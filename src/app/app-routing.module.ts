@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainContantComponent } from './mainsite/main-contant/main-contant.component';
 import { MainsiteComponent } from './mainsite/mainsite.component';
 import { PrivacyPolicyComponent } from './mainsite/privacy-policy/privacy-policy.component';
+import { CustomerSignupComponent } from './mainsite/SignUp/CustomerSignup/customer-signup/customer-signup.component';
+import { DriverSignupComponent } from './mainsite/SignUp/DriverSignup/driver-signup/driver-signup.component';
 import { TermsandconditionComponent } from './mainsite/termsandcondition/termsandcondition.component';
 
 const routes: Routes = [
@@ -10,7 +12,10 @@ const routes: Routes = [
   {path: "", component: MainsiteComponent, children: [
       {path: 'home', component: MainContantComponent},
       {path: 'termsandcondition', component: TermsandconditionComponent},
-      {path: 'privacypolicy', component: PrivacyPolicyComponent}
+      {path: 'privacypolicy', component: PrivacyPolicyComponent},
+      {path: 'customer-signup', component: CustomerSignupComponent},
+      {path: 'driver-signup', component: DriverSignupComponent}
+
     ]
   }
 ];
