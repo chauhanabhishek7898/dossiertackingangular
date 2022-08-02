@@ -1,1 +1,226 @@
-<p>customer-signup works!</p>
+<form [formGroup]="customerSignupForm">
+    <div>
+
+        <!-- <div class="ma-input">
+            <mat-form-field style="width: 100%;" appearance="outline">
+                <mat-label>User Name</mat-label>
+                <mat-icon matSuffix>email</mat-icon>
+                <input matInput placeholder="Enter User Id or Member Code" type="text">
+    
+                <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+        </div> -->
+        
+        <div class="date-and-mob">
+    
+            <div class="ma-input-33">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Mobile Number</mat-label>
+                    <!-- <mat-icon matSuffix>email</mat-icon> -->
+                    <input (keyup)="onUserNameKeyUpEvent($event)" #searchInput matInput
+                        formControlName="vMobileNo" placeholder="Enter Mobile Number" type="number">
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                </mat-form-field>
+            </div>
+    
+            <div class="ma-input-33">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Full Name</mat-label>
+                    <!-- <mat-icon matSuffix>email</mat-icon> -->
+                    <input formControlName="vFullName" matInput placeholder="Enter Full Name"
+                        type="text">
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                </mat-form-field>
+            </div>
+    
+            <div class="ma-input-33">
+                <mat-form-field appearance="outline">
+                    <mat-label>DOB</mat-label>
+                    <input formControlName="dtDOB" matInput [matDatepicker]="picker1"
+                        placeholder="Enter DOB">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1 color="primary"></mat-datepicker>
+                </mat-form-field>
+            </div>
+    
+        </div>
+    
+        <div class="date-and-mob">
+    
+            <div class="ma-input-33">
+                <mat-form-field appearance="outline">
+                    <mat-label>Gender</mat-label>
+                    <select formControlName="vGender" matNativeControl required>
+                        <option [ngValue]="null" [disabled]="true">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Others">Others</option>
+                        <option value="audi">Prefer not to say</option>
+                    </select>
+                </mat-form-field>
+            </div>
+    
+            <!-- <div class="ma-input-33">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Gender</mat-label>
+                    <mat-icon matSuffix>email</mat-icon>
+                    <input matInput placeholder="Enter Gender" type="text">
+                    <mat-hint>Hint</mat-hint>
+                </mat-form-field>
+            </div> -->
+    
+            <div class="ma-input-33">
+    
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>City</mat-label>
+                    <!-- <mat-icon matSuffix>email</mat-icon> -->
+                    <input formControlName="nCityId" matInput placeholder="Enter City" type="text">
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                </mat-form-field>
+            </div>
+    
+            <div class="ma-input-33">
+    
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Flat No.</mat-label>
+                    <!-- <mat-icon matSuffix>email</mat-icon> -->
+                    <input formControlName="vFlatNoPlotNoLaneBuilding" matInput
+                        placeholder="Enter Flat No." type="text">
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                </mat-form-field>
+            </div>
+        </div>
+    
+        <div class="date-and-mob">
+    
+            <div class="ma-input-50">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Address</mat-label>
+                    <!-- <mat-icon matSuffix>email</mat-icon> -->
+                    <input formControlName="vAddress" matInput placeholder="Enter Address"
+                        type="text">
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                </mat-form-field>
+            </div>
+    
+            <div class="ma-input-50">
+    
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Email Id</mat-label>
+                    <!-- <mat-icon matSuffix>email</mat-icon> -->
+                    <input formControlName="vEmailId" matInput placeholder="Enter Email Id"
+                        type="text">
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                </mat-form-field>
+            </div>
+    
+        </div>
+    
+        <div class="date-and-mob">
+    
+            <div class="ma-input-50">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Aadhar No.</mat-label>
+                    <input formControlName="vAadhaarNo" style="width: 80%;" matInput
+                        placeholder="Enter Aadhar No.">
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                </mat-form-field>
+            </div>
+    
+            <!-- <div class="ma-input-50">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Upload Adhar File</mat-label>
+                    <input style="width: 80%;" matInput placeholder="Upload Adhar File">
+                </mat-form-field>
+            </div> -->
+            <div class="ma-input-image">
+    
+                <mat-label [ngClass]="{'dynamicchange': ifSelect}"
+                    style="color: #6c757d;font-weight: 300;font-size: 15px;">Upload Aadhar
+                    File
+                </mat-label>
+                <div class="aadhar-file">
+                    <div class="file-name" *ngIf="urlLink !='false'" style="font-size: 10px;">
+                        <a title={{fileName}} [attr.href]="urlLink" target="_blank">{{fileNameSlice
+                            }}</a>
+                    </div>
+    
+                    <div class="file-name" *ngIf="urlLink =='false'" style="font-size: 10px;">
+                        <a target="_blank" [attr.href]="selectedFileBLOB">{{fileNameSlice}}</a>
+                    </div>
+                </div>
+                <div class="image-chose">
+                    <button type="button" (click)="files.click()"
+                        class="img-uplod-btn">Choose</button>
+                    <span>
+                        <!-- <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Upload Adhar File</mat-label>
+                                <input style="width: 80%;" matInput placeholder="Upload Adhar File">
+                            </mat-form-field> -->
+                        <input formControlName="vAadhaarNoFilePath" type="file"
+                            (change)="selectFiles($event)" style="display: none;" #files>
+                    </span>
+                </div>
+            </div>
+    
+        </div>
+    
+    
+        <div class="date-and-mob">
+    
+            <div class="ma-input-50">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input formControlName="vPassword" style="width: 80%;" matInput
+                        placeholder="Enter Password" type="{{pass3}}">
+                    <mat-icon (click)="eyeIconPasswordSignInCustomer('show')" *ngIf="eye3"
+                        matSuffix>visibility</mat-icon>
+                    <mat-icon (click)="eyeIconPasswordSignInCustomer('hide')" *ngIf="!eye3"
+                        matSuffix>visibility_off
+                    </mat-icon>
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                </mat-form-field>
+            </div>
+    
+    
+            <div class="ma-input-50">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Confirm Password</mat-label>
+                    <input formControlName="vConfirmPassword" style="width: 80%;" matInput
+                        placeholder="Enter Confirm Password" type="{{pass4}}">
+                    <mat-icon (click)="eyeIconConfirmPasswordSignInCustomer('show')" *ngIf="eye4"
+                        matSuffix>visibility</mat-icon>
+                    <mat-icon (click)="eyeIconConfirmPasswordSignInCustomer('hide')" *ngIf="!eye4"
+                        matSuffix>visibility_off
+                    </mat-icon>
+                    <!-- <mat-hint>Hint</mat-hint> -->
+                </mat-form-field>
+            </div>
+    
+        </div>
+    
+    
+    
+        <div class="forgot" >
+           
+            <div class="form-check">
+                <input formControlName="dTermCondition" class="form-check-input" type="checkbox"
+                    value="" id="flexCheckDefault2" (change)="onCheckboxChange($event)">
+                <label class="form-check-label" for="">
+                    By signing up, i agree to 
+                </label>
+                <span (click)="opentermConditionComponent()" style="color: blue;border-bottom: 1px solid blue;cursor: pointer;">terms and conditions.</span> 
+            </div>
+    
+    
+        </div>
+    
+    
+    </div>
+    
+    <div class="log-in-btn">
+        <button class="enable-btn-gray" [disabled]="customerSignupForm.invalid" type="button">
+            Signup
+        </button>
+    </div>
+</form>

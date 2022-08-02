@@ -73,10 +73,10 @@
                         <div>
                             <div class="ma-input">
                                 <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>User Id or Member Code</mat-label>
+                                    <mat-label>Mobile Number</mat-label>
                                     <mat-icon matSuffix>email</mat-icon>
-                                    <input matInput formControlName="vUserName"
-                                        placeholder="Enter User Id or Member Code" type="text">
+                                    <input matInput formControlName="vMobileNo" placeholder="Enter Mobile Number"
+                                        type="text">
                                 </mat-form-field>
                             </div>
 
@@ -189,7 +189,8 @@
                                     <mat-form-field style="width: 100%;" appearance="outline">
                                         <mat-label>Mobile Number</mat-label>
                                         <!-- <mat-icon matSuffix>email</mat-icon> -->
-                                        <input (keyup)="onUserNameKeyUpEvent($event)" #searchInput formControlName="vMobileNo" matInput placeholder="Enter Mobile Number"
+                                        <input (keyup)="onUserNameKeyUpEvent($event)" #searchInput
+                                            formControlName="vMobileNo" matInput placeholder="Enter Mobile Number"
                                             type="text">
 
                                         <!-- <mat-hint>Hint</mat-hint> -->
@@ -232,15 +233,64 @@
                             <div class="date-and-mob">
 
 
+
+                                <div class="ma-input-33">
+                                    <div class="input-group">
+                                        <label for="">City<span>*</span></label>
+                                        <div class="input-feild custom-select">
+                                            <div style="position: relative;">
+                                                <input type="text" placeholder="Select City" formControlName="nCityId"
+                                                    readonly (focusin)="showSelectList($event)">
+                                                <span style="position: absolute;right: 10px;top: 2px;color: #757575;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="11"
+                                                        fill="currentColor" class="bi bi-caret-down-fill"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <div class="input-feild select-list" *ngIf='selectList'
+                                                [@slideInOutAnimation] (click)="selectCityList($event)">
+                                                <div (keyup)="onCityKey($event)" class="search-input">
+                                                    <input #searchInput appAutofocus type="text"
+                                                        (focusout)="onFocusOut($event)"
+                                                        placeholder="Enter 3 letters to search City">
+                                                    <span class="search-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                                            fill="currentColor" class="bi bi-search"
+                                                            viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                                        </svg>
+                                                    </span>
+                                                    <div class="close" (click)="closeSearch()">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                            fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                                            <path
+                                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+
+                                                <ul>
+                                                    <li *ngIf="AllCity.length==0 && noMatchFound">No Match Found</li>
+                                                    <li (click)="selectCity(item,$event)" *ngFor="let item of AllCity"
+                                                        [value]="item.nCityId">
+                                                        {{item.CityDetails}}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 
                                 <div class="ma-input-33">
                                     <mat-form-field style="width: 100%;" appearance="outline">
                                         <mat-label>City</mat-label>
-                                        <!-- <mat-icon matSuffix>email</mat-icon> -->
                                         <input formControlName="nCityId" matInput placeholder="Enter City" type="text">
-
-                                        <!-- <mat-hint>Hint</mat-hint> -->
                                     </mat-form-field>
-                                </div>
+                                </div> -->
 
                                 <div class="ma-input-33">
                                     <mat-form-field style="width: 100%;" appearance="outline">
@@ -326,7 +376,8 @@
                                 <!--   adhar file  code start  -->
                                 <div class="ma-input-image-adhar-driver">
 
-                                    <mat-label [ngClass]="{'dynamicchange': ifSelect}" style="color: #6c757d;font-weight: 300;font-size: 15px;">Upload Adhar
+                                    <mat-label [ngClass]="{'dynamicchange': ifSelect}"
+                                        style="color: #6c757d;font-weight: 300;font-size: 15px;">Upload Aadhar
                                         File
                                     </mat-label>
                                     <div class="aadhar-file">
@@ -381,24 +432,27 @@
                             <div class="date-and-mob">
 
 
-                              
+
 
 
 
                                 <!--   pan file  code start  -->
                                 <div class="ma-input-image-adhar-driver">
 
-                                    <mat-label [ngClass]="{'dynamicchange': ifSelect}" style="color: #6c757d;font-weight: 300;font-size: 15px;">Upload PAN
+                                    <mat-label [ngClass]="{'dynamicchange': ifSelect}"
+                                        style="color: #6c757d;font-weight: 300;font-size: 15px;">Upload PAN
                                         Card
                                     </mat-label>
                                     <div class="aadhar-file">
                                         <div class="file-name" *ngIf="LogoUrlLink !='false'" style="font-size: 10px;">
-                                            <a title={{LogoFileName}} [attr.href]="LogoUrlLink" target="_blank">{{LogoFileNameSlice
+                                            <a title={{LogoFileName}} [attr.href]="LogoUrlLink"
+                                                target="_blank">{{LogoFileNameSlice
                                                 }}</a>
                                         </div>
 
                                         <div class="file-name" *ngIf="LogoUrlLink =='false'" style="font-size: 10px;">
-                                            <a target="_blank" [attr.href]="LogoSelectedFileBLOB">{{LogoFileNameSlice}}</a>
+                                            <a target="_blank"
+                                                [attr.href]="LogoSelectedFileBLOB">{{LogoFileNameSlice}}</a>
                                         </div>
                                     </div>
                                     <div class="image-chose">
@@ -438,17 +492,22 @@
                                 <!--   License file  code start  -->
                                 <div class="ma-input-image-adhar-driver">
 
-                                    <mat-label [ngClass]="{'dynamicchange': ifSelect}" style="color: #6c757d;font-weight: 300;font-size: 15px;">
+                                    <mat-label [ngClass]="{'dynamicchange': ifSelect}"
+                                        style="color: #6c757d;font-weight: 300;font-size: 15px;">
                                         Upload License
                                     </mat-label>
                                     <div class="aadhar-file">
-                                        <div class="file-name" *ngIf="LicenseUrlLink !='false'" style="font-size: 10px;">
-                                            <a title={{LicenseFileName}} [attr.href]="LicenseUrlLink" target="_blank">{{LicenseFileNameSlice
+                                        <div class="file-name" *ngIf="LicenseUrlLink !='false'"
+                                            style="font-size: 10px;">
+                                            <a title={{LicenseFileName}} [attr.href]="LicenseUrlLink"
+                                                target="_blank">{{LicenseFileNameSlice
                                                 }}</a>
                                         </div>
 
-                                        <div class="file-name" *ngIf="LicenseUrlLink =='false'" style="font-size: 10px;">
-                                            <a target="_blank" [attr.href]="LicenseSelectedFileBLOB">{{LicenseFileNameSlice}}</a>
+                                        <div class="file-name" *ngIf="LicenseUrlLink =='false'"
+                                            style="font-size: 10px;">
+                                            <a target="_blank"
+                                                [attr.href]="LicenseSelectedFileBLOB">{{LicenseFileNameSlice}}</a>
                                         </div>
                                     </div>
                                     <div class="image-chose">
@@ -460,8 +519,8 @@
                                                     <input style="width: 80%;" matInput placeholder="Upload Adhar File">
                                                 </mat-form-field> -->
                                             <input formControlName="vLicenseNoFilePath" type="file"
-                                            (change)="selectLicensePhotoFiles($event)" style="display: none;"
-                                            #files4>
+                                                (change)="selectLicensePhotoFiles($event)" style="display: none;"
+                                                #files4>
                                         </span>
                                     </div>
                                 </div>
@@ -494,7 +553,8 @@
                                 <!--   Vehicle Registration file  code start  -->
                                 <div class="ma-input-image-adhar-driver">
 
-                                    <mat-label [ngClass]="{'dynamicchange': ifSelect}" style="color: #6c757d;font-weight: 300;font-size: 15px;">
+                                    <mat-label [ngClass]="{'dynamicchange': ifSelect}"
+                                        style="color: #6c757d;font-weight: 300;font-size: 15px;">
                                         Upload Vehicle Registration
                                     </mat-label>
                                     <div class="aadhar-file">
@@ -516,7 +576,8 @@
                                                     <input style="width: 80%;" matInput placeholder="Upload Adhar File">
                                                 </mat-form-field> -->
                                             <input formControlName="vVehicleRegistrationNoFilePath" type="file"
-                                                (change)="selectFilesRegistration($event)" style="display: none;" #files>
+                                                (change)="selectFilesRegistration($event)" style="display: none;"
+                                                #files>
                                         </span>
                                     </div>
                                 </div>
@@ -535,12 +596,14 @@
                                 <!--   Vehicle Insurance file  code start  -->
                                 <div class="ma-input-image-adhar-driver">
 
-                                    <mat-label [ngClass]="{'dynamicchange': ifSelect}" style="color: #6c757d;font-weight: 300;font-size: 15px;">
+                                    <mat-label [ngClass]="{'dynamicchange': ifSelect}"
+                                        style="color: #6c757d;font-weight: 300;font-size: 15px;">
                                         Upload Vehicle Insurance
                                     </mat-label>
                                     <div class="aadhar-file">
                                         <div class="file-name" *ngIf="LogoUrlLink6 !='false'" style="font-size: 10px;">
-                                            <a title={{fileName}} [attr.href]="LogoUrlLink6" target="_blank">{{LogoFileNameSlice6
+                                            <a title={{fileName}} [attr.href]="LogoUrlLink6"
+                                                target="_blank">{{LogoFileNameSlice6
                                                 }}</a>
                                         </div>
 
@@ -579,17 +642,22 @@
                                 <!--   Photo file  code start  -->
                                 <div class="ma-input-image-adhar-driver">
 
-                                    <mat-label [ngClass]="{'dynamicchange': ifSelect}" style="color: #6c757d;font-weight: 300;font-size: 15px;">
+                                    <mat-label [ngClass]="{'dynamicchange': ifSelect}"
+                                        style="color: #6c757d;font-weight: 300;font-size: 15px;">
                                         Upload Photo
                                     </mat-label>
                                     <div class="aadhar-file">
-                                        <div class="file-name" *ngIf="LicenseUrlLink7 !='false'" style="font-size: 10px;">
-                                            <a title={{LicenseFileName7}} [attr.href]="LicenseUrlLink7" target="_blank">{{LicenseFileName7
+                                        <div class="file-name" *ngIf="LicenseUrlLink7 !='false'"
+                                            style="font-size: 10px;">
+                                            <a title={{LicenseFileName7}} [attr.href]="LicenseUrlLink7"
+                                                target="_blank">{{LicenseFileName7
                                                 }}</a>
                                         </div>
 
-                                        <div class="file-name" *ngIf="LicenseUrlLink7 =='false'" style="font-size: 10px;">
-                                            <a target="_blank" [attr.href]="LicenseSelectedFileBLOB7">{{LicenseFileName7}}</a>
+                                        <div class="file-name" *ngIf="LicenseUrlLink7 =='false'"
+                                            style="font-size: 10px;">
+                                            <a target="_blank"
+                                                [attr.href]="LicenseSelectedFileBLOB7">{{LicenseFileName7}}</a>
                                         </div>
                                     </div>
                                     <div class="image-chose">
@@ -648,33 +716,26 @@
                             </div>
 
 
-                            <div class="forgot" [ngClass]="{'marginBottum': passwordHide}">
-                                <div class="forgot-remember">
-                                    <div class="form-check">
-                                        <input formControlName="btPromotion" class="form-check-input" type="checkbox"
-                                            id="flexCheckDefault1">
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            Receive relevant offers and promotional communication from Drome
-                                        </label>
-                                    </div>
-                                </div>
+                            <div class="forgot">
                                 <div class="form-check">
                                     <input formControlName="dTermCondition" class="form-check-input" type="checkbox"
                                         value="" id="flexCheckDefault2" (change)="onCheckboxChange($event)">
                                     <label class="form-check-label" for="flexCheckDefault2">
-                                        By signing up, i agree to <a target="_blank"
-                                            href="https://drome.co.in/terms-and-conditions/">terms and conditions.</a>
+                                        By signing up, i agree to
                                     </label>
-                                </div>
+                                    <span (click)="opentermConditionComponent()"
+                                        style="color: blue;border-bottom: 1px solid blue;cursor: pointer;">terms and
+                                        conditions.</span>
 
+                                </div>
                             </div>
 
                         </div>
 
-                        <div *ngIf="!passwordHide" class="driver-sign-in-btn">
+                        <div class="driver-sign-in-btn">
                             <button class="enable-driver-sign-in-btn-gray" [disabled]="driverSignupForm.invalid"
                                 type="button">
-                                Send Otp
+                                Signup
                             </button>
                         </div>
 
@@ -687,265 +748,36 @@
 
     </ng-template>
 
+
     <!--  customer sign up template below here  -->
     <ng-template #customersignup>
-        <form [formGroup]="customerSignupForm">
-            <div class="modal-container">
-                <div class="model-header">
-                    <div></div>
-                    <div class="close-btn">
-                        <button type="button" class="close pull-right" aria-label="Close"
-                            (click)="modalRefcustomersignup.hide()">
-                            <mat-icon>close</mat-icon>
-                        </button>
-                    </div>
+
+        <div class="modal-container">
+            <div class="model-header">
+                <div></div>
+                <div class="close-btn">
+                    <button type="button" class="close pull-right" aria-label="Close"
+                        (click)="modalRefcustomersignup.hide()">
+                        <mat-icon>close</mat-icon>
+                    </button>
                 </div>
-                <div class="head-title">
-                    <div class="title-signup-customer">
-                        <h1 class="modal-title pull-left" mat-dialog-title>{{modaltitlecustomersignup}}</h1>
-                    </div>
-                </div>
-
-                <div mat-dialog-content>
-                    <div class="model-body">
-                        <div>
-
-                            <!-- <div class="ma-input">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>User Name</mat-label>
-                                    <mat-icon matSuffix>email</mat-icon>
-                                    <input matInput placeholder="Enter User Id or Member Code" type="text">
-    
-                                    <mat-hint>Hint</mat-hint>
-                                </mat-form-field>
-                            </div> -->
-
-                            <div class="date-and-mob">
-
-                                <div class="ma-input-33">
-                                    <mat-form-field style="width: 100%;" appearance="outline">
-                                        <mat-label>Mobile Number</mat-label>
-                                        <!-- <mat-icon matSuffix>email</mat-icon> -->
-                                        <input (keyup)="onUserNameKeyUpEvent($event)" #searchInput matInput formControlName="vMobileNo" placeholder="Enter Mobile Number"
-                                            type="number">
-                                        <!-- <mat-hint>Hint</mat-hint> -->
-                                    </mat-form-field>
-                                </div>
-
-                                <div class="ma-input-33">
-                                    <mat-form-field style="width: 100%;" appearance="outline">
-                                        <mat-label>Full Name</mat-label>
-                                        <!-- <mat-icon matSuffix>email</mat-icon> -->
-                                        <input formControlName="vFullName" matInput placeholder="Enter Full Name"
-                                            type="text">
-                                        <!-- <mat-hint>Hint</mat-hint> -->
-                                    </mat-form-field>
-                                </div>
-
-                                <div class="ma-input-33">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>DOB</mat-label>
-                                        <input formControlName="dtDOB" matInput [matDatepicker]="picker1"
-                                            placeholder="Enter DOB">
-                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker1 color="primary"></mat-datepicker>
-                                    </mat-form-field>
-                                </div>
-
-                            </div>
-
-                            <div class="date-and-mob">
-
-                                <div class="ma-input-33">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>Gender</mat-label>
-                                        <select formControlName="vGender" matNativeControl required>
-                                            <option [ngValue]="null" [disabled]="true">Select Gender</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                            <option value="Others">Others</option>
-                                            <option value="audi">Prefer not to say</option>
-                                        </select>
-                                    </mat-form-field>
-                                </div>
-
-                                <!-- <div class="ma-input-33">
-                                    <mat-form-field style="width: 100%;" appearance="outline">
-                                        <mat-label>Gender</mat-label>
-                                        <mat-icon matSuffix>email</mat-icon>
-                                        <input matInput placeholder="Enter Gender" type="text">
-                                        <mat-hint>Hint</mat-hint>
-                                    </mat-form-field>
-                                </div> -->
-
-                                <div class="ma-input-33">
-
-                                    <mat-form-field style="width: 100%;" appearance="outline">
-                                        <mat-label>City</mat-label>
-                                        <!-- <mat-icon matSuffix>email</mat-icon> -->
-                                        <input formControlName="nCityId" matInput placeholder="Enter City" type="text">
-                                        <!-- <mat-hint>Hint</mat-hint> -->
-                                    </mat-form-field>
-                                </div>
-
-                                <div class="ma-input-33">
-
-                                    <mat-form-field style="width: 100%;" appearance="outline">
-                                        <mat-label>Flat No.</mat-label>
-                                        <!-- <mat-icon matSuffix>email</mat-icon> -->
-                                        <input formControlName="vFlatNoPlotNoLaneBuilding" matInput
-                                            placeholder="Enter Flat No." type="text">
-                                        <!-- <mat-hint>Hint</mat-hint> -->
-                                    </mat-form-field>
-                                </div>
-                            </div>
-
-                            <div class="date-and-mob">
-
-                                <div class="ma-input-50">
-                                    <mat-form-field style="width: 100%;" appearance="outline">
-                                        <mat-label>Address</mat-label>
-                                        <!-- <mat-icon matSuffix>email</mat-icon> -->
-                                        <input formControlName="vAddress" matInput placeholder="Enter Address"
-                                            type="text">
-                                        <!-- <mat-hint>Hint</mat-hint> -->
-                                    </mat-form-field>
-                                </div>
-
-                                <div class="ma-input-50">
-
-                                    <mat-form-field style="width: 100%;" appearance="outline">
-                                        <mat-label>Email Id</mat-label>
-                                        <!-- <mat-icon matSuffix>email</mat-icon> -->
-                                        <input formControlName="vEmailId" matInput placeholder="Enter Email Id"
-                                            type="text">
-                                        <!-- <mat-hint>Hint</mat-hint> -->
-                                    </mat-form-field>
-                                </div>
-
-                            </div>
-
-                            <div class="date-and-mob">
-
-                                <div class="ma-input-50">
-                                    <mat-form-field style="width: 100%;" appearance="outline">
-                                        <mat-label>Adhar No.</mat-label>
-                                        <input formControlName="vAadhaarNo" style="width: 80%;" matInput
-                                            placeholder="Enter Adhar No.">
-                                        <!-- <mat-hint>Hint</mat-hint> -->
-                                    </mat-form-field>
-                                </div>
-
-                                <!-- <div class="ma-input-50">
-                                    <mat-form-field style="width: 100%;" appearance="outline">
-                                        <mat-label>Upload Adhar File</mat-label>
-                                        <input style="width: 80%;" matInput placeholder="Upload Adhar File">
-                                    </mat-form-field>
-                                </div> -->
-                                <div class="ma-input-image">
-
-                                    <mat-label [ngClass]="{'dynamicchange': ifSelect}" style="color: #6c757d;font-weight: 300;font-size: 15px;">Upload Adhar
-                                        File
-                                    </mat-label>
-                                    <div class="aadhar-file">
-                                        <div class="file-name" *ngIf="urlLink !='false'" style="font-size: 10px;">
-                                            <a title={{fileName}} [attr.href]="urlLink" target="_blank">{{fileNameSlice
-                                                }}</a>
-                                        </div>
-
-                                        <div class="file-name" *ngIf="urlLink =='false'" style="font-size: 10px;">
-                                            <a target="_blank" [attr.href]="selectedFileBLOB">{{fileNameSlice}}</a>
-                                        </div>
-                                    </div>
-                                    <div class="image-chose">
-                                        <button type="button" (click)="files.click()"
-                                            class="img-uplod-btn">Choose</button>
-                                        <span>
-                                            <!-- <mat-form-field style="width: 100%;" appearance="outline">
-                                                    <mat-label>Upload Adhar File</mat-label>
-                                                    <input style="width: 80%;" matInput placeholder="Upload Adhar File">
-                                                </mat-form-field> -->
-                                            <input formControlName="vAadhaarNoFilePath" type="file"
-                                                (change)="selectFiles($event)" style="display: none;" #files>
-                                        </span>
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                            <div class="date-and-mob">
-
-                                <div class="ma-input-50">
-                                    <mat-form-field style="width: 100%;" appearance="outline">
-                                        <mat-label>Password</mat-label>
-                                        <input formControlName="vPassword" style="width: 80%;" matInput
-                                            placeholder="Enter Password" type="{{pass3}}">
-                                        <mat-icon (click)="eyeIconPasswordSignInCustomer('show')" *ngIf="eye3"
-                                            matSuffix>visibility</mat-icon>
-                                        <mat-icon (click)="eyeIconPasswordSignInCustomer('hide')" *ngIf="!eye3"
-                                            matSuffix>visibility_off
-                                        </mat-icon>
-                                        <!-- <mat-hint>Hint</mat-hint> -->
-                                    </mat-form-field>
-                                </div>
-
-
-                                <div class="ma-input-50">
-                                    <mat-form-field style="width: 100%;" appearance="outline">
-                                        <mat-label>Confirm Password</mat-label>
-                                        <input formControlName="vConfirmPassword" style="width: 80%;" matInput
-                                            placeholder="Enter Confirm Password" type="{{pass4}}">
-                                        <mat-icon (click)="eyeIconConfirmPasswordSignInCustomer('show')" *ngIf="eye4"
-                                            matSuffix>visibility</mat-icon>
-                                        <mat-icon (click)="eyeIconConfirmPasswordSignInCustomer('hide')" *ngIf="!eye4"
-                                            matSuffix>visibility_off
-                                        </mat-icon>
-                                        <!-- <mat-hint>Hint</mat-hint> -->
-                                    </mat-form-field>
-                                </div>
-
-                            </div>
-
-
-
-                            <div class="forgot" [ngClass]="{'marginBottum': passwordHide}">
-                                <div class="forgot-remember">
-                                    <div class="form-check">
-                                        <input formControlName="btPromotion" class="form-check-input" type="checkbox"
-                                            id="flexCheckDefault1">
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            Receive relevant offers and promotional communication from Drome
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-check">
-                                    <input formControlName="dTermCondition" class="form-check-input" type="checkbox"
-                                        value="" id="flexCheckDefault2" (change)="onCheckboxChange($event)">
-                                    <label class="form-check-label" for="flexCheckDefault2">
-                                        By signing up, i agree to <a target="_blank"
-                                            href="https://drome.co.in/terms-and-conditions/">terms and conditions.</a>
-                                    </label>
-                                </div>
-
-                            </div>
-
-
-                        </div>
-
-                        <div class="log-in-btn">
-                            <button class="enable-btn-gray" [disabled]="customerSignupForm.invalid" type="button">
-                                Send Otp
-                            </button>
-                        </div>
-
-
-
-                    </div>
+            </div>
+            <div class="head-title">
+                <div class="title-signup-customer">
+                    <h1 class="modal-title pull-left" mat-dialog-title>{{modaltitlecustomersignup}}</h1>
                 </div>
             </div>
 
-        </form>
+            <div mat-dialog-content>
+                <div class="model-body">
+
+
+                    <app-customer-signup></app-customer-signup>
+
+                </div>
+            </div>
+        </div>
+
 
     </ng-template>
     <!-- <div class="second_header">

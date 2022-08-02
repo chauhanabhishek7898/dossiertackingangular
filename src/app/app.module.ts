@@ -23,6 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CustomerSignupComponent } from './mainsite/SignUp/CustomerSignup/customer-signup/customer-signup.component';
 import { DriverSignupComponent } from './mainsite/SignUp/DriverSignup/driver-signup/driver-signup.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { DriverSignupComponent } from './mainsite/SignUp/DriverSignup/driver-sig
   imports: [
     BrowserModule,
     HttpClientModule,
-
+    CommonModule,
     MatSelectModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -51,7 +52,7 @@ import { DriverSignupComponent } from './mainsite/SignUp/DriverSignup/driver-sig
     MatFormFieldModule,
     MatInputModule,
   ],
-  exports: [],
+  exports: [TermsandconditionComponent],
   providers: [BsModalService, HttpClientModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 

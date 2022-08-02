@@ -1,3 +1,4 @@
+import { CitymasterService } from './../services/citymaster.service';
 import {
   Component,
   ElementRef,
@@ -19,6 +20,9 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LoginService } from './Login/login.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { CityMasterList } from './models/city-master';
+import { Router } from '@angular/router';
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
     control: FormControl | null,
@@ -62,7 +66,9 @@ export class MainsiteComponent implements OnInit {
     private formBuilder: FormBuilder,
     private modalService: BsModalService,
     private sanitizer: DomSanitizer,
-    private loginService: LoginService //   private authService: AuthService, //   private notifier: NotificationService,
+    private loginService: LoginService, //   private authService: AuthService, //   private notifier: NotificationService,
+    private cityDropDownService: CitymasterService,
+    private router: Router,
   ) //   private storageService: StorageService,
   //   private router: Router,
   //   public loaderService: LoaderService,
@@ -83,28 +89,7 @@ export class MainsiteComponent implements OnInit {
   maxDate;
   matcher = new MyErrorStateMatcher();
   ngOnInit(): void {
-    this.customerSignupForm = this.formBuilder.group({
-      nCId: [0],
-      //  vCId: [null],
-      vFullName: [null, [Validators.required]],
-      vMobileNo: [null, [Validators.required]],
-      vEmailId: [
-        null,
-        [Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')],
-      ],
-      vPassword: [null, [Validators.required]],
-      vConfirmPassword: [null, [Validators.required]],
-      dtDOB: [null, [Validators.required]],
-      btPromotion: [null],
-      nCityId: [null, [Validators.required]],
-      vAddress: [null, [Validators.required]],
-      vGender: [null, [Validators.required]],
-      vAadhaarNo: [null, [Validators.required]],
-      vAadhaarNoFilePath: [null], // one file (adhar file)  //
-      vFlatNoPlotNoLaneBuilding: [null, [Validators.required]],
-
-      dTermCondition: [false, [Validators.required]],
-    });
+   
 
     this.driverSignupForm = this.formBuilder.group({
       nDriverId: 0,
@@ -246,8 +231,8 @@ export class MainsiteComponent implements OnInit {
         this.file.name.split('.').pop() == 'jpg'
       ) {
         if (this.file.size > 2000000) {
-          // this.notifier.showError(`Please Select File less than 2 MB`);
-          alert('Please Select File less than 2 MB');
+          alert(`Please Select File less than 2 MB`);
+          // alert('Please Select File less than 2 MB');
           this.file = null!!;
         } else {
           this.fileName = this.file.name;
@@ -266,8 +251,8 @@ export class MainsiteComponent implements OnInit {
           this.ifSelect=true
         }
       } else {
-        // this.notifier.showError(`Invalid file format. Please select .JPG or .PDF file formats.`);
-        alert('Invalid file format. Please select .JPG or .PDF file formats.');
+        alert(`Invalid file format. Please select .JPG or .PDF file formats.`);
+        // alert('Invalid file format. Please select .JPG or .PDF file formats.');
         this.fileFormetValid = false;
       }
       // event.target.value = null;
@@ -400,8 +385,8 @@ selectFilesRegistration(event) {
       this.file.name.split('.').pop() == 'jpg'
     ) {
       if (this.file.size > 2000000) {
-        // this.notifier.showError(`Please Select File less than 2 MB`);
-        alert('Please Select File less than 2 MB');
+        alert(`Please Select File less than 2 MB`);
+        // alert('Please Select File less than 2 MB');
         this.file = null!!;
       } else {
         this.fileName = this.file.name;
@@ -420,8 +405,8 @@ selectFilesRegistration(event) {
         this.ifSelect=true
       }
     } else {
-      // this.notifier.showError(`Invalid file format. Please select .JPG or .PDF file formats.`);
-      alert('Invalid file format. Please select .JPG or .PDF file formats.');
+      alert(`Invalid file format. Please select .JPG or .PDF file formats.`);
+      // alert('Invalid file format. Please select .JPG or .PDF file formats.');
       this.fileFormetValid = false;
     }
     // event.target.value = null;
@@ -591,16 +576,16 @@ selectFilesPhoto(event) {
     //       this.otPtimer(60);
     //     }
     //     else {
-    //       this.notifier.showError(status.statusMsg);
+    //       alert(status.statusMsg);
     //     }
     //     setTimeout(() => {
     //       this.btnLoader = false
     //     }, 300)
     //   }, (error: HttpErrorResponse) => {
-    //     this.notifier.showError(error.statusText);
+    //     alert(error.statusText);
     //   })
     // } else {
-    //   this.notifier.showError("Please select either Mobile Number or Email Id.");
+    //   alert("Please select either Mobile Number or Email Id.");
     //   setTimeout(() => {
     //     this.btnLoader = false
     //   }, 300)
@@ -634,7 +619,7 @@ selectFilesPhoto(event) {
     //     this.otpVerified = true;
     //   }
     //   else {
-    //     this.notifier.showError("OTP not matched");
+    //     alert("OTP not matched");
     //     this.otpVerified = false;
     //   }
     // }
@@ -656,7 +641,7 @@ selectFilesPhoto(event) {
     //     this.btnLoader = false
     //   }, 300)
     // }, (error: HttpErrorResponse) => {
-    //   this.notifier.showError(error.statusText);
+    //   alert(error.statusText);
     // });
   }
 
@@ -705,7 +690,7 @@ selectFilesPhoto(event) {
     //       this.otPtimer(60);
     //     }
     //     else {
-    //       this.notifier.showError(status.statusMsg);
+    //       alert(status.statusMsg);
     //       setTimeout(() => {
     //         this.btnLoader = false
     //       }, 300)
@@ -714,12 +699,12 @@ selectFilesPhoto(event) {
     //       this.btnLoader = false
     //     }, 300)
     //   }, (error: HttpErrorResponse) => {
-    //     this.notifier.showError(error.statusText, "Server Error");
+    //     alert(error.statusText, "Server Error");
     //     this.btnLoader = false
     //   });
     // }
     // else {
-    //   this.notifier.showError("Please select either Mobile Number  or Email Id.");
+    //   alert("Please select either Mobile Number  or Email Id.");
     //   setTimeout(() => {
     //     this.btnLoader = false
     //   }, 300)
@@ -733,7 +718,7 @@ selectFilesPhoto(event) {
       //   this.isFPOtpReceived = false;
       // }
       // else {
-      //   this.notifier.showError("OTP not matched");
+      //   alert("OTP not matched");
       //   this.fPOtpVerified = false;
       // }
     }
@@ -754,7 +739,7 @@ selectFilesPhoto(event) {
     //     this.btnLoader = false
     //   }, 300)
     // }, (error: HttpErrorResponse) => {
-    //   this.notifier.showError(error.statusText)
+    //   alert(error.statusText)
     // });
   }
 
@@ -797,31 +782,7 @@ selectFilesPhoto(event) {
     }
   }
 
-  pass3: string = 'password';
-  eye3: boolean = false;
-  eyeIconPasswordSignInCustomer(type) {
-    if (type == 'hide') {
-      this.pass3 = 'text';
-      this.eye3 = true;
-    }
-    if (type == 'show') {
-      this.pass3 = 'password';
-      this.eye3 = false;
-    }
-  }
-
-  pass4: string = 'password';
-  eye4: boolean = false;
-  eyeIconConfirmPasswordSignInCustomer(type) {
-    if (type == 'hide') {
-      this.pass4 = 'text';
-      this.eye4 = true;
-    }
-    if (type == 'show') {
-      this.pass4 = 'password';
-      this.eye4 = false;
-    }
-  }
+  
 
   mobileNo: string;
   available: boolean = false;
@@ -868,4 +829,86 @@ selectFilesPhoto(event) {
   // }
 
   //  login  //
+
+  //  city dropdown start here  //
+  AllCity: CityMasterList[] = [];
+  noMatchFound: boolean = false;
+  selectedCity: CityMasterList = new CityMasterList()
+  selectList: boolean = false;
+  bindCityDetailsOnDropDown(cityName: string) {
+
+    this.AllCity = [];
+    this.cityDropDownService.getCityDetailsByCityName(cityName).subscribe((res) => {
+      this.AllCity = res;
+      if (this.AllCity.length == 0) {
+        this.noMatchFound = true;
+      }
+      // this.loaderService.isLoading.next(false);
+
+
+    }, (error: HttpErrorResponse) => {
+      alert(error.statusText);
+    });
+  }
+
+  onCityKey(event: any) {
+    if (event.target.value.length == 0) {
+      this.AllCity = [];
+      this.noMatchFound = false;
+    }
+
+    if (!!event.target.value) {
+      if (event.target.value.length > 2) {
+        this.bindCityDetailsOnDropDown(event.target.value);
+      }
+    }
+  }
+  isCountryIndia = false;
+
+  selectCity(city, e) {
+    let country = this.AllCity.find(e => e.vCountryName != "India");
+    if (country) {
+      this.isCountryIndia = true
+      this.customerSignupForm.get('vEmailId')?.setValue(null);
+    } else {
+      this.isCountryIndia = false;
+      this.customerSignupForm.get('vMobileNo')?.setValue(null);
+    }
+    //this.otherCuntryName = this.AllCity.find(e => e.vCountryName != "India");
+    this.selectedCity = city;
+    this.customerSignupForm.get('nCityId')?.setValue(this.selectedCity.CityDetails);
+    this.selectList = false;
+    this.AllCity = [];
+    // this.searchInput.nativeElement.value = '';
+  }
+  selectCityList($event) {
+    $event.stopPropagation();
+    this.selectList = true;
+  }
+
+  showSelectList($event) {
+    $event.stopPropagation();
+    this.selectList = true;
+  }
+  showSelectLists($event) {
+    $event.stopPropagation();
+    this.selectList = true;
+  }
+
+  closeSearch() {
+    this.selectList = false;
+    this.AllCity = [];
+    this.noMatchFound = false;
+  }
+  onFocusOut(event: any) {
+    window.setTimeout(() => {
+      this.closeSearch()
+    }, 500)
+
+  }
+  opentermConditionComponent(){
+    this.router.navigate(['/termsandcondition']);
+  }
+  
+  //  city dropdown end here  //
 }
