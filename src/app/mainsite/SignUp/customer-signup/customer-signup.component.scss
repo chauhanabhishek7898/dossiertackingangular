@@ -1,0 +1,157 @@
+.date-and-mob {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.ma-input-33 {
+  width: 24%;
+  position: relative;
+
+  mat-form-field {
+    width: 100% !important;
+  }
+}
+
+.ma-input-50 {
+  width: 100%;
+
+
+  mat-form-field {
+    width: 100% !important;
+  }
+}
+
+.ma-input-image {
+  width: 33%;
+  border: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 10px;
+  border-radius: 5px;
+  height: 52px;
+  margin-top: 3px;
+  position: relative;
+}
+
+.image-chose {
+  margin-top: -7px;
+}
+
+.img-uplod-btn {
+  padding: 4px 8px;
+  border-radius: 50px;
+  border: 1px solid #6c757d;
+  color: #6c757d;
+}
+
+.log-in-btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .enable-btn-gray {
+    background-color: #1ce1ee;
+    width: 100%;
+    padding: 8px 12px;
+    height: 40px;
+    border-radius: 8px;
+    font-size: 18px;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+
+    &:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.LableChange {
+  position: absolute;
+  font-size: 10px !important;
+  margin-top: -26px;
+  background-color: #fff;
+}
+
+::ng-deep .cdk-overlay-container {
+  z-index: 1000000 !important;
+}
+
+.otp_send {
+  position: absolute;
+  right: 7px;
+  top: 16px;
+
+  button {
+    border: none;
+    padding: 4px;
+    font-size: 10px;
+    border-radius: 50px;
+  }
+}
+
+.send-otp {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.model-header {
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: none;
+
+  button {
+    justify-content: flex-end;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 50%;
+    margin: 3px;
+  }
+
+}
+
+.input-group {
+  width: 30%;
+  margin: 10px 0;
+display: flex;
+justify-content: center;
+align-items: center;
+  input {
+    height: 30px;
+    font-size: 12px;
+    text-align: center;
+    &::placeholder {
+      font-size: 10px;
+    }
+  }
+}
+
+.otp-alrt {
+  color: green;
+}
+
+.number {
+  font-weight: bold;
+}
+
+
+.resend-otp {
+  span {
+    font-size: 11px;
+  }
+
+  button.resend {
+    font-size: 11px;
+    border: none;
+    background: transparent;
+    margin-left: 4px;
+    color: blue;
+  }
+}

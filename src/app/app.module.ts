@@ -21,9 +21,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { CustomerSignupComponent } from './mainsite/SignUp/CustomerSignup/customer-signup/customer-signup.component';
+import { CustomerSignupComponent } from './mainsite/SignUp/customer-signup/customer-signup.component';
 import { DriverSignupComponent } from './mainsite/SignUp/DriverSignup/driver-signup/driver-signup.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { NotificationService } from './core/service/notification.service';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -51,11 +54,19 @@ import { CommonModule } from '@angular/common';
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
+    MatAutocompleteModule,
+    ToastrModule.forRoot(),
   ],
   exports: [TermsandconditionComponent],
-  providers: [BsModalService, HttpClientModule],
+  providers: 
+  [
+    BsModalService, 
+    HttpClientModule,
+    DatePipe,
+    NotificationService
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

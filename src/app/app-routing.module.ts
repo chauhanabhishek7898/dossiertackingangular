@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainContantComponent } from './mainsite/main-contant/main-contant.component';
 import { MainsiteComponent } from './mainsite/mainsite.component';
 import { PrivacyPolicyComponent } from './mainsite/privacy-policy/privacy-policy.component';
-import { CustomerSignupComponent } from './mainsite/SignUp/CustomerSignup/customer-signup/customer-signup.component';
+import { CustomerSignupComponent } from './mainsite/SignUp/customer-signup/customer-signup.component';
 import { DriverSignupComponent } from './mainsite/SignUp/DriverSignup/driver-signup/driver-signup.component';
 import { TermsandconditionComponent } from './mainsite/termsandcondition/termsandcondition.component';
 

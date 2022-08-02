@@ -14,6 +14,9 @@ export class LoginService {
   checkExistsMobileNo(vMobileNo: string, nRoleId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/UserMaster/CheckExistsMobileNo/${vMobileNo}/${nRoleId}`)
 }
+GetOTPMsgSMSVerifyMobile(mobileNumber): Observable<any> {
+    return this.http.get(`${this.apiUrl}/Utility/GetOTPMsgSMSVerifyMobile/${mobileNumber}`)
+}
 
   loginAndGetUserDetailsByvUserNameOrvPassword(
     vUserName: string,
