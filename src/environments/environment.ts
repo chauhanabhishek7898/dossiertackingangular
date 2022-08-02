@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  dromeApiUrl: 'http://localhost:5000/api'
+  dossiarApiUrl: 'http://localhost:5000/api'
 
 };
 

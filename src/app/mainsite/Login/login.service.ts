@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 export class LoginService {
   constructor(private http: HttpClient) {}
 
-  apiUrl = environment.dromeApiUrl;
+  apiUrl = environment.dossiarApiUrl;
 
   checkExistsMobileNo(vMobileNo: string, nRoleId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/UserMaster/CheckExistsMobileNo/${vMobileNo}/${nRoleId}`)
