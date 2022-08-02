@@ -193,7 +193,7 @@ export class MainsiteComponent implements OnInit {
   configcustomersignup: ModalOptions = {
     animated: true,
     backdrop: 'static',
-    class: 'modal-dialog-centered modal-lg',
+    class: 'modal-dialog-centered modal-xl',
   };
 
   config: ModalOptions = {

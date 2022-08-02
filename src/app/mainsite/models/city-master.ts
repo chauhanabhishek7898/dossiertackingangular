@@ -9,5 +9,5 @@ export class CityMasterList extends CityMaster {
     vStateName: string;
     vCountryName: string;
     CityDetails: string;
-    CityDetailsState: string;
+    CityStateDetails: string;
 }

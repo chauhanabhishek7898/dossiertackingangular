@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CitymasterService {
   constructor(private http: HttpClient) {}
-  apiUrl = environment.dromeApiUrl;
+  apiUrl = environment.dossiarApiUrl;
 
   getCityDetailsByCityName(vGeneric: string): Observable<any> {
     return this.http.get(
