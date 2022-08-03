@@ -25,7 +25,9 @@ export class DriverMaster {
   vPassword: String;
   vEmailId: String;
   btPromotion: String;
-  btOnDuty: boolean;
   vDiriverCurrentLat: String;
   vDiriverCurrentLong: String;
+}
+export class DriverMasterClass{
+  
 }
