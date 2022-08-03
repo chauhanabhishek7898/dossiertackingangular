@@ -123,7 +123,7 @@
 
 .ma-input-24 {
     width: 24%;
-
+    position: relative;
     mat-form-field {
         width: 100% !important;
     }
@@ -140,6 +140,7 @@
 .date-and-mob {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .example-form {
@@ -336,18 +337,7 @@
     font-size: 10px;
 }
 
-.otp_send {
-    position: absolute;
-    right: 7px;
-    top: 16px;
 
-    button {
-        border: none;
-        padding: 4px;
-        font-size: 10px;
-        border-radius: 50px;
-    }
-}
 
 .send-otp {
     display: flex;
@@ -417,3 +407,15 @@
 ::ng-deep .cdk-overlay-container {
     z-index: 1000000 !important;
 }
+.otp_send {
+    position: absolute;
+    right: 7px;
+    top: 16px;
+  
+    button {
+      border: none;
+      padding: 4px;
+      font-size: 10px;
+      border-radius: 50px;
+    }
+  }
