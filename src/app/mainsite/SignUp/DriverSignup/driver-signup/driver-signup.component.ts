@@ -1,16 +1,38 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/mainsite/Login/login.service';
 import { CityMasterList } from 'src/app/mainsite/models/city-master';
 import { CitymasterService } from 'src/app/services/citymaster.service';
-import { debounceTime, map, startWith, switchMap, tap, finalize, distinctUntilChanged, filter } from 'rxjs/operators';
+import {
+  debounceTime,
+  map,
+  startWith,
+  switchMap,
+  tap,
+  finalize,
+  distinctUntilChanged,
+  filter,
+} from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { OtpSenderApiService } from 'src/app/services/otp-sender-api.service';
 import { DriverSignupService } from '../driver-signup.service';
+import { DriverMaster, DriverMasterClass } from 'src/app/mainsite/models/DriverMaster';
 @Component({
   selector: 'app-driver-signup',
   templateUrl: './driver-signup.component.html',
@@ -25,53 +47,81 @@ export class DriverSignupComponent implements OnInit {
     private cityDropDownService: CitymasterService,
     private modalService: BsModalService,
     private otpSenderApiService: OtpSenderApiService,
-    private driverSignupService:DriverSignupService,
+    private driverSignupService: DriverSignupService,
+    private http: HttpClient
   ) {}
   driverSignupForm: FormGroup;
   apiUrl = environment.dossiarApiUrl;
-  @Input() mobileDisabled:boolean = false;
-  @Input() emailDisabled:boolean = false;
+  @Input() mobileDisabled: boolean = false;
+  @Input() emailDisabled: boolean = false;
   OTPModalTitle: string;
   OTPmodalRef: BsModalRef;
+  maxDate;
 
+  // selectedCity: any = { CityDetailsState: "Gurgaon - Haryana" };
+  selectedCity: any = { CityStateDetails: '' };
+  selectedSpecilization: any = '';
+  cityName1 = 'Gurgaon';
+  cityId: any = null;
+  cityMasterList: CityMasterList[] = [];
+  isLoading = false;
+  searchCityCtrl = new FormControl();
+  errorMsg!: string;
+  minLengthTerm = 3;
+  onSelected() {
+    this.selectedCity = this.selectedCity;
+    this.cityId = this.selectedCity.nCityId;
+    this.cityName1 = this.selectedCity.vCityName;
+  }
+  displayWith(value: any) {
+    return value?.CityStateDetails;
+  }
+
+  clearSelection(e) {
+    if (e.target.value == '') {
+      this.selectedCity = '';
+      this.cityMasterList = [];
+      this.cityId = null;
+    }
+  }
   ngOnInit(): void {
+    this.searchCityCtrl.valueChanges
+      .pipe(
+        filter((res) => {
+          return res !== null && res.length >= this.minLengthTerm;
+        }),
+        distinctUntilChanged(),
+        debounceTime(200),
+        tap(() => {
+          this.errorMsg = '';
+          this.cityMasterList = [];
+          this.isLoading = true;
+        }),
+        switchMap((value) =>
+          this.http
+            .get(
+              `${this.apiUrl}/CityMaster/CityMaster_SelectAll_ActiveLikeSearch/${value}`
+            )
+            .pipe(
+              finalize(() => {
+                this.isLoading = false;
+              })
+            )
+        )
+      )
+      .subscribe((data: any) => {
+        if (data == undefined) {
+          this.errorMsg = 'error';
+          this.cityMasterList = [];
+        } else {
+          this.errorMsg = '';
+          this.cityMasterList = data;
+        }
+        console.log(this.cityMasterList);
+      });
+    this.maxDate = new Date();
 
-
-    
-    // this.searchCityCtrl.valueChanges
-    //   .pipe(
-    //     filter((res) => {
-    //       return res !== null && res.length >= this.minLengthTerm;
-    //     }),
-    //     distinctUntilChanged(),
-    //     debounceTime(200),
-    //     tap(() => {
-    //       this.errorMsg = '';
-    //       this.cityMasterList = [];
-    //       this.isLoading = true;
-    //     }),
-    //     switchMap((value) =>
-    //       this.http
-    //         .get(
-    //           `${this.apiUrl}/CityMaster/CityMaster_SelectAll_ActiveLikeSearch/${value}`
-    //         )
-    //         .pipe(
-    //           finalize(() => {
-    //             this.isLoading = false;
-    //           })
-    //         )
-    //     )
-    //   )
-    //   .subscribe((data: any) => {
-    //     if (data == undefined) {
-    //       this.errorMsg = 'error';
-    //       this.cityMasterList = [];
-    //     } else {
-    //       this.errorMsg = '';
-    //       this.cityMasterList = data;
-    //     }
-    //     console.log(this.cityMasterList);
-    //   });
+   
     this.driverSignupForm = this.formBuilder.group(
       {
         nDriverId: 0,
@@ -132,31 +182,7 @@ export class DriverSignupComponent implements OnInit {
   get createdriverSignupFormControls(): any {
     return this.driverSignupForm.controls;
   }
-  selectedCity: any = { CityDetails: "" };
-  selectedSpecilization: any = "";
-  cityName1 = 'Gurgaon'
-  cityId :any=null
-  cityMasterList: CityMasterList[] = []
-  isLoading = false
-  onSelected() {
-    this.selectedCity = this.selectedCity;
-    this.cityId = this.selectedCity.nCityId;
-    this.cityName1 = this.selectedCity.vCityName
-  }
-  displayWith(value: any) {
-    return value?.CityDetails;
-    
-  }
-  clearSelection(e) {
-    if(e.target.value==''){
-      this.selectedCity = "";
-      this.cityMasterList = [];
-      // console.log('citymasterlist', this.cityMasterList)
-      this.cityId = null
-    }
-  
-    
-}
+
   opentermConditionComponent() {
     this.router.navigate(['/termsandcondition']);
   }
@@ -285,7 +311,7 @@ export class DriverSignupComponent implements OnInit {
   LogoFileName: string;
   LogoSelectedFileBLOB;
   LogoFileNameSlice;
-  ifSelect2=false
+  ifSelect2 = false;
   selectLogoFiles(event) {
     this.file2 = null!!;
     this.LogoFileNameSlice = '';
@@ -328,7 +354,7 @@ export class DriverSignupComponent implements OnInit {
   // upload pan sample code //
 
   // upload license sample code //
-  ifSelect4=false
+  ifSelect4 = false;
   file4: File;
   files4: any;
   LicenseFiles: any;
@@ -370,7 +396,7 @@ export class DriverSignupComponent implements OnInit {
             this.LicenseSelectedFileBLOB =
               this.sanitizer.bypassSecurityTrustUrl(url4);
           };
-          this.ifSelect4=true
+          this.ifSelect4 = true;
         }
       } else {
         alert(`Invalid file format. Please select .JPG or .PDF file formats.`);
@@ -388,7 +414,7 @@ export class DriverSignupComponent implements OnInit {
   fileName5: string;
   selectedFileBLOB5;
   fileNameSlice5;
-  ifSelect5=false
+  ifSelect5 = false;
   // fileFormetValid = false;
   // ifSelect=false
   selectFilesRegistration(event) {
@@ -418,7 +444,8 @@ export class DriverSignupComponent implements OnInit {
           reader.onload = (event: any) => {
             var blob5 = new Blob(this.files5, { type: this.file5.type });
             var url5 = window.URL.createObjectURL(blob5);
-            this.selectedFileBLOB5 = this.sanitizer.bypassSecurityTrustUrl(url5);
+            this.selectedFileBLOB5 =
+              this.sanitizer.bypassSecurityTrustUrl(url5);
           };
           this.ifSelect5 = true;
         }
@@ -441,7 +468,7 @@ export class DriverSignupComponent implements OnInit {
   LogoFileName6: string;
   LogoSelectedFileBLOB6;
   LogoFileNameSlice6;
-  ifSelect6=false
+  ifSelect6 = false;
   selectFilesInsurance(event) {
     this.file6 = null!!;
     this.LogoFileNameSlice6 = '';
@@ -473,7 +500,7 @@ export class DriverSignupComponent implements OnInit {
             this.LogoSelectedFileBLOB6 =
               this.sanitizer.bypassSecurityTrustUrl(url6);
           };
-          this.ifSelect6=true
+          this.ifSelect6 = true;
         }
       } else {
         alert(`Invalid file format. Please select .JPG or .PDF file formats.`);
@@ -484,48 +511,48 @@ export class DriverSignupComponent implements OnInit {
   // upload pan sample code //
 
   // upload license sample code //
-  file7: File;
-  files7: any;
-  LicenseFiles7: any;
-  fileSize7: number;
-  LicenseUrlLink7: string;
-  LicenseFileName7: string;
-  LicenseSelectedFileBLOB7;
+  file3: File;
+  files3: any;
+  LicenseFiles3: any;
+  fileSize3: number;
+  LicenseUrlLink3: string;
+  LicenseFileName3: string;
+  LicenseSelectedFileBLOB3;
   // fileFormetValid = true
-  LicenseFileNameSlice7;
-  ifSelect7=false
+  LicenseFileNameSlice3;
+  ifSelect3 = false;
   selectFilesPhoto(event) {
-    this.file7 = null!!;
-    this.LicenseFileNameSlice7 = '';
-    this.LicenseUrlLink7 = '';
+    this.file3 = null!!;
+    this.LicenseFileNameSlice3 = '';
+    this.LicenseUrlLink3 = '';
     if (event.target.files) {
-      this.files7 = event.target.files;
-      this.file7 = event.target.files[0];
-      console.log(this.file7);
+      this.files3 = event.target.files;
+      this.file3 = event.target.files[0];
+      console.log(this.file3);
       if (
-        this.file7.name.split('.').pop() == 'pdf' ||
-        this.file7.name.split('.').pop() == 'jpg'
+        this.file3.name.split('.').pop() == 'pdf' ||
+        this.file3.name.split('.').pop() == 'jpg'
       ) {
-        if (this.file7.size > 2000000) {
+        if (this.file3.size > 2000000) {
           alert(`Please Select File less than 2 MB`);
-          this.file7 = null!!;
+          this.file3 = null!!;
         } else {
-          this.LicenseFileName7 = this.file7.name;
-          if (this.LicenseFileName7.length > 6) {
-            this.LicenseFileNameSlice7 = this.LicenseFileName7.slice(0, 10);
+          this.LicenseFileName3 = this.file3.name;
+          if (this.LicenseFileName3.length > 6) {
+            this.LicenseFileNameSlice3 = this.LicenseFileName3.slice(0, 10);
           }
           var reader = new FileReader();
-          this.LicenseUrlLink7 = 'false';
+          this.LicenseUrlLink3 = 'false';
           this.fileFormetValid = true;
           reader.readAsDataURL(event.target.files[0]);
           reader.onload = (event: any) => {
             // this.urlLink = event.target.result
-            var blob7 = new Blob(this.files7, { type: this.file7.type });
+            var blob7 = new Blob(this.files3, { type: this.file3.type });
             var url7 = window.URL.createObjectURL(blob7);
-            this.LicenseSelectedFileBLOB7 =
+            this.LicenseSelectedFileBLOB3 =
               this.sanitizer.bypassSecurityTrustUrl(url7);
           };
-          this.ifSelect7=true
+          this.ifSelect3 = true;
         }
       } else {
         alert(`Invalid file format. Please select .JPG or .PDF file formats.`);
@@ -616,46 +643,44 @@ export class DriverSignupComponent implements OnInit {
   //  city dropdown end here  //
 
   //verify mobile no. and email id
-  showMobileOtpBtn: boolean = false
-  showEmailOtpBtn: boolean = false
+  showMobileOtpBtn: boolean = false;
+  showEmailOtpBtn: boolean = false;
   MobileIconVerified = false;
   emailIconVerified = false;
   mobileVerified = false;
-  mobileNo
-  emailId
-  onMobileNo =false
-  onEmail=false
+  mobileNo;
+  emailId;
+  onMobileNo = false;
+  onEmail = false;
   showSendOtp(event: any, type) {
-    this.showMobileOtpBtn = false
-    this.showEmailOtpBtn = false
+    this.showMobileOtpBtn = false;
+    this.showEmailOtpBtn = false;
     if (type == 'mobile') {
       if (event.target.value.length < 10) {
         this.showMobileOtpBtn = false;
         this.mobileVerified = false;
-        this.onEmail=false;
-        this.onMobileNo =true;
+        this.onEmail = false;
+        this.onMobileNo = true;
         this.isSubmitDisable = false;
       }
       if (!!event.target.value) {
         if (event.target.value.length > 9) {
-          this.showMobileOtpBtn = true
-          this.mobileNo=event.target.value;
-          
+          this.showMobileOtpBtn = true;
+          this.mobileNo = event.target.value;
         }
       }
     }
     if (type == 'email') {
-      this.emailId=event.target.value;
+      this.emailId = event.target.value;
       if (event.target.value.length <= 5) {
         this.showEmailOtpBtn = false;
         this.mobileVerified = false;
-        this.onEmail=true;
-        this.onMobileNo =false;
-        
+        this.onEmail = true;
+        this.onMobileNo = false;
       }
       if (!!event.target.value) {
         if (event.target.value.length >= 5) {
-          this.showEmailOtpBtn = true
+          this.showEmailOtpBtn = true;
         }
       }
     }
@@ -668,23 +693,23 @@ export class DriverSignupComponent implements OnInit {
   };
   openSendOtpForm(template: TemplateRef<any>) {
     this.OTPmodalRef = this.modalService.show(template, this.OTPconfig);
-    this.OTPModalTitle = "Enter OTP"
-  //   this.OTPmodalRef.onHide.subscribe(() => {
-  //     // this.timerOn= false;
-  //  });
+    this.OTPModalTitle = 'Enter OTP';
+    //   this.OTPmodalRef.onHide.subscribe(() => {
+    //     // this.timerOn= false;
+    //  });
     this.sendOtp();
     // this.sendOtpToEmail();
   }
   openSendOtpToEmail(template: TemplateRef<any>) {
     this.OTPmodalRef = this.modalService.show(template, this.OTPconfig);
-    this.OTPModalTitle = "Enter OTP"
-  //   this.OTPmodalRef.onHide.subscribe(() => {
-  //     // this.timerOn= false;
-  //  });
+    this.OTPModalTitle = 'Enter OTP';
+    //   this.OTPmodalRef.onHide.subscribe(() => {
+    //     // this.timerOn= false;
+    //  });
     // this.sendOtp();
     this.sendOtpToEmail();
   }
-  emailOtp: string 
+  emailOtp: string;
   mobNumber: string;
   resendOtpBtnDisabled: boolean = true;
   timerOn = true;
@@ -692,42 +717,45 @@ export class DriverSignupComponent implements OnInit {
     // this.loader = true;
     let mobieNumber = this.driverSignupForm.controls.vMobileNo.value;
     this.mobNumber = mobieNumber;
-    this.otpSenderApiService.SendOtpToVerifyMobileNo(mobieNumber).subscribe((res) => {
-      this.otp = res;
-       this.resendOtpBtnDisabled = true;
-      this.timerOn= true;
-      this.otPtimer(60);
-      // setTimeout(() => {
-      //   this.loader = false
-      // }, 300)
-      }, (error: HttpErrorResponse) => {
+    this.otpSenderApiService.SendOtpToVerifyMobileNo(mobieNumber).subscribe(
+      (res) => {
+        this.otp = res;
+        this.resendOtpBtnDisabled = true;
+        this.timerOn = true;
+        this.otPtimer(60);
+        // setTimeout(() => {
+        //   this.loader = false
+        // }, 300)
+      },
+      (error: HttpErrorResponse) => {
         alert(error.statusText);
-    });
-
+      }
+    );
   }
   eMailId: string;
   sendOtpToEmail() {
     // this.loader = true;
     let emailId = this.driverSignupForm.controls.vEmailId.value;
     this.eMailId = emailId;
-    this.otpSenderApiService.GetOTPMsgMailVerifyEmail(emailId).subscribe((res) => {
-      this.otp = res;
-     
-      this.resendOtpBtnDisabled = true;
-      this.timerOn= true;
-      this.otPtimer(60);
-      // setTimeout(() => {
-      //   this.loader = false
-      // }, 300)
-    
-    }, (error: HttpErrorResponse) => {
-      alert(error.statusText);
-    });
+    this.otpSenderApiService.GetOTPMsgMailVerifyEmail(emailId).subscribe(
+      (res) => {
+        this.otp = res;
 
+        this.resendOtpBtnDisabled = true;
+        this.timerOn = true;
+        this.otPtimer(60);
+        // setTimeout(() => {
+        //   this.loader = false
+        // }, 300)
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.statusText);
+      }
+    );
   }
   resendOtpOnMobileNo() {
     // this.loader = true;
-    this.sendOtp()
+    this.sendOtp();
   }
   resendOtpOnEmail() {
     // this.loader = true;
@@ -739,7 +767,7 @@ export class DriverSignupComponent implements OnInit {
     let s = remaining % 60;
     m = m < 10 ? 0 + m : m;
     s = s < 10 ? 0 + s : s;
-    this.countDownTimer = (m * 60) + s + ' second(s)';
+    this.countDownTimer = m * 60 + s + ' second(s)';
     //document.getElementById('timer').innerHTML = m + ':' + s;
     remaining -= 1;
     if (remaining >= 0 && this.timerOn) {
@@ -753,25 +781,24 @@ export class DriverSignupComponent implements OnInit {
       // Do validate stuff here
       return;
     }
-    this.countDownTimer = "";
+    this.countDownTimer = '';
     this.resendOtpBtnDisabled = false;
   }
   isSubmitDisable: boolean;
-  otp: string
+  otp: string;
   onKeyUpEvent(event: any) {
     if (event.target.value.length == 4) {
       if (this.otp == event.target.value) {
         this.OTPmodalRef.hide();
         this.MobileIconVerified = true;
-        this.showMobileOtpBtn=false;
-        this.showEmailOtpBtn=false;
+        this.showMobileOtpBtn = false;
+        this.showEmailOtpBtn = false;
         // this.isSubmitDisable = true;
-        this.mobileDisabled =true;
-      }
-      else {
-        alert("OTP not matched");
+        this.mobileDisabled = true;
+      } else {
+        alert('OTP not matched');
         this.isSubmitDisable = false;
-        this.mobileDisabled =false;
+        this.mobileDisabled = false;
         this.MobileIconVerified = false;
       }
     }
@@ -780,172 +807,163 @@ export class DriverSignupComponent implements OnInit {
     if (event.target.value.length == 4) {
       if (this.otp == event.target.value) {
         this.OTPmodalRef.hide();
-        this.showMobileOtpBtn=false;
-        this.showEmailOtpBtn=false;
+        this.showMobileOtpBtn = false;
+        this.showEmailOtpBtn = false;
         // this.isSubmitDisable = true;
-        this.emailDisabled =true;
-        this.emailIconVerified=true;
-      }
-      else {
-        alert("OTP not matched");
+        this.emailDisabled = true;
+        this.emailIconVerified = true;
+      } else {
+        alert('OTP not matched');
         this.isSubmitDisable = false;
-        this.emailDisabled =false;
-        this.emailIconVerified=false;
+        this.emailDisabled = false;
+        this.emailIconVerified = false;
       }
     }
   }
 
-
-
   //  submit  start  //
 
-  // PLDetailsModel: PLDetails
-  // CustomerMasterList: CustomerMasterList[]=[]
-  // onSubmitdriverSignupForm(){
-  //   if(this.Unavailable== true){
-  //     alert("Mobile No. already exists !!")
-  //   }else{
-  //     // this.loader = true;
-  //     let docUploadId;
-  //     let fp1;
-  //     let fp2;
-  //     let fp3;
-  //     let fp4;
-  
-  //     let fz1;
-  //     let fz2;
-  //     let fz3;
-  //     let fz4;
-  
-  //     let fn1;
-  //     let fn2;
-  //     let fn3;
-  //     let fn4;
+  DriverDetailsModel: DriverMaster;
+  DriverDetailsList: DriverMaster[] = [];
+  DriverMasterClass: DriverMasterClass;
+  signUpDrivdedr() {
+    if (this.Unavailable == true) {
+      alert('Mobile No. already exists !!');
+    } else {
+      // this.loader = true;
+      let docUploadId;
+      let fp1;
+      let fp2;
+      let fp3;
+      let fp4;
+      let fp5;
+      let fp6;
 
-  //       docUploadId = 0;
-  //       fp1 = "";
-  //       fp2 = "";
-  //       fp3 = "";
-  //       fp4 = "";
-  
-  //       fz1 = 0;
-  //       fz2 = 0;
-  //       fz3 = 0;
-  //       fz4 = 0;
-  
-  //       fn1 = "";
-  //       fn2 = "";
-  //       fn3 = "";
-  //       fn4 = "";
-  //     // }
-  //     if (this.file1) {
-  //       this.fileSize1 = (this.file1.size / 1024) as number
-  //       fz1 = this.fileSize1;
-  
-  //     }
-  //     if (this.file2) {
-  //       this.fileSize2 = (this.file2.size / 1024) as number
-  //       fz2 = this.fileSize2;
-  
-  //     }
-  //     if (this.file3) {
-  //       // this.fileSize3 = (this.file3.size / 1024) as number
-  //       fz3 = this.fileSize3;
-  
-  //     }
-  //     if (this.file4) {
-  //       this.fileSize4 = (this.file4.size / 1024) as number
-  //       fz4 = this.fileSize4;
-  
-  //     }
-  //     this.CustomerMasterList=[];
-  //     this.PLDetailsModel = {
+      let fz1;
+      let fz2;
+      let fz3;
+      let fz4;
+      let fz5;
+      let fz6;
 
-  //       // nDriverId: Number;
-  //       // nUserId: Number;
-  //       // vDriverId: String;
-  //       // nVId: Number;
-  //       // vGender: String;
-  //       // dtDOB: String;
-  //       // nCityId: Number;
-  //       // vPresentAddress: String;
-  //       // vPermanentAddress: String;
-  //       // vAlternateNo: String;
-  //       // vLicenseNo: String;
-  //       // vLicenseNoFilePath: String;
-  //       // vAadhaarNo: String;
-  //       // vAadhaarNoFilePath: String;
-  //       // vPANNo: String;
-  //       // vPANNoFilePath: String;
-  //       // vVehicleRegistrationNo: String;
-  //       // vVehicleRegistrationNoFilePath: String;
-  //       // vVehicleInsuranceFilePath: String;
-  //       // vPhotoFilePath: String;
-  //       // vAnyOtherRemarks: String;
-  //       // vFullName: String;
-  //       // vMobileNo: String;
-  //       // vPassword: String;
-  //       // vEmailId: String;
-  //       // btPromotion: String;
-  //       // btOnDuty: boolean;
-  //       // vDiriverCurrentLat: String;
-  //       // vDiriverCurrentLong: String;
+      let fn1;
+      let fn2;
+      let fn3;
+      let fn4;
+      let fn5;
+      let fn6;
 
+      docUploadId = 0;
+      fp1 = '';
+      fp2 = '';
+      fp3 = '';
+      fp4 = '';
+      fp5 = '';
+      fp6 = '';
 
-  //       nEId: this.driverSignupForm.controls.nEId.value == null ? 0:this.driverSignupForm.controls.nEId.value,
-  //       // vEId: this.driverSignupForm.controls.vEId.value,
-  //       // vEType: this.pharmacyAndLabDiagnostics,
-  //       vEstablishmentName: this.driverSignupForm.controls.vEstablishmentName.value,
-  //       vContactPersonOwner: this.driverSignupForm.controls.vContactPersonOwner.value,
-  //       vCPDesignation: this.driverSignupForm.controls.vCPDesignation.value,
-  //       vCPMobileNo: this.driverSignupForm.controls.vCPMobileNo.value,
-  //       vAddress: this.driverSignupForm.controls.vAddress.value,
-  //       vLocation: this.driverSignupForm.controls.vLocation.value,
-  //       nCityId: this.selectedCity.nCityId,
-  //       vPinCode: this.driverSignupForm.controls.vPinCode.value,
-  //       vContactNo: this.driverSignupForm.controls.vContactNo.value,
-  //       vWhatsUpNo: this.driverSignupForm.controls.vWhatsUpNo.value,
-  //       vEmailId: this.driverSignupForm.controls.vEmailId.value,
-  //       vWebsiteLink: this.driverSignupForm.controls.vWebsiteLink.value,
-  //       vTaxDetails: this.driverSignupForm.controls.vTaxDetails.value, 
-  //       vAuthorizedSignatory: this.driverSignupForm.controls.vAuthorizedSignatory.value,
-  //       vAuthorizedSignatoryFilePath: fp1,
-  //       vLogoFilePath: fp2,
-  //       vShopPhotoFilePath: fp3,
-  //       nShopPhotoFileSizeInKB:fz3,
-  //       // btActive: this.driverSignupForm.controls.btActive.value,
-  //       vLicenseNo: this.driverSignupForm.controls.vLicenseNo.value,
-  //       vLicenseNoFilePath: fp4,
-  //       vPassword: this.driverSignupForm.controls.vPassword.value,
-  //       vUserName: this.driverSignupForm.controls.vUserName.value,
-  //       btPromotion: this.driverSignupForm.controls.btPromotion.value,
-  //     };
-  //     // this.driverMasterList.push(this.driverModel)
-  //     // this.driverModel = {
-  //     //   CustomerMaster : this.CustomerMasterList
-  //     // }
-  //     // this.driverSignupService.PostPLDetails(this.PLDetailsSave, this.file1, this.file2 ,this.file3,this.fileSize3, this.file4)
-  //     // .subscribe((status: any) => {
-  //     //   if (status) {
-  //     //     console.log("status",status)
-  //     //     // this.loader=false;
-  //     //     // this.apiStatus = `Your ${status[0].vEType} Establishment Registration - ${status[0].vEstablishmentName}, with Drome is Successfully done, with Reg. Code: ${status[0].vEId}. Also, you have successfully registered with Drome for ${status[0].RoleType} login, with Member Code: ${status[0].MemberCode}. Though, Approval awaited from APP Administrator.`;
-  //     //     // this.notifier.showSuccess(this.apiStatus);
-  //     //     // this.success = true;
-  //     //     // this.redirectAfterClose= 'login';
-  //     //     // this.parentChildCommunicationService.emitChange({ redirectAfterClose:this.redirectAfterClose });
-  //     //     // this.resetSelectedData();
-  //     //     this.driverSignupForm.reset();
-  //     //     // setTimeout(() => {
-  //     //     //   this.loader = false
-  //     //     // }, 300)
-  //     //   } 
-  //     // }, (error: HttpErrorResponse) => {
-  //     //   alert(error.statusText)
-  //     // });
-  //   }
+      fz1 = 0;
+      fz2 = 0;
+      fz4 = 0;
+      fz5 = 0;
+      fz6 = 0;
+      fz3 = 0;
+
+      fn1 = '';
+      fn2 = '';
+      fn3 = '';
+      fn4 = '';
+      fn5 = '';
+      fn6 = '';
+      // }
+      if (this.file) {
+        this.fileSize = (this.file.size / 1024) as number
+        fz1 = this.fileSize;
+
+      }
+      if (this.file2) {
+        this.fileSize2 = (this.file2.size / 1024) as number
+        fz2 = this.fileSize2;
+
+      }
+      if (this.file3) {
+        // this.fileSize3 = (this.file3.size / 1024) as number
+        fz3 = this.fileSize3;
+
+      }
+      if (this.file4) {
+        this.fileSize4 = (this.file4.size / 1024) as number
+        fz4 = this.fileSize4;
+
+      }
+      if (this.file5) {
+        // this.fileSize3 = (this.file3.size / 1024) as number
+        fz5 = this.fileSize5;
+
+      }
+      if (this.file6) {
+        this.fileSize6 = (this.file6.size / 1024) as number
+        fz6 = this.fileSize6;
+      }
     
-  // };
+      this.DriverDetailsList = [];
+      this.DriverDetailsModel = {
+        nDriverId: this.driverSignupForm.controls.nEId.value == null
+              ? 0
+              : this.driverSignupForm.controls.nEId.value,
+        nUserId:this.driverSignupForm.controls.vEId.value,
+        vDriverId: this.driverSignupForm.controls.vEId.value,
+        nVId:this.driverSignupForm.controls.vEId.value,
+        vGender:this.driverSignupForm.controls.vEId.value,
+        dtDOB:this.driverSignupForm.controls.vEId.value,
+        nCityId: this.driverSignupForm.controls.vEId.value,
+        vPresentAddress: this.driverSignupForm.controls.vEId.value,
+        vPermanentAddress: this.driverSignupForm.controls.vEId.value,
+        vAlternateNo:this.driverSignupForm.controls.vEId.value,
+        vLicenseNo: this.driverSignupForm.controls.vEId.value,
+        vLicenseNoFilePath: this.driverSignupForm.controls.vEId.value,
+        vAadhaarNo: this.driverSignupForm.controls.vEId.value,
+        vAadhaarNoFilePath: this.driverSignupForm.controls.vEId.value,
+        vPANNo: this.driverSignupForm.controls.vEId.value,
+        vPANNoFilePath:this.driverSignupForm.controls.vEId.value,
+        vVehicleRegistrationNo: this.driverSignupForm.controls.vEId.value,
+        vVehicleRegistrationNoFilePath: this.driverSignupForm.controls.vEId.value,
+        vVehicleInsuranceFilePath: this.driverSignupForm.controls.vEId.value,
+        vPhotoFilePath: this.driverSignupForm.controls.vEId.value,
+        vAnyOtherRemarks:this.driverSignupForm.controls.vEId.value,
+        vFullName:this.driverSignupForm.controls.vEId.value,
+        vMobileNo: this.driverSignupForm.controls.vEId.value,
+        vPassword: this.driverSignupForm.controls.vEId.value,
+        vEmailId: this.driverSignupForm.controls.vEId.value,
+        btPromotion: this.driverSignupForm.controls.vEId.value,
+        vDiriverCurrentLat: this.driverSignupForm.controls.vEId.value,
+        vDiriverCurrentLong: this.driverSignupForm.controls.vEId.value,
+      };
+      this.DriverDetailsList.push(this.DriverDetailsModel)
+      this.DriverMasterClass = {
+        DriverMaster : this.DriverDetailsList
+      }
+    
+      // this.driverSignupService.PostPLDetails(this.PLDetailsSave, this.file1, this.file2 ,this.file3,this.fileSize3, this.file4)
+      // .subscribe((status: any) => {
+      //   if (status) {
+      //     console.log("status",status)
+      //     // this.loader=false;
+      //     // this.apiStatus = `Your ${status[0].vEType} Establishment Registration - ${status[0].vEstablishmentName}, with Drome is Successfully done, with Reg. Code: ${status[0].vEId}. Also, you have successfully registered with Drome for ${status[0].RoleType} login, with Member Code: ${status[0].MemberCode}. Though, Approval awaited from APP Administrator.`;
+      //     // this.notifier.showSuccess(this.apiStatus);
+      //     // this.success = true;
+      //     // this.redirectAfterClose= 'login';
+      //     // this.parentChildCommunicationService.emitChange({ redirectAfterClose:this.redirectAfterClose });
+      //     // this.resetSelectedData();
+      //     this.driverSignupForm.reset();
+      //     // setTimeout(() => {
+      //     //   this.loader = false
+      //     // }, 300)
+      //   }
+      // }, (error: HttpErrorResponse) => {
+      //   alert(error.statusText)
+      // });
+    }
+  }
 
   //  submit  end  //
 }

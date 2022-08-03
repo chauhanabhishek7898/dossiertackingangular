@@ -6,14 +6,14 @@
 
             <div class="ma-input-33">
                 <mat-form-field style="width: 100%;" appearance="outline">
-                    <mat-label>Full Name</mat-label>
+                    <mat-label>Full Name <span style="color: red;">*</span></mat-label>
                     <input formControlName="vFullName" matInput placeholder="Enter Full Name" type="text">
                 </mat-form-field>
             </div>
 
             <div class="ma-input-33">
                 <mat-form-field appearance="outline">
-                    <mat-label>DOB</mat-label>
+                    <mat-label>DOB <span style="color: red;">*</span></mat-label>
                     <input formControlName="dtDOB" mask="d0-M0-0000" [max]="maxDate" matInput [matDatepicker]="picker1"
                         placeholder="Enter DOB">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -22,27 +22,26 @@
             </div>
             <div class="ma-input-33">
                 <mat-form-field appearance="outline">
-                    <mat-label>Gender</mat-label>
-                    <select formControlName="vGender" matNativeControl required>
-                        <option [ngValue]="null" [disabled]="true">Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Others">Others</option>
-                        <option value="audi">Prefer not to say</option>
-                    </select>
+                    <mat-label>Gender <span style="color: red;">*</span></mat-label>
+                    <mat-select formControlName="vGender">
+                        <mat-option [ngValue]="null" [disabled]="true">Select Gender</mat-option>
+                        <mat-option value="Male">Male</mat-option>
+                        <mat-option value="Female">Female</mat-option>
+                        <mat-option value="Others">Others</mat-option>
+                        <mat-option value="Prefer not to say">Prefer not to say</mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
             <div class="ma-input-33">
                 <mat-form-field style="width: 100%;" appearance="outline">
-                    <mat-label>Aadhar No.</mat-label>
+                    <mat-label>Aadhar No. <span style="color: red;">*</span></mat-label>
                     <input formControlName="vAadhaarNo" style="width: 80%;" matInput placeholder="Enter Aadhar No.">
                 </mat-form-field>
             </div>
             <div class="ma-input-image">
                 <mat-label [ngClass]="{'LableChange': ifSelect}"
                     style="color: #6c757d;font-weight: 300;font-size: 13px;">Upload Aadhar
-                    File
-                </mat-label>
+                    File <span style="color: red;">*</span></mat-label>
                 <div class="aadhar-file">
                     <div class="file-name" *ngIf="urlLink !='false'" style="font-size: 10px;">
                         <a title={{fileName}} [attr.href]="urlLink" target="_blank">{{fileNameSlice
@@ -65,7 +64,7 @@
             <div class="ma-input-33" style="width: 40.2%;">
 
                 <mat-form-field style="width: 100%;" appearance="outline">
-                    <mat-label>Select City</mat-label>
+                    <mat-label>Select City <span style="color: red;">*</span></mat-label>
                     <input id="txtcitySearch" matInput [(ngModel)]="selectedCity"
                         [matAutocomplete]="auto" [formControl]="searchCityCtrl" (keyup)="clearSelection($event)">
                     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelected()"
@@ -83,14 +82,14 @@
             <div class="ma-input-33">
 
                 <mat-form-field style="width: 100%;" appearance="outline">
-                    <mat-label>Flat No.</mat-label>
+                    <mat-label>Flat No. <span style="color: red;">*</span></mat-label>
                     <input formControlName="vFlatNoPlotNoLaneBuilding" matInput placeholder="Enter Flat No."
                         type="text">
                 </mat-form-field>
             </div>
             <div class="ma-input-33" style="width: 100%;">
                 <mat-form-field style="width: 100%;" appearance="outline">
-                    <mat-label>Address</mat-label>
+                    <mat-label>Address <span style="color: red;">*</span></mat-label>
                     <input formControlName="vAddress" matInput placeholder="Enter Address" type="text">
                 </mat-form-field>
             </div>
@@ -98,7 +97,7 @@
         <div class="date-and-mob">
             <div class="ma-input-33">
                 <mat-form-field style="width: 100%;" appearance="outline">
-                    <mat-label>Mobile Number</mat-label>
+                    <mat-label>Mobile Number <span style="color: red;">*</span></mat-label>
                     <input (keyup)="onUserNameKeyUpEvent($event)" #searchInput matInput formControlName="vMobileNo"
                         placeholder="Enter Mobile Number" type="number" [readonly]="mobileDisable">
                 </mat-form-field>
@@ -108,7 +107,7 @@
             </div>
             <div class="ma-input-33">
                 <mat-form-field style="width: 100%;" appearance="outline">
-                    <mat-label>Email Id</mat-label>
+                    <mat-label>Email Id <span style="color: red;">*</span></mat-label>
                     <input formControlName="vEmailId" matInput placeholder="Enter Email Id" type="text" (keyup)="emailvalidate($event)" [readonly]="emailDisable">
                 </mat-form-field>
                 <span class="otp_send" *ngIf="emailOtpVerify" >
@@ -117,7 +116,7 @@
             </div>
             <div class="ma-input-33">
                 <mat-form-field style="width: 100%;" appearance="outline">
-                    <mat-label>Password</mat-label>
+                    <mat-label>Password <span style="color: red;">*</span></mat-label>
                     <input formControlName="vPassword" style="width: 80%;" matInput placeholder="Enter Password"
                         type="{{pass3}}">
                     <mat-icon (click)="eyeIconPasswordSignInCustomer('show')" *ngIf="eye3" matSuffix>visibility
@@ -128,7 +127,7 @@
             </div>
             <div class="ma-input-33" >
                 <mat-form-field style="width: 100%;" appearance="outline">
-                    <mat-label>Confirm Password</mat-label>
+                    <mat-label>Confirm Password <span style="color: red;">*</span></mat-label>
                     <input formControlName="vConfirmPassword" style="width: 80%;" matInput
                         placeholder="Enter Confirm Password" type="{{pass4}}">
                     <mat-icon (click)="eyeIconConfirmPasswordSignInCustomer('show')" *ngIf="eye4" matSuffix>visibility
