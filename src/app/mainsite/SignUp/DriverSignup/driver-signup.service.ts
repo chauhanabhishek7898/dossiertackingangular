@@ -13,16 +13,24 @@ export class DriverSignupService {
   }
   apiUrl = environment.dossiarApiUrl;
 
-  PostPLDetails(PharmacyDetails: object, file1: File,file2: File, file3: File,fileSize,file4: File): Observable<any> {
+  DriverMaster(DriverMasterSave: object, file1: File,file2: File, file3: File,file4: File,file5: File,file6: File): Observable<any> {
     // if(FormType == "Submit"){
+      console.log('file1',file1)
+      console.log('file2',file2)
+      console.log('file3',file3)
+      console.log('file4',file4)
+      console.log('file5',file5)
+      console.log('file6',file6)
       const formDataAdd = new FormData();
-      formDataAdd.append("AuthorizedSignatoryFile", file1);
-      formDataAdd.append("LogoFile", file2);
-      formDataAdd.append("ShopPhotoFile", file3);
-      formDataAdd.append("fileSize", fileSize);
+      formDataAdd.append("AadharNoFile", file1);
+      formDataAdd.append("PANNoFile", file2);
+      formDataAdd.append("DriverPhotoFile", file3);
       formDataAdd.append("LicenseFile", file4);
-      formDataAdd.append("PLDetails", JSON.stringify(PharmacyDetails));
-      return this.http.post(`${this.apiUrl}/Open`, formDataAdd);
+      formDataAdd.append("VehicleRegFile", file5);
+      formDataAdd.append("VehicleInsuranceFile", file6);
+     
+      formDataAdd.append("DriverMaster", JSON.stringify(DriverMasterSave));
+      return this.http.post(`${this.apiUrl}/DriverMaster`, formDataAdd);
   }
   
 }
