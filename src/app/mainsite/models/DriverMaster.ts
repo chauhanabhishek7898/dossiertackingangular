@@ -1,7 +1,6 @@
 export class DriverMaster {
   nDriverId: Number;
-  nUserId: Number;
-  vDriverId: String;
+  // vDriverId: String;
   nVId: Number;
   vGender: String;
   dtDOB: String;
@@ -19,15 +18,12 @@ export class DriverMaster {
   vVehicleRegistrationNoFilePath: String;
   vVehicleInsuranceFilePath: String;
   vPhotoFilePath: String;
-  vAnyOtherRemarks: String;
   vFullName: String;
   vMobileNo: String;
   vPassword: String;
   vEmailId: String;
   btPromotion: String;
-  vDiriverCurrentLat: String;
-  vDiriverCurrentLong: String;
 }
 export class DriverMasterClass{
-  
+  DriverMaster:DriverMaster[]
 }
