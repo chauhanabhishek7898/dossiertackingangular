@@ -1,9 +1,6 @@
 <form [formGroup]="customerSignupForm">
     <div>
         <div class="date-and-mob">
-
-            
-
             <div class="ma-input-33">
                 <mat-form-field style="width: 100%;" appearance="outline">
                     <mat-label>Full Name <span style="color: red;">*</span></mat-label>
@@ -66,7 +63,7 @@
                 <mat-form-field style="width: 100%;" appearance="outline">
                     <mat-label>Select City <span style="color: red;">*</span></mat-label>
                     <input id="txtcitySearch" matInput [(ngModel)]="selectedCity"
-                        [matAutocomplete]="auto" [formControl]="searchCityCtrl" (keyup)="clearSelection($event)">
+                        [matAutocomplete]="auto"  [formControl]="searchCityCtrl" (keyup)="clearSelection($event)">
                     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelected()"
                         [displayWith]="displayWith">
                         <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
@@ -99,8 +96,14 @@
                 <mat-form-field style="width: 100%;" appearance="outline">
                     <mat-label>Mobile Number <span style="color: red;">*</span></mat-label>
                     <input (keyup)="onUserNameKeyUpEvent($event)" #searchInput matInput formControlName="vMobileNo"
-                        placeholder="Enter Mobile Number" type="text" [readonly]="mobileDisable">
+                        placeholder="Enter Mobile Number" maxlength="10" type="text" [readonly]="mobileDisable">
                 </mat-form-field>
+                <div class="available" *ngIf="available">
+                    <span>Mobile number is available.</span>
+                </div>
+                <div class="available" style="color: red;" *ngIf="Unavailable">
+                    <span>Mobile number is already exist.</span>
+                </div>
                 <span class="otp_send" *ngIf="otpVerify">
                     <button (click)="sendOtpMobileModel(templateOTPForm)">Send OTP</button>
                 </span>
@@ -150,11 +153,25 @@
             </div>
         </div>
     </div>
-    <div class="log-in-btn">
-        <button class="enable-btn-gray" (click)="submitCustomerSignup()" [disabled]="customerSignupForm.invalid" type="button">
-            Signup
-        </button>
+
+    <div class="submit" >
+        <div class="btnLoader" *ngIf="btnLoader">
+            <div class="lds-ring">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div class="log-in-btn">
+            <button class="enable-btn-gray" (click)="submitCustomerSignup()" [disabled]="customerSignupForm.invalid " type="button">
+                Signup
+            </button>
+        </div>
     </div>
+
+   
+
 </form>
 <ng-template #templateOTPForm>
     <form>

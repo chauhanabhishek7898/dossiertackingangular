@@ -300,6 +300,12 @@
                     <input (keyup)="onUserNameKeyUpEvent($event)" #searchInput matInput formControlName="vMobileNo"
                         placeholder="Enter Mobile Number" type="number" [readonly]="mobileDisable">
                 </mat-form-field>
+                <div class="available" *ngIf="available">
+                    <span>available</span>
+                </div>
+                <div class="available" style="background: red;" *ngIf="Unavailable">
+                    <span>Already Taken</span>
+                </div>
                 <span class="otp_send" *ngIf="otpVerify">
                     <button (click)="sendOtpMobileModel(templateOTPForm)">Send OTP</button>
                 </span>
@@ -309,6 +315,12 @@
                     <mat-label>Email Id <span style="color: red;">*</span></mat-label>
                     <input formControlName="vEmailId" matInput placeholder="Enter Email Id" type="text" (keyup)="emailvalidate($event)" [readonly]="emailDisable">
                 </mat-form-field>
+                <div class="available" *ngIf="available">
+                    <span>Mobile number is available.</span>
+                </div>
+                <div class="available" style="color: red;" *ngIf="Unavailable">
+                    <span>Mobile number is already exist.</span>
+                </div>
                 <span class="otp_send" *ngIf="emailOtpVerify" >
                     <button (click)="sendOtpEmailModel(templateOTPForm)">Send OTP</button>
                 </span>
@@ -366,6 +378,20 @@
             Signup
         </button>
     </div>
+    <!-- <div class="submit" *ngIf="mobileVerified">
+        <div class="btnLoader" *ngIf="btnLoader">
+            <div class="lds-ring">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+         
+   
+    </div> -->
+
+   
 </form>
 
 <ng-template #templateOTPForm>

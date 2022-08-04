@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  Input,
   OnInit,
   TemplateRef,
   ViewChild,
@@ -78,10 +79,17 @@ export const MY_FORMATS = {
 export class CustomerSignupComponent implements OnInit {
   maxDate = new Date();
   customerSignupForm: FormGroup;
-  searchCityCtrl = new FormControl();
   errorMsg!: string;
   minLengthTerm = 3;
   apiUrl = environment.dossiarApiUrl;
+  mobileVerified = false;
+  emailVerified = false;
+  searchCityCtrl = new FormControl(Validators.required);
+  btnLoader = false;
+  available: boolean = false;
+  Unavailable: boolean = false;
+  @Input()
+  maxlength: string | number | null;
   constructor(
     private loginService: LoginService,
     private formBuilder: FormBuilder,
@@ -165,7 +173,7 @@ export class CustomerSignupComponent implements OnInit {
         vAddress: [null, [Validators.required]],
         vGender: [null, [Validators.required]],
         vAadhaarNo: [null, [Validators.required]],
-        vAadhaarNoFilePath: [null], // one file (adhar file)  //
+        vAadhaarNoFilePath: [null, [Validators.required]], // one file (adhar file)  //
         vFlatNoPlotNoLaneBuilding: [null, [Validators.required]],
         dTermCondition: [false],
       },
@@ -178,79 +186,92 @@ export class CustomerSignupComponent implements OnInit {
   listCustomer: CustomerMaster[] = [];
   CustomerMasterClass: CustomerMasterClass;
   //  signup customer  //
+
   submitCustomerSignup() {
-    // this.btnLoader = true
-    this.listCustomer = [];
+    this.btnLoader = true;
+    // console.log(this.mobileVerified);
+    // console.log(this.emailVerified);
+    if (!this.cityId) {
+      alert('please Select City');
+    } else {
+      if (this.mobileVerified == false || this.emailVerified == false) {
+        alert('Please Verify Both Fields');
+      } else {
+        this.btnLoader = true;
+        this.listCustomer = [];
 
-    let docUploadId;
-    let fp;
-    let fz;
-    let fn;
-    docUploadId = 0;
-    fp = '';
-    fz = 0;
-    fn = '';
+        let docUploadId;
+        let fp;
+        let fz;
+        let fn;
+        docUploadId = 0;
+        fp = '';
+        fz = 0;
+        fn = '';
 
-    if (this.file) {
-      this.fileSize = (this.file.size / 1024) as number;
-    }
-
-    this.addCustomerUserModel = {
-      nCId: 0,
-      // vCId: this.customerSignupForm.controls.vCId.value,
-      // nUserId: 0,
-      vGender: this.customerSignupForm.controls.vGender.value,
-      dtDOB: parseDateToString(this.customerSignupForm.controls.dtDOB.value),
-      vAadhaarNo: this.customerSignupForm.controls.vAadhaarNo.value,
-      vAadhaarNoFilePath: '',
-      vFullName: this.customerSignupForm.controls.vFullName.value,
-      vMobileNo: this.customerSignupForm.controls.vMobileNo.value,
-      vPassword: this.customerSignupForm.controls.vPassword.value,
-      vEmailId: this.customerSignupForm.controls.vEmailId.value,
-      btPromotion: true,
-      nCityId: this.cityId,
-      vAddress: this.customerSignupForm.controls.vAddress.value,
-      vFlatNoPlotNoLaneBuilding:
-        this.customerSignupForm.controls.vFlatNoPlotNoLaneBuilding.value,
-    };
-
-    this.listCustomer.push(this.addCustomerUserModel);
-    //   CustomerMasterClass
-    this.CustomerMasterClass = {
-      CustomerMaster: this.listCustomer,
-    };
-    console.log('CustomerMasterClass', this.CustomerMasterClass);
-
-    console.log('this.file', this.file);
-    this.customerSignupService
-      .PostCreateUserCustomer(this.CustomerMasterClass, this.file)
-      .subscribe(
-        (status: any) => {
-          // this.apiStatus = `Congratulations, User has been created successfully with member Code:  ${status[0].MemberCode}. You may further use it to login in the APP.
-          // Though, it has to be approved by the APP Administrator before logging in. Thanks, for your kind patience.`;
-          if (status) {
-            console.log('status', status);
-            // this.success = true;
-            // this.isOtp = false;
-          }
-          // setTimeout(() => {
-          //   this.btnLoader = false
-          // }, 300)
-        },
-        (error: HttpErrorResponse) => {
-          console.log('error', error);
-          // this.apiError = error.statusText
-          // this.error = true
-          // setTimeout(() => {
-          //   this.error = false
-          // }, 3000)
+        if (this.file) {
+          this.fileSize = (this.file.size / 1024) as number;
         }
-      );
+
+        this.addCustomerUserModel = {
+          nCId: 0,
+          // vCId: this.customerSignupForm.controls.vCId.value,
+          // nUserId: 0,
+          vGender: this.customerSignupForm.controls.vGender.value,
+          dtDOB: parseDateToString(
+            this.customerSignupForm.controls.dtDOB.value
+          ),
+          vAadhaarNo: this.customerSignupForm.controls.vAadhaarNo.value,
+          vAadhaarNoFilePath: '',
+          vFullName: this.customerSignupForm.controls.vFullName.value,
+          vMobileNo: this.customerSignupForm.controls.vMobileNo.value,
+          vPassword: this.customerSignupForm.controls.vPassword.value,
+          vEmailId: this.customerSignupForm.controls.vEmailId.value,
+          btPromotion: true,
+          nCityId: this.cityId,
+          vAddress: this.customerSignupForm.controls.vAddress.value,
+          vFlatNoPlotNoLaneBuilding:
+            this.customerSignupForm.controls.vFlatNoPlotNoLaneBuilding.value,
+        };
+
+        this.listCustomer.push(this.addCustomerUserModel);
+        //   CustomerMasterClass
+        this.CustomerMasterClass = {
+          CustomerMaster: this.listCustomer,
+        };
+        console.log('CustomerMasterClass', this.CustomerMasterClass);
+
+        console.log('this.file', this.file);
+        this.customerSignupService
+          .PostCreateUserCustomer(this.CustomerMasterClass, this.file)
+          .subscribe(
+            (status: any) => {
+              // this.apiStatus = `Congratulations, User has been created successfully with member Code:  ${status[0].MemberCode}. You may further use it to login in the APP.
+              // Though, it has to be approved by the APP Administrator before logging in. Thanks, for your kind patience.`;
+              if (status) {
+                console.log('status', status);
+                // this.success = true;
+                // this.isOtp = false;
+              }
+              setTimeout(() => {
+                this.btnLoader = false;
+              }, 300);
+            },
+            (error: HttpErrorResponse) => {
+              console.log('error', error);
+              // this.apiError = error.statusText
+              // this.error = true
+              // setTimeout(() => {
+              //   this.error = false
+              // }, 3000)
+            }
+          );
+      }
+    }
   }
   //  signup customer  //
   mobileNo: string;
-  available: boolean = false;
-  Unavailable: boolean = false;
+
   otpVerify = false;
   emailOtpVerify = false;
   @ViewChild('searchInput') searchInput: ElementRef;
@@ -285,12 +306,17 @@ export class CustomerSignupComponent implements OnInit {
         this.loginService
           .checkExistsMobileNo(this.mobileNo, 3)
           .subscribe((res) => {
+            console.log('res', res);
             if (typeof res != 'string') {
               this.otpVerify = true;
+              this.available = true;
+            } else {
+              this.Unavailable = true;
             }
           });
       } else {
         this.otpVerify = false;
+        this.Unavailable = true;
       }
     }
   }
@@ -403,17 +429,17 @@ export class CustomerSignupComponent implements OnInit {
     backdrop: 'static',
     class: 'modal-dialog-centered modal-md',
   };
-  mobileVerified = false;
-  mobileVerifiedForSubmit = false;
   onKeyUpEventForMobile(event: any) {
     if (event.target.value.length == 4) {
       if (this.otp == event.target.value) {
         this.OTPmodalRef.hide();
         this.mobileDisable = true;
         this.otpVerify = false;
+        this.mobileVerified = true;
       } else {
         this.notifier.showError('OTP not matched');
-        this.mobileDisable = true;
+        this.mobileDisable = false;
+        this.mobileVerified = false;
       }
     }
   }
@@ -423,9 +449,12 @@ export class CustomerSignupComponent implements OnInit {
         this.OTPmodalRef.hide();
         this.emailDisable = true;
         this.emailOtpVerify = false;
+        this.emailVerified = true;
       } else {
         this.notifier.showError('OTP not matched');
-        this.emailDisable = true;
+        this.emailDisable = false;
+
+        this.emailVerified = false;
       }
     }
   }
@@ -458,6 +487,8 @@ export class CustomerSignupComponent implements OnInit {
     }
   }
   sendOtpToMobile() {
+    this.btnLoader = true;
+    this.available = false;
     this.userMobileNo = this.customerSignupForm.controls.vMobileNo.value;
     this.userEmail = '';
     this.customerSignupService
@@ -472,6 +503,7 @@ export class CustomerSignupComponent implements OnInit {
             this.resendOtpBtnDisabled = true;
             this.timerOn = true;
             this.timer(60);
+            this.btnLoader = false;
           }
         },
         (error: HttpErrorResponse) => {
@@ -481,6 +513,8 @@ export class CustomerSignupComponent implements OnInit {
   }
   userEmail;
   sendOtpToEmail() {
+    this.btnLoader = true;
+    this.available = false;
     this.userEmail = this.customerSignupForm.controls.vEmailId.value;
     this.userMobileNo = '';
     this.customerSignupService
@@ -495,6 +529,7 @@ export class CustomerSignupComponent implements OnInit {
             this.resendOtpBtnDisabled = true;
             this.timerOn = true;
             this.timer(60);
+            this.btnLoader = false;
           }
         },
         (error: HttpErrorResponse) => {
