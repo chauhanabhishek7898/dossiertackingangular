@@ -27,6 +27,9 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NotificationService } from './core/service/notification.service';
 import { ToastrModule } from 'ngx-toastr';
+import { ContactUsComponent } from './mainsite/contact-us/contact-us.component';
+import { FaqsComponent } from './mainsite/faqs/faqs.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,8 @@ import { ToastrModule } from 'ngx-toastr';
     TermsandconditionComponent,
     CustomerSignupComponent,
     DriverSignupComponent,
+    ContactUsComponent,
+    FaqsComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +61,7 @@ import { ToastrModule } from 'ngx-toastr';
     MatInputModule,
     MatAutocompleteModule,
     ToastrModule.forRoot(),
+    MatExpansionModule
   ],
   exports: [TermsandconditionComponent],
   providers: 

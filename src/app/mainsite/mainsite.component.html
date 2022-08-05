@@ -7,8 +7,8 @@
                 <div class="right_header">
                     <ul>
                         <li><a routerLink="home">Home</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact Us</a></li>
+                        <!-- <li><a href="#">About Us</a></li> -->
+                        <li><a routerLink="/contact-us">Contact Us</a></li>
                         <li>
                             <div>
                                 <button class="log-in-buton" (click)="openModal(templateLoginMaster)">
@@ -16,26 +16,21 @@
                                 </button>
                             </div>
                         </li>
-                        <li>
-                            <div class="custm-selet">
-                                <!-- <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-                                        <g data-name="Circle bawah">
-                                            <circle cx="12" cy="12" r="10" style="fill:#ccc" />
-                                            <path
-                                                d="M12 15a1 1 0 0 1-.707-.293l-3-3a1 1 0 0 1 1.414-1.414L12 12.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3A1 1 0 0 1 12 15z"
-                                                style="fill:#000" />
-                                        </g>
-                                    </svg>
-                                </span> -->
-                                <select (change)="onchange($event)">
-
-                                    <option [ngValue]="null" [disabled]="true">Signup</option>
-
-                                    <option *ngFor="let item of items" [value]="item.value">{{ item.value }}</option>
-
-                                </select>
-                            </div>
+                        <li style="position: relative;">
+                            <span class="signup_link" (click)="toggle_nav()" *ngIf="!toggle_nav_list" >
+                                Signup
+                            </span>
+                            <span class="signup_link" (click)="toggle_nav()" *ngIf="toggle_nav_list">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-x-lg" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                            </svg>
+                            </span>
+                            <ul class="custm-selet" *ngIf="toggle_nav_list">
+                                <li (click)="openDriverSignup(driversignup)">Driver's Signup</li>
+                                <li (click)="openCstomersignup(customersignup)">Customer's Signup</li>
+                            </ul>
                         </li>
                         <li>
 
@@ -158,36 +153,36 @@
 
     </ng-template>
     <ng-template #driversignup>
-            <div class="modal-container">
-                <div class="model-header">
-                    <div></div>
-                    <div class="close-btn">
-                        <button type="button" class="close pull-right" aria-label="Close"
-                            (click)="modalRefdriversignup.hide()">
-                            <mat-icon>close</mat-icon>
-                        </button>
-                    </div>
-
-                </div>
-                <div class="head-title-driver">
-                    <div class="title-driver">
-                        <h1 style="margin: 0 0 5px;color: #000;" class="modal-title pull-left" mat-dialog-title>
-                            {{modeltitledriversignup}}</h1>
-
-                    </div>
+        <div class="modal-container">
+            <div class="model-header">
+                <div></div>
+                <div class="close-btn">
+                    <button type="button" class="close pull-right" aria-label="Close"
+                        (click)="modalRefdriversignup.hide()">
+                        <mat-icon>close</mat-icon>
+                    </button>
                 </div>
 
-                <div mat-dialog-content>
-                    <div class="model-body">
+            </div>
+            <div class="head-title-driver">
+                <div class="title-driver">
+                    <h1 style="margin: 0 0 5px;color: #000;" class="modal-title pull-left" mat-dialog-title>
+                        {{modeltitledriversignup}}</h1>
 
-                        <app-driver-signup></app-driver-signup>
-                       
-
-
-
-                    </div>
                 </div>
             </div>
+
+            <div mat-dialog-content>
+                <div class="model-body">
+
+                    <app-driver-signup></app-driver-signup>
+
+
+
+
+                </div>
+            </div>
+        </div>
 
     </ng-template>
 
@@ -327,11 +322,11 @@
             <a href="index.html"><b>Dossier</b></a>
         </div>
         <div class="footer_links">
-            <ul>
-                <span>Company</span>
-                <li><a href="">About Us</a></li>
-                <li><a href="">Blog</a></li>
-            </ul>
+            <!-- <ul>
+                    <span>Company</span>
+                    <li><a href="">About Us</a></li>
+                    <li><a href="">Blog</a></li>
+                </ul> -->
             <!-- <ul>
                 <span>Services</span>
                 <li><a href="">Contact Us</a></li>
@@ -341,9 +336,10 @@
             </ul> -->
             <ul>
                 <span>Support</span>
-                <li><a href="">Contact Us</a></li>
+                <li><a routerLink="/contact-us">Contact Us</a></li>
                 <li><a routerLink="/privacypolicy">Privacy policy</a></li>
                 <li><a href="" routerLink="/termsandcondition">Terms and Condition</a></li>
+                <li><a href="" routerLink="/faqs">FAQs</a></li>
             </ul>
             <ul>
                 <li><a href=""><span class="app_image"><img src="../../assets/images/googleplay.png" alt=""></span></a>

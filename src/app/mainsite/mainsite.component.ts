@@ -224,6 +224,18 @@ export class MainsiteComponent implements OnInit {
     // this.timerOn = false;
     this.btnLoader = false;
   }
+  toggle_nav_list:boolean=false
+  toggle_nav(){
+    this.toggle_nav_list= !this.toggle_nav_list
+  }
+  openDriverSignup(template: TemplateRef<any>){
+    this.modalRefdriversignup = this.modalService.show(template, this.configdriversignup);
+    this.modeltitledriversignup="Driver's Signup"
+  }
+  openCstomersignup(template: TemplateRef<any>){
+    this.modalRefcustomersignup = this.modalService.show(template, this.configdriversignup);
+    this.modaltitlecustomersignup="Customer's Signup"
+  }
 
   sendOtp() {
     // this.btnLoader = true;
@@ -462,99 +474,5 @@ export class MainsiteComponent implements OnInit {
     this.router.navigate(['/termsandcondition']);
   }
 
-  // ConfirmedValidator(controlName: string, matchingControlName: string) {
-  //   return (formGroup: FormGroup) => {
-  //     const control = formGroup.controls[controlName];
-  //     const matchingControl = formGroup.controls[matchingControlName];
-  //     if (matchingControl.errors && !matchingControl.errors.confirmedValidator) {
-  //       return;
-  //     }
-  //     if (control.value !== matchingControl.value) {
-  //       matchingControl.setErrors({ confirmedValidator: true });
-  //     } else {
-  //       matchingControl.setErrors(null);
-  //     }
-  //   }
-  // }
-
-  //  login  //
-
-  // //  city dropdown start here  //
-  // AllCity: CityMasterList[] = [];
-  // noMatchFound: boolean = false;
-  // selectedCity: CityMasterList = new CityMasterList()
-  // selectList: boolean = false;
-  // bindCityDetailsOnDropDown(cityName: string) {
-
-  //   this.AllCity = [];
-  //   this.cityDropDownService.getCityDetailsByCityName(cityName).subscribe((res) => {
-  //     this.AllCity = res;
-  //     if (this.AllCity.length == 0) {
-  //       this.noMatchFound = true;
-  //     }
-  //     // this.loaderService.isLoading.next(false);
-
-
-  //   }, (error: HttpErrorResponse) => {
-  //     alert(error.statusText);
-  //   });
-  // }
-
-  // onCityKey(event: any) {
-  //   if (event.target.value.length == 0) {
-  //     this.AllCity = [];
-  //     this.noMatchFound = false;
-  //   }
-
-  //   if (!!event.target.value) {
-  //     if (event.target.value.length > 2) {
-  //       this.bindCityDetailsOnDropDown(event.target.value);
-  //     }
-  //   }
-  // }
-  // isCountryIndia = false;
-
-  // selectCity(city, e) {
-  //   let country = this.AllCity.find(e => e.vCountryName != "India");
-  //   if (country) {
-  //     this.isCountryIndia = true
-  //     this.customerSignupForm.get('vEmailId')?.setValue(null);
-  //   } else {
-  //     this.isCountryIndia = false;
-  //     this.customerSignupForm.get('vMobileNo')?.setValue(null);
-  //   }
-  //   //this.otherCuntryName = this.AllCity.find(e => e.vCountryName != "India");
-  //   this.selectedCity = city;
-  //   this.customerSignupForm.get('nCityId')?.setValue(this.selectedCity.CityDetails);
-  //   this.selectList = false;
-  //   this.AllCity = [];
-  //   // this.searchInput.nativeElement.value = '';
-  // }
-  // selectCityList($event) {
-  //   $event.stopPropagation();
-  //   this.selectList = true;
-  // }
-
-  // showSelectList($event) {
-  //   $event.stopPropagation();
-  //   this.selectList = true;
-  // }
-  // showSelectLists($event) {
-  //   $event.stopPropagation();
-  //   this.selectList = true;
-  // }
-
-  // closeSearch() {
-  //   this.selectList = false;
-  //   this.AllCity = [];
-  //   this.noMatchFound = false;
-  // }
-  // onFocusOut(event: any) {
-  //   window.setTimeout(() => {
-  //     this.closeSearch()
-  //   }, 500)
-
-  // }
-
-  //  city dropdown end here  //
+  
 }
