@@ -124,6 +124,7 @@
 .ma-input-24 {
     width: 24%;
     position: relative;
+
     mat-form-field {
         width: 100% !important;
     }
@@ -407,15 +408,24 @@
 ::ng-deep .cdk-overlay-container {
     z-index: 1000000 !important;
 }
+
 .otp_send {
     position: absolute;
     right: 7px;
     top: 16px;
-  
+
     button {
-      border: none;
-      padding: 4px;
-      font-size: 10px;
-      border-radius: 50px;
+        border: none;
+        padding: 4px;
+        font-size: 10px;
+        border-radius: 50px;
     }
-  }
+}
+
+.available {
+    position: absolute;
+    color: lightgreen;
+    font-size: 10px;
+    bottom: 2px;
+    left: 5px;
+}
