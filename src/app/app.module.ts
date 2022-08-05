@@ -27,6 +27,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NotificationService } from './core/service/notification.service';
 import { ToastrModule } from 'ngx-toastr';
+import { ContactUsComponent } from './mainsite/contact-us/contact-us.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ToastrModule } from 'ngx-toastr';
     TermsandconditionComponent,
     CustomerSignupComponent,
     DriverSignupComponent,
+    ContactUsComponent,
   ],
   imports: [
     BrowserModule,

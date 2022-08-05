@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ContactUsComponent } from './mainsite/contact-us/contact-us.component';
 import { MainContantComponent } from './mainsite/main-contant/main-contant.component';
 import { MainsiteComponent } from './mainsite/mainsite.component';
 import { PrivacyPolicyComponent } from './mainsite/privacy-policy/privacy-policy.component';
@@ -14,7 +15,8 @@ const routes: Routes = [
       {path: 'termsandcondition', component: TermsandconditionComponent},
       {path: 'privacypolicy', component: PrivacyPolicyComponent},
       {path: 'customer-signup', component: CustomerSignupComponent},
-      {path: 'driver-signup', component: DriverSignupComponent}
+      {path: 'driver-signup', component: DriverSignupComponent},
+      {path: 'contact-us', component: ContactUsComponent}
 
     ]
   }

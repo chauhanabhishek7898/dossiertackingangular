@@ -7,8 +7,8 @@
                 <div class="right_header">
                     <ul>
                         <li><a routerLink="home">Home</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact Us</a></li>
+                        <!-- <li><a href="#">About Us</a></li> -->
+                        <li><a routerLink="/contact-us">Contact Us</a></li>
                         <li>
                             <div>
                                 <button class="log-in-buton" (click)="openModal(templateLoginMaster)">
@@ -327,11 +327,11 @@
             <a href="index.html"><b>Dossier</b></a>
         </div>
         <div class="footer_links">
-            <ul>
-                <span>Company</span>
-                <li><a href="">About Us</a></li>
-                <li><a href="">Blog</a></li>
-            </ul>
+                <!-- <ul>
+                    <span>Company</span>
+                    <li><a href="">About Us</a></li>
+                    <li><a href="">Blog</a></li>
+                </ul> -->
             <!-- <ul>
                 <span>Services</span>
                 <li><a href="">Contact Us</a></li>
@@ -341,7 +341,7 @@
             </ul> -->
             <ul>
                 <span>Support</span>
-                <li><a href="">Contact Us</a></li>
+                <li><a routerLink="/contact-us">Contact Us</a></li>
                 <li><a routerLink="/privacypolicy">Privacy policy</a></li>
                 <li><a href="" routerLink="/termsandcondition">Terms and Condition</a></li>
             </ul>

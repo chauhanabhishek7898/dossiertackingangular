@@ -1,0 +1,31 @@
+.contact_us_heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    h1 {
+        font-size: 28px;
+        font-weight: 500;
+    }
+}
+.contact_us_details {
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+    .contact_us_box {
+        box-shadow: 0 0 6px 0 rgb(0 0 0 / 40%);
+        width: 45%;
+        padding: 15px;
+        border-radius: 15px;
+        border-top: 6px solid #40a8d1;
+        min-height: 349px;
+        margin-bottom: 20px;
+        &:nth-child(2){
+            border-top: 6px solid #5bc69d;
+        }
+        h2{
+            margin-bottom: 10px;
+        }
+    }
+}

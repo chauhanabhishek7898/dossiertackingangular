@@ -58,9 +58,10 @@
     background: #98b2ff;
     .section_heading {
         padding-top: 10px;
-        h1 {
+        h2 {
             font-size: 28px;
             text-align: center;
+            font-weight: 500;
         }
     }
     .offer_list {
@@ -92,7 +93,8 @@
                 display: -webkit-flex;
             }
             h3 {
-                font-size: 16px;
+                font-size: 15px;
+                font-weight: 500;
             }
             .offer_details {
                 font-size: 12px;
@@ -135,8 +137,10 @@
             }
         }
         .courier_details .fare p {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
+            color: #003277;
+
         }
         .fare_details ul li {
             font-size: 12px;
@@ -144,16 +148,7 @@
             color: #999898;
             position: relative;
             padding-left: 1.3em;
-            &::before {
-                position: absolute;
-                content: "\f058";
-                font-family: FontAwesome;
-                display: inline-block;
-                margin-left: -1.3em;
-                width: 1.3em;
-                color: green;
-            
-            }
+            list-style-image: url('../../../assets/images/check.png');
 
         }
         .capacity p {
@@ -325,6 +320,7 @@
 .product_deatils h2 {
     font-size: 16px;
     font-weight: 600;
+    margin-bottom: 0;
 }
 
 .product_deatils p {
