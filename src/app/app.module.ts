@@ -28,6 +28,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NotificationService } from './core/service/notification.service';
 import { ToastrModule } from 'ngx-toastr';
 import { ContactUsComponent } from './mainsite/contact-us/contact-us.component';
+import { FaqsComponent } from './mainsite/faqs/faqs.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { ContactUsComponent } from './mainsite/contact-us/contact-us.component';
     CustomerSignupComponent,
     DriverSignupComponent,
     ContactUsComponent,
+    FaqsComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,7 @@ import { ContactUsComponent } from './mainsite/contact-us/contact-us.component';
     MatInputModule,
     MatAutocompleteModule,
     ToastrModule.forRoot(),
+    MatExpansionModule
   ],
   exports: [TermsandconditionComponent],
   providers: 

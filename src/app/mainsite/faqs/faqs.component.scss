@@ -1,0 +1,26 @@
+.faqs_header{
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    h1{
+        font-size: 28px;
+        font-weight: 500;
+    }
+}
+.faqs_list {
+    width: 70%;
+    margin: 0 auto 20px;
+    p{
+        font-size: 12px;
+    }
+    ul{
+        padding-left: 12px;
+        li{
+            list-style: disc;
+            font-size: 12px;
+        }
+    }
+}
+::ng-deep .mat-expansion-panel-header-title{
+    font-weight: 500;
+}
