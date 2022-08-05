@@ -32,12 +32,23 @@ import { environment } from 'src/environments/environment';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { OtpSenderApiService } from 'src/app/services/otp-sender-api.service';
 import { DriverSignupService } from '../driver-signup.service';
-import { DriverMaster, DriverMasterClass } from 'src/app/mainsite/models/DriverMaster';
+import {
+  DriverMaster,
+  DriverMasterClass,
+} from 'src/app/mainsite/models/DriverMaster';
 import { CustomerSignupService } from '../../customer-signup/customer-signup.service';
 import { NotificationService } from 'src/app/core/service/notification.service';
 import * as _moment from 'moment';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
 import { default as _rollupMoment } from 'moment';
 import { DatePipe } from '@angular/common';
 const moment = _rollupMoment || _moment;
@@ -56,9 +67,15 @@ export const MY_FORMATS = {
   selector: 'app-driver-signup',
   templateUrl: './driver-signup.component.html',
   styleUrls: ['./driver-signup.component.scss'],
-  providers: [DatePipe,
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },]
+  providers: [
+    DatePipe,
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
 })
 export class DriverSignupComponent implements OnInit {
   constructor(
@@ -72,7 +89,7 @@ export class DriverSignupComponent implements OnInit {
     private driverSignupService: DriverSignupService,
     private http: HttpClient,
     private customerSignupService: CustomerSignupService,
-    private notifier: NotificationService,
+    private notifier: NotificationService
   ) {}
   driverSignupForm: FormGroup;
   apiUrl = environment.dossiarApiUrl;
@@ -81,6 +98,10 @@ export class DriverSignupComponent implements OnInit {
   OTPModalTitle: string;
   OTPmodalRef: BsModalRef;
   maxDate;
+
+  mobileVerified = false;
+
+  btnLoader = false;
 
   // selectedCity: any = { CityDetailsState: "Gurgaon - Haryana" };
   selectedCity: any = { CityStateDetails: '' };
@@ -145,16 +166,15 @@ export class DriverSignupComponent implements OnInit {
       });
     this.maxDate = new Date();
 
-   
     this.driverSignupForm = this.formBuilder.group(
       {
         nDriverId: 0,
         nUserId: [null],
         vDriverId: [null],
-        nVId: [null],
+        nVId: [null,[Validators.required]],
         vGender: [null, [Validators.required]],
         dtDOB: [null, [Validators.required]],
-        nCityId: [null, [Validators.required]],
+        nCityId: [null],
         vPresentAddress: [null, [Validators.required]],
         vPermanentAddress: [null, [Validators.required]],
         vAlternateNo: [null, [Validators.required]],
@@ -168,18 +188,15 @@ export class DriverSignupComponent implements OnInit {
         vVehicleRegistrationNoFilePath: [null, [Validators.required]], //  fourthfile  //
         vVehicleInsuranceFilePath: [null, [Validators.required]], //  fifth file  //
         vPhotoFilePath: [null, [Validators.required]], //  sixth file  //
-        // vAnyOtherRemarks: [null, [Validators.required]],
         vFullName: [null, [Validators.required]],
         vMobileNo: [null, [Validators.required]],
         vPassword: [null, [Validators.required]],
         vEmailId: [null, [Validators.required]],
-        btPromotion: [false, [Validators.required]],
-        // btOnDuty:[null],
+        btPromotion: [false],
         vDiriverCurrentLat: [null],
         vDiriverCurrentLong: [null],
-
         vConfirmPassword: [null, [Validators.required]],
-        dTermCondition: [false, [Validators.required]],
+        dTermCondition: [null, [Validators.required]],
       },
       {
         validator: this.ConfirmedValidator('vPassword', 'vConfirmPassword'),
@@ -647,13 +664,13 @@ export class DriverSignupComponent implements OnInit {
   showEmailOtpBtn: boolean = false;
   MobileIconVerified = false;
   emailIconVerified = false;
-  mobileVerified = false;
+  // mobileVerified = false;
   mobileNo;
   emailId;
   onMobileNo = false;
   onEmail = false;
-  userMobileNo
-  userEmail
+  userMobileNo;
+  userEmail;
   //send otp model
   OTPconfig: ModalOptions = {
     animated: true,
@@ -662,21 +679,21 @@ export class DriverSignupComponent implements OnInit {
   };
   sendOtpMobileModel(template: TemplateRef<any>) {
     this.timerOn = false;
-    
-    this.userMobileNo = this.driverSignupForm.controls.vMobileNo.value
+
+    this.userMobileNo = this.driverSignupForm.controls.vMobileNo.value;
     if (this.userMobileNo) {
       this.OTPmodalRef = this.modalService.show(template, this.OTPconfig);
-      this.sendOtpToMobile()
-      this.otpVerify = false
+      this.sendOtpToMobile();
+      this.otpVerify = false;
     }
   }
   sendOtpEmailModel(template: TemplateRef<any>) {
     this.timerOn = false;
-    this.userEmail = this.driverSignupForm.controls.vEmailId.value
+    this.userEmail = this.driverSignupForm.controls.vEmailId.value;
     if (this.userEmail) {
       this.OTPmodalRef = this.modalService.show(template, this.OTPconfig);
-      this.sendOtpToEmail()
-      this.emailOtpVerify = false
+      this.sendOtpToEmail();
+      this.emailOtpVerify = false;
     }
   }
 
@@ -687,50 +704,62 @@ export class DriverSignupComponent implements OnInit {
   timerOn = true;
   otp: string;
   resendOtpBtnDisabled: boolean = true;
-  mobileDisable = false
-  emailDisable = false
+  mobileDisable = false;
+  emailDisable = false;
   sendOtpToMobile() {
-    this.userMobileNo = this.driverSignupForm.controls.vMobileNo.value
-    this.userEmail = ''
-    this.customerSignupService.GetOTPMsgSMSVerifyMobile(this.userMobileNo).subscribe((status: string) => {
-      if (status) {
-        this.isOtp = true;
-        this.otp = status
-        this.otpBtnDisable = true;
-        this.resendOtpBtnDisabled = true;
-        this.timerOn = true;
-        this.timer(60);
-
-      }
-    }, (error: HttpErrorResponse) => {
-      this.notifier.showError(error.statusText);
-    })
-
+    this.btnLoader = true;
+    this.available = false;
+    this.userMobileNo = this.driverSignupForm.controls.vMobileNo.value;
+    this.userEmail = '';
+    this.customerSignupService
+      .GetOTPMsgSMSVerifyMobile(this.userMobileNo)
+      .subscribe(
+        (status: string) => {
+          if (status) {
+            this.isOtp = true;
+            this.otp = status;
+            this.otpBtnDisable = true;
+            this.resendOtpBtnDisabled = true;
+            this.timerOn = true;
+            this.timer(60);
+            this.btnLoader = false;
+          }
+        },
+        (error: HttpErrorResponse) => {
+          this.notifier.showError(error.statusText);
+        }
+      );
   }
   sendOtpToEmail() {
-    this.userEmail = this.driverSignupForm.controls.vEmailId.value
-    this.userMobileNo = ''
-    this.customerSignupService.GetOTPMsgMailVerifyEmail(this.userEmail).subscribe((status: string) => {
-      if (status) {
-        this.isOtp = true;
-        this.otp = status
-        this.otpBtnDisable = true;
-        this.resendOtpBtnDisabled = true;
-        this.timerOn = true;
-        this.timer(60);
-
-      }
-    }, (error: HttpErrorResponse) => {
-      this.notifier.showError(error.statusText);
-    })
-
+    this.btnLoader = true;
+    this.available = false;
+    this.userEmail = this.driverSignupForm.controls.vEmailId.value;
+    this.userMobileNo = '';
+    this.customerSignupService
+      .GetOTPMsgMailVerifyEmail(this.userEmail)
+      .subscribe(
+        (status: string) => {
+          if (status) {
+            this.isOtp = true;
+            this.otp = status;
+            this.otpBtnDisable = true;
+            this.resendOtpBtnDisabled = true;
+            this.timerOn = true;
+            this.timer(60);
+            this.btnLoader = false;
+          }
+        },
+        (error: HttpErrorResponse) => {
+          this.notifier.showError(error.statusText);
+        }
+      );
   }
   timer(remaining: number) {
     let m = Math.floor(remaining / 60);
     let s = remaining % 60;
     m = m < 10 ? 0 + m : m;
     s = s < 10 ? 0 + s : s;
-    this.countDownTimer = (m * 60) + s + ' second(s)';
+    this.countDownTimer = m * 60 + s + ' second(s)';
     //document.getElementById('timer').innerHTML = m + ':' + s;
     remaining -= 1;
     if (remaining >= 0 && this.timerOn) {
@@ -743,8 +772,8 @@ export class DriverSignupComponent implements OnInit {
       // Do validate stuff here
       return;
     }
-    this.countDownTimer = "";
-    this.resendOtpBtnDisabled = false
+    this.countDownTimer = '';
+    this.resendOtpBtnDisabled = false;
     // Do timeout stuff here
     //alert('Timeout for otp');
   }
@@ -756,23 +785,28 @@ export class DriverSignupComponent implements OnInit {
   }
   // mobileVerified = false;
   mobileVerifiedForSubmit = false;
+  
+  verifiedMobileText=false
   onKeyUpEventForMobile(event: any) {
     if (event.target.value.length == 4) {
       if (this.otp == event.target.value) {
         this.OTPmodalRef.hide();
-        this.mobileDisable = true
-        this.otpVerify = false
-      }
-      else {
-        this.notifier.showError("OTP not matched");
-        this.mobileDisable = true
+        this.mobileDisable = true;
+        this.otpVerify = false;
+        this.verifiedMobileText=true;
+      } else {
+        this.notifier.showError('OTP not matched');
+        this.mobileDisable = true;
       }
     }
   }
+
+  verifiedEmailText=false
   onKeyUpEventForEmail(event: any) {
     if (event.target.value.length == 4) {
       if (this.otp == event.target.value) {
         this.OTPmodalRef.hide();
+        this.verifiedEmailText=true;
         this.showMobileOtpBtn = false;
         this.showEmailOtpBtn = false;
         // this.isSubmitDisable = true;
@@ -785,7 +819,7 @@ export class DriverSignupComponent implements OnInit {
       }
     }
   }
-  otpVerify
+  otpVerify;
   onUserNameKeyUpEvent(event: any) {
     this.available = false;
     this.Unavailable = false;
@@ -793,46 +827,74 @@ export class DriverSignupComponent implements OnInit {
     if (event.target.value.length == 0) {
       this.Unavailable = false;
       this.available = false;
-      this.otpVerify = false
+      this.otpVerify = false;
     }
     if (!!event.target.value) {
       if (this.mobileNo.length > 9) {
-        this.loginService.checkExistsMobileNo(this.mobileNo, 3).subscribe((res) => {
-          if (typeof res != "string") {
 
-            this.otpVerify = true
-          }
-        })
-      }else{
-        this.otpVerify = false
+        this.loginService
+          .checkExistsMobileNo(this.mobileNo, 3)
+          .subscribe((res) => {
+             if (typeof res != 'string') {
+              this.otpVerify = true;
+              this.errorMobileTxt = false;
+              this.available = true;
+            } else {
+              this.errorMobileTxt = false;
+              this.Unavailable = true;
+            }
+          });
+      } else {
+        this.otpVerify = false;
+        this.errorMobileTxt = false;
+        this.Unavailable = true;
       }
     }
   }
-  emailOtpVerify
-  timers
+  emailOtpVerify;
+  timers;
   emailvalidate(event: any) {
-    clearTimeout(this.timers)
-    let validate = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i
+    clearTimeout(this.timers);
+    let validate = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
     this.timers = setTimeout(() => {
       if (validate.test(event.target.value)) {
-        this.emailOtpVerify = true
+        this.emailOtpVerify = true;
       } else {
-        this.emailOtpVerify = false
+        this.emailOtpVerify = false;
       }
-
-    }, 500)
+    }, 500);
   }
 
   //  submit  start  //
+  errorMobileTxt = false;
+  errorEmailTxt = false;
+  errorCityTxt = false;
 
   DriverDetailsModel: DriverMaster;
   DriverDetailsList: DriverMaster[] = [];
   DriverMasterClass: DriverMasterClass;
   signUp() {
-    if (this.Unavailable == true) {
-      alert('Mobile No. already exists !!');
+    console.log(this.mobileDisable);
+    console.log(this.emailDisable);
+    if (
+      !this.cityId ||
+      this.mobileDisable == false 
+      // ||
+      // this.emailDisable == false
+    ) {
+      if (!this.cityId) {
+        this.errorCityTxt = true;
+      }
+      if (this.mobileDisable == false) {
+        this.Unavailable=false;
+        this.available = false;
+        this.errorMobileTxt = true;
+      }
+      // if (this.emailDisable == false) {
+      //   this.errorEmailTxt = true;
+      // }
     } else {
-      // this.loader = true;
+      this.btnLoader = true;
       let docUploadId;
       let fp1;
       let fp2;
@@ -878,96 +940,106 @@ export class DriverSignupComponent implements OnInit {
       fn6 = '';
       // }
       if (this.file1) {
-        this.fileSize = (this.file1.size / 1024) as number
+        this.fileSize = (this.file1.size / 1024) as number;
         fz1 = this.fileSize;
-
       }
       if (this.file2) {
-        this.fileSize2 = (this.file2.size / 1024) as number
+        this.fileSize2 = (this.file2.size / 1024) as number;
         fz2 = this.fileSize2;
-
       }
       if (this.file3) {
         // this.fileSize3 = (this.file3.size / 1024) as number
         fz3 = this.fileSize3;
-
       }
       if (this.file4) {
-        this.fileSize4 = (this.file4.size / 1024) as number
+        this.fileSize4 = (this.file4.size / 1024) as number;
         fz4 = this.fileSize4;
-
       }
       if (this.file5) {
         // this.fileSize3 = (this.file3.size / 1024) as number
         fz5 = this.fileSize5;
-
       }
       if (this.file6) {
-        this.fileSize6 = (this.file6.size / 1024) as number
+        this.fileSize6 = (this.file6.size / 1024) as number;
         fz6 = this.fileSize6;
       }
-      let dob
+      let dob;
       if (this.driverSignupForm.controls.dtDOB.value != null) {
-        if (typeof this.driverSignupForm.controls.dtDOB.value == "object") {
+        if (typeof this.driverSignupForm.controls.dtDOB.value == 'object') {
           let dobDate = this.driverSignupForm.controls.dtDOB.value._d;
           let month = dobDate.getMonth() + 1;
-          dob = dobDate.getFullYear() + "-" + month + "-" + dobDate.getDate();
-        }
-        else {
-          dob = this.driverSignupForm.controls.dtDOB.value
+          dob = dobDate.getFullYear() + '-' + month + '-' + dobDate.getDate();
+        } else {
+          dob = this.driverSignupForm.controls.dtDOB.value;
         }
       }
       this.DriverDetailsList = [];
       this.DriverDetailsModel = {
-        nDriverId: this.driverSignupForm.controls.nDriverId.value == null? 0: this.driverSignupForm.controls.nDriverId.value,
+        nDriverId:
+          this.driverSignupForm.controls.nDriverId.value == null
+            ? 0
+            : this.driverSignupForm.controls.nDriverId.value,
         // vDriverId: this.driverSignupForm.controls.vDriverId.value,
-        nVId:parseInt(this.driverSignupForm.controls.nVId.value),
-        vGender:this.driverSignupForm.controls.vGender.value,
-        dtDOB:dob,
+        nVId: parseInt(this.driverSignupForm.controls.nVId.value),
+        vGender: this.driverSignupForm.controls.vGender.value,
+        dtDOB: dob,
         nCityId: this.cityId,
         vPresentAddress: this.driverSignupForm.controls.vPresentAddress.value,
-        vPermanentAddress: this.driverSignupForm.controls.vPermanentAddress.value,
-        vAlternateNo:this.driverSignupForm.controls.vAlternateNo.value,
+        vPermanentAddress:
+          this.driverSignupForm.controls.vPermanentAddress.value,
+        vAlternateNo: this.driverSignupForm.controls.vAlternateNo.value,
         vLicenseNo: this.driverSignupForm.controls.vLicenseNo.value,
         vLicenseNoFilePath: fp3,
         vAadhaarNo: this.driverSignupForm.controls.vAadhaarNo.value,
         vAadhaarNoFilePath: fp1,
         vPANNo: this.driverSignupForm.controls.vPANNo.value,
-        vPANNoFilePath:fp2,
-        vVehicleRegistrationNo: this.driverSignupForm.controls.vVehicleRegistrationNo.value,
+        vPANNoFilePath: fp2,
+        vVehicleRegistrationNo:
+          this.driverSignupForm.controls.vVehicleRegistrationNo.value,
         vVehicleRegistrationNoFilePath: fp4,
         vVehicleInsuranceFilePath: fp5,
         vPhotoFilePath: fp6,
-        vFullName:this.driverSignupForm.controls.vFullName.value,
+        vFullName: this.driverSignupForm.controls.vFullName.value,
         vMobileNo: this.driverSignupForm.controls.vMobileNo.value,
         vPassword: this.driverSignupForm.controls.vPassword.value,
         vEmailId: this.driverSignupForm.controls.vEmailId.value,
         btPromotion: this.driverSignupForm.controls.btPromotion.value,
       };
-      this.DriverDetailsList.push(this.DriverDetailsModel)
+      this.DriverDetailsList.push(this.DriverDetailsModel);
       this.DriverMasterClass = {
-        DriverMaster : this.DriverDetailsList
-      }
-    console.log('this.DriverDetailsList',this.DriverDetailsList)
-      this.driverSignupService.DriverMaster(this.DriverMasterClass, this.file1, this.file2 ,this.file3, this.file4,this.file5,this.file6)
-      .subscribe((status: any) => {
-        if (status) {
-          console.log("status",status)
-          // this.loader=false;
-          // this.apiStatus = `Your ${status[0].vEType} Establishment Registration - ${status[0].vEstablishmentName}, with Drome is Successfully done, with Reg. Code: ${status[0].vEId}. Also, you have successfully registered with Drome for ${status[0].RoleType} login, with Member Code: ${status[0].MemberCode}. Though, Approval awaited from APP Administrator.`;
-          // this.notifier.showSuccess(this.apiStatus);
-          // this.success = true;
-          // this.redirectAfterClose= 'login';
-          // this.parentChildCommunicationService.emitChange({ redirectAfterClose:this.redirectAfterClose });
-          // this.resetSelectedData();
-          this.driverSignupForm.reset();
-          // setTimeout(() => {
-          //   this.loader = false
-          // }, 300)
-        }
-      }, (error: HttpErrorResponse) => {
-        alert(error.statusText)
-      });
+        DriverMaster: this.DriverDetailsList,
+      };
+      console.log('this.DriverDetailsList', this.DriverDetailsList);
+      this.driverSignupService
+        .DriverMaster(
+          this.DriverMasterClass,
+          this.file1,
+          this.file2,
+          this.file3,
+          this.file4,
+          this.file5,
+          this.file6
+        )
+        .subscribe(
+          (status: any) => {
+            if (status) {
+              console.log('status', status);
+              // this.apiStatus = `Your ${status[0].vEType} Establishment Registration - ${status[0].vEstablishmentName}, with Drome is Successfully done, with Reg. Code: ${status[0].vEId}. Also, you have successfully registered with Drome for ${status[0].RoleType} login, with Member Code: ${status[0].MemberCode}. Though, Approval awaited from APP Administrator.`;
+              // this.notifier.showSuccess(this.apiStatus);
+              // this.success = true;
+              // this.redirectAfterClose= 'login';
+              // this.parentChildCommunicationService.emitChange({ redirectAfterClose:this.redirectAfterClose });
+              // this.resetSelectedData();
+              this.driverSignupForm.reset();
+              setTimeout(() => {
+                this.btnLoader = false;
+              }, 300);
+            }
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.statusText);
+          }
+        );
     }
   }
 

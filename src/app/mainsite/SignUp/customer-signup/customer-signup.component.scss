@@ -120,13 +120,15 @@
 .input-group {
   width: 30%;
   margin: 10px 0;
-display: flex;
-justify-content: center;
-align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   input {
     height: 30px;
     font-size: 12px;
     text-align: center;
+
     &::placeholder {
       font-size: 10px;
     }
@@ -154,4 +156,18 @@ align-items: center;
     margin-left: 4px;
     color: blue;
   }
+}
+
+.available {
+  position: absolute;
+  color: lightgreen;
+  font-size: 10px;
+  bottom: 2px;
+  left: 5px;
+}
+
+.checkIcon {
+  position: absolute;
+  top: 22px;
+  right: 12px;
 }

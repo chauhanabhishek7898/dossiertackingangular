@@ -131,16 +131,8 @@ export class MainsiteComponent implements OnInit {
       btRememberMe: [false],
       btLoginWithOtp: [false],
     });
-    this.ChiefComplaintForm = this.formBuilder.group({
-      nChiefComplaintId: [0],
-      vChiefComplaint: [null, [Validators.required]],
-      btActive: new FormControl({ value: 'true', disabled: this.disabled }),
-    });
+  
     this.maxDate = new Date();
-  }
-
-  get createcustomerSignupFormControls(): any {
-    return this.customerSignupForm.controls;
   }
   get createUserLoginFormControls(): any {
     return this.userLoginForm.controls;
@@ -150,15 +142,10 @@ export class MainsiteComponent implements OnInit {
     return this.userForgetPasswordForm.controls;
   }
 
-  get createChiefComplaintFormControls(): any {
-    return this.ChiefComplaintForm.controls;
-  }
-
   items = [
     { id: 1, value: "Driver's Signup" },
     { id: 2, value: "Customer's Signup" },
   ];
-  onSubmitcustomerSignupForm() {}
   onchange(e) {
     let val = e.target.value;
     //  alert(val)
@@ -204,12 +191,7 @@ export class MainsiteComponent implements OnInit {
     this.modalRef = this.modalService.show(template, this.config);
     this.ModalTitle = 'Login';
   }
-
   onSubmitUserLoginForm(): void {}
-
-  
-
-
 
   //  extra useful code below  //
 
@@ -476,10 +458,9 @@ export class MainsiteComponent implements OnInit {
       this.eye2 = false;
     }
   }
-
-  
-
- 
+  opentermConditionComponent(){
+    this.router.navigate(['/termsandcondition']);
+  }
 
   // ConfirmedValidator(controlName: string, matchingControlName: string) {
   //   return (formGroup: FormGroup) => {
@@ -498,85 +479,82 @@ export class MainsiteComponent implements OnInit {
 
   //  login  //
 
-  //  city dropdown start here  //
-  AllCity: CityMasterList[] = [];
-  noMatchFound: boolean = false;
-  selectedCity: CityMasterList = new CityMasterList()
-  selectList: boolean = false;
-  bindCityDetailsOnDropDown(cityName: string) {
+  // //  city dropdown start here  //
+  // AllCity: CityMasterList[] = [];
+  // noMatchFound: boolean = false;
+  // selectedCity: CityMasterList = new CityMasterList()
+  // selectList: boolean = false;
+  // bindCityDetailsOnDropDown(cityName: string) {
 
-    this.AllCity = [];
-    this.cityDropDownService.getCityDetailsByCityName(cityName).subscribe((res) => {
-      this.AllCity = res;
-      if (this.AllCity.length == 0) {
-        this.noMatchFound = true;
-      }
-      // this.loaderService.isLoading.next(false);
+  //   this.AllCity = [];
+  //   this.cityDropDownService.getCityDetailsByCityName(cityName).subscribe((res) => {
+  //     this.AllCity = res;
+  //     if (this.AllCity.length == 0) {
+  //       this.noMatchFound = true;
+  //     }
+  //     // this.loaderService.isLoading.next(false);
 
 
-    }, (error: HttpErrorResponse) => {
-      alert(error.statusText);
-    });
-  }
+  //   }, (error: HttpErrorResponse) => {
+  //     alert(error.statusText);
+  //   });
+  // }
 
-  onCityKey(event: any) {
-    if (event.target.value.length == 0) {
-      this.AllCity = [];
-      this.noMatchFound = false;
-    }
+  // onCityKey(event: any) {
+  //   if (event.target.value.length == 0) {
+  //     this.AllCity = [];
+  //     this.noMatchFound = false;
+  //   }
 
-    if (!!event.target.value) {
-      if (event.target.value.length > 2) {
-        this.bindCityDetailsOnDropDown(event.target.value);
-      }
-    }
-  }
-  isCountryIndia = false;
+  //   if (!!event.target.value) {
+  //     if (event.target.value.length > 2) {
+  //       this.bindCityDetailsOnDropDown(event.target.value);
+  //     }
+  //   }
+  // }
+  // isCountryIndia = false;
 
-  selectCity(city, e) {
-    let country = this.AllCity.find(e => e.vCountryName != "India");
-    if (country) {
-      this.isCountryIndia = true
-      this.customerSignupForm.get('vEmailId')?.setValue(null);
-    } else {
-      this.isCountryIndia = false;
-      this.customerSignupForm.get('vMobileNo')?.setValue(null);
-    }
-    //this.otherCuntryName = this.AllCity.find(e => e.vCountryName != "India");
-    this.selectedCity = city;
-    this.customerSignupForm.get('nCityId')?.setValue(this.selectedCity.CityDetails);
-    this.selectList = false;
-    this.AllCity = [];
-    // this.searchInput.nativeElement.value = '';
-  }
-  selectCityList($event) {
-    $event.stopPropagation();
-    this.selectList = true;
-  }
+  // selectCity(city, e) {
+  //   let country = this.AllCity.find(e => e.vCountryName != "India");
+  //   if (country) {
+  //     this.isCountryIndia = true
+  //     this.customerSignupForm.get('vEmailId')?.setValue(null);
+  //   } else {
+  //     this.isCountryIndia = false;
+  //     this.customerSignupForm.get('vMobileNo')?.setValue(null);
+  //   }
+  //   //this.otherCuntryName = this.AllCity.find(e => e.vCountryName != "India");
+  //   this.selectedCity = city;
+  //   this.customerSignupForm.get('nCityId')?.setValue(this.selectedCity.CityDetails);
+  //   this.selectList = false;
+  //   this.AllCity = [];
+  //   // this.searchInput.nativeElement.value = '';
+  // }
+  // selectCityList($event) {
+  //   $event.stopPropagation();
+  //   this.selectList = true;
+  // }
 
-  showSelectList($event) {
-    $event.stopPropagation();
-    this.selectList = true;
-  }
-  showSelectLists($event) {
-    $event.stopPropagation();
-    this.selectList = true;
-  }
+  // showSelectList($event) {
+  //   $event.stopPropagation();
+  //   this.selectList = true;
+  // }
+  // showSelectLists($event) {
+  //   $event.stopPropagation();
+  //   this.selectList = true;
+  // }
 
-  closeSearch() {
-    this.selectList = false;
-    this.AllCity = [];
-    this.noMatchFound = false;
-  }
-  onFocusOut(event: any) {
-    window.setTimeout(() => {
-      this.closeSearch()
-    }, 500)
+  // closeSearch() {
+  //   this.selectList = false;
+  //   this.AllCity = [];
+  //   this.noMatchFound = false;
+  // }
+  // onFocusOut(event: any) {
+  //   window.setTimeout(() => {
+  //     this.closeSearch()
+  //   }, 500)
 
-  }
-  opentermConditionComponent(){
-    this.router.navigate(['/termsandcondition']);
-  }
-  
+  // }
+
   //  city dropdown end here  //
 }
