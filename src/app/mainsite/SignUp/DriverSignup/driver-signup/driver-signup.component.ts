@@ -196,7 +196,7 @@ export class DriverSignupComponent implements OnInit {
         vDiriverCurrentLat: [null],
         vDiriverCurrentLong: [null],
         vConfirmPassword: [null, [Validators.required]],
-        dTermCondition: [false],
+        dTermCondition: [null, [Validators.required]],
       },
       {
         validator: this.ConfirmedValidator('vPassword', 'vConfirmPassword'),
@@ -785,22 +785,28 @@ export class DriverSignupComponent implements OnInit {
   }
   // mobileVerified = false;
   mobileVerifiedForSubmit = false;
+  
+  verifiedMobileText=false
   onKeyUpEventForMobile(event: any) {
     if (event.target.value.length == 4) {
       if (this.otp == event.target.value) {
         this.OTPmodalRef.hide();
         this.mobileDisable = true;
         this.otpVerify = false;
+        this.verifiedMobileText=true;
       } else {
         this.notifier.showError('OTP not matched');
         this.mobileDisable = true;
       }
     }
   }
+
+  verifiedEmailText=false
   onKeyUpEventForEmail(event: any) {
     if (event.target.value.length == 4) {
       if (this.otp == event.target.value) {
         this.OTPmodalRef.hide();
+        this.verifiedEmailText=true;
         this.showMobileOtpBtn = false;
         this.showEmailOtpBtn = false;
         // this.isSubmitDisable = true;
@@ -825,16 +831,22 @@ export class DriverSignupComponent implements OnInit {
     }
     if (!!event.target.value) {
       if (this.mobileNo.length > 9) {
+
         this.loginService
           .checkExistsMobileNo(this.mobileNo, 3)
           .subscribe((res) => {
-            if (typeof res != 'string') {
+             if (typeof res != 'string') {
               this.otpVerify = true;
+              this.errorMobileTxt = false;
               this.available = true;
+            } else {
+              this.errorMobileTxt = false;
+              this.Unavailable = true;
             }
           });
       } else {
         this.otpVerify = false;
+        this.errorMobileTxt = false;
         this.Unavailable = true;
       }
     }
@@ -854,13 +866,33 @@ export class DriverSignupComponent implements OnInit {
   }
 
   //  submit  start  //
+  errorMobileTxt = false;
+  errorEmailTxt = false;
+  errorCityTxt = false;
 
   DriverDetailsModel: DriverMaster;
   DriverDetailsList: DriverMaster[] = [];
   DriverMasterClass: DriverMasterClass;
   signUp() {
-    if (!this.cityId) {
-      alert('Please Select City');
+    console.log(this.mobileDisable);
+    console.log(this.emailDisable);
+    if (
+      !this.cityId ||
+      this.mobileDisable == false 
+      // ||
+      // this.emailDisable == false
+    ) {
+      if (!this.cityId) {
+        this.errorCityTxt = true;
+      }
+      if (this.mobileDisable == false) {
+        this.Unavailable=false;
+        this.available = false;
+        this.errorMobileTxt = true;
+      }
+      // if (this.emailDisable == false) {
+      //   this.errorEmailTxt = true;
+      // }
     } else {
       this.btnLoader = true;
       let docUploadId;
