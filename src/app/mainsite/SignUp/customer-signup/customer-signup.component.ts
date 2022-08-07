@@ -78,6 +78,16 @@ export const MY_FORMATS = {
   ],
 })
 export class CustomerSignupComponent implements OnInit {
+  // @Input()
+  // options: Object;
+  formattedaddress = " ";
+  @Input()
+  options: any =
+    {
+      // componentRestrictions: {
+      //   country: ["IN"]
+      // }
+    }
   maxDate = new Date();
   customerSignupForm: FormGroup;
   errorMsg!: string;
@@ -100,7 +110,7 @@ export class CustomerSignupComponent implements OnInit {
     private http: HttpClient,
     private notifier: NotificationService,
     private modalService: BsModalService
-  ) {}
+  ) { }
   //  city dropdown end here  //
   // selectedCity: any = { CityDetailsState: "Gurgaon - Haryana" };
   selectedCity: any = { CityStateDetails: '' };
@@ -109,6 +119,11 @@ export class CustomerSignupComponent implements OnInit {
   cityId: any = null;
   cityMasterList: CityMasterList[] = [];
   isLoading = false;
+
+  AddressChange(address: any) {
+    //setting address from API to local variable
+    this.formattedaddress = address.formatted_address
+  }
   onSelected() {
     this.selectedCity = this.selectedCity;
     this.cityId = this.selectedCity.nCityId;
@@ -177,7 +192,7 @@ export class CustomerSignupComponent implements OnInit {
         vAadhaarNo: [null, [Validators.required]],
         vAadhaarNoFilePath: [null, [Validators.required]], // one file (adhar file)  //
         vFlatNoPlotNoLaneBuilding: [null, [Validators.required]],
-        dTermCondition: [null,[Validators.required]], 
+        dTermCondition: [null, [Validators.required]],
       },
       {
         validator: this.ConfirmedValidator('vPassword', 'vConfirmPassword'),
@@ -196,7 +211,7 @@ export class CustomerSignupComponent implements OnInit {
     console.log(this.emailDisable);
     if (
       !this.cityId ||
-      this.mobileDisable == false 
+      this.mobileDisable == false
       // ||
       // this.emailDisable == false
     ) {
@@ -204,7 +219,7 @@ export class CustomerSignupComponent implements OnInit {
         this.errorCityTxt = true;
       }
       if (this.mobileDisable == false) {
-        this.Unavailable=false;
+        this.Unavailable = false;
         this.available = false;
         this.errorMobileTxt = true;
       }
@@ -374,7 +389,7 @@ export class CustomerSignupComponent implements OnInit {
   }
   isOtpLogin: boolean = false;
   passwordHide: boolean = false;
-  termConditionTxt=false;
+  termConditionTxt = false;
   onCheckboxChange(e) {
     if (e.target.checked) {
       this.termConditionTxt = false;
@@ -444,7 +459,7 @@ export class CustomerSignupComponent implements OnInit {
     backdrop: 'static',
     class: 'modal-dialog-centered modal-md',
   };
-  verifiedMobileText=false
+  verifiedMobileText = false
   onKeyUpEventForMobile(event: any) {
     if (event.target.value.length == 4) {
       if (this.otp == event.target.value) {
@@ -452,9 +467,9 @@ export class CustomerSignupComponent implements OnInit {
         this.errorMobileTxt = false;
         this.mobileDisable = true;
         this.otpVerify = false;
-        this.verifiedMobileText=true;
+        this.verifiedMobileText = true;
         // this.mobileVerified = true;
-      
+
       } else {
         this.notifier.showError('OTP not matched');
         this.mobileDisable = false;
@@ -462,7 +477,7 @@ export class CustomerSignupComponent implements OnInit {
       }
     }
   }
-  verifiedEmailText=false
+  verifiedEmailText = false
   onKeyUpEventForEmail(event: any) {
     if (event.target.value.length == 4) {
       if (this.otp == event.target.value) {
@@ -470,7 +485,7 @@ export class CustomerSignupComponent implements OnInit {
         this.errorEmailTxt = false;
         this.emailDisable = true;
         this.emailOtpVerify = false;
-        this.verifiedEmailText=true;
+        this.verifiedEmailText = true;
         // this.emailVerified = true;
       } else {
         alert('OTP not matched');

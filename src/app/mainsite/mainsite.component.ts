@@ -72,7 +72,7 @@ export class MainsiteComponent implements OnInit {
   ) //   private storageService: StorageService,
   //   private router: Router,
   //   public loaderService: LoaderService,
-  {}
+  { }
   driverSignupForm: FormGroup;
   userLoginForm: FormGroup;
   userForgetPasswordForm: FormGroup;
@@ -89,7 +89,7 @@ export class MainsiteComponent implements OnInit {
   maxDate;
   matcher = new MyErrorStateMatcher();
   ngOnInit(): void {
-   
+
 
     this.driverSignupForm = this.formBuilder.group({
       nDriverId: 0,
@@ -131,7 +131,7 @@ export class MainsiteComponent implements OnInit {
       btRememberMe: [false],
       btLoginWithOtp: [false],
     });
-  
+
     this.maxDate = new Date();
   }
   get createUserLoginFormControls(): any {
@@ -146,6 +146,13 @@ export class MainsiteComponent implements OnInit {
     { id: 1, value: "Driver's Signup" },
     { id: 2, value: "Customer's Signup" },
   ];
+  AddressChange(address: any) {
+    //setting address from API to local variable
+    console.log(address);
+
+    console.log(address.geometry.location.lng());
+    console.log(address.geometry.location.lat());
+  }
   onchange(e) {
     let val = e.target.value;
     //  alert(val)
@@ -191,7 +198,7 @@ export class MainsiteComponent implements OnInit {
     this.modalRef = this.modalService.show(template, this.config);
     this.ModalTitle = 'Login';
   }
-  onSubmitUserLoginForm(): void {}
+  onSubmitUserLoginForm(): void { }
 
   //  extra useful code below  //
 
@@ -224,17 +231,17 @@ export class MainsiteComponent implements OnInit {
     // this.timerOn = false;
     this.btnLoader = false;
   }
-  toggle_nav_list:boolean=false
-  toggle_nav(){
-    this.toggle_nav_list= !this.toggle_nav_list
+  toggle_nav_list: boolean = false
+  toggle_nav() {
+    this.toggle_nav_list = !this.toggle_nav_list
   }
-  openDriverSignup(template: TemplateRef<any>){
+  openDriverSignup(template: TemplateRef<any>) {
     this.modalRefdriversignup = this.modalService.show(template, this.configdriversignup);
-    this.modeltitledriversignup="Driver's Signup"
+    this.modeltitledriversignup = "Driver's Signup"
   }
-  openCstomersignup(template: TemplateRef<any>){
+  openCstomersignup(template: TemplateRef<any>) {
     this.modalRefcustomersignup = this.modalService.show(template, this.configdriversignup);
-    this.modaltitlecustomersignup="Customer's Signup"
+    this.modaltitlecustomersignup = "Customer's Signup"
   }
 
   sendOtp() {
@@ -470,9 +477,9 @@ export class MainsiteComponent implements OnInit {
       this.eye2 = false;
     }
   }
-  opentermConditionComponent(){
+  opentermConditionComponent() {
     this.router.navigate(['/termsandcondition']);
   }
 
-  
+
 }

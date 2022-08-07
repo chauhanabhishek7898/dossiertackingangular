@@ -1,4 +1,6 @@
+<input ngx-google-places-autocomplete />
 <form [formGroup]="customerSignupForm">
+
     <div>
         <div class="date-and-mob">
             <div class="ma-input-33">
@@ -90,7 +92,9 @@
             <div class="ma-input-33" style="width: 100%;">
                 <mat-form-field style="width: 100%;" appearance="outline">
                     <mat-label>Address <span style="color: red;">*</span></mat-label>
-                    <input formControlName="vAddress" matInput placeholder="Enter Address" type="text">
+                    <input ngx-google-places-autocomplete [options]='options' (onAddressChange)="AddressChange($event)"
+                        formControlName="vAddress" matInput placeholder="Enter Address" type="text">
+                    {{ formattedaddress }}
                 </mat-form-field>
             </div>
         </div>
