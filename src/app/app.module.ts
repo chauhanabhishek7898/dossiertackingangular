@@ -30,6 +30,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ContactUsComponent } from './mainsite/contact-us/contact-us.component';
 import { FaqsComponent } from './mainsite/faqs/faqs.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { AboutUsComponent } from './mainsite/about-us/about-us.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     DriverSignupComponent,
     ContactUsComponent,
     FaqsComponent,
+    AboutUsComponent,
   ],
   imports: [
     BrowserModule,

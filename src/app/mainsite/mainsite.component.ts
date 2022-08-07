@@ -54,6 +54,10 @@ interface Food {
   ],
 })
 export class MainsiteComponent implements OnInit {
+  onActivate(event) {
+    window.scroll(0,0);
+    
+}
   @ViewChild('driversignup') private driversignup: TemplateRef<any>;
   @ViewChild('customersignup') private customersignup: TemplateRef<any>;
   customerSignupForm: FormGroup;
