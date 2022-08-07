@@ -833,7 +833,7 @@ export class DriverSignupComponent implements OnInit {
       if (this.mobileNo.length > 9) {
 
         this.loginService
-          .checkExistsMobileNo(this.mobileNo, 3)
+          .checkExistsMobileNo(this.mobileNo)
           .subscribe((res) => {
              if (typeof res != 'string') {
               this.otpVerify = true;

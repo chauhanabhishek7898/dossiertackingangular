@@ -29,7 +29,8 @@ import { NotificationService } from './core/service/notification.service';
 import { ToastrModule } from 'ngx-toastr';
 import { ContactUsComponent } from './mainsite/contact-us/contact-us.component';
 import { FaqsComponent } from './mainsite/faqs/faqs.component';
-import { MatExpansionModule } from '@angular/material/expansion';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { AboutUsComponent } from './mainsite/about-us/about-us.component';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 
 @NgModule({
@@ -43,8 +44,10 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
     DriverSignupComponent,
     ContactUsComponent,
     FaqsComponent,
+    AboutUsComponent,
   ],
-  imports: [GooglePlaceModule,
+  imports: [
+    GooglePlaceModule,
     BrowserModule,
     HttpClientModule,
     CommonModule,

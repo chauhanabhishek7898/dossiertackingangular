@@ -11,8 +11,8 @@ export class LoginService {
 
   apiUrl = environment.dossiarApiUrl;
 
-  checkExistsMobileNo(vMobileNo: string, nRoleId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/UserMaster/CheckExistsMobileNo/${vMobileNo}/${nRoleId}`)
+  checkExistsMobileNo(vMobileNo: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/UserMaster/CheckExistsMobileNo/${vMobileNo}`)
 }
 GetOTPMsgSMSVerifyMobile(mobileNumber): Observable<any> {
     return this.http.get(`${this.apiUrl}/Utility/GetOTPMsgSMSVerifyMobile/${mobileNumber}`)

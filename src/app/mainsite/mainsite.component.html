@@ -1,15 +1,14 @@
 <header>
     <div class="main_headeer">
-        <input ngx-google-places-autocomplete (onAddressChange)="AddressChange($event)" />
         <div class="container-xl">
             <div class="top_header">
                 <div class="left_header"><a routerLink="/home"><img src="../../../assets/images/bottom text logo.png"
                             alt=""></a></div>
                 <div class="right_header">
                     <ul>
-                        <li><a routerLink="home">Home</a></li>
-                        <!-- <li><a href="#">About Us</a></li> -->
-                        <li><a routerLink="/contact-us">Contact Us</a></li>
+                        <li><a routerLink="home" routerLinkActive="active">Home</a></li>
+                        <li><a routerLink="/about-us" routerLinkActive="active">About Us</a></li>
+                        <li><a routerLink="/contact-us" routerLinkActive="active">Contact Us</a></li>
                         <li>
                             <div>
                                 <button class="log-in-buton" (click)="openModal(templateLoginMaster)">
@@ -243,7 +242,7 @@
         </div>
     </div> -->
 </header>
-<router-outlet></router-outlet>
+<router-outlet (activate)="onActivate($event)"></router-outlet>
 <section>
     <div class="pickup">
         <div class="container-lg pickup_wrap_box">
@@ -257,14 +256,14 @@
 
 
                     </li>
-                    <li>
+                    <!-- <li>
                         <div style="margin-top: 30px;">
                             <h3 class="title_heading">Real time tracking</h3>
                             <p class="title">Our verified partner will ensure that your goods are transported safely
                                 to the destination. You can monitor the trip with live vehicle tracking and regular
                                 sms/email updates from our MOBILE APP or TRACK ORDER TOOL.</p>
                         </div>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <div class="right_pickup_box">
@@ -337,6 +336,7 @@
             </ul> -->
             <ul>
                 <span>Support</span>
+                <li><a routerLink="/about-us">About Us</a></li>
                 <li><a routerLink="/contact-us">Contact Us</a></li>
                 <li><a routerLink="/privacypolicy">Privacy policy</a></li>
                 <li><a href="" routerLink="/termsandcondition">Terms and Condition</a></li>

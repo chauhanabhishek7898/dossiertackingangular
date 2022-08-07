@@ -1,4 +1,3 @@
-<input ngx-google-places-autocomplete />
 <form [formGroup]="customerSignupForm">
 
     <div>
@@ -10,16 +9,16 @@
                 </mat-form-field>
             </div>
 
-            <div class="ma-input-33">
+            <div class="ma-input-33" style="width: 14%;">
                 <mat-form-field appearance="outline">
-                    <mat-label>DOB <span style="color: red;">*</span></mat-label>
+                    <mat-label>DOB </mat-label>
                     <input formControlName="dtDOB" mask="d0-M0-0000" [max]="maxDate" matInput [matDatepicker]="picker1"
                         placeholder="Enter DOB">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1 color="primary"></mat-datepicker>
                 </mat-form-field>
             </div>
-            <div class="ma-input-33">
+            <div class="ma-input-33" style="width: 14%;">
                 <mat-form-field appearance="outline">
                     <mat-label>Gender <span style="color: red;">*</span></mat-label>
                     <mat-select formControlName="vGender">
@@ -31,16 +30,17 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="ma-input-33">
+
+            <div class="ma-input-33" style="width: 14%;">
                 <mat-form-field style="width: 100%;" appearance="outline">
-                    <mat-label>Aadhar No. <span style="color: red;">*</span></mat-label>
+                    <mat-label>Aadhar No.</mat-label>
                     <input formControlName="vAadhaarNo" style="width: 80%;" matInput placeholder="Enter Aadhar No.">
                 </mat-form-field>
             </div>
-            <div class="ma-input-image">
+            <div class="ma-input-image" style="width: 27%;">
                 <mat-label [ngClass]="{'LableChange': ifSelect}"
                     style="color: #6c757d;font-weight: 300;font-size: 13px;">Upload Aadhar
-                    File <span style="color: red;">*</span></mat-label>
+                    File</mat-label>
                 <div class="aadhar-file">
                     <div class="file-name" *ngIf="urlLink !='false'" style="font-size: 10px;">
                         <a title={{fileName}} [attr.href]="urlLink" target="_blank">{{fileNameSlice
@@ -59,8 +59,16 @@
                     </span>
                 </div>
             </div>
+            <div class="ma-input-33" style="width: 55.5%;">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Address <span style="color: red;">*</span></mat-label>
+                    <input ngx-google-places-autocomplete [options]='options' (onAddressChange)="AddressChange($event)"
+                        formControlName="vAddress" matInput placeholder="Enter Address" type="text">
+                </mat-form-field>
+            </div>
+            
 
-            <div class="ma-input-33" style="width: 40.2%;">
+            <div class="ma-input-33" style="width: 27.2%;">
 
                 <mat-form-field style="width: 100%;" appearance="outline">
                     <mat-label>Select City <span style="color: red;">*</span></mat-label>
@@ -81,7 +89,7 @@
                 </div>
             </div>
 
-            <div class="ma-input-33">
+            <div class="ma-input-33" style="width: 14%;">
 
                 <mat-form-field style="width: 100%;" appearance="outline">
                     <mat-label>Flat No. <span style="color: red;">*</span></mat-label>
@@ -89,14 +97,7 @@
                         type="text">
                 </mat-form-field>
             </div>
-            <div class="ma-input-33" style="width: 100%;">
-                <mat-form-field style="width: 100%;" appearance="outline">
-                    <mat-label>Address <span style="color: red;">*</span></mat-label>
-                    <input ngx-google-places-autocomplete [options]='options' (onAddressChange)="AddressChange($event)"
-                        formControlName="vAddress" matInput placeholder="Enter Address" type="text">
-                    {{ formattedaddress }}
-                </mat-form-field>
-            </div>
+            
         </div>
         <div class="date-and-mob">
             <div class="ma-input-33">
@@ -109,9 +110,9 @@
                     <span>Mobile number is available.</span>
                 </div>
                 <div class="available" style="color: red;" *ngIf="Unavailable">
-                    <span>Mobile number is already exist.</span>
+                    <span>Mobile number already exists.</span>
                 </div>
-                <div class="available" style="color: red;" *ngIf="errorMobileTxt">verifiedEmailText
+                <div class="available" style="color: red;" *ngIf="errorMobileTxt">
                     <span>Please verify Mobile number.</span>
                 </div>
                 <div class="available" style="color: green;" *ngIf="verifiedMobileText">
@@ -131,7 +132,7 @@
             </div>
             <div class="ma-input-33">
                 <mat-form-field style="width: 100%;" appearance="outline">
-                    <mat-label>Email Id <span style="color: red;">*</span></mat-label>
+                    <mat-label>Email Id</mat-label>
                     <input formControlName="vEmailId" matInput placeholder="Enter Email Id" type="text"
                         (keyup)="emailvalidate($event)" [readonly]="emailDisable">
                 </mat-form-field>
@@ -187,9 +188,9 @@
                 </label>
 
             </div>
-            <div class="termAndCondition" *ngIf="termConditionTxt">
+            <!-- <div class="termAndCondition" *ngIf="termConditionTxt">
                 Please agree terms and conditions
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -202,7 +203,7 @@
                 <div></div>
             </div>
         </div>
-        <div class="log-in-btn">
+        <div class="log-in-btn" *ngIf="termConditionTxt">
             <button class="enable-btn-gray" (click)="submitCustomerSignup()" [disabled]="customerSignupForm.invalid "
                 type="button">
                 Signup
