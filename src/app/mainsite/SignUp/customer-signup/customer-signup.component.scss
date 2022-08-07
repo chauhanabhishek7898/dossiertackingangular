@@ -1,3 +1,13 @@
+.head-title {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  // padding-top: 8px;
+  h1{
+      margin-bottom: 0;
+  }
+}
 .date-and-mob {
   display: flex;
   justify-content: space-between;
@@ -170,4 +180,7 @@
   position: absolute;
   top: 22px;
   right: 12px;
+}
+::ng-deep .pac-container{
+  z-index: 1000000;
 }

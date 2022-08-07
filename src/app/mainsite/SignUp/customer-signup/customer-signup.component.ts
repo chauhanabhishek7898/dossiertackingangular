@@ -78,6 +78,16 @@ export const MY_FORMATS = {
   ],
 })
 export class CustomerSignupComponent implements OnInit {
+  // @Input()
+  // options: Object;
+  formattedaddress = " ";
+  @Input()
+  options: any =
+    {
+      // componentRestrictions: {
+      //   country: ["IN"]
+      // }
+    }
   maxDate = new Date();
   customerSignupForm: FormGroup;
   errorMsg!: string;
@@ -100,7 +110,7 @@ export class CustomerSignupComponent implements OnInit {
     private http: HttpClient,
     private notifier: NotificationService,
     private modalService: BsModalService
-  ) {}
+  ) { }
   //  city dropdown end here  //
   // selectedCity: any = { CityDetailsState: "Gurgaon - Haryana" };
   selectedCity: any = { CityStateDetails: '' };
@@ -109,6 +119,14 @@ export class CustomerSignupComponent implements OnInit {
   cityId: any = null;
   cityMasterList: CityMasterList[] = [];
   isLoading = false;
+  addressLat
+  addressLong
+  AddressChange(address: any) {
+    //setting address from API to local variable
+    this.formattedaddress = address.formatted_address
+    this.addressLat = address.geometry.location.lat()
+    this.addressLong = address.geometry.location.lng()
+  }
   onSelected() {
     this.selectedCity = this.selectedCity;
     this.cityId = this.selectedCity.nCityId;
@@ -166,18 +184,18 @@ export class CustomerSignupComponent implements OnInit {
         vCId: [null],
         vFullName: [null, [Validators.required]],
         vMobileNo: [null, [Validators.required]],
-        vEmailId: [null, [Validators.required]],
+        vEmailId: [null, ],
         vPassword: [null, [Validators.required]],
         vConfirmPassword: [null, [Validators.required]],
-        dtDOB: [null, [Validators.required]],
+        dtDOB: [null],
         btPromotion: [false],
         nCityId: [null],
         vAddress: [null, [Validators.required]],
         vGender: [null, [Validators.required]],
-        vAadhaarNo: [null, [Validators.required]],
-        vAadhaarNoFilePath: [null, [Validators.required]], // one file (adhar file)  //
+        vAadhaarNo: [null],
+        vAadhaarNoFilePath: [null], // one file (adhar file)  //
         vFlatNoPlotNoLaneBuilding: [null, [Validators.required]],
-        dTermCondition: [null,[Validators.required]], 
+        dTermCondition: [null, [Validators.required]],
       },
       {
         validator: this.ConfirmedValidator('vPassword', 'vConfirmPassword'),
@@ -192,25 +210,26 @@ export class CustomerSignupComponent implements OnInit {
   errorEmailTxt = false;
   errorCityTxt = false;
   submitCustomerSignup() {
-    console.log(this.mobileDisable);
-    console.log(this.emailDisable);
-    if (
-      !this.cityId ||
-      this.mobileDisable == false 
-      // ||
-      // this.emailDisable == false
-    ) {
-      if (!this.cityId) {
-        this.errorCityTxt = true;
+    let dob;
+      if (this.customerSignupForm.controls.dtDOB.value != null) {
+        if (typeof this.customerSignupForm.controls.dtDOB.value == 'object') {
+          let dobDate = this.customerSignupForm.controls.dtDOB.value._d;
+          let month = dobDate.getMonth() + 1;
+          dob = dobDate.getFullYear() + '-' + month + '-' + dobDate.getDate();
+        } else {
+          dob = this.customerSignupForm.controls.dtDOB.value;
+        }
       }
+    let emailId = this.customerSignupForm.controls.vEmailId.value
+    if (this.mobileDisable == false) {
       if (this.mobileDisable == false) {
-        this.Unavailable=false;
+        this.Unavailable = false;
         this.available = false;
         this.errorMobileTxt = true;
       }
-      // if (this.emailDisable == false) {
-      //   this.errorEmailTxt = true;
-      // }
+      if (this.emailDisable == false && emailId) {
+        this.errorEmailTxt = true;
+      }
     } else {
       this.btnLoader = true;
       this.listCustomer = [];
@@ -233,18 +252,19 @@ export class CustomerSignupComponent implements OnInit {
         // vCId: this.customerSignupForm.controls.vCId.value,
         // nUserId: 0,
         vGender: this.customerSignupForm.controls.vGender.value,
-        dtDOB: parseDateToString(this.customerSignupForm.controls.dtDOB.value),
+        dtDOB: dob,
         vAadhaarNo: this.customerSignupForm.controls.vAadhaarNo.value,
         vAadhaarNoFilePath: '',
         vFullName: this.customerSignupForm.controls.vFullName.value,
         vMobileNo: this.customerSignupForm.controls.vMobileNo.value,
         vPassword: this.customerSignupForm.controls.vPassword.value,
         vEmailId: this.customerSignupForm.controls.vEmailId.value,
-        btPromotion: true,
+        btPromotion: false,
         nCityId: this.cityId,
-        vAddress: this.customerSignupForm.controls.vAddress.value,
-        vFlatNoPlotNoLaneBuilding:
-          this.customerSignupForm.controls.vFlatNoPlotNoLaneBuilding.value,
+        vAddress: this.formattedaddress,
+        vFlatNoPlotNoLaneBuilding:this.customerSignupForm.controls.vFlatNoPlotNoLaneBuilding.value,
+        vLat:this.addressLat,
+        vLong:this.addressLong
       };
 
       this.listCustomer.push(this.addCustomerUserModel);
@@ -252,19 +272,12 @@ export class CustomerSignupComponent implements OnInit {
       this.CustomerMasterClass = {
         CustomerMaster: this.listCustomer,
       };
-      console.log('CustomerMasterClass', this.CustomerMasterClass);
-
-      console.log('this.file', this.file);
-      this.customerSignupService
-        .PostCreateUserCustomer(this.CustomerMasterClass, this.file)
-        .subscribe(
-          (status: any) => {
+      this.customerSignupService.PostCreateUserCustomer(this.CustomerMasterClass, this.file).subscribe((status: any) => {
             // this.apiStatus = `Congratulations, User has been created successfully with member Code:  ${status[0].MemberCode}. You may further use it to login in the APP.
             // Though, it has to be approved by the APP Administrator before logging in. Thanks, for your kind patience.`;
             if (status) {
-              console.log('status', status);
-              // this.success = true;
-              // this.isOtp = false;
+              this.customerSignupForm.reset();
+              this.file=null!
             }
             setTimeout(() => {
               this.btnLoader = false;
@@ -317,7 +330,7 @@ export class CustomerSignupComponent implements OnInit {
     if (!!event.target.value) {
       if (this.mobileNo.length > 9) {
         this.loginService
-          .checkExistsMobileNo(this.mobileNo, 3)
+          .checkExistsMobileNo(this.mobileNo)
           .subscribe((res) => {
             console.log('res', res);
             if (typeof res != 'string') {
@@ -374,12 +387,12 @@ export class CustomerSignupComponent implements OnInit {
   }
   isOtpLogin: boolean = false;
   passwordHide: boolean = false;
-  termConditionTxt=false;
+  termConditionTxt = false;
   onCheckboxChange(e) {
     if (e.target.checked) {
-      this.termConditionTxt = false;
-    } else {
       this.termConditionTxt = true;
+    } else {
+      this.termConditionTxt = false;
     }
   }
   opentermConditionComponent() {
@@ -444,7 +457,7 @@ export class CustomerSignupComponent implements OnInit {
     backdrop: 'static',
     class: 'modal-dialog-centered modal-md',
   };
-  verifiedMobileText=false
+  verifiedMobileText = false
   onKeyUpEventForMobile(event: any) {
     if (event.target.value.length == 4) {
       if (this.otp == event.target.value) {
@@ -452,9 +465,9 @@ export class CustomerSignupComponent implements OnInit {
         this.errorMobileTxt = false;
         this.mobileDisable = true;
         this.otpVerify = false;
-        this.verifiedMobileText=true;
+        this.verifiedMobileText = true;
         // this.mobileVerified = true;
-      
+
       } else {
         this.notifier.showError('OTP not matched');
         this.mobileDisable = false;
@@ -462,7 +475,7 @@ export class CustomerSignupComponent implements OnInit {
       }
     }
   }
-  verifiedEmailText=false
+  verifiedEmailText = false
   onKeyUpEventForEmail(event: any) {
     if (event.target.value.length == 4) {
       if (this.otp == event.target.value) {
@@ -470,7 +483,7 @@ export class CustomerSignupComponent implements OnInit {
         this.errorEmailTxt = false;
         this.emailDisable = true;
         this.emailOtpVerify = false;
-        this.verifiedEmailText=true;
+        this.verifiedEmailText = true;
         // this.emailVerified = true;
       } else {
         alert('OTP not matched');
@@ -508,7 +521,6 @@ export class CustomerSignupComponent implements OnInit {
     }
   }
   sendOtpToMobile() {
-    this.btnLoader = true;
     this.available = false;
     this.userMobileNo = this.customerSignupForm.controls.vMobileNo.value;
     this.userEmail = '';

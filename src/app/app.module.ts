@@ -31,6 +31,7 @@ import { ContactUsComponent } from './mainsite/contact-us/contact-us.component';
 import { FaqsComponent } from './mainsite/faqs/faqs.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { AboutUsComponent } from './mainsite/about-us/about-us.component';
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { AboutUsComponent } from './mainsite/about-us/about-us.component';
     AboutUsComponent,
   ],
   imports: [
+    GooglePlaceModule,
     BrowserModule,
     HttpClientModule,
     CommonModule,
@@ -64,15 +66,16 @@ import { AboutUsComponent } from './mainsite/about-us/about-us.component';
     MatAutocompleteModule,
     ToastrModule.forRoot(),
     MatExpansionModule
+
   ],
   exports: [TermsandconditionComponent],
-  providers: 
-  [
-    BsModalService, 
-    HttpClientModule,
-    DatePipe,
-    NotificationService
-  ],
+  providers:
+    [
+      BsModalService,
+      HttpClientModule,
+      DatePipe,
+      NotificationService
+    ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   bootstrap: [AppComponent],

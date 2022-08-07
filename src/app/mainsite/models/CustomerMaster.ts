@@ -13,8 +13,8 @@ export class CustomerMaster {
   btPromotion: any;
   nCityId: number | null;
   vAddress: string;
-  // vLat: string;
-  // vLong: string;
+  vLat: string;
+  vLong: string;
   vFlatNoPlotNoLaneBuilding: string;
 }
 export class CustomerMasterClass {
