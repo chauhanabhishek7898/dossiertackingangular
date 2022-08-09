@@ -209,6 +209,7 @@ export class CustomerSignupComponent implements OnInit {
   errorMobileTxt = false;
   errorEmailTxt = false;
   errorCityTxt = false;
+  addressError=false
   submitCustomerSignup() {
     let dob;
       if (this.customerSignupForm.controls.dtDOB.value != null) {
@@ -231,6 +232,7 @@ export class CustomerSignupComponent implements OnInit {
         this.errorEmailTxt = true;
       }
     } else {
+      if(this.addressLat || this.addressLong){
       this.btnLoader = true;
       this.listCustomer = [];
 
@@ -292,6 +294,9 @@ export class CustomerSignupComponent implements OnInit {
             // }, 3000)
           }
         );
+      }else{
+        this.addressError=true
+      }
     }
   }
 

@@ -9,14 +9,12 @@
                         <li><a routerLink="home" routerLinkActive="active">Home</a></li>
                         <li><a routerLink="/about-us" routerLinkActive="active">About Us</a></li>
                         <li><a routerLink="/contact-us" routerLinkActive="active">Contact Us</a></li>
+                        <li><a style="cursor: pointer;" routerLinkActive="active"  (click)="openDriverSignup(driversignup)">Driver's Signup</a></li>
+                        <li><a style="cursor: pointer;" routerLinkActive="active" (click)="openCstomersignup(customersignup)">Customer's Signup</a></li>
                         <li>
-                            <div>
-                                <button class="log-in-buton" (click)="openModal(templateLoginMaster)">
-                                    Login
-                                </button>
-                            </div>
+                            
                         </li>
-                        <li style="position: relative;">
+                        <!-- <li style="position: relative;">
                             <span class="signup_link" (click)="toggle_nav()" *ngIf="!toggle_nav_list">
                                 Signup
                             </span>
@@ -31,13 +29,18 @@
                                 <li (click)="openDriverSignup(driversignup)">Driver's Signup</li>
                                 <li (click)="openCstomersignup(customersignup)">Customer's Signup</li>
                             </ul>
-                        </li>
+                        </li> -->
                         <li>
 
                         </li>
 
 
                     </ul>
+                </div>
+                <div>
+                    <button class="log-in-buton" (click)="openModal(templateLoginMaster)">
+                        Login
+                    </button>
                 </div>
             </div>
         </div>
