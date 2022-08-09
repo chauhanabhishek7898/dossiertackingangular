@@ -84,9 +84,9 @@ export class CustomerSignupComponent implements OnInit {
   @Input()
   options: any =
     {
-      // componentRestrictions: {
-      //   country: ["IN"]
-      // }
+      componentRestrictions: { country: ["in"] },
+      fields: ["address_components", "geometry"],
+      //types: ["address"],
     }
   maxDate = new Date();
   customerSignupForm: FormGroup;
@@ -123,9 +123,17 @@ export class CustomerSignupComponent implements OnInit {
   addressLong
   AddressChange(address: any) {
     //setting address from API to local variable
+    console.log(address)
     this.formattedaddress = address.formatted_address
     this.addressLat = address.geometry.location.lat()
     this.addressLong = address.geometry.location.lng()
+    address.address_components.forEach(element => {
+      let componentType = element.types[0];
+      if (componentType == "locality") {
+        alert(element.long_name);
+        return;
+      }
+    });
   }
   onSelected() {
     this.selectedCity = this.selectedCity;
@@ -184,7 +192,7 @@ export class CustomerSignupComponent implements OnInit {
         vCId: [null],
         vFullName: [null, [Validators.required]],
         vMobileNo: [null, [Validators.required]],
-        vEmailId: [null, ],
+        vEmailId: [null,],
         vPassword: [null, [Validators.required]],
         vConfirmPassword: [null, [Validators.required]],
         dtDOB: [null],
@@ -211,15 +219,15 @@ export class CustomerSignupComponent implements OnInit {
   errorCityTxt = false;
   submitCustomerSignup() {
     let dob;
-      if (this.customerSignupForm.controls.dtDOB.value != null) {
-        if (typeof this.customerSignupForm.controls.dtDOB.value == 'object') {
-          let dobDate = this.customerSignupForm.controls.dtDOB.value._d;
-          let month = dobDate.getMonth() + 1;
-          dob = dobDate.getFullYear() + '-' + month + '-' + dobDate.getDate();
-        } else {
-          dob = this.customerSignupForm.controls.dtDOB.value;
-        }
+    if (this.customerSignupForm.controls.dtDOB.value != null) {
+      if (typeof this.customerSignupForm.controls.dtDOB.value == 'object') {
+        let dobDate = this.customerSignupForm.controls.dtDOB.value._d;
+        let month = dobDate.getMonth() + 1;
+        dob = dobDate.getFullYear() + '-' + month + '-' + dobDate.getDate();
+      } else {
+        dob = this.customerSignupForm.controls.dtDOB.value;
       }
+    }
     let emailId = this.customerSignupForm.controls.vEmailId.value
     if (this.mobileDisable == false) {
       if (this.mobileDisable == false) {
@@ -262,9 +270,9 @@ export class CustomerSignupComponent implements OnInit {
         btPromotion: false,
         nCityId: this.cityId,
         vAddress: this.formattedaddress,
-        vFlatNoPlotNoLaneBuilding:this.customerSignupForm.controls.vFlatNoPlotNoLaneBuilding.value,
-        vLat:this.addressLat,
-        vLong:this.addressLong
+        vFlatNoPlotNoLaneBuilding: this.customerSignupForm.controls.vFlatNoPlotNoLaneBuilding.value,
+        vLat: this.addressLat,
+        vLong: this.addressLong
       };
 
       this.listCustomer.push(this.addCustomerUserModel);
@@ -273,25 +281,25 @@ export class CustomerSignupComponent implements OnInit {
         CustomerMaster: this.listCustomer,
       };
       this.customerSignupService.PostCreateUserCustomer(this.CustomerMasterClass, this.file).subscribe((status: any) => {
-            // this.apiStatus = `Congratulations, User has been created successfully with member Code:  ${status[0].MemberCode}. You may further use it to login in the APP.
-            // Though, it has to be approved by the APP Administrator before logging in. Thanks, for your kind patience.`;
-            if (status) {
-              this.customerSignupForm.reset();
-              this.file=null!
-            }
-            setTimeout(() => {
-              this.btnLoader = false;
-            }, 300);
-          },
-          (error: HttpErrorResponse) => {
-            console.log('error', error);
-            // this.apiError = error.statusText
-            // this.error = true
-            // setTimeout(() => {
-            //   this.error = false
-            // }, 3000)
-          }
-        );
+        // this.apiStatus = `Congratulations, User has been created successfully with member Code:  ${status[0].MemberCode}. You may further use it to login in the APP.
+        // Though, it has to be approved by the APP Administrator before logging in. Thanks, for your kind patience.`;
+        if (status) {
+          this.customerSignupForm.reset();
+          this.file = null!
+        }
+        setTimeout(() => {
+          this.btnLoader = false;
+        }, 300);
+      },
+        (error: HttpErrorResponse) => {
+          console.log('error', error);
+          // this.apiError = error.statusText
+          // this.error = true
+          // setTimeout(() => {
+          //   this.error = false
+          // }, 3000)
+        }
+      );
     }
   }
 
