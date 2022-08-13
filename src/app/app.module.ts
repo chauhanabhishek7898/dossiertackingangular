@@ -52,6 +52,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
     AboutUsComponent,
     AdminDashboardComponent,
     AdminLoginComponent,
+    PageFilterPipe,
   ],
   imports: [
     GooglePlaceModule,

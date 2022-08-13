@@ -27,7 +27,6 @@ import { PageFilterPipe } from '../../core/pipe/page-filter';
 @NgModule({
   declarations: [
     // AdminLoginComponent,
-    
   ],
   imports: [
     CommonModule,
@@ -53,10 +52,9 @@ import { PageFilterPipe } from '../../core/pipe/page-filter';
   ],
   exports:[
     // AdminLoginComponent,
-    
   ],
   providers:[
-    PageFilterPipe
+   
   ]
 })
 export class AdminModule { }

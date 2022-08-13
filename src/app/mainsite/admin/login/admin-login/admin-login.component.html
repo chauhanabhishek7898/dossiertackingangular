@@ -20,16 +20,13 @@
         <div class="input-group mb-3">
             <mat-form-field style="width: 100%;" appearance="outline">
                 <mat-label>Mobile No. <span style="color: red;">*</span></mat-label>
-                <input formControlName="vEmailorPhone" matInput placeholder="Enter Full Name" type="text">
+                <input formControlName="vUserName" matInput placeholder="Enter Full Name" type="text">
             </mat-form-field>
-            <div class="invalid-tooltip" *ngIf="createUserLoginFormControls.vEmailorPhone.invalid && (createUserLoginFormControls.vEmailorPhone.dirty || createUserLoginFormControls.vEmailorPhone.touched)">
-                Enter Mobile No
-            </div>
         </div>
         <div class="input-group mb-3" *ngIf="!passwordHide">
             <mat-form-field style="width: 100%;" appearance="outline">
                 <mat-label>Enter Password <span style="color: red;">*</span></mat-label>
-                <input formControlName="vEmailorPhone" matInput placeholder="Enter Full Name" type="text">
+                <input formControlName="vPassword" matInput placeholder="Enter Full Name" type="text">
             </mat-form-field>
             <span class="eyeBtn">
                 <span (click)="eyeIcon('show')" *ngIf="eye">
@@ -51,9 +48,6 @@
                 </span>
 
             </span>
-            <div class="invalid-tooltip" *ngIf="createUserLoginFormControls.vPassword.invalid && (createUserLoginFormControls.vPassword.dirty || createUserLoginFormControls.vPassword.touched)">
-                Enter Password*
-            </div>
         </div>
         <div class="form-check" *ngIf="!passwordHide">
             <input [(ngModel)]="isRememberMe" (change)="onChkRemeber($event)" formControlName="bRememberMe" class="form-check-input" type="checkbox" id="flexCheckDefault1">
@@ -112,14 +106,14 @@
             </div>
         </div>
         <div *ngIf='!isOtpLogin' class="submit">
-            <div class="btnLoader" *ngIf="btnLoader">
+            <!-- <div class="btnLoader" *ngIf="btnLoader">
                 <div class="lds-ring">
                     <div></div>
                     <div></div>
                     <div></div>
                     <div></div>
                 </div>
-            </div>
+            </div> -->
 
             <button class="login-btn" type="submit" [ngClass]="{'doctorBackground' : toggle}">Login</button>
         </div>

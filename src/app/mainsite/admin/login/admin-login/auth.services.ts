@@ -44,8 +44,8 @@ export class AuthService {
     loginByUNandPw(nRoleId: number, vMobileNoOrEmailId: string, vPassword: string): Observable<any> {
         return this.http.get<any>(`${this.apiUrl}/UserMaster/GetUserDetailsUsingUNandPW/${nRoleId}/${vMobileNoOrEmailId}/${vPassword}`);
     }
-    loginByvUserNameOrMemberCode(nRoleId: number, vUserNameOrMemberCode: string, vPassword: string,vDeviceId): Observable<any> {
-        return this.http.get<any>(`${this.apiUrl}/UserMaster/GetUserDetailsUsingUNandPWUsingUserName/${vUserNameOrMemberCode}/${vPassword}/${vDeviceId}`);
+    loginByvUserNameOrMemberCode(vUserName, vPassword): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/UserMaster/GetUserDetailsUsingUNandPW/${vUserName}/${vPassword}`);
     }
     getUserDetailsByMobOrEmail(nRoleId: number, vMobileNoOrEmailId: string): Observable<any> {
         return this.http.get<any>(`${this.apiUrl}/UserMaster/GetUserDetails/${nRoleId}/${vMobileNoOrEmailId}`);

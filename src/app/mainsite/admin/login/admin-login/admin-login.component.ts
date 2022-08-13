@@ -69,7 +69,7 @@ export class AdminLoginComponent implements OnInit {
       userEmailOrPhone = this.storageService.getRememberMeUser;
     }
     this.userLoginForm = this.formBuilder.group({
-      vEmailorPhone: [userEmailOrPhone, [Validators.required]],
+      vUserName: [userEmailOrPhone, [Validators.required]],
       vPassword: [null, [Validators.required]],
       bRememberMe: [false],
       bOtp: [false],
@@ -96,11 +96,8 @@ export class AdminLoginComponent implements OnInit {
     return this.userForgetPasswordForm.controls;
   }
   onSubmitUserLoginForm() { 
-    let vEmailorPhone = this.userLoginForm.controls.vEmailorPhone.value;
+    let vEmailorPhone = this.userLoginForm.controls.vUserName.value;
     let vPassword = this.userLoginForm.controls.vPassword.value;
-    let vDeviceId = null
-    console.log("vEmailorPhone")
-    console.log(vEmailorPhone)
     if(vEmailorPhone==null && vPassword==null || vEmailorPhone==undefined && vPassword==undefined ){
       this.notifier.showError("Please Enter UserName/MemberCode or password");
     }else{
@@ -108,7 +105,8 @@ export class AdminLoginComponent implements OnInit {
       if (this.storageService.isUserRemberMe == 'true') {
         this.storageService.setRememberMe = vEmailorPhone;
       }
-      this.authService.loginByvUserNameOrMemberCode(this.roleId, vEmailorPhone, vPassword,vDeviceId).subscribe((users: any) => {
+      this.authService.loginByvUserNameOrMemberCode(vEmailorPhone, vPassword).subscribe((users: any) => {
+        console.log('users',users)
         if (users) {
           if (users.data.length > 0) {
             this.storageService.setMemberToken = users.jwtToken;
@@ -171,7 +169,7 @@ export class AdminLoginComponent implements OnInit {
     this.storageService.loginUserdetails = user;
     if (this.storageService.roleId == "1") {
       this.storageService.setHealthParameter = true;
-      this.router.navigate(['/ad/login'], {
+      this.router.navigate(['/ad'], {
         state: {
           user: JSON.stringify(user)
         }

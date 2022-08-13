@@ -6,70 +6,7 @@
     </span> Internet issue
     </span>
 </div>
-<div class="container-fluid top-header ">
-    <div class="mobile-menu" (click)="sideMenuBar($event)">
-        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-        </svg> -->
-        <svg xmlns="http://www.w3.org/2000/svg" width="57" height="58" viewBox="0 0 57 58">
-            <g id="Group_2" data-name="Group 2" transform="translate(-425 -174)">
-                <ellipse id="Ellipse_1" data-name="Ellipse 1" cx="28.5" cy="29" rx="28.5" ry="29"
-                    transform="translate(425 174)" fill="#7087db" />
-                <g id="Group_1" data-name="Group 1" transform="translate(435.292 187.458)">
-                    <rect id="Rectangle_1" data-name="Rectangle 1" width="36" height="6" rx="3"
-                        transform="translate(-0.292 -0.458)" fill="#fff" />
-                    <rect id="Rectangle_2" data-name="Rectangle 2" width="36" height="6" rx="3"
-                        transform="translate(-0.292 24.542)" fill="#fff" />
-                    <rect id="Rectangle_3" data-name="Rectangle 3" width="24" height="6" rx="3"
-                        transform="translate(-0.292 12.042)" fill="#fff" />
-                </g>
-            </g>
-        </svg>
-    </div>
-    <div class="top-menu">
-        <div class="lft-logo">
-            <a href="https://drome.co.in/"><img [src]="urlLink2" class="logo"></a>
-        </div>
-        <span class="mobileMenu2" *ngIf="roleId == '1'" (click)="menuClick($event)">
-            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 57 58">
-                <g id="Group_2" data-name="Group 2" transform="translate(-425 -174)">
-                    <ellipse id="Ellipse_1" data-name="Ellipse 1" cx="28.5" cy="29" rx="28.5" ry="29"
-                        transform="translate(425 174)" fill="#fff" />
-                    <g id="Group_1" data-name="Group 1" transform="translate(435.292 187.458)">
-                        <rect id="Rectangle_1" data-name="Rectangle 1" width="36" height="6" rx="3"
-                            transform="translate(-0.292 -0.458)" />
-                        <rect id="Rectangle_2" data-name="Rectangle 2" width="36" height="6" rx="3"
-                            transform="translate(-0.292 24.542)" />
-                        <rect id="Rectangle_3" data-name="Rectangle 3" width="24" height="6" rx="3"
-                            transform="translate(11.708 12.042)" />
-                    </g>
-                </g>
-            </svg>
-        </span>
 
-        <div class="right-menu" *ngIf="roleId == '1'">
-            <ul [ngClass]="{'menuShow':menuShow}">
-                <!-- <li><a (click)="redairect()" style="background: #31b0a4;">
-                    <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-                            <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
-                          </svg>
-                    </span>
-                    Home</a></li> -->
-                <!-- <li><a (click)="openModalFirst(templateMedicine)">Order Medicines</a></li>
-                <li><a (click)="openModalFirst(templateMedicine)">Order Investigations</a></li> -->
-                <li><a (click)="openModalFirst(templateMedicine)">Ambulance Services</a></li>
-                <li><a (click)="openModalFirst(templateMedicine)">Concierge Services</a></li>
-            </ul>
-        </div>
-        <span class="flex" *ngIf="roleId == '1' || roleId == '2' || roleId == '3'|| roleId == '8'|| roleId == '11'|| roleId == '12'|| roleId == '13'|| roleId == '16'|| roleId == '17'">
-            <span class="messageCount" routerLink="{{userRole}}/mailbox">Inbox: <b>{{this.count}}</b></span>
-        </span>
-    </div>
-
-</div>
 
 <section class="user-profile-section">
     <!-- <mat-progress-bar mode='indeterminate' *ngIf="loaderService.isLoading | async"></mat-progress-bar> -->
@@ -78,17 +15,17 @@
             <div class="row">
                 <div class="col-3" [ngClass]="{'sideBarClose' : toggleMenuProfile}">
                     <div class="user-aside" [ngClass]="{'user-aside2' : roleId==2|| roleId==8}">
-                        <div class="close-profilemenu" (click)="closeProfilesMenu()">
+                        <!-- <div class="close-profilemenu" (click)="closeProfilesMenu()">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                                 <path
                                     d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                             </svg>
-                        </div>
+                        </div> -->
                         <div class="user-head">
                             <div class="user-head-box" [ngClass]="{'user-aside2' : roleId==2 || roleId==8}">
-                                <div class="user-img">
+                                <!-- <div class="user-img">
                                     <img [src]="urlLink" alt="">
-                                    <!-- <span class="user-img-edit">
+                                    <span class="user-img-edit">
                                         <button type="button" (click)="ProfileFiles.click()" class="fileUpload" title="Edit Photo">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -98,10 +35,10 @@
                                         <span><input (click)="reset()" value="" type="file"
                                                 (change)="selectFiles(templateImageCroper,$event)"
                                                 style="display: none;" #ProfileFiles> </span>
-                                    </span> -->
+                                    </span>
 
                                 </div>
-                                <!-- <div class="uploadBtn">
+                                <div class="uploadBtn">
                                     <div class="UploadImage" *ngIf="!uploadBtn">
                                         <span class="button" (click)="openWebCam(templatewebcam)" title="Take Picture" style="cursor: pointer;">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
@@ -168,9 +105,6 @@
                             </div>
                             <div class="user-name" [ngClass]="{'user-name-1' : roleId == '3' || roleId == '11' || roleId == '12' || roleId == '13' || roleId == '14' || roleId == '15' || roleId == '16' }">
                                 <span style="background: rgba( 0,208,255,0.6); padding-left: 3px;" *ngIf="roleId == '3' || roleId == '11' || roleId == '12' || roleId == '13'|| roleId == '14' || roleId == '15' || roleId == '16'" class="age-title" [ngClass]="{'age-title-1' : roleId == '3' || roleId == '11' || roleId == '12' || roleId == '13'|| roleId == '14' || roleId == '15' || roleId == '16' }">
-                                    <!-- <spanng
-                                        class="titleName"
-                                        [ngClass]="{'titleName-1' : roleId == '3' || roleId == '11' || roleId == '12' || roleId == '13' }"></spanng> -->
                                     <span class="name"
                                         [ngClass]="{'name-1' : roleId == '3' || roleId == '11' || roleId == '12' || roleId == '13' || roleId == '14' || roleId == '15' || roleId == '16'}">
                                         {{establishmentName}}
@@ -226,7 +160,7 @@
                                             </span>
                                         </a>
                                         <div class="subMenuWrapper" [ngClass]="{'bottom' : item.nPageId==44 || item.nPageId==20|| item.nPageId==109,'user-aside2':roleId==2 || roleId==8, 'subMenuWrapper2':submenu==true}">
-                                            <div class="subMenu" *ngFor="let page of pageDetails">
+                                            <div class="subMenu" *ngFor="let page of pageDetails|pageFilter:item">
                                                 <a routerLinkActive="list-item-active" style="border-bottom: 0.5px solid rgba(222,220,217,0.7);" routerLink="{{userRole}}/{{page.vPageName.toLowerCase()}}" [queryParams]="{ title:page.vPageCaption }" (click)='closeMatSideBar($event)'>
                                                     {{page.vPageCaption}}
                                                 </a>
