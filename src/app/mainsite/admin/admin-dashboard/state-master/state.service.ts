@@ -2,8 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { StateMaster, stateMasterList } from '../../mainsite/models/state.model';
-import { CountryMaster } from '../../mainsite/models/counntry.model';
+
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -15,12 +14,12 @@ export class StateService {
 
     }
     apiUrl = environment.dossiarApiUrl;
-    getStateList(): Observable<stateMasterList[]> {
-        return this.http.get<stateMasterList[]>(`${this.apiUrl}/StateMaster`);
+    getStateList(): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/StateMaster`);
 
     }
-    getCountryList(): Observable<CountryMaster[]> {
-        return this.http.get<CountryMaster[]>(`${this.apiUrl}/CountryMaster`);
+    getCountryList(): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/CountryMaster`);
 
     }
     saveState(stateMaster: object , formType: String): Observable<any> {
@@ -37,8 +36,8 @@ export class StateService {
         return this.http.put(`${this.apiUrl}/StateMaster`, stateMaster);
 
     }
-    getActiveStateList(): Observable<StateMaster[]> {
-        return this.http.get<StateMaster[]>(`${this.apiUrl}/StateMaster/GetAllActiveStates`);
+    getActiveStateList(): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/StateMaster/GetAllActiveStates`);
 
     }
     //#endregion CDE Services.

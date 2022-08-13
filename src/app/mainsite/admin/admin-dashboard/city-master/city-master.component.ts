@@ -4,10 +4,12 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
+import { StateMaster } from 'src/app/mainsite/models/state.model';
+import { CityMaster, CityMasterList } from '../../../models/city-master';
 import { CityMasterService } from './city-master.service';
-import { CityMaster, CityMasterList } from '../../mainsite/models/city-master';
-import { StateMaster } from '../../mainsite/models/state.model';
 import { StateService } from '../state-master/state.service';
+
+
 // import { NotificationService } from 'src/app/core/services/notification.service';
 // import { LoaderService } from 'src/app/loader/loader.service';
 

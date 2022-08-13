@@ -9,14 +9,13 @@
                         <li><a routerLink="home" routerLinkActive="active">Home</a></li>
                         <li><a routerLink="/about-us" routerLinkActive="active">About Us</a></li>
                         <li><a routerLink="/contact-us" routerLinkActive="active">Contact Us</a></li>
+
+                        <!-- <li><a style="cursor: pointer;" routerLinkActive="active"  ></a></li>
+                        <li><a style="cursor: pointer;" routerLinkActive="active" ></a></li>
                         <li>
-                            <div>
-                                <button class="log-in-buton" (click)="openModal(templateLoginMaster)">
-                                    Login
-                                </button>
-                            </div>
-                        </li>
-                        <li style="position: relative;">
+                            
+                        </li> -->
+                        <!-- <li style="position: relative;">
                             <span class="signup_link" (click)="toggle_nav()" *ngIf="!toggle_nav_list">
                                 Signup
                             </span>
@@ -31,125 +30,31 @@
                                 <li (click)="openDriverSignup(driversignup)">Driver's Signup</li>
                                 <li (click)="openCstomersignup(customersignup)">Customer's Signup</li>
                             </ul>
-                        </li>
+                        </li> -->
                         <li>
 
                         </li>
 
 
                     </ul>
+                    <div>
+                        <button class="log-in-buton" routerLink="driver-signup">
+                            Driver's Signup
+                        </button>
+                        <button class="log-in-buton" routerLink="customer-signup" >
+                            Customer's Signup
+                        </button>
+                        <!-- <button class="log-in-buton" (click)="openModal(templateLoginMaster)">
+                            Login
+                        </button> -->
+                    </div>
                 </div>
+                
             </div>
         </div>
     </div>
     <ng-template #templateLoginMaster>
-        <form *ngIf="!isOtpReceived" [formGroup]="userLoginForm" (ngSubmit)="onSubmitUserLoginForm()" [@fade]>
-            <div class="modal-container">
-                <div class="model-header">
-                    <div></div>
-                    <div class="close-btn">
-                        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                            <mat-icon>close</mat-icon>
-                        </button>
-                    </div>
-
-                </div>
-                <div class="head-title">
-                    <div class="title">
-                        <h1 class="modal-title pull-left" mat-dialog-title>{{ModalTitle}}</h1>
-
-                    </div>
-                </div>
-
-                <div mat-dialog-content>
-                    <div class="model-body">
-                        <div>
-                            <div class="ma-input">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Mobile Number</mat-label>
-                                    <mat-icon matSuffix>email</mat-icon>
-                                    <input matInput formControlName="vMobileNo" placeholder="Enter Mobile Number"
-                                        type="text">
-                                </mat-form-field>
-                            </div>
-
-                            <div class="ma-input" *ngIf="!passwordHide">
-                                <mat-form-field style="width: 100%;" appearance="outline">
-                                    <mat-label>Password</mat-label>
-                                    <input formControlName="vPassword" style="width: 80%;" matInput
-                                        placeholder="Enter Password" type="{{pass}}">
-                                    <mat-icon (click)="eyeIconLogin('show')" *ngIf="eye" matSuffix>visibility</mat-icon>
-                                    <mat-icon (click)="eyeIconLogin('hide')" *ngIf="!eye" matSuffix>visibility_off
-                                    </mat-icon>
-                                </mat-form-field>
-                            </div>
-
-                            <div class="forgot" [ngClass]="{'marginBottum': passwordHide}">
-
-                                <div class="forgot-remember">
-                                    <div class="form-check">
-                                        <input formControlName="btRememberMe" [(ngModel)]="isRememberMe"
-                                            class="form-check-input" type="checkbox" id="flexCheckDefault1">
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            Remember me
-                                        </label>
-                                        <!-- <a class="forget-pasword" >Forget Password</a> -->
-                                    </div>
-                                    <span *ngIf="!passwordHide">
-                                        <button style="background-color: #fff; border: none ">Forgot Password?</button>
-                                    </span>
-                                </div>
-
-                                <div class="form-check" (change)="onCheckboxChange($event)">
-                                    <input formControlName="btLoginWithOtp" class="form-check-input" type="checkbox"
-                                        value="" id="flexCheckDefault2">
-                                    <label class="form-check-label" for="flexCheckDefault2">
-                                        Login with OTP instead of password
-                                    </label>
-                                </div>
-
-                            </div>
-
-                            <div *ngIf='isOtpLogin'>
-                                <div style="font-size: 13px;color: #000;">Where do you want the OTP?</div>
-
-                                <div class="form-check">
-                                    <input formControlName="vMobileNo" class="form-check-input" type="checkbox"
-                                        name="flexRadioDefault" id="flexRadioDefault1">
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        Mobile Number
-                                    </label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input formControlName="vEmailId" class="form-check-input" type="checkbox"
-                                        name="flexRadioDefault" id="flexRadioDefault2">
-                                    <label class="form-check-label" for="flexRadioDefault2">
-                                        Email
-                                    </label>
-                                </div>
-
-                                <div class="send-otp-btn">
-                                    <button
-                                        style="background-color:#1ce1ee; width: 100%;padding: 8px 12px;height: 40px;border-radius: 8px;font-size: 18px;color: #fff;font-weight: 600;border: none;"
-                                        type="button">
-                                        Send OTP
-                                    </button>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div *ngIf="!passwordHide" class="log-in-btn">
-                            <button [disabled]="userLoginForm.invalid" class="enable-btn-gray" type="button">
-                                Login
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </form>
+        
 
     </ng-template>
     <ng-template #driversignup>

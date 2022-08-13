@@ -18,13 +18,17 @@ export class CustomerSignupService {
   GetOTPMsgMailVerifyEmail(email): Observable<any> {
     return this.http.get(`${this.apiUrl}/Utility/GetOTPMsgMailVerifyEmail/${email}`)
   }
-  PostCreateUserCustomer(postCreateCustomers,AadharNoFile){
-    const formData = new FormData();
-    // Store form name as "file" with file data
-    formData.append("AadharNoFile", AadharNoFile);
-    // formData.append("fileSize", fileSize);
-    formData.append("CustomerMaster", JSON.stringify(postCreateCustomers));
-    return this.http.post(`${this.apiUrl}/CustomerMaster`, formData);
+  GetCityIdAgainstCityName(vCityName): Observable<any> {
+    return this.http.get(`${this.apiUrl}/CityMaster/GetCityIdAgainstCityName/${vCityName}`)
+  }
+
+  PostCreateUserCustomer(postCreateCustomers){
+    // const formData = new FormData();
+    // // Store form name as "file" with file data
+    // formData.append("AadharNoFile", AadharNoFile);
+    // // formData.append("fileSize", fileSize);
+    // formData.append("CustomerMaster", JSON.stringify(postCreateCustomers));
+    return this.http.post(`${this.apiUrl}/CustomerMaster`, postCreateCustomers);
   }
 
 }

@@ -41,7 +41,7 @@ input[type=number] {
 .lds-ring {
   display: inline-flex;
   position: relative;
-  width: 96%;
+  width: 100%;
   background: #1ce1ee;
   height: 40px;
   justify-content: center;
@@ -98,4 +98,7 @@ input[type=number] {
           margin: 0 auto 20px;
       }
   }
+}
+.container-xl{
+  max-width: 1337px;
 }

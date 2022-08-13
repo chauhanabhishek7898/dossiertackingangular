@@ -1,0 +1,32 @@
+.login-from {
+    width: 30%;
+    margin: 20px auto;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 6px 0 rgba($color: #000000, $alpha: 0.5);
+}
+.input-group{
+    position: relative;
+    .eyeBtn {
+        position: absolute;
+        right: 15px;
+        top: 19px;
+    }
+}
+::ng-deep .mat-form-field-wrapper{
+    padding-bottom: 10px !important;
+    margin: 0 !important;
+}
+.form-check{
+    display: flex;
+    justify-content: space-between;
+}
+.login-btn {
+    width: 100%;
+    border: none;
+    padding: 10px 0;
+    color: #fff;
+    background: #e45f4c;
+    border-radius: 50px;
+    margin-top: 10px;
+}

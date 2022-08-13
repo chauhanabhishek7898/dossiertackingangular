@@ -85,7 +85,7 @@ export class CustomerSignupComponent implements OnInit {
   options: any =
     {
       componentRestrictions: { country: ["in"] },
-      fields: ["address_components", "geometry"],
+      fields: ["address_components", "geometry","formatted_address"],
       //types: ["address"],
     }
   maxDate = new Date();
@@ -121,19 +121,40 @@ export class CustomerSignupComponent implements OnInit {
   isLoading = false;
   addressLat
   addressLong
+  cityName
+  cityservice=false
+  cityServiceResult
   AddressChange(address: any) {
     //setting address from API to local variable
     console.log(address)
     this.formattedaddress = address.formatted_address
+    console.log('this.formattedaddress',this.formattedaddress)
     this.addressLat = address.geometry.location.lat()
     this.addressLong = address.geometry.location.lng()
     address.address_components.forEach(element => {
+      console.log(element)
       let componentType = element.types[0];
       if (componentType == "locality") {
-        alert(element.long_name);
+        // alert(element.long_name);
+        this.customerSignupForm.get('nCityId')?.setValue(element.long_name)
+        this.cityName= element.long_name
+        this.cityNameCheck(element.long_name)
         return;
       }
     });
+  }
+  cityNameCheck(cityName){
+    this.customerSignupService.GetCityIdAgainstCityName(cityName).subscribe((res)=>{
+      console.log('res', res)
+      if(typeof res == "string"){
+        this.cityservice= true
+        this.cityServiceResult=res
+      }else{
+        this.cityservice= false
+        this.cityServiceResult=''
+        this.cityId=res[0].nCityId
+      }
+    })
   }
   onSelected() {
     this.selectedCity = this.selectedCity;
@@ -217,6 +238,7 @@ export class CustomerSignupComponent implements OnInit {
   errorMobileTxt = false;
   errorEmailTxt = false;
   errorCityTxt = false;
+  addressError=false
   submitCustomerSignup() {
     let dob;
     if (this.customerSignupForm.controls.dtDOB.value != null) {
@@ -239,6 +261,7 @@ export class CustomerSignupComponent implements OnInit {
         this.errorEmailTxt = true;
       }
     } else {
+      if(this.addressLat || this.addressLong){
       this.btnLoader = true;
       this.listCustomer = [];
 
@@ -268,11 +291,12 @@ export class CustomerSignupComponent implements OnInit {
         vPassword: this.customerSignupForm.controls.vPassword.value,
         vEmailId: this.customerSignupForm.controls.vEmailId.value,
         btPromotion: false,
-        nCityId: this.cityId,
+        nCityId:  this.cityId,
         vAddress: this.formattedaddress,
         vFlatNoPlotNoLaneBuilding: this.customerSignupForm.controls.vFlatNoPlotNoLaneBuilding.value,
         vLat: this.addressLat,
-        vLong: this.addressLong
+        vLong: this.addressLong,
+        vCityName:this.cityName
       };
 
       this.listCustomer.push(this.addCustomerUserModel);
@@ -280,26 +304,29 @@ export class CustomerSignupComponent implements OnInit {
       this.CustomerMasterClass = {
         CustomerMaster: this.listCustomer,
       };
-      this.customerSignupService.PostCreateUserCustomer(this.CustomerMasterClass, this.file).subscribe((status: any) => {
-        // this.apiStatus = `Congratulations, User has been created successfully with member Code:  ${status[0].MemberCode}. You may further use it to login in the APP.
-        // Though, it has to be approved by the APP Administrator before logging in. Thanks, for your kind patience.`;
-        if (status) {
-          this.customerSignupForm.reset();
-          this.file = null!
-        }
-        setTimeout(() => {
-          this.btnLoader = false;
-        }, 300);
-      },
-        (error: HttpErrorResponse) => {
-          console.log('error', error);
-          // this.apiError = error.statusText
-          // this.error = true
-          // setTimeout(() => {
-          //   this.error = false
-          // }, 3000)
-        }
-      );
+      this.customerSignupService.PostCreateUserCustomer(this.CustomerMasterClass).subscribe((status: any) => {
+            // this.apiStatus = `Congratulations, User has been created successfully with member Code:  ${status[0].MemberCode}. You may further use it to login in the APP.
+            // Though, it has to be approved by the APP Administrator before logging in. Thanks, for your kind patience.`;
+            if (status) {
+              this.customerSignupForm.reset();
+              this.file=null!
+            }
+            setTimeout(() => {
+              this.btnLoader = false;
+            }, 300);
+          },
+          (error: HttpErrorResponse) => {
+            console.log('error', error);
+            // this.apiError = error.statusText
+            // this.error = true
+            // setTimeout(() => {
+            //   this.error = false
+            // }, 3000)
+          }
+        );
+      }else{
+        this.addressError=true
+      }
     }
   }
 
