@@ -1,0 +1,23 @@
+@import "../state-master/state-master.component.scss";
+.country{
+    display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+
+.input-group-2{
+    width: 45% !important;
+}
+.input-group-1{
+    select{
+      font-size: 12px;
+    }
+}
+.country-edit-model{
+  // height: 31vh;
+  height: auto;
+  @media screen and (max-width: 768px) {
+    height: auto;
+}
+}

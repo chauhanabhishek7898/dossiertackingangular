@@ -55,9 +55,9 @@ interface Food {
 })
 export class MainsiteComponent implements OnInit {
   onActivate(event) {
-    window.scroll(0,0);
-    
-}
+    window.scroll(0, 0);
+  }
+
   @ViewChild('driversignup') private driversignup: TemplateRef<any>;
   @ViewChild('customersignup') private customersignup: TemplateRef<any>;
   customerSignupForm: FormGroup;
@@ -66,17 +66,15 @@ export class MainsiteComponent implements OnInit {
     { value: 'pizza-1', viewValue: 'Male' },
     { value: 'tacos-2', viewValue: 'Female' },
   ];
+
   constructor(
     private formBuilder: FormBuilder,
     private modalService: BsModalService,
     private sanitizer: DomSanitizer,
     private loginService: LoginService, //   private authService: AuthService, //   private notifier: NotificationService,
     private cityDropDownService: CitymasterService,
-    private router: Router,
-  ) //   private storageService: StorageService,
-  //   private router: Router,
-  //   public loaderService: LoaderService,
-  { }
+    private router: Router //   private storageService: StorageService, //   private router: Router,
+  ) {}
   driverSignupForm: FormGroup;
   userLoginForm: FormGroup;
   userForgetPasswordForm: FormGroup;
@@ -93,8 +91,6 @@ export class MainsiteComponent implements OnInit {
   maxDate;
   matcher = new MyErrorStateMatcher();
   ngOnInit(): void {
-
-
     this.driverSignupForm = this.formBuilder.group({
       nDriverId: 0,
       nUserId: [null],
@@ -116,16 +112,13 @@ export class MainsiteComponent implements OnInit {
       vVehicleRegistrationNoFilePath: [null, [Validators.required]], //  fourthfile  //
       vVehicleInsuranceFilePath: [null, [Validators.required]], //  fifth file  //
       vPhotoFilePath: [null, [Validators.required]], //  sixth file  //
-      // vAnyOtherRemarks: [null, [Validators.required]],
       vFullName: [null, [Validators.required]],
       vMobileNo: [null, [Validators.required]],
       vPassword: [null, [Validators.required]],
       vEmailId: [null, [Validators.required]],
       btPromotion: [false, [Validators.required]],
-      // btOnDuty:[null],
       vDiriverCurrentLat: [null],
       vDiriverCurrentLong: [null],
-
       dConfirmPassword: [null, [Validators.required]],
       dTermCondition: [false, [Validators.required]],
     });
@@ -135,8 +128,43 @@ export class MainsiteComponent implements OnInit {
       btRememberMe: [false],
       btLoginWithOtp: [false],
     });
-
     this.maxDate = new Date();
+    this.loadProfilePic();
+  }
+  loadProfilePic() {
+    // this.loader = true;
+    this.loginService.loginAndGetUserDetailsByvUserNameOrvPassword(parseInt("6260216707"), parseInt("123")).subscribe(
+      (patients) => {
+        console.log('patients', patients);
+        // alert(patients);
+        //   this.vOtherRoleId = patients[0].vOtherRoleId
+        // if (patients) {
+        //   this.viewOtherRollModel = patients[0]
+        //   this.selectedCity.nCityId = this.viewOtherRollModel?.nCityId!!
+        //   this.selectedCity.CityDetails = this.viewOtherRollModel?.CityDetails
+        //   this.viewUpdateProfileFrom.patchValue({
+        //     vEmailId: this.viewOtherRollModel?.vEmailId,
+        //     vMobileNo: this.viewOtherRollModel?.vMobileNo,
+        //     nOtherRoleId: this.viewOtherRollModel?.nOtherRoleId,
+        //     vOtherRoleId: this.viewOtherRollModel?.vOtherRoleId,
+        //     vGender: this.viewOtherRollModel?.vGender,
+        //     dtDOB: this.viewOtherRollModel?.dtDOB,
+        //     vAddress: this.viewOtherRollModel?.vAddress,
+        //     nCityId: this.viewOtherRollModel?.CityDetails,
+        //     vOtherInformationIfAny: this.viewOtherRollModel?.vOtherInformationIfAny,
+        //     vPinCode: this.viewOtherRollModel?.vPinCode,
+        //     vFullName: this.viewOtherRollModel?.vFullName,
+        //   });
+      }
+
+      //   else {
+      //     this.notifier.showSuccess("Something Wrong");
+      //   }
+      //   setTimeout(() => {
+      //     this.loader = false
+      //   }, 300)
+      // }
+    );
   }
   get createUserLoginFormControls(): any {
     return this.userLoginForm.controls;
@@ -157,6 +185,7 @@ export class MainsiteComponent implements OnInit {
     console.log(address.geometry.location.lng());
     console.log(address.geometry.location.lat());
   }
+
   onchange(e) {
     let val = e.target.value;
     //  alert(val)
@@ -202,7 +231,7 @@ export class MainsiteComponent implements OnInit {
     this.modalRef = this.modalService.show(template, this.config);
     this.ModalTitle = 'Login';
   }
-  onSubmitUserLoginForm(): void { }
+  onSubmitUserLoginForm(): void {}
 
   //  extra useful code below  //
 
@@ -235,17 +264,23 @@ export class MainsiteComponent implements OnInit {
     // this.timerOn = false;
     this.btnLoader = false;
   }
-  toggle_nav_list: boolean = false
+  toggle_nav_list: boolean = false;
   toggle_nav() {
-    this.toggle_nav_list = !this.toggle_nav_list
+    this.toggle_nav_list = !this.toggle_nav_list;
   }
   openDriverSignup(template: TemplateRef<any>) {
-    this.modalRefdriversignup = this.modalService.show(template, this.configdriversignup);
-    this.modeltitledriversignup = "Driver's Signup"
+    this.modalRefdriversignup = this.modalService.show(
+      template,
+      this.configdriversignup
+    );
+    this.modeltitledriversignup = "Driver's Signup";
   }
   openCstomersignup(template: TemplateRef<any>) {
-    this.modalRefcustomersignup = this.modalService.show(template, this.configdriversignup);
-    this.modaltitlecustomersignup = "Customer's Signup"
+    this.modalRefcustomersignup = this.modalService.show(
+      template,
+      this.configdriversignup
+    );
+    this.modaltitlecustomersignup = "Customer's Signup";
   }
 
   sendOtp() {
@@ -481,9 +516,8 @@ export class MainsiteComponent implements OnInit {
       this.eye2 = false;
     }
   }
+
   opentermConditionComponent() {
     this.router.navigate(['/termsandcondition']);
   }
-
-
 }

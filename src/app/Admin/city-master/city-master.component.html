@@ -1,0 +1,91 @@
+<div class="loader" *ngIf="loader">
+    <div class="loading">
+        <img src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
+    </div>
+</div>
+<div class="country-model button-spacing">
+    <button type="button" class="btn" (click)="openModal(templateCityMaster)">Add City</button>
+    <ng-template #templateCityMaster>
+        <div class="country-edit-model">
+            <div class="model-header">
+            <button type="button" class="close-btn pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+            <h1 mat-dialog-title>{{ModalTitle}}</h1>
+            <mat-divider></mat-divider>
+            <div mat-dialog-content>
+                <div class="country-form">
+                    <form class="country" [formGroup]="CityMasterForm" (ngSubmit)="onSubmitCityMasterForm()">
+                        <div class="input-group input-group-1">
+                            <label for="">City Name</label>
+                            <input formControlName="vCityName" appAutofocus type="text" class="form-control" placeholder="City Name" aria-label="Country" aria-describedby="basic-addon1" [ngClass]="{'is-invalid' : createCityMasterFormControls.vCityName.invalid && (createCityMasterFormControls.vCityName.dirty || createCityMasterFormControls.vCityName.touched)}">
+                            <div class="invalid-tooltip" *ngIf="createCityMasterFormControls.vCityName.invalid && (createCityMasterFormControls.vCityName.dirty || createCityMasterFormControls.vCityName.touched)">
+                                <span *ngIf="createCityMasterFormControls.vCityName.errors.required">
+                                    Please enter City Name.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="input-group input-group-1">
+                            <label for="">Select State</label>
+                            <select class="form-select" aria-label="Default select example" formControlName="nStateId" [ngClass]="{'is-invalid' : createCityMasterFormControls.nStateId.invalid && (createCityMasterFormControls.nStateId.dirty || createCityMasterFormControls.nStateId.touched)}">
+                                <option value="0" disabled> Select State</option>
+                                <option value="{{state.nStateId}}" *ngFor="let state of StateList">
+                                    {{state.vStateName}}</option>
+                            </select>
+                            <div class="invalid-tooltip" *ngIf="createCityMasterFormControls.nStateId.invalid && (createCityMasterFormControls.nStateId.dirty || createCityMasterFormControls.nStateId.touched)">
+                                Please Select State.
+                            </div>
+                        </div>
+                        <div class="break"></div>
+                        <div class="form-check mt-2">
+                            <label for="">Is Active</label>
+                            <span class="checkBox">
+                                <input type="checkbox" formControlName="btActive" [disabled]="disabled" />
+                                <span class="active">Active</span>
+                            </span>
+                        </div>
+                        <div class="submit mt-2"> <button class="btn btn-primary" type="submit" [disabled]="CityMasterForm.invalid">{{formType}}</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>
+<mat-divider></mat-divider>
+
+<div class="country-table">
+    <table datatable class="ui celled table nowrap dt-responsive" style="width:100%" [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+        <thead>
+            <tr>
+                <th class="no-sort" style="background-image: none !important;">#</th>
+                <th style="background-image: none !important;">City Name</th>
+                <th class="no-sort" style="background-image: none !important;">State Name</th>
+                <th class="no-sort" style="background-position:115px">Country Name</th>
+                <th class="no-sort" style="background-image: none !important;">Status</th>
+                <th class="no-sort" style="background-image: none !important;">Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of CityMasterList; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{item.vCityName}}</td>
+                <td>{{item.vStateName}}</td>
+                <td>{{item.vCountryName}}</td>
+                <td><input disabled [checked]=item.btActive type="checkbox" /></td>
+                <td>
+                    <span (click)="editClick(templateCityMaster,item.nCityId)"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path
+                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                            <path fill-rule="evenodd"
+                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                        </svg></span>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+
+</div>
