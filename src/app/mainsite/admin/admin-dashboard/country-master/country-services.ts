@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CountryMaster } from '../../mainsite/models/counntry.model';
+
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -14,8 +14,8 @@ export class CountryService {
 
     }
     apiUrl = environment.dossiarApiUrl;
-    getCountryList(): Observable<CountryMaster[]> {
-        return this.http.get<CountryMaster[]>(`${this.apiUrl}/CountryMaster`);
+    getCountryList(): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/CountryMaster`);
 
     }
     saveCountry(countryMaster: object, formType: String): Observable<any> {

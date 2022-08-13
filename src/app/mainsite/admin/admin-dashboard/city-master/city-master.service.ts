@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { CityMaster, CityMasterList } from '../../mainsite/models/city-master';
+import { CityMaster, CityMasterList } from '../../../models/city-master';
 import { environment } from 'src/environments/environment';
 import { delay } from 'rxjs/operators';
 

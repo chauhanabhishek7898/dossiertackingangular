@@ -1,3 +1,4 @@
+
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   Component,
@@ -17,12 +18,11 @@ import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
+import { CountryMaster } from '../../../models/counntry.model';
+import { StateMaster, stateMasterList } from '../../../models/state.model';
 import { CountryService } from '../country-master/country-services';
-import { CountryMaster } from '../../mainsite/models/counntry.model';
-import {
-  StateMaster,
-  stateMasterList,
-} from '../../mainsite/models/state.model';
+
+
 import { StateService } from './state.service';
 // import { NotificationService } from 'src/app/core/services/notification.service';
 // import { LoaderService } from 'src/app/loader/loader.service';

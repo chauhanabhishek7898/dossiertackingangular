@@ -1,6 +1,4 @@
-import { StateMasterComponent } from './Admin/state-master/state-master.component';
-import { CountryMasterComponent } from './Admin/country-master/country-master.component';
-import { CityMasterComponent } from './Admin/city-master/city-master.component';
+
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import {
@@ -34,7 +32,12 @@ import { ContactUsComponent } from './mainsite/contact-us/contact-us.component';
 import { FaqsComponent } from './mainsite/faqs/faqs.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { AboutUsComponent } from './mainsite/about-us/about-us.component';
-import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+
+import { AdminLoginComponent } from './mainsite/admin/login/admin-login/admin-login.component';
+import { AdminModule } from './mainsite/admin/admin.module';
+import { AdminDashboardComponent } from './mainsite/admin/admin-dashboard/admin-dashboard.component';
+import { PageFilterPipe } from './core/pipe/page-filter';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
@@ -49,9 +52,10 @@ import { DataTablesModule } from 'angular-datatables';
     ContactUsComponent,
     FaqsComponent,
     AboutUsComponent,
-    CityMasterComponent,
-    CountryMasterComponent,
-    StateMasterComponent
+    AdminDashboardComponent,
+    AdminLoginComponent,
+    PageFilterPipe,
+  
   ],
   imports: [
     GooglePlaceModule,
@@ -73,20 +77,19 @@ import { DataTablesModule } from 'angular-datatables';
     MatAutocompleteModule,
     ToastrModule.forRoot(),
     MatExpansionModule,
+    // AdminModule,
+    // PageFilterPipe
+    
     DataTablesModule
 
   ],
-  exports: [TermsandconditionComponent,
-    CityMasterComponent,
-    CountryMasterComponent,
-    StateMasterComponent
-    ],
   providers:
     [
       BsModalService,
       HttpClientModule,
       DatePipe,
-      NotificationService
+      NotificationService,
+      PageFilterPipe
     ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 

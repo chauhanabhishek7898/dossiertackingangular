@@ -184,3 +184,27 @@
 ::ng-deep .pac-container{
   z-index: 1000000;
 }
+.form-box{
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0;
+}
+// .left-form-image{
+//   width: 30%;
+// }
+.right-form{
+  width: 100%;
+}
+.submit{
+  position: relative;
+  padding-bottom: 35px;
+}
+
+
+.signup-head {
+    text-align: center;
+    background: #eb6f48;
+    h2{
+      color: #fff;
+    }
+}

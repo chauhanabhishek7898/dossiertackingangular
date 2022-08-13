@@ -64,24 +64,31 @@
     }
   }
 }
-
-.offers {
-  background: #98b2ff;
-
-  .section_heading {
+.section_heading {
     padding-top: 10px;
+    text-align: center;
 
     h2 {
       font-size: 28px;
       text-align: center;
       font-weight: 500;
+    //   margin-bottom: 0;
+    }
+    p{
+        color: #000;
+        font-size: 14px;
     }
   }
+
+.offers {
+  background: #98b2ff;
+
+  
 
   .offer_list {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: baseline;
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -91,10 +98,11 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 385px;
+      width: 300px;
       display: -webkit-box;
       display: -ms-flexbox;
       display: -webkit-flex;
+      margin: 0 30px;
 
       .offer_icon {
         border-radius: 50%;
@@ -112,6 +120,7 @@
       h3 {
         font-size: 15px;
         font-weight: 500;
+        margin-bottom: 0;
       }
 
       .offer_details {
@@ -138,7 +147,8 @@
     display: -webkit-flex;
 
     img {
-      width: 440px;
+    //   width: 440px;
+      width: auto;
     }
 
   }
@@ -184,7 +194,7 @@
         display: inline-block;
         height: 12px;
         width: 20px;
-        background-image: url('../../../assets/images/check.png');
+        background-image: url('../../../assets/images/check.jpg');
         background-size: contain;
         background-repeat: no-repeat;
 
@@ -395,11 +405,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 
     h2 {
       font-size: 28px;
+    //   margin-bottom: 0;
 
     }
+    p{
+        font-size: 12px;
+    }
+  }
+  .row{
+    justify-content: center;
   }
 }
 

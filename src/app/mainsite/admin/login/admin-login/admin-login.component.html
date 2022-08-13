@@ -1,0 +1,302 @@
+<!-- <section class="login-button">
+    <div class="login-or-rgister">
+        <button class="login-btn " id="login" routerLinkActive="Active" routerLink="/login" [ngClass]="{'doctorBackground' : toggle}">Login</button>
+        <button class="login-btn" id="register" routerLinkActive="Active" routerLink="/register" [ngClass]="{'doctorBackground' : toggle}">Sign Up</button>
+    </div>
+</section> -->
+<div class="login-from" [ngClass]="{'borderColor' : toggle}">
+    <div class="form-head" [ngClass]="{'doctorBackground' : toggle}">
+        <h1>Admin Login</h1>
+        <!-- <span class="doctor-register">Are you a {{ toggle ? 'Patient' : 'Doctor' }} ?
+            <a class="doctor-btn" (click)="doctorClick()" [ngClass]="{'btnBackground' : toggle}">
+                click Here</a></span> -->
+    </div>
+    <!-- <mat-progress-bar mode="indeterminate" *ngIf="loader"></mat-progress-bar> -->
+    <form *ngIf="!isOtpReceived" [formGroup]="userLoginForm" (ngSubmit)="onSubmitUserLoginForm()">
+        <!-- <div class="login-name" style="display: flex; justify-content: flex-end;">
+            
+        </div> -->
+
+        <div class="input-group mb-3">
+            <mat-form-field style="width: 100%;" appearance="outline">
+                <mat-label>Mobile No. <span style="color: red;">*</span></mat-label>
+                <input formControlName="vUserName" matInput placeholder="Enter Full Name" type="text">
+            </mat-form-field>
+        </div>
+        <div class="input-group mb-3" *ngIf="!passwordHide">
+            <mat-form-field style="width: 100%;" appearance="outline">
+                <mat-label>Enter Password <span style="color: red;">*</span></mat-label>
+                <input formControlName="vPassword" matInput placeholder="Enter Full Name" type="text">
+            </mat-form-field>
+            <span class="eyeBtn">
+                <span (click)="eyeIcon('show')" *ngIf="eye">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-eye-fill" viewBox="0 0 16 16">
+                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                        <path
+                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                    </svg>
+                </span>
+            <span (click)="eyeIcon('hide')" *ngIf="!eye">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                        <path
+                            d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z" />
+                        <path
+                            d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z" />
+                    </svg>
+                </span>
+
+            </span>
+        </div>
+        <div class="form-check" *ngIf="!passwordHide">
+            <input [(ngModel)]="isRememberMe" (change)="onChkRemeber($event)" formControlName="bRememberMe" class="form-check-input" type="checkbox" id="flexCheckDefault1">
+            <label class="form-check-label" for="flexCheckDefault">
+                Remember me
+            </label>
+            <a class="forget-pasword" (click)="openModal(templateModel)">Forget Password</a>
+        </div>
+        <div class="form-check" [ngClass]="{'margintop': !passwordHide}">
+            <input formControlName="bOtp" (change)="onCheckboxChange($event)" class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+            <label class="form-check-label" for="flexCheckDefault2">
+                Login with OTP instead of password
+            </label>
+        </div>
+        <div *ngIf='isOtpLogin'>
+            <div style="font-size: 13px;">Where do you want the OTP?</div>
+            <!-- <div class="form-check">
+                <input formControlName="botpMobile" class="form-check-input" (change)="botpMobile($event)"
+                name="botpMobile" type="radio" value="" id="botpMobile">
+                <label class="form-check-label" for="botpMobile">
+                    Mobile Number
+                </label>
+
+            </div> -->
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" formControlName="botpMobile" name="flexRadioDefault" id="flexRadioDefault1">
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Mobile Number
+                </label>
+            </div>
+            <!-- <div class="form-check">
+                <input formControlName="botpEmail" class="form-check-input" (change)="botpEmail($event)"
+                 name="botpEmail" type="radio" value="" id="botpEmail">
+                <label class="form-check-label" for="botpEmail">
+                    Email
+                </label>
+            </div> -->
+            <div class="form-check">
+                <input class="form-check-input" formControlName="botpEmail" type="checkbox" name="flexRadioDefault" id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                    Email
+                </label>
+            </div>
+
+            <div class="submit">
+                <div class="btnLoader" *ngIf="btnLoader">
+                    <div class="lds-ring">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+
+                <button type="button" (click)="sendOtp()" class="login-btn" [ngClass]="{'doctorBackground' : toggle}">Send OTP</button>
+            </div>
+        </div>
+        <div *ngIf='!isOtpLogin' class="submit">
+            <!-- <div class="btnLoader" *ngIf="btnLoader">
+                <div class="lds-ring">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div> -->
+
+            <button class="login-btn" type="submit" [ngClass]="{'doctorBackground' : toggle}">Login</button>
+        </div>
+        <!-- <div class="divider">Or</div> -->
+
+        <div class="forget-password">
+            <ng-template #templateModel>
+                <form [formGroup]="userForgetPasswordForm">
+                    <!-- <div class="loader loader2 " *ngIf="loaderService.isModelPopUpLoading | async">
+                    <div class="spinner spinner2">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                    </div>
+                </div> -->
+                    <div class="country-edit-model">
+                        <div class="model-header">
+                            <h1 mat-dialog-title>{{ModalTitle}}</h1>
+                            <button type="button" class="close-btn pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </div>
+
+
+                        <mat-divider></mat-divider>
+                        <div mat-dialog-content>
+                            <div *ngIf="!fPEmailIdMobileFound" class="forget-first-step">
+                                <span class="foget-title">Please provide us the registered User Id/ Member Code of your
+                                    Drome account to RESET Password.</span>
+                                <div class="input-group mb-3">
+                                    <label for="">User Id/ Member Code</label>
+                                    <input formControlName="emailOrMobileNumber" type="text" appAutofocus class="form-control" placeholder="User Id/ Member Code" aria-label="Username" aria-describedby="basic-addon1" readonly>
+                                </div>
+                                <div>
+                                    <div style="font-size: 13px;">Where do you want the OTP?</div>
+                                    <div class="form-check">
+                                        <input formControlName="botpMobile" class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+                                        <label class="form-check-label" for="flexCheckDefault1">
+                                            Mobile Number
+                                        </label>
+
+                                    </div>
+                                    <div class="form-check">
+                                        <input formControlName="botpEmail" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Email
+                                        </label>
+                                    </div>
+
+                                    <!-- <div class="submit">
+                                        <button type="button" (click)="sendOtp()" class="login-btn"
+                                            [ngClass]="{'doctorBackground' : toggle}">Send OTP</button>
+                                    </div> -->
+                                </div>
+                                <span class="submit">
+                                    <div class="btnLoader" *ngIf="btnLoader">
+                                        <div class="lds-ring">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                    <button (click)="sendOtpForgetPassword()">Send OTP</button>
+                                </span>
+                            </div>
+
+                            <div class="forget-second-step">
+                                <div *ngIf="isFPOtpReceived" class="verify">
+                                    <h2>OTP Verification</h2>
+                                    <div class="verifiy-no">
+                                        <div class="enter-otp">
+                                            <div class="otp-alrt">We have sent you an OTP on</div>
+                                            <span>{{userMobileNumber}}</span><span *ngIf="userMobileNumber != null && userEmail != null " style="margin: 2px;">and</span><span>{{userEmail}}</span>
+
+                                        </div>
+                                        <div class="enter-otp">
+                                            <label for="">OTP</label>
+                                            <input (keyup)="matchForgetPasswordOtp($event)" type="text" placeholder="Please enter 4 digits OTP here to verify">
+                                            <span>{{countDownTimer}}</span>
+                                            <div class="resend-otp">
+                                                <span>Still not received OTP?</span>
+                                                <button (click)="sendOtpForgetPassword()" [disabled]="resendOtpBtnDisabled" type="button" class="resend">Resend OTP</button>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="submit">
+                                            <button type="button" (click)="otoLogin()" class="login-btn"
+                                                type="submit">Login</button>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="fPOtpVerified" class="forget-first-step forget-third-step">
+                                <span class="foget-title">Reset Password</span>
+                                <div class="input-group mb-3">
+                                    <label for="">New Password</label>
+                                    <input formControlName="userNewPassword" type="password" appAutofocus class="form-control" placeholder="New Password" aria-label="Username" aria-describedby="basic-addon1" [ngClass]="{'is-invalid' : createUserForgetPasswordFormControls.userNewPassword.invalid && (createUserForgetPasswordFormControls.userNewPassword.dirty || createUserForgetPasswordFormControls.userNewPassword.touched)}">
+                                    <div class="invalid-tooltip" *ngIf="createUserForgetPasswordFormControls.userNewPassword.invalid && (createUserForgetPasswordFormControls.userNewPassword.dirty || createUserForgetPasswordFormControls.userNewPassword.touched)">
+                                        Please enter Password
+                                    </div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label for="">Confirm New Password</label>
+                                    <input formControlName="userNewConfirmPassword" type="password" class="form-control" placeholder="Confirm New Password" aria-label="Username" aria-describedby="basic-addon1" [ngClass]="{'is-invalid' : createUserForgetPasswordFormControls.userNewConfirmPassword.invalid && (createUserForgetPasswordFormControls.userNewConfirmPassword.dirty || createUserForgetPasswordFormControls.userNewConfirmPassword.touched)}">
+                                    <div class="invalid-tooltip" *ngIf="createUserForgetPasswordFormControls.userNewConfirmPassword.invalid && (createUserForgetPasswordFormControls.userNewConfirmPassword.dirty || createUserForgetPasswordFormControls.userNewConfirmPassword.touched)">
+                                        <span *ngIf="createUserForgetPasswordFormControls.userNewConfirmPassword.errors.required ">
+                                            Please enter
+                                            Confirm Password.</span>
+                                        <span *ngIf="createUserForgetPasswordFormControls.userNewConfirmPassword.errors.confirmedValidator">Password
+                                            and Confirm password does not match.
+                                        </span>
+                                    </div>
+                                </div>
+                                <span class="submit">
+                                    <div class="btnLoader" *ngIf="btnLoader">
+                                        <div class="lds-ring">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                    <button (click)="fogetPassword()" [disabled]="userForgetPasswordForm.invalid">Change
+                                        Password</button>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </ng-template>
+        </div>
+
+    </form>
+    <!-- <div *ngIf="!isOtpReceived" class="submit px-3" (click)="submitLogin()">
+        <a class="login-btn" type="submit"><span class="fb-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                    height="16" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                    <path
+                        d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                </svg></span>Connect with Facebook</a>
+    </div> -->
+    <div *ngIf="isOtpReceived" class="verify verify2">
+        <div class="otp-head">
+            <div class="backTohome" (click)="backtosignup()" title="Home">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                </svg>
+            </div>
+            <h2>OTP Verification</h2>
+        </div>
+
+        <div class="verifiy-no">
+            <div class="enter-otp">
+                <div class="otp-alrt">We have sent you an OTP on</div>
+                <div class="number">
+                    <span>{{userMobileNumber}}</span><span *ngIf="userMobileNumber != null && userEmail != null " style="margin: 2px;">and</span><span>{{userEmail}}</span>
+                </div>
+            </div>
+            <div class="enter-otp">
+                <label for="">OTP</label>
+                <input appAutofocus (keyup)="onKeyUpEvent($event)" type="number" placeholder="Please enter 4 digits OTP here to verify">
+                <span>{{countDownTimer}}</span>
+                <div class="resend-otp">
+                    <span>Still not received OTP?</span>
+                    <button (click)="sendOtp()" [disabled]="resendOtpBtnDisabled" type="button" class="resend">Resend
+                        OTP</button>
+                </div>
+            </div>
+            <div *ngIf="otpVerified" class="submit">
+                <div class="btnLoader" *ngIf="btnLoader">
+                    <div class="lds-ring">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+
+                <button type="button" (click)="otoLogin()" class="login-btn" type="submit">Login</button>
+            </div>
+        </div>
+    </div>
+</div>
