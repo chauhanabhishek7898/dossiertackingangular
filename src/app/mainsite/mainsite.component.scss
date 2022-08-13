@@ -18,6 +18,7 @@
   }
 
   .right_header {
+    display: flex;
     ul {
       display: flex;
       align-items: center;
@@ -30,7 +31,7 @@
         }
 
         &:not(:first-child) {
-          margin-left: 10px;
+          margin-left: 15px;
           // font-weight: 700;
         }
       }
@@ -325,11 +326,14 @@ footer {
   border: none;
   font-weight: 700;
   background-color: #e45f4c;
-  padding: 4px 30px;
+  padding: 4px 10px;
   font-size: 14px;
   font-weight: 500;
   border-radius: 50px;
   color: #fff;
+  &:not(:last-child){
+    margin-right: 10px;
+  }
 }
 
 //  start  //

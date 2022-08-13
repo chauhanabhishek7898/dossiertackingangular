@@ -84,9 +84,9 @@ export class CustomerSignupComponent implements OnInit {
   @Input()
   options: any =
     {
-      // componentRestrictions: {
-      //   country: ["IN"]
-      // }
+      componentRestrictions: { country: ["in"] },
+      fields: ["address_components", "geometry","formatted_address"],
+      //types: ["address"],
     }
   maxDate = new Date();
   customerSignupForm: FormGroup;
@@ -121,11 +121,40 @@ export class CustomerSignupComponent implements OnInit {
   isLoading = false;
   addressLat
   addressLong
+  cityName
+  cityservice=false
+  cityServiceResult
   AddressChange(address: any) {
     //setting address from API to local variable
+    console.log(address)
     this.formattedaddress = address.formatted_address
+    console.log('this.formattedaddress',this.formattedaddress)
     this.addressLat = address.geometry.location.lat()
     this.addressLong = address.geometry.location.lng()
+    address.address_components.forEach(element => {
+      console.log(element)
+      let componentType = element.types[0];
+      if (componentType == "locality") {
+        // alert(element.long_name);
+        this.customerSignupForm.get('nCityId')?.setValue(element.long_name)
+        this.cityName= element.long_name
+        this.cityNameCheck(element.long_name)
+        return;
+      }
+    });
+  }
+  cityNameCheck(cityName){
+    this.customerSignupService.GetCityIdAgainstCityName(cityName).subscribe((res)=>{
+      console.log('res', res)
+      if(typeof res == "string"){
+        this.cityservice= true
+        this.cityServiceResult=res
+      }else{
+        this.cityservice= false
+        this.cityServiceResult=''
+        this.cityId=res[0].nCityId
+      }
+    })
   }
   onSelected() {
     this.selectedCity = this.selectedCity;
@@ -184,7 +213,7 @@ export class CustomerSignupComponent implements OnInit {
         vCId: [null],
         vFullName: [null, [Validators.required]],
         vMobileNo: [null, [Validators.required]],
-        vEmailId: [null, ],
+        vEmailId: [null,],
         vPassword: [null, [Validators.required]],
         vConfirmPassword: [null, [Validators.required]],
         dtDOB: [null],
@@ -212,15 +241,15 @@ export class CustomerSignupComponent implements OnInit {
   addressError=false
   submitCustomerSignup() {
     let dob;
-      if (this.customerSignupForm.controls.dtDOB.value != null) {
-        if (typeof this.customerSignupForm.controls.dtDOB.value == 'object') {
-          let dobDate = this.customerSignupForm.controls.dtDOB.value._d;
-          let month = dobDate.getMonth() + 1;
-          dob = dobDate.getFullYear() + '-' + month + '-' + dobDate.getDate();
-        } else {
-          dob = this.customerSignupForm.controls.dtDOB.value;
-        }
+    if (this.customerSignupForm.controls.dtDOB.value != null) {
+      if (typeof this.customerSignupForm.controls.dtDOB.value == 'object') {
+        let dobDate = this.customerSignupForm.controls.dtDOB.value._d;
+        let month = dobDate.getMonth() + 1;
+        dob = dobDate.getFullYear() + '-' + month + '-' + dobDate.getDate();
+      } else {
+        dob = this.customerSignupForm.controls.dtDOB.value;
       }
+    }
     let emailId = this.customerSignupForm.controls.vEmailId.value
     if (this.mobileDisable == false) {
       if (this.mobileDisable == false) {
@@ -262,11 +291,12 @@ export class CustomerSignupComponent implements OnInit {
         vPassword: this.customerSignupForm.controls.vPassword.value,
         vEmailId: this.customerSignupForm.controls.vEmailId.value,
         btPromotion: false,
-        nCityId: this.cityId,
+        nCityId:  this.cityId,
         vAddress: this.formattedaddress,
-        vFlatNoPlotNoLaneBuilding:this.customerSignupForm.controls.vFlatNoPlotNoLaneBuilding.value,
-        vLat:this.addressLat,
-        vLong:this.addressLong
+        vFlatNoPlotNoLaneBuilding: this.customerSignupForm.controls.vFlatNoPlotNoLaneBuilding.value,
+        vLat: this.addressLat,
+        vLong: this.addressLong,
+        vCityName:this.cityName
       };
 
       this.listCustomer.push(this.addCustomerUserModel);
@@ -274,7 +304,7 @@ export class CustomerSignupComponent implements OnInit {
       this.CustomerMasterClass = {
         CustomerMaster: this.listCustomer,
       };
-      this.customerSignupService.PostCreateUserCustomer(this.CustomerMasterClass, this.file).subscribe((status: any) => {
+      this.customerSignupService.PostCreateUserCustomer(this.CustomerMasterClass).subscribe((status: any) => {
             // this.apiStatus = `Congratulations, User has been created successfully with member Code:  ${status[0].MemberCode}. You may further use it to login in the APP.
             // Though, it has to be approved by the APP Administrator before logging in. Thanks, for your kind patience.`;
             if (status) {

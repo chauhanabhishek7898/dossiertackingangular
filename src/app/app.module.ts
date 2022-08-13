@@ -31,7 +31,12 @@ import { ContactUsComponent } from './mainsite/contact-us/contact-us.component';
 import { FaqsComponent } from './mainsite/faqs/faqs.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { AboutUsComponent } from './mainsite/about-us/about-us.component';
-import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+
+import { AdminLoginComponent } from './mainsite/admin/login/admin-login/admin-login.component';
+import { AdminModule } from './mainsite/admin/admin.module';
+import { AdminDashboardComponent } from './mainsite/admin/admin-dashboard/admin-dashboard.component';
+import { PageFilterPipe } from './core/pipe/page-filter';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 @NgModule({
   declarations: [
@@ -45,6 +50,8 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
     ContactUsComponent,
     FaqsComponent,
     AboutUsComponent,
+    AdminDashboardComponent,
+    AdminLoginComponent,
   ],
   imports: [
     GooglePlaceModule,
@@ -65,7 +72,10 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
     MatInputModule,
     MatAutocompleteModule,
     ToastrModule.forRoot(),
-    MatExpansionModule
+    MatExpansionModule,
+    // AdminModule,
+    // PageFilterPipe
+    
 
   ],
   exports: [TermsandconditionComponent],
@@ -74,7 +84,8 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
       BsModalService,
       HttpClientModule,
       DatePipe,
-      NotificationService
+      NotificationService,
+      PageFilterPipe
     ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 

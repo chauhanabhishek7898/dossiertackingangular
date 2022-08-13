@@ -16,6 +16,7 @@ export class CustomerMaster {
   vLat: string;
   vLong: string;
   vFlatNoPlotNoLaneBuilding: string;
+  vCityName:string
 }
 export class CustomerMasterClass {
   CustomerMaster: CustomerMaster[] = [];
