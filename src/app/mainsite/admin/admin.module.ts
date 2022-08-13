@@ -22,11 +22,19 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { PageFilterPipe } from '../../core/pipe/page-filter';
 
+import { DataTablesModule } from 'angular-datatables';
+import { CityMasterComponent } from './admin-dashboard/city-master/city-master.component';
+import { CountryMasterComponent } from './admin-dashboard/country-master/country-master.component';
+import { StateMasterComponent } from './admin-dashboard/state-master/state-master.component';
+
+
 
 
 @NgModule({
   declarations: [
-    // AdminLoginComponent,
+    CityMasterComponent,
+    CountryMasterComponent,
+    StateMasterComponent
   ],
   imports: [
     CommonModule,
@@ -48,10 +56,13 @@ import { PageFilterPipe } from '../../core/pipe/page-filter';
     MatAutocompleteModule,
     ToastrModule.forRoot(),
     MatExpansionModule,
+    DataTablesModule
     // PageFilterPipe
   ],
   exports:[
-    // AdminLoginComponent,
+    CityMasterComponent,
+    CountryMasterComponent,
+    StateMasterComponent
   ],
   providers:[
    

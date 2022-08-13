@@ -1,3 +1,4 @@
+
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import {
@@ -37,6 +38,7 @@ import { AdminModule } from './mainsite/admin/admin.module';
 import { AdminDashboardComponent } from './mainsite/admin/admin-dashboard/admin-dashboard.component';
 import { PageFilterPipe } from './core/pipe/page-filter';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
     AdminDashboardComponent,
     AdminLoginComponent,
     PageFilterPipe,
+  
   ],
   imports: [
     GooglePlaceModule,
@@ -77,9 +80,9 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
     // AdminModule,
     // PageFilterPipe
     
+    DataTablesModule
 
   ],
-  exports: [TermsandconditionComponent],
   providers:
     [
       BsModalService,

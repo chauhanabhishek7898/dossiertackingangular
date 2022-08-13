@@ -12,6 +12,7 @@ import { CustomerSignupComponent } from './mainsite/SignUp/customer-signup/custo
 import { DriverSignupComponent } from './mainsite/SignUp/DriverSignup/driver-signup/driver-signup.component';
 import { TermsandconditionComponent } from './mainsite/termsandcondition/termsandcondition.component';
 
+
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: "full" },
   {path: "", component: MainsiteComponent, children: [
@@ -26,14 +27,17 @@ const routes: Routes = [
       {path: 'driver-signup', component: DriverSignupComponent},
       {path: 'faqs', component: FaqsComponent},
       {path: 'login', component: AdminLoginComponent},
+      
+      {path: 'faqs', component: FaqsComponent},
+
+      
       {
-        path: 'ad',
-        component: AdminDashboardComponent,
+        path: 'ad', component: AdminDashboardComponent,
         loadChildren: () => import('./mainsite/admin/admin-routing.module').then((m) => m.AdminRoutingModule),
       },
-
     ]
-  }
+  },
+  
 ];
 
 @NgModule({

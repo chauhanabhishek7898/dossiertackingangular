@@ -480,50 +480,8 @@ export class AdminDashboardComponent implements OnInit {
   // }
   setUserRole() {
     if (this.storageService.roleId == "1") {
-      this.userRole = "pt";
-    } else if (this.storageService.roleId == "2") {
-      this.userRole = "dr";
-    }
-    else if (this.storageService.roleId == "3") {
-      this.userRole = "pharmacy";
-    }
-    else if (this.storageService.roleId == "4") {
       this.userRole = "ad";
-    }
-    else if (this.storageService.roleId == "5") {
-      this.userRole = "sad";
-    }
-    else if (this.storageService.roleId == "6") {
-      this.userRole = "cc";
-    }
-    else if (this.storageService.roleId == "9") {
-      this.userRole = "ccnd";
-    }
-
-    else if (this.storageService.roleId == "8") {
-      this.userRole = "nd";
-    }
-    else if (this.storageService.roleId == "11") {
-      this.userRole = "lab";
-    }
-    else if (this.storageService.roleId == "12") {
-      this.userRole = "pa";
-    }
-    else if (this.storageService.roleId == "13") {
-      this.userRole = "la";
-    }
-    else if (this.storageService.roleId == "14") {
-      this.userRole = "entity";
-    }
-    else if (this.storageService.roleId == "15") {
-      this.userRole = "corporate";
-    }
-    else if (this.storageService.roleId == "16") {
-      this.userRole = "institute";
-    }
-    else if (this.storageService.roleId == "17") {
-      this.userRole = "institute-assistent";
-    }
+    } 
   }
   states: any;
   arrowRotate = false;

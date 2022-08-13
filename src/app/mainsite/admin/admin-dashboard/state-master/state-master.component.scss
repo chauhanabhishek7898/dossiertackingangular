@@ -1,0 +1,12 @@
+@import "../country-master/country-master.component.scss";
+.input-group-1{
+    width: 49% !important;
+    @media screen and (max-width: 768px) {
+        width: 100% !important;
+    }
+
+        @media screen and (max-width: 992px) {
+      width: 100% !important;
+   }
+
+}

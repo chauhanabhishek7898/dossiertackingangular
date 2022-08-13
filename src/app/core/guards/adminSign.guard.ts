@@ -14,7 +14,7 @@ export class AdminSignInGuard implements CanActivate {
     ) { }
     canActivate(): boolean {
         if (this.storageService.isAdminLogedIn) {
-            this.router.navigate(["/ad/dashboard"]);
+            this.router.navigate(["/ad"]);
             return false;
         }
         return true;

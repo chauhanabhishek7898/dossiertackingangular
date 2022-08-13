@@ -161,7 +161,7 @@
                                         </a>
                                         <div class="subMenuWrapper" [ngClass]="{'bottom' : item.nPageId==44 || item.nPageId==20|| item.nPageId==109,'user-aside2':roleId==2 || roleId==8, 'subMenuWrapper2':submenu==true}">
                                             <div class="subMenu" *ngFor="let page of pageDetails|pageFilter:item">
-                                                <a routerLinkActive="list-item-active" style="border-bottom: 0.5px solid rgba(222,220,217,0.7);" routerLink="{{userRole}}/{{page.vPageName.toLowerCase()}}" [queryParams]="{ title:page.vPageCaption }" (click)='closeMatSideBar($event)'>
+                                                <a routerLinkActive="list-item-active" style="border-bottom: 0.5px solid rgba(222,220,217,0.7);" routerLink="{{page.vPageName.toLowerCase()}}" [queryParams]="{ title:page.vPageCaption }" (click)='closeMatSideBar($event)'>
                                                     {{page.vPageCaption}}
                                                 </a>
                                             </div>
