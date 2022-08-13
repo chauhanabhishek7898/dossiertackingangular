@@ -80,7 +80,7 @@ import { DataTablesModule } from 'angular-datatables';
     // AdminModule,
     // PageFilterPipe
     
-    DataTablesModule
+    // DataTablesModule
 
   ],
   providers:
