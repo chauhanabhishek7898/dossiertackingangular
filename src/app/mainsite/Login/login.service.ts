@@ -19,11 +19,14 @@ GetOTPMsgSMSVerifyMobile(mobileNumber): Observable<any> {
 }
 
   loginAndGetUserDetailsByvUserNameOrvPassword(
-    vUserName: string,
-    vPassword: string
+    vUserName: any,
+    vPassword: any
   ): Observable<any> {
     return this.http.get<any>(
       `${this.apiUrl}/UserMaster/GetUserDetailsUsingUNandPW/${vUserName}/${vPassword}`
     );
+  }
+  getProfileDetailsByUserId(nUserId): Observable<any> {
+    return this.http.get(`${this.apiUrl}/UserMaster/GetUserDetailsUsingUNandPW/${nUserId}`)
   }
 }

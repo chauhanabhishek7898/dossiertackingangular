@@ -1,3 +1,6 @@
+import { StateMasterComponent } from './Admin/state-master/state-master.component';
+import { CountryMasterComponent } from './Admin/country-master/country-master.component';
+import { CityMasterComponent } from './Admin/city-master/city-master.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import {
@@ -32,6 +35,7 @@ import { FaqsComponent } from './mainsite/faqs/faqs.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { AboutUsComponent } from './mainsite/about-us/about-us.component';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -45,6 +49,9 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
     ContactUsComponent,
     FaqsComponent,
     AboutUsComponent,
+    CityMasterComponent,
+    CountryMasterComponent,
+    StateMasterComponent
   ],
   imports: [
     GooglePlaceModule,
@@ -65,10 +72,15 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
     MatInputModule,
     MatAutocompleteModule,
     ToastrModule.forRoot(),
-    MatExpansionModule
+    MatExpansionModule,
+    DataTablesModule
 
   ],
-  exports: [TermsandconditionComponent],
+  exports: [TermsandconditionComponent,
+    CityMasterComponent,
+    CountryMasterComponent,
+    StateMasterComponent
+    ],
   providers:
     [
       BsModalService,
