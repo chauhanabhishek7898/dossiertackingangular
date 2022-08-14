@@ -1,0 +1,33 @@
+export class TrackingDetailsMaster {
+  nTrackId: Number;
+  vTrackId: Number;
+  dtDated: string;
+  vTime: string;
+  nCustomerUserId: Number;
+  nCityId: Number;
+  vFromLocation: string;
+  vFromLocationLat: Number;
+  vFromLocationLong: Number;
+  vFromFlatNoPlotNoLaneBuilding: Number;
+  vToLocation: string;
+  vToLocationLat: Number;
+  vToLocationLong: Number;
+  vToFlatNoPlotNoLaneBuilding: Number;
+  btActive: Boolean;
+  btPaid: Boolean;
+  nKMs: string;
+  nRate: string;
+  nWaitingTimeInMinutes: string;
+  nWaitingPrice: Number;
+  nTotalRate: Number;
+  vRemarks: string;
+  nDriverUserId: Number;
+  vDiriverCurrentLat: string;
+  vDiriverCurrentLong: string;
+  btClosed: Boolean;
+  dtCreatedDate: string;
+  dtModifiedDate: string;
+  nCreatedByUserId: Number;
+  nModifiedByUserId: Number;
+  nLoggedInUserId: Number;
+}

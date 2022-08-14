@@ -1,0 +1,153 @@
+<div class="medical-record">
+    <div class="loader" *ngIf="loader">
+        <div class="loading">
+            <img src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
+        </div>
+    </div>
+    <div class="family-head">
+        <span>{{pageTitle}}</span>
+    </div>
+    <mat-divider></mat-divider>
+    <form [formGroup]="myNoteForm">
+        <div class="input-box">
+
+            <div class="input-group input-group-1">
+                <label for="">From Date</label>
+                <mat-form-field appearance="fill">
+                    <input formControlName="fromDate" [max]="maxDateFilter" matInput placeholder="From Date " readonly
+                        [matDatepicker]="fromDate" class="matinput">
+                    <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+                    <mat-datepicker #fromDate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="input-group input-group-1">
+                <label for="">To Date</label>
+                <mat-form-field appearance="fill">
+                    <input formControlName="toDate" [max]="maxDateFilter" matInput placeholder="To Date "
+                        [matDatepicker]="toDate" readonly class="matinput">
+                    <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+                    <mat-datepicker #toDate></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="input-group input-group-1">
+                <input type="text" formControlName="txtSearch" placeholder="Search..." />
+                <input (click)="searchPastConsultation()" value="Search" type="button" formControlName="btnSearch" />
+            </div>
+        </div>
+    </form>
+    <mat-divider></mat-divider>
+    <!-- <div class="plan-enroll-outerbox">
+        <div class="singal-plan">
+            <div class="empty-box" *ngIf="buyCreditsa.length == 0">
+                <span>
+                    <img src="../../../../assets/images/emptyFolder.png" alt="">
+                </span>
+               <span>No Record</span>
+            </div>
+            <mat-accordion  >
+                <mat-expansion-panel (opened)="panelOpenState = true"
+                                     (closed)="panelOpenState = false" *ngFor="let item of buyCreditsa;">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="superUserDetailHead">
+                            <span style="flex: 1;"><b>{{item.vBuyCreditsId}}</b><br>{{item.PlanDetail}}</span>
+                            <span style="flex: 1;">{{item.Dated}}</span>
+                        </div>
+                    </mat-panel-title>
+                    
+                  </mat-expansion-panel-header>
+                  <div class="mat-plan-table">
+                    <div class="plan-table-heading">
+                      <ul>
+                          <li><b>Buy Credits Id</b></li>
+                          <li><b>Dated</b></li>
+                          <li><b>Patient Detail</b></li>
+                          <li><b>Plan Detail</b></li>
+                          <li><b>Credit Detail</b></li>
+                          <li><b>Order Id</b></li>
+                          <li><b>Credits</b></li>
+                          <li><b>Per Credit Rate</b></li>
+                          <li><b>Amount Paid</b></li>
+                      </ul>
+                    </div>
+                    <div class="plan-table-body">
+                      <ul>
+                          <li>{{item.vBuyCreditsId}}</li>
+                          <li>{{item.Dated}}</li>
+                          <li>{{item.PatientDetail}}</li>
+                          <li>{{item.PlanDetail}}</li>
+                          <li>{{item.CreditDetail}}</li>
+                          <li>{{item.vOrderId}}</li>
+                          <li>{{item.nCredits}}</li>
+                          <li>{{item.nPerCreditRate}}</li>
+                          <li>{{item.nAmountPaid}}</li>
+                      </ul>
+                    </div>
+                </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+        </div>
+    </div> -->
+    <div class="new-table">
+        <table datatable class="ui celled table nowrap dt-responsive" style="width:100%" [dtTrigger]="dtTrigger"
+            [dtOptions]="dtOptions">
+            <thead>
+                <tr>
+                    <th class="no-sort" style="background-image: none !important;">#</th>
+                    <th style="background-position: 125px;">Track Id</th>
+                    <th class="no-sort" style="background-image: none !important;">Dated</th>
+                    <th class="no-sort" style="background-image: none !important;">Time</th>
+                    <th class="no-sort" style="background-image: none !important;">From Location</th>
+                    <th class="no-sort" style="background-image: none !important;">To Location</th>
+                    <th class="no-sort" style="background-image: none !important;">KMs</th>
+                    <th class="no-sort" style="background-image: none !important;">Amount Paid</th>
+                    <!-- nTrackId: Number;
+                    vTrackId: Number;
+                    dtDated: string;
+                    vTime: string;
+                    nCustomerUserId: Number;
+                    nCityId: Number;
+                    vFromLocation: string;
+                    vFromLocationLat: Number;
+                    vFromLocationLong: Number;
+                    vFromFlatNoPlotNoLaneBuilding: Number;
+                    vToLocation: string;
+                    vToLocationLat: Number;
+                    vToLocationLong: Number;
+                    vToFlatNoPlotNoLaneBuilding: Number;
+                    btActive: Boolean;
+                    btPaid: Boolean;
+                    nKMs: string;
+                    nRate: string;
+                    nWaitingTimeInMinutes: string;
+                    nWaitingPrice: Number;
+                    nTotalRate: Number;
+                    vRemarks: string;
+                    nDriverUserId: Number;
+                    vDiriverCurrentLat: string;
+                    vDiriverCurrentLong: string;
+                    btClosed: Boolean;
+                    dtCreatedDate: string;
+                    dtModifiedDate: string;
+                    nCreatedByUserId: Number;
+                    nModifiedByUserId: Number;
+                    nLoggedInUserId: Number; -->
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let item of buyCreditsa; let i = index">
+                    <td>{{i+1}}</td>
+                    <td>{{item.vTrackId}}</td>
+                    <td>{{item.dtDated}}</td>
+                    <td>{{item.vTime}}</td>
+                    <td>{{item.vFromLocation}}</td>
+                    <td>{{item.vToLocation}}</td>
+                    <td>{{item.nKMs}}</td>
+                    <td>{{item.nRate}}</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
