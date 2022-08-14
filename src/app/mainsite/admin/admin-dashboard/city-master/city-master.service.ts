@@ -16,11 +16,6 @@ export class CityMasterService {
   }
   apiUrl = environment.dossiarApiUrl;
 
-  // // // // //
-  getCityList(): Observable<CityMasterList[]> {
-    return this.http.get<CityMasterList[]>(`${this.apiUrl}/CityMaster`);
-  }
-  // // // // //
 
   saveCity(cityMaster: object, formType: string): Observable<any> {
     if (formType == "Submit") {
@@ -35,23 +30,17 @@ export class CityMasterService {
     }
   }
 
-  // // // // //
-  updateCity(cityMaster: object): Observable<any> {
-    return this.http.put(`${this.apiUrl}/CityMaster`, cityMaster);
-  }
-  // // // // //
-
-  getActiveCityList(): Observable<CityMaster[]> {
-    return this.http.get<CityMaster[]>(`${this.apiUrl}/CityMaster/GetAllActiveCities`);
+  getActiveCityList(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/CityMaster/GetAllActiveCities`);
 
   }
   
-  getActiveCityListForOpen(): Observable<CityMaster[]> {
-    return this.http.get<CityMaster[]>(`${this.apiUrl}/GetAllActiveCities`);
+  CityMaster_SelectAll_ActiveLikeSearch(vGeneric): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/CityMaster/CityMaster_SelectAll_ActiveLikeSearch/${vGeneric}`);
 
   }
-  CityMaster_SelectAll_ActiveLikeSearch(vGeneric): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/CityMaster_SelectAll_ActiveLikeSearch/${vGeneric}`);
+  GetMainInterrelatedCities(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/CityMaster/GetMainInterrelatedCities`);
 
   }
   //#endregion CDE Services.

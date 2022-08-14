@@ -5,7 +5,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 import { StateMaster } from 'src/app/mainsite/models/state.model';
-import { CityMaster, CityMasterList } from '../../../models/city-master';
+import { CityMaster, CityMasterList, MainInterRelatedCity } from '../../../models/city-master';
 import { CityMasterService } from './city-master.service';
 import { StateService } from '../state-master/state.service';
 
@@ -46,6 +46,7 @@ export class CityMasterComponent implements OnInit {
   activeStateList: StateMaster[] = [];
   cityList: CityMaster[] = [];
   CityMasterList : CityMasterList[]=[];
+  mainInterRelatedCity : MainInterRelatedCity[]=[];
   bsModalRef: BsModalRef
   dtTrigger: Subject<any> = new Subject<any>();
   ModalTitle: string;
@@ -79,6 +80,8 @@ export class CityMasterComponent implements OnInit {
       nCityId: [0],
       vCityName: [null, [Validators.required]],
       btActive: new FormControl({ value: 'true', disabled: this.disabled }),
+      nInterRelatedCityId:[null],
+      btMainInterRelatedCity:[false]
     });
   }
 
@@ -97,7 +100,9 @@ export class CityMasterComponent implements OnInit {
           nStateId: this.CityMasterForm.controls.nStateId.value,
           nCityId: this.CityMasterForm.controls.nCityId.value==null?0:this.CityMasterForm.controls.nCityId.value,
           vCityName: this.CityMasterForm.controls.vCityName.value,
-          btActive: this.CityMasterForm.controls.btActive.value
+          btActive: this.CityMasterForm.controls.btActive.value,
+          nInterRelatedCityId: this.CityMasterForm.controls.nInterRelatedCityId.value,
+          btMainInterRelatedCity: this.CityMasterForm.controls.btMainInterRelatedCity.value
         };
         this.CityService.saveCity(this.cityModel , this.formType)
           .subscribe((status: string) => {
@@ -117,7 +122,9 @@ export class CityMasterComponent implements OnInit {
         nStateId: this.CityMasterForm.controls.nStateId.value,
         nCityId: this.CityMasterForm.controls.nCityId.value==null?0:this.CityMasterForm.controls.nCityId.value,
         vCityName: this.CityMasterForm.controls.vCityName.value,
-        btActive: this.CityMasterForm.controls.btActive.value
+        btActive: this.CityMasterForm.controls.btActive.value,
+        nInterRelatedCityId: this.CityMasterForm.controls.nInterRelatedCityId.value,
+        btMainInterRelatedCity: this.CityMasterForm.controls.btMainInterRelatedCity.value
       };
       this.CityService.saveCity(this.cityModel , this.formType)
         .subscribe((status: string) => {
@@ -166,13 +173,25 @@ export class CityMasterComponent implements OnInit {
     if (isReInitilized) {
       this.isDtInitialized = false;
     }
-    this.CityService.getCityList(
+    this.CityService.getActiveCityList(
     ).subscribe((res) => {
       this.CityMasterList = res;
       if (!this.isDtInitialized) {
         this.dtTrigger.next();
       }
       this.isDtInitialized = true;
+  setTimeout(() => {
+    this.loader = false
+  }, 300)
+    }, (error: HttpErrorResponse) => {
+      alert(error.statusText);
+    });
+  }
+
+  GetMainInterrelatedCities() {
+    this.CityService.GetMainInterrelatedCities(
+    ).subscribe((res) => {
+      this.mainInterRelatedCity = res;
   setTimeout(() => {
     this.loader = false
   }, 300)
@@ -196,11 +215,13 @@ export class CityMasterComponent implements OnInit {
 
     this.ModalTitle = "Add City";
     this.formType = "Submit"
+    this.InterRelatedCity=true
     this.CityMasterForm.get('btActive')?.setValue(true);
     this.CityMasterForm.get('btActive')?.disable();
-    // this.modalRef.onHide.subscribe(() => {
-    //    this.CityMasterForm.reset();
-    // });
+    this.GetMainInterrelatedCities()
+    this.modalRef.onHide.subscribe(() => {
+       this.CityMasterForm.reset();
+    });
   }
 
   editClick(template: TemplateRef<any>, cityId:number) {
@@ -213,17 +234,24 @@ export class CityMasterComponent implements OnInit {
     this.ModalTitle = "Edit City ";
     this.formType = "Update";
     this.editCityRowItem(cityId);
-    // this.modalRef.onHide.subscribe(() => {
-    //    this.CityMasterForm.reset();
-    // });
+    this.GetMainInterrelatedCities()
+    this.modalRef.onHide.subscribe(() => {
+       this.CityMasterForm.reset();
+    });
   }
   editCityRowItem(cityId : number) {
+    
     let city = this.CityMasterList.find(e => e.nCityId == cityId);
+    if(city?.btMainInterRelatedCity==true){
+      this.InterRelatedCity=false
+    }
     this.CityMasterForm.patchValue({
       nStateId: city?.nStateId,
       nCityId: city?.nCityId,
       vCityName: city?.vCityName,
-      btActive: city?.btActive
+      btActive: city?.btActive,
+      btMainInterRelatedCity: city?.btMainInterRelatedCity,
+      nInterRelatedCityId: city?.nInterRelatedCityId
     });
   }
 
@@ -234,5 +262,16 @@ export class CityMasterComponent implements OnInit {
       vCityName:null,
       btActive: true
     });
+  }
+  InterRelatedCity:boolean =true
+  checkSelect(e){
+    console.log('InterRelatedCity',this.InterRelatedCity)
+    if(e.target.checked){
+      this.InterRelatedCity=false
+      this.CityMasterForm.get('nInterRelatedCityId')?.setValue(null)
+    }else{
+      this.InterRelatedCity=true
+    }
+    
   }
 }

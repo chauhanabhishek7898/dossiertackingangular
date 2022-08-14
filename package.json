@@ -31,7 +31,7 @@
     "datatables.net-dt": "^1.10.20",
     "jquery": "^3.6.0",
     "moment": "^2.29.4",
-    "ngx-bootstrap": "^7.1.2",
+    "ngx-bootstrap": "^6.2.0",
     "ngx-google-places-autocomplete": "^2.0.5",
     "ngx-toastr": "^14.0.0",
     "rxjs": "~6.6.0",

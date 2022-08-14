@@ -8,10 +8,10 @@
     <ng-template #templateCityMaster>
         <div class="country-edit-model">
             <div class="model-header">
-            <button type="button" class="close-btn pull-right" aria-label="Close" (click)="modalRef.hide()">
-                <mat-icon>close</mat-icon>
-            </button>
-        </div>
+                <button type="button" class="close-btn pull-right" aria-label="Close" (click)="modalRef.hide()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
             <h1 mat-dialog-title>{{ModalTitle}}</h1>
             <mat-divider></mat-divider>
             <div mat-dialog-content>
@@ -19,8 +19,11 @@
                     <form class="country" [formGroup]="CityMasterForm" (ngSubmit)="onSubmitCityMasterForm()">
                         <div class="input-group input-group-1">
                             <label for="">City Name</label>
-                            <input formControlName="vCityName" appAutofocus type="text" class="form-control" placeholder="City Name" aria-label="Country" aria-describedby="basic-addon1" [ngClass]="{'is-invalid' : createCityMasterFormControls.vCityName.invalid && (createCityMasterFormControls.vCityName.dirty || createCityMasterFormControls.vCityName.touched)}">
-                            <div class="invalid-tooltip" *ngIf="createCityMasterFormControls.vCityName.invalid && (createCityMasterFormControls.vCityName.dirty || createCityMasterFormControls.vCityName.touched)">
+                            <input formControlName="vCityName" appAutofocus type="text" class="form-control"
+                                placeholder="City Name" aria-label="Country" aria-describedby="basic-addon1"
+                                [ngClass]="{'is-invalid' : createCityMasterFormControls.vCityName.invalid && (createCityMasterFormControls.vCityName.dirty || createCityMasterFormControls.vCityName.touched)}">
+                            <div class="invalid-tooltip"
+                                *ngIf="createCityMasterFormControls.vCityName.invalid && (createCityMasterFormControls.vCityName.dirty || createCityMasterFormControls.vCityName.touched)">
                                 <span *ngIf="createCityMasterFormControls.vCityName.errors.required">
                                     Please enter City Name.
                                 </span>
@@ -28,14 +31,34 @@
                         </div>
                         <div class="input-group input-group-1">
                             <label for="">Select State</label>
-                            <select class="form-select" aria-label="Default select example" formControlName="nStateId" [ngClass]="{'is-invalid' : createCityMasterFormControls.nStateId.invalid && (createCityMasterFormControls.nStateId.dirty || createCityMasterFormControls.nStateId.touched)}">
+                            <select class="form-select" aria-label="Default select example" formControlName="nStateId"
+                                [ngClass]="{'is-invalid' : createCityMasterFormControls.nStateId.invalid && (createCityMasterFormControls.nStateId.dirty || createCityMasterFormControls.nStateId.touched)}">
                                 <option value="0" disabled> Select State</option>
                                 <option value="{{state.nStateId}}" *ngFor="let state of StateList">
                                     {{state.vStateName}}</option>
                             </select>
-                            <div class="invalid-tooltip" *ngIf="createCityMasterFormControls.nStateId.invalid && (createCityMasterFormControls.nStateId.dirty || createCityMasterFormControls.nStateId.touched)">
+                            <div class="invalid-tooltip"
+                                *ngIf="createCityMasterFormControls.nStateId.invalid && (createCityMasterFormControls.nStateId.dirty || createCityMasterFormControls.nStateId.touched)">
                                 Please Select State.
                             </div>
+                        </div>
+                        <div class="break"></div>
+                        <div class="form-check mt-2">
+                            <label for="">Main Inter Related City Is Active</label>
+                            <span class="checkBox">
+                                <input type="checkbox" formControlName="btMainInterRelatedCity" (change)="checkSelect($event)">
+                                <span class="active">Main Inter Related City Is Active</span>
+                            </span>
+                        </div>
+                        <div class="input-group input-group-1" *ngIf="InterRelatedCity" >
+                            <label for="">Select Inter Related City</label>
+                            <select class="form-select" aria-label="Default select example"
+                                formControlName="nInterRelatedCityId">
+                                <option value="{{item.nCityId}}" *ngFor="let item of mainInterRelatedCity">
+                                    {{item.vCityName}}</option>
+                                <option value="null" >None of these</option>
+                            </select>
+                           
                         </div>
                         <div class="break"></div>
                         <div class="form-check mt-2">
@@ -45,7 +68,8 @@
                                 <span class="active">Active</span>
                             </span>
                         </div>
-                        <div class="submit mt-2"> <button class="btn btn-primary" type="submit" [disabled]="CityMasterForm.invalid">{{formType}}</button></div>
+                        <div class="submit mt-2"> <button class="btn btn-primary" type="submit"
+                                [disabled]="CityMasterForm.invalid">{{formType}}</button></div>
                     </form>
                 </div>
             </div>
@@ -55,7 +79,8 @@
 <mat-divider></mat-divider>
 
 <div class="country-table">
-    <table datatable class="ui celled table nowrap dt-responsive" style="width:100%" [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+    <table datatable class="ui celled table nowrap dt-responsive" style="width:100%" [dtTrigger]="dtTrigger"
+        [dtOptions]="dtOptions">
         <thead>
             <tr>
                 <th class="no-sort" style="background-image: none !important;">#</th>
@@ -74,9 +99,8 @@
                 <td>{{item.vCountryName}}</td>
                 <td><input disabled [checked]=item.btActive type="checkbox" /></td>
                 <td>
-                    <span (click)="editClick(templateCityMaster,item.nCityId)"><svg
-                            xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <span (click)="editClick(templateCityMaster,item.nCityId)"><svg xmlns="http://www.w3.org/2000/svg"
+                            width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path
                                 d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                             <path fill-rule="evenodd"

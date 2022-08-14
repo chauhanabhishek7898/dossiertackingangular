@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
+import { IsSignedInGuard } from './core/guards/signIn.guard';
 import { AboutUsComponent } from './mainsite/about-us/about-us.component';
 import { AdminDashboardComponent } from './mainsite/admin/admin-dashboard/admin-dashboard.component';
 import { AdminLoginComponent } from './mainsite/admin/login/admin-login/admin-login.component';
@@ -26,13 +28,13 @@ const routes: Routes = [
       {path: 'customer-signup', component: CustomerSignupComponent},
       {path: 'driver-signup', component: DriverSignupComponent},
       {path: 'faqs', component: FaqsComponent},
-      {path: 'login', component: AdminLoginComponent},
+      {path: 'login', component: AdminLoginComponent,canActivate: [IsSignedInGuard]},
       
       {path: 'faqs', component: FaqsComponent},
 
       
       {
-        path: 'ad', component: AdminDashboardComponent,
+        path: 'ad', component: AdminDashboardComponent,canActivate: [AuthGuard],
         loadChildren: () => import('./mainsite/admin/admin-routing.module').then((m) => m.AdminRoutingModule),
       },
     ]

@@ -10,6 +10,7 @@ import { StorageService } from 'src/app/core/services/storage.service';
 import { environment } from 'src/environments/environment';
 import { PageDetails } from '../../models/page-details';
 import { AdminDashboardService } from './admin-dashboard.service';
+import { ScrollToBottomDirective } from './scroll-to-bottom.directive';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -79,6 +80,9 @@ export class AdminDashboardComponent implements OnInit {
   sideBarHide: any
   isConnected: boolean = true
   connection: any
+  @ViewChild(ScrollToBottomDirective)
+  scroll: ScrollToBottomDirective;
+  public scrollVisibility: any = { horizontal: false, vertical: false }
   ngOnInit(): void {
     this.connectionService.monitor().subscribe(isConnected => {
       if (isConnected) {
@@ -312,13 +316,6 @@ export class AdminDashboardComponent implements OnInit {
           this.storageService.setMobileNoCompany = status.TAB1[0].MobileNoCompany;
           this.storageService.setEmailIdCompany = status.TAB1[0].EmailIdCompany;
           this.storageService.setMemberId = status.TAB1[0].MemberId;
-          // this.storageService.setvGender = status[0].vGender;
-          // this.storageService.setPatientAge = status[0].PatientAge;
-
-          // this.storageService.setRoleNameDetails = status[0].vRoleName;
-          // if (status.TAB1[0].vPhotoFilePath != null) {
-          //   this.urlLink = `${environment.dromeImageUrl}/${status.TAB1[0].vPhotoFilePath}`
-          // }
 
           this.memberId = status.TAB1[0].MemberId
           this.roleName = status.TAB1[0].vRoleName
