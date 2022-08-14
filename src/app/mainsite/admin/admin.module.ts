@@ -62,9 +62,6 @@ import { OtherRolesProfileComponent } from './admin-dashboard/other-roles-profil
     DriverDetailsAdminComponent,
     CustomerDetailsAdminComponent,
     TrackingDetailsAdminComponent,
-
-    
-,
     VehicleTypeMasterComponent,
     VehicleRateMasterComponent,
     WaitTimeChargesComponent,
@@ -101,7 +98,22 @@ import { OtherRolesProfileComponent } from './admin-dashboard/other-roles-profil
   exports:[
     CityMasterComponent,
     CountryMasterComponent,
-    StateMasterComponent
+    StateMasterComponent,
+    UpdateEmailComponent,
+    UpdateMobileNoComponent,
+    ChangePasswordComponent,
+    OrgMobnoAndEmailIdComponent,
+    ApproveDriverMasterComponent,
+    DriverDetailsAdminComponent,
+    CustomerDetailsAdminComponent,
+    TrackingDetailsAdminComponent,
+    VehicleTypeMasterComponent,
+    VehicleRateMasterComponent,
+    WaitTimeChargesComponent,
+    KMLimitMasterComponent,
+    ServiceTypeMasterComponent,
+    ServiceSubTypeMasterComponent,
+    OtherRolesProfileComponent
   ],
   providers:[
    

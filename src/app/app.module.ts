@@ -76,11 +76,8 @@ import { DataTablesModule } from 'angular-datatables';
     MatInputModule,
     MatAutocompleteModule,
     ToastrModule.forRoot(),
-    MatExpansionModule,
-    // AdminModule,
-    // PageFilterPipe
-    
-    // DataTablesModule
+    MatExpansionModule
+
 
   ],
   providers:
