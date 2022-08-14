@@ -12,7 +12,7 @@ export class UtilityService {
     constructor(private http: HttpClient) {
 
     }
-    apiUrl = environment.dromeApiUrl;
+    apiUrl = environment.dossiarApiUrl;
     getCurrentDate(): Observable<any> {
         return this.http.get(`${this.apiUrl}/Utility/GetCurrentDBDate`);
 

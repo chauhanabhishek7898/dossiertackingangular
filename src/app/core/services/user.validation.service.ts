@@ -13,7 +13,7 @@ export class UserValidationService {
     constructor(private http: HttpClient) {
 
     }
-    apiUrl = environment.dromeApiUrl;
+    apiUrl = environment.dossiarApiUrl;
     checkUsersOldPassword(password: string,userId: number,): Observable<any> {
         return this.http.get(`${this.apiUrl}/UserMaster/CheckUsersOldPassword/${password}/${userId}`)
     }

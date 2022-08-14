@@ -1,0 +1,10 @@
+@import '../update-email/update-email.component.scss';
+
+.submit{
+    button{
+        &:disabled{
+            background: #ccc !important;
+            cursor:not-allowed;
+        }
+    }
+}

@@ -1,0 +1,108 @@
+<div class="loader" *ngIf="loader">
+    <div class="loading">
+        <img  src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
+    </div>
+</div>
+<div class="family-head">
+    <span>{{pageTitle}}</span>
+</div>
+<mat-divider></mat-divider>
+<div class="country-table">
+    <table datatable class="ui celled table table-striped dt-responsive nowrap " style="width:100%"
+        [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+        <thead>
+            <tr>
+                <th class="no-sort" style="background-image: none !important;">#</th>
+                <!-- <th class="no-sort" style="background-image: none !important;">Patient Id</th>
+                <th class="no-sort" style="background-image: none !important;">Patient Code</th> -->
+                <th class="no-sort" style="background-image: none !important;">Full Name</th>
+                <th class="no-sort" style="background-image: none !important;">Mobile No.</th>
+                <th class="no-sort" style="background-image: none !important;">Email Id</th>
+                <th class="no-sort" style="background-image: none !important;">Gender</th>
+                <th class="no-sort" style="background-image: none !important;">DOB</th>
+                <!-- <th class="no-sort" style="background-image: none !important;">Referred By</th> -->
+                <!-- <th class="no-sort" style="background-image: none !important;">Blood Group</th> -->
+                <!-- <th class="no-sort" style="background-image: none !important;">Height (CMs)</th>
+                <th class="no-sort" style="background-image: none !important;">Weight (KGs)</th>
+                <th class="no-sort" style="background-image: none !important;">BMI</th> -->
+                <th class="no-sort" style="background-image: none !important;">Address</th>
+                <th class="no-sort" style="background-image: none !important;">City Detail</th>
+                <!-- <th class="no-sort" style="background-image: none !important;">Alcohol_Habits ?</th>
+                <th class="no-sort" style="background-image: none !important;">Alcohol Type</th>
+                <th class="no-sort" style="background-image: none !important;">Alcohol Frequency</th>
+                <th class="no-sort" style="background-image: none !important;">Alcohol Duration</th>
+                <th class="no-sort" style="background-image: none !important;">Tobacco Habits ?</th>
+                <th class="no-sort" style="background-image: none !important;">Tobacco Type</th>
+                <th class="no-sort" style="background-image: none !important;">Tobacco Frequency</th>
+                <th class="no-sort" style="background-image: none !important;">Tobacco Duration</th>
+                <th class="no-sort" style="background-image: none !important;">Diabetes Family History ?</th>
+                <th class="no-sort" style="background-image: none !important;">Diabetes Relation</th>
+                <th class="no-sort" style="background-image: none !important;">Hypertension Family History ?</th>
+                <th class="no-sort" style="background-image: none !important;">Hypertension Relation</th>
+                <th class="no-sort" style="background-image: none !important;">Heart Disease Family History ?</th>
+                <th class="no-sort" style="background-image: none !important;">Heart Disease Relation</th>
+                <th class="no-sort" style="background-image: none !important;">Others (Family History)</th>
+                <th class="no-sort" style="background-image: none !important;">Diabetes Personal History ?</th>
+                <th class="no-sort" style="background-image: none !important;">Diabetes Duration</th>
+                <th class="no-sort" style="background-image: none !important;">Hypertension_PersonalHistory ?</th>
+                <th class="no-sort" style="background-image: none !important;">Hypertension Duration</th>
+                <th class="no-sort" style="background-image: none !important;">Heart Disease_PersonalHistory ?</th>
+                <th class="no-sort" style="background-image: none !important;">Heart Disease Duration</th>
+                <th class="no-sort" style="background-image: none !important;">Others (Personal History)</th>
+                <th class="no-sort" style="background-image: none !important;">Allergy Information</th> -->
+                <th class="no-sort" style="background-image: none !important;">Aadhaar No.</th>
+                <th class="no-sort" style="background-image: none !important;">Aadhaar File</th>
+                <th class="no-sort" style="background-image: none !important;">Is Active </th>
+                
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let items of PatientDetailList; let i = index ">
+                <td>{{i+1}}</td>
+                <!-- <td>{{items.nPatientId}}</td>
+                <td>{{items.vPatientId}}</td> -->
+                <td>{{items.vFullName}}</td>
+                <td>{{items.vMobileNo}}</td>
+                <td>{{items.vEmailId}}</td>
+                <td>{{items.vGender}}</td>
+                <td>{{items.dtDOB}}</td>
+                <!-- <td>{{items.vReferredBy}}</td>
+                <td>{{items.vBloodGroup_BodyMetrics}}</td>
+                <td>{{items.nHeightInCMs_BodyMetrics}}</td>
+                <td>{{items.nWeightInKgs_BodyMetrics}}</td>
+                <td>{{items.vBMI}}</td> -->
+                <td>{{items.vAddress}}</td>
+                <td>{{items.vCityName}}</td>
+                <!-- <td>{{items.btAlcohol_Habits}}</td>
+                <td>{{items.vAlcoholType}}</td>
+                <td>{{items.vAlcoholFrequency}}</td>
+                <td>{{items.vAlcoholDuration}}</td>
+                <td>{{items.btTobacco_Habits}}</td>
+                <td>{{items.vTobaccoType}}</td>
+                <td>{{items.vTobaccoFrequency}}</td>
+                <td>{{items.vTobaccoDuration}}</td> -->
+                <!-- <td>{{items.btDiabetes_FamilyHistory}}</td>
+                <td>{{items.vDiabetesRelation}}</td>
+                <td>{{items.btHypertension_FamilyHistory}}</td>
+                <td>{{items.vHypertensionRelation}}</td>
+                <td>{{items.btHeartDisease_FamilyHistory}}</td>
+                <td>{{items.vHeartDiseaseRelation}}</td>
+                <td>{{items.vOthers_FamilyHistory}}</td>
+                <td>{{items.btDiabetes_PersonalHistory}}</td>
+                <td>{{items.vDiabetesDuration}}</td>
+                <td>{{items.btHypertension_PersonalHistory}}</td>
+                <td>{{items.vHypertensionDuration}}</td>
+                <td>{{items.btHeartDisease_PersonalHistory}}</td>
+                <td>{{items.vHeartDiseaseDuration}}</td>
+                <td>{{items.vOthers_PersonalHistory}}</td>
+                <td>{{items.vAllergyInformation}}</td> -->
+                <td>{{items.vAadhaarNo}}</td>
+                <td><a [href]="imageUrl + '/'+ items.vAadhaarNoFilePath"
+                    target="_blank">{{items.vAadhaarNoFilePath}}</a></td>
+                <!-- <td><input [checked]=items.btIsActive type="checkbox" [disabled]="disabled"/></td> -->
+                
+            </tr>
+        </tbody>
+    </table>
+</div>

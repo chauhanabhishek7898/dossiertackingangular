@@ -326,6 +326,7 @@ export class AdminDashboardComponent implements OnInit {
           this.establishmentName = status.TAB1[0].EstablishmentName
 
           this.pageDetails = status.TAB2;
+          console.log("this.pageDetails",this.pageDetails)
           this.parentPageList = this.pageDetails.filter((page) => page.nPageDependentId == null)
           if (this.parentPageList.length > 4) {
             this.pageDetailsFirsList = this.parentPageList.slice(0, 4);

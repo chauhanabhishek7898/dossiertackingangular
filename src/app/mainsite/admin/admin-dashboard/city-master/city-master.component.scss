@@ -21,3 +21,31 @@
     height: auto;
 }
 }
+.family-head {
+  display: inline;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: none;
+  @media screen and (max-width: 540px) {
+      display: flex;
+      margin-bottom: 12px;
+  }
+  @media screen and (max-width: 480px) {
+      // display: inline-flex !important;
+      margin-bottom: 0px;
+  }
+  span {
+      &:first-child {
+          border-bottom: 4px solid #7087db;
+      }
+      button {
+          border: none;
+          background: #30afa3;
+          padding: 6px 10px;
+          font-size: 13px;
+          border-radius: 5px;
+          color: #fff;
+      }
+  }
+}
