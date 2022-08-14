@@ -1,0 +1,101 @@
+<div class="loader" *ngIf="loader">
+    <div class="loading">
+        <img src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
+    </div>
+</div>
+<div class="family-head">
+    <span>{{pageTitle}}</span>
+</div>
+<mat-divider></mat-divider>
+<div class="country-table">
+    <table datatable class="ui celled table table-striped dt-responsive nowrap " style="width:100%" [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+        <thead>
+            <tr>
+                <th class="no-sort" style="background-image: none !important;">#</th>
+                <th class="no-sort" style="background-image: none !important;">Activate </th>
+                <th class="no-sort" style="background-image: none !important;">Full Name</th>
+            
+                <th class="no-sort" style="background-image: none !important;">Mobile No.</th>
+                <th class="no-sort" style="background-image: none !important;">Email Id</th>
+                <th class="no-sort" style="background-image: none !important;">Gender</th>
+                <th class="no-sort" style="background-image: none !important;">DOB</th>
+                <th class="no-sort" style="background-image: none !important;">Present Address</th>
+                <th class="no-sort" style="background-image: none !important;">Permanent Address</th>
+                <th class="no-sort" style="background-image: none !important;">License / Registration No.</th>
+                <th class="no-sort" style="background-image: none !important;">License File</th>
+                <th class="no-sort" style="background-image: none !important;">Aadhaar No.</th>
+                <th class="no-sort" style="background-image: none !important;">Aadhaar File</th>
+                <th class="no-sort" style="background-image: none !important;">PAN No.</th>
+                <th class="no-sort" style="background-image: none !important;">PAN File</th>
+                <th class="no-sort" style="background-image: none !important;">Vehicle Registration No.</th>
+                <th class="no-sort" style="background-image: none !important;">VehicleRegistration File</th>
+                <th class="no-sort" style="background-image: none !important;">VehicleInsurance File</th>
+                <th class="no-sort" style="background-image: none !important;">License /Registration File</th>
+       
+                <th class="no-sort" style="background-image: none !important;">Photo</th>
+                <th class="no-sort" style="background-image: none !important;">Is Active </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let items of userDetailList; let i = index ">
+                <td>{{i+1}}</td>
+                <td>
+                    <button class="activate-user" (click)="openConformaitionModel(templateApproveConformationModel,{nUserId : items.nDriverId})">Activate</button>
+                </td>
+                <td >{{items.vFullName}}</td>
+              
+                <td>{{items.vMobileNo}}</td>
+                <td>{{items.vEmailId}}</td>
+                <td>{{items.vGender}}</td>
+                <td>{{items.dtDOB}}</td>
+                <td>{{items.vPresentAddress}}</td>
+                <td>{{items.vPermanentAddress}}</td>
+                <td>{{items.vLicenseNo}}</td>
+                <td>
+                    <a [attr.href]="imageUrl + '/'+ items.vLicenseNoFilePath" target="_blank">{{items.vLicenseNoFilePath}}</a>
+                </td>
+                <td>{{items.vAadhaarNo}}</td>
+                <td>
+                    <a [attr.href]="imageUrl + '/'+ items.vAadhaarNoFilePath" target="_blank">{{items.vAadhaarNoFilePath}}</a>
+                </td>
+                <td>{{items.vPANNo}}</td>
+                <td>
+                    <a [attr.href]="imageUrl + '/'+ items.vPANNoFilePath" target="_blank">{{items.vPANNoFilePath}}</a>
+                </td>
+                <td>{{items.vVehicleRegistrationNo}}</td>
+                <td>
+                    <a [attr.href]="imageUrl + '/'+ items.vVehicleRegistrationNoFilePath" target="_blank">{{items.vVehicleRegistrationNoFilePath}}</a>
+                </td>
+
+              
+                <td *ngIf="items.vVehicleInsuranceFilePath!=null" >
+                    <a [href]="imageUrl + '/'+ items.vVehicleInsuranceFilePath" target="_blank">{{items.vVehicleInsuranceFilePath}}</a>
+                </td>
+                <td *ngIf="items.vPhotoFilePath!=null" >
+                    <a [href]="imageUrl + '/'+ items.vPhotoFilePath" target="_blank">{{items.vPhotoFilePath}}</a>
+                </td>
+                <td><input [checked]=items.btIsActive type="checkbox" [disabled]="disabled" /></td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+<ng-template #templateApproveConformationModel>
+    <div class="country-edit-model">
+        <div class="model-header">
+            <button type="button" class="close-btn pull-right" aria-label="Close" (click)="conformaitonmodalRef.hide()">
+                <mat-icon>close</mat-icon>
+            </button>
+            <h1 mat-dialog-title>ALERT !!</h1>
+        </div>
+        <mat-divider></mat-divider>
+    </div>
+    <div mat-dialog-content>
+        <p class="confirm-text" style="text-align: center;">Do you want to Activate this User ??</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="confirm-btn mt-3">
+        <button (click)="ActivateUserDetail()" type="button">Ok</button>
+        <button (click)="modelCencelBtn()" type="button">Cancel</button>
+    </div>
+</ng-template>

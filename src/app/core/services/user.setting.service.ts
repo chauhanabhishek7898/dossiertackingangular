@@ -12,7 +12,7 @@ export class UserSettingService {
     constructor(private http: HttpClient) {
 
     }
-    apiUrl = environment.dromeApiUrl;
+    apiUrl = environment.dossiarApiUrl;
     updateUserEmail(user: object): Observable<any> {
         return this.http.put(`${this.apiUrl}/UserMaster/UserMasterEmailId_Update`, user);
 

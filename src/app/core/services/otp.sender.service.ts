@@ -12,7 +12,7 @@ export class OtpSender {
     constructor(private http: HttpClient) {
 
     }
-    apiUrl = environment.dromeApiUrl;
+    apiUrl = environment.dossiarApiUrl;
     sendOtpToMobileAndEmail(mobileNo: string, email: string): Observable<any> {
         return this.http.get(`${this.apiUrl}/Utility/SendOtpToMobileAndEmail/?m=${mobileNo}&e=${email}`)
     }

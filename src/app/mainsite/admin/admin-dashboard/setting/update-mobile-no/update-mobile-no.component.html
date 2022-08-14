@@ -1,0 +1,65 @@
+<div class="loader" *ngIf="loader">
+    <div class="loading">
+        <img src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
+    </div>
+</div>
+<div class="change-pass">
+
+    <div class="update-form-head">
+        <span>
+            {{pageTitle}}
+        </span>
+    </div>
+
+    <form [formGroup]="updateMobileForm" action="" class="update-form">
+
+        <div class="input-group mb-3">
+            <label for="">Mobile No.</label>
+            <input formControlName="vMobileNumber" type="text" class="form-control" placeholder="Enter New Mobile No." appAutofocus aria-label="Current Email Id" aria-describedby="basic-addon1" [ngClass]="{'is-invalid' : createupdateMobileFormControls.vMobileNumber.invalid && (createupdateMobileFormControls.vMobileNumber.dirty || createupdateMobileFormControls.vMobileNumber.touched)}">
+            <div class="invalid-tooltip" *ngIf="createupdateMobileFormControls.vMobileNumber.invalid && (createupdateMobileFormControls.vMobileNumber.dirty || createupdateMobileFormControls.vMobileNumber.touched)">
+                Please enter Mobile No.
+            </div>
+        </div>
+        <div class="change-pass-title">
+            <p>** Please note, an OTP will be sent to your new Mobile No. before changing.</p>
+        </div>
+        <div class="submit">
+            <button type="submit" [disabled]="updateMobileForm.invalid" (click)="openModal(templateCountryMaster)">Send OTP</button>
+        </div>
+    </form>
+</div>
+
+<ng-template #templateCountryMaster>
+    <div class="loader" *ngIf="loader">
+        <div class="loading">
+            <img src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
+        </div>
+    </div>
+    <div class="country-edit-model">
+        <div class="model-header">
+            <h1 mat-dialog-title>{{ModalTitle}}</h1>
+            <button type="button" class="close-btn pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <mat-divider></mat-divider>
+        <div mat-dialog-content>
+            <div class="country-form">
+                <div class="send-otp">
+                    <div class="otp-alrt">We have sent you an OTP on</div>
+                    <div>{{mobNumber}}</div>
+                    <div class="input-group ">
+                        <label for="">Enter OTP</label>
+                        <input appAutofocus (keyup)="onKeyUpEvent($event)" type="number" class="form-control" placeholder="Please enter 4 digits OTP here to verify" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <span class="counter">{{countDownTimer}}</span>
+                    <div class="resend-otp">
+                        <span>Still not received OTP?</span>
+                        <button (click)="resendOtp()" [disabled]="resendOtpBtnDisabled" type="button" class="resend">Resend OTP</button>
+                    </div>
+                    <div class="submit addMamber" *ngIf="otpVerified"> <button (click)="updateMobileNumber()" class="btn btn-primary" type="button">Update</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
