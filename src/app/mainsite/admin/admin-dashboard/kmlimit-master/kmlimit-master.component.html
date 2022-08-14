@@ -1,0 +1,123 @@
+<div class="loader" *ngIf="loader">
+    <div class="loading">
+        <img src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
+    </div>
+</div>
+<div class="country-model button-spacing">
+    <button type="button" class="btn" (click)="openModal(templateCountryMaster)">Add KM Limit   </button>
+
+    <ng-template #templateCountryMaster>
+
+        <!-- <div class="loader loader2 " *ngIf="loaderService.isModelPopUpLoading | async">
+            <div class="spinner spinner2">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </div> -->
+        <div class="country-edit-model">
+            <div class="model-header">
+                <h1 mat-dialog-title>{{ModalTitle}}</h1>
+                <button type="button" class="close-btn pull-right" aria-label="Close" (click)="modalRef.hide()">
+                    <mat-icon>close</mat-icon>
+                </button>
+
+            </div>
+            <mat-divider></mat-divider>
+            <div mat-dialog-content>
+                <div class="country-form">
+                    <form class="country" [formGroup]="countryMasterForm" (ngSubmit)="onSubmitCountryMasterForm()">
+
+                        
+                        <div class="input-group"  >
+                            <label for="">Inter Related City <span style="color: red;">*</span></label>
+                            <select class="form-select" aria-label="Default select example"
+                                formControlName="nCityId">
+                                <option value="{{item.nCityId}}" *ngFor="let item of CityMasterList">
+                                    {{item.vCityName}}</option>
+                                <!-- <option value="null" >None of these</option> -->
+                            </select>
+                           
+                        </div>
+                        <div class="input-group"  >
+                            <label for="">Vehicle Type <span style="color: red;">*</span></label>
+                            <select class="form-select" aria-label="Default select example"
+                                formControlName="nVId">
+                                <option value="{{item.nVId}}" *ngFor="let item of vehicleTypeMaster">
+                                    {{item.vVehicleType}}</option>
+                            </select>
+                           
+                        </div>
+                        <div class="input-group">
+                            <label for="">KM Limit<span style="color: red;">*</span></label>
+                            <input name="vCountry" formControlName="nKMLimit" appAutofocus CountryAutofocus="true"
+                                type="number" class="form-control" placeholder="KM Limit" aria-label="Country"
+                                aria-describedby="basic-addon1"
+                                [ngClass]="{'is-invalid' : createCountryMasterFormControls.nKMLimit.invalid && (createCountryMasterFormControls.nKMLimit.dirty || createCountryMasterFormControls.nKMLimit.touched)}">
+
+                            <div class="invalid-tooltip"
+                                *ngIf="createCountryMasterFormControls.nKMLimit.invalid && (createCountryMasterFormControls.nKMLimit.dirty || createCountryMasterFormControls.nKMLimit.touched)">
+                                <span *ngIf="createCountryMasterFormControls.nKMLimit.errors.required">
+                                    Please enter KM Limit.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="break"></div>
+                        <div class="form-check mt-2">
+                            <label for="">Is Active</label>
+                            <span class="checkBox">
+                                <input type="checkbox" formControlName="btActive" [disabled]="disabled" />
+                                <span class="active">Active</span>
+                            </span>
+                        </div>
+                        <div class="submit mt-2">
+                            <button class="btn btn-primary" type="submit"
+                                [disabled]="countryMasterForm.invalid">{{formType}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>
+
+<mat-divider></mat-divider>
+
+
+<div class="country-table">
+    <table datatable class="ui celled table table-striped dt-responsive nowrap " style="width:100%"
+        [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+        <thead>
+            <tr>
+                <th class="no-sort" style="background-image: none !important;">#</th>
+                <th style="background-image: none !important;">City</th>
+                <th style="background-image: none !important;">Vehicle Type</th>
+                <th style="background-image: none !important;">KM Limit</th>
+                <th class="no-sort" style="background-image: none !important;">Status</th>
+                <th class="no-sort" style="background-image: none !important;">Edit</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let item of kmLimitMaster; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{item.CityStateDetails}}</td>
+                <td>{{item.vVehicleType}}</td>
+                <td>{{item.nKMLimit}}</td>
+                <td><input [checked]=item.btActive type="checkbox" [disabled]="disabled" /></td>
+                <td>
+                    <span (click)="editClick(templateCountryMaster, item.nLimitId)"><svg xmlns="http://www.w3.org/2000/svg"
+                            width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path
+                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                            <path fill-rule="evenodd"
+                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                        </svg>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

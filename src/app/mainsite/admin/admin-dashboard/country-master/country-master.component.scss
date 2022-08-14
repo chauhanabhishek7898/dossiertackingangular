@@ -46,7 +46,7 @@ h1 {
 .country {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: end;
     flex-wrap: wrap;
 
     @media screen and (max-width: 992px) {
@@ -81,7 +81,7 @@ h1 {
         input {
             padding: 4px 8px;
             font-size: 12px;
-
+            border-radius: 5px !important;
             &::placeholder {
                 font-size: 12px;
             }
@@ -180,7 +180,8 @@ h1 {
 }
 .model-header{
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
+    align-items: center;
 }
 .close {
     border: 0.5px solid #31b0a4;
@@ -492,4 +493,10 @@ h1 {
 
 .mt-2 {
     margin-top: 12px !important;
+}
+.break{
+    flex-basis: 100%;
+}
+.mat-divider{
+    margin: 8px 0;
 }
