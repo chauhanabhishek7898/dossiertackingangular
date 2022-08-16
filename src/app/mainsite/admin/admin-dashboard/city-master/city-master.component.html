@@ -52,22 +52,31 @@
                         </div>
                         <div class="break"></div>
                         <div class="form-check mt-2">
-                            <label for="">Main Inter Related City Is Active</label>
+                            <label for="">Main Inter Related City?</label>
                             <span class="checkBox">
                                 <input type="checkbox" formControlName="btMainInterRelatedCity"
                                     (change)="checkSelect($event)">
-                                <span class="active">Main Inter Related City Is Active</span>
+                                <span class="active">Main Inter Related City </span>
                             </span>
                         </div>
-                        <div class="input-group input-group-1" *ngIf="InterRelatedCity">
+                        <div class="input-group input-group-1" *ngIf="!InterRelatedCity" >
                             <label for="">Select Inter Related City</label>
-                            <select class="form-select" aria-label="Default select example"
-                                formControlName="nInterRelatedCityId">
+                            <!-- <select class="form-select" aria-label="Default select example"
+                                formControlName="nInterRelatedCityId" [ngModel]="InterRelatedCityId" (change)="InterRelatedCityId($event)">
                                 <option value="{{item.nCityId}}" *ngFor="let item of mainInterRelatedCity">
                                     {{item.vCityName}}</option>
-                                <option value=null>None of these</option>
-                            </select>
+                                    
+                                <option value='NA'>NA</option>
 
+                            </select> -->
+                            <mat-form-field appearance="fill" >
+                                <!-- <mat-label>Select Inter Related City</mat-label> -->
+                                <mat-select formControlName="nInterRelatedCityId" (selectionChange)="InterRelatedCityIds($event)" [(ngModel)]="InterRelatedCityId" name="item">
+                                <!-- <mat-select formControlName="nInterRelatedCityId" (selectionChange)="InterRelatedCityIds($event)" [(ngModel)]="InterRelatedCityId"> -->
+                                  <mat-option [value]="item.nCityId" *ngFor="let item of mainInterRelatedCity">{{item.vCityName}}</mat-option>
+                                  <mat-option value='NA'>NA</mat-option>    
+                                </mat-select>
+                              </mat-form-field>
                         </div>
                         <div class="break"></div>
                         <div class="form-check mt-2">
@@ -96,6 +105,8 @@
                 <th style="background-image: none !important;">City Name</th>
                 <th class="no-sort" style="background-image: none !important;">State Name</th>
                 <th class="no-sort" style="background-position:115px">Country Name</th>
+                <th class="no-sort" style="background-image: none !important;">Is Main Inter Related City?</th>
+                <th class="no-sort" style="background-image: none !important;">Related City</th>
                 <th class="no-sort" style="background-image: none !important;">Status</th>
                 <th class="no-sort" style="background-image: none !important;">Edit</th>
             </tr>
@@ -103,9 +114,11 @@
         <tbody>
             <tr *ngFor="let item of CityMasterList; let i = index">
                 <td>{{i+1}}</td>
-                <td>{{item.vCityName}}</td>
+                <td>{{item.CityStateDetailsPX}}</td>
                 <td>{{item.vStateName}}</td>
                 <td>{{item.vCountryName}}</td>
+                <td><input disabled [checked]=item.btMainInterRelatedCity type="checkbox" /></td>
+                <td>{{item.RelatedCity}}</td>
                 <td><input disabled [checked]=item.btActive type="checkbox" /></td>
                 <td>
                     <span (click)="editClick(templateCityMaster,item.nCityId)"><svg xmlns="http://www.w3.org/2000/svg"

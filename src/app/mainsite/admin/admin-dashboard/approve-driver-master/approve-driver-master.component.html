@@ -69,8 +69,8 @@
             <tr *ngFor="let items of userDetailList; let i = index ">
                 <td>{{i+1}}</td>
                 <td>
-                    <button class="activate-user"
-                        (click)="openConformaitionModel(templateApproveConformationModel,{nUserId : items.nDriverId})">Activate</button>
+                    <button class="activate-user" (click)="openConformaitionModel(templateApproveConformationModel, items.nDriverId)">Activate</button>
+                    <!-- <button class="activate-user" (click)="openConformaitionModel(templateApproveConformationModel,{nUserId : items.nDriverId})">Inactive</button> -->
                 </td>
                 <td>{{items.vDriverId}}</td>
                 <td>{{items.RegistrationDate}}</td>
@@ -88,31 +88,31 @@
                 <td>{{items.vPermanentAddress}}</td>
                 <td>{{items.vLicenseNo}}</td>
                 <td>
-                    <a [attr.href]="imageUrl + '/'+ items.vLicenseNoFilePath"
-                        target="_blank">{{items.vLicenseNoFilePath}}</a>
+                    <a *ngIf="items.vLicenseNoFilePath!=null" [attr.href]="imageUrl + '/'+ items.vLicenseNoFilePath"
+                        target="_blank">License Copy</a>
                 </td>
                 <td>{{items.vAadhaarNo}}</td>
                 <td>
-                    <a [attr.href]="imageUrl + '/'+ items.vAadhaarNoFilePath"
-                        target="_blank">{{items.vAadhaarNoFilePath}}</a>
+                    <a *ngIf="items.vAadhaarNoFilePath!=null" [attr.href]="imageUrl + '/'+ items.vAadhaarNoFilePath"
+                        target="_blank">Aadhaar Copy</a>
                 </td>
                 <td>{{items.vPANNo}}</td>
                 <td>
-                    <a [attr.href]="imageUrl + '/'+ items.vPANNoFilePath" target="_blank">{{items.vPANNoFilePath}}</a>
+                    <a *ngIf="items.vPANNoFilePath!=null" [attr.href]="imageUrl + '/'+ items.vPANNoFilePath" target="_blank">PAN Card Copy</a>
                 </td>
                 <td>{{items.vVehicleRegistrationNo}}</td>
                 <td>
-                    <a [attr.href]="imageUrl + '/'+ items.vVehicleRegistrationNoFilePath"
-                        target="_blank">{{items.vVehicleRegistrationNoFilePath}}</a>
+                    <a *ngIf="items.vVehicleRegistrationNoFilePath!=null" [attr.href]="imageUrl + '/'+ items.vVehicleRegistrationNoFilePath"
+                        target="_blank">Vehicle Registration File Copy</a>
                 </td>
 
 
-                <td *ngIf="items.vVehicleInsuranceFilePath!=null">
-                    <a [href]="imageUrl + '/'+ items.vVehicleInsuranceFilePath"
-                        target="_blank">{{items.vVehicleInsuranceFilePath}}</a>
+                <td >
+                    <a *ngIf="items.vVehicleInsuranceFilePath!=null" [href]="imageUrl + '/'+ items.vVehicleInsuranceFilePath"
+                        target="_blank">Vehicle Insurance File Copy</a>
                 </td>
-                <td *ngIf="items.vPhotoFilePath!=null">
-                    <a [href]="imageUrl + '/'+ items.vPhotoFilePath" target="_blank">{{items.vPhotoFilePath}}</a>
+                <td >
+                    <a *ngIf="items.vPhotoFilePath!=null" [href]="imageUrl + '/'+ items.vPhotoFilePath" target="_blank">Profile Photo</a>
                 </td>
                 <!-- <td><input [checked]=items.btIsActive type="checkbox" [disabled]="disabled" /></td> -->
 
@@ -123,10 +123,10 @@
 <ng-template #templateApproveConformationModel>
     <div class="country-edit-model">
         <div class="model-header">
+            <h1 mat-dialog-title>ALERT !!</h1>
             <button type="button" class="close-btn pull-right" aria-label="Close" (click)="conformaitonmodalRef.hide()">
                 <mat-icon>close</mat-icon>
             </button>
-            <h1 mat-dialog-title>ALERT !!</h1>
         </div>
         <mat-divider></mat-divider>
     </div>

@@ -5,7 +5,7 @@
 </div> -->
 <div class="loader" *ngIf="loader">
     <div class="center-loader">
-        <div class="spinner-border" role="status" >
+        <div class="spinner-border" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
     </div>
@@ -37,25 +37,30 @@
                 <div class="country-form">
                     <form class="country" [formGroup]="countryMasterForm" (ngSubmit)="onSubmitCountryMasterForm()">
 
-                        
-                        <div class="input-group"  >
+
+                        <div class="input-group">
                             <label for="">City <span style="color: red;">*</span></label>
-                            <select class="form-select" aria-label="Default select example"
+                            <!-- <select class="form-select" aria-label="Default select example"
                                 formControlName="nCityId">
                                 <option value="{{item.nCityId}}" *ngFor="let item of CityMasterList">
                                     {{item.vCityName}}</option>
-                                <!-- <option value="null" >None of these</option> -->
-                            </select>
-                           
+                                <option value="null" >None of these</option>
+                            </select> -->
+                            <mat-form-field>
+                                <mat-select formControlName="nCityId" [(ngModel)]="cityId" name="item">
+                                    <mat-option [value]="item.nCityId" *ngFor="let item of CityMasterList">
+                                        {{item.vCityName}}</mat-option>
+                                    <!-- <mat-option value='NA'>NA</mat-option>     -->
+                                </mat-select>
+                            </mat-form-field>
                         </div>
-                        <div class="input-group"  >
+                        <div class="input-group">
                             <label for="">Vehicle Type <span style="color: red;">*</span></label>
-                            <select class="form-select" aria-label="Default select example"
-                                formControlName="nVId">
+                            <select class="form-select" aria-label="Default select example" formControlName="nVId">
                                 <option value="{{item.nVId}}" *ngFor="let item of vehicleTypeMaster">
                                     {{item.vVehicleType}}</option>
                             </select>
-                           
+
                         </div>
                         <div class="input-group">
                             <label for="">Rate Per KM <span style="color: red;">*</span></label>
@@ -110,12 +115,12 @@
         <tbody>
             <tr *ngFor="let item of vehicleRateMaster; let i = index">
                 <td>{{i+1}}</td>
-                <td>{{item.CityStateDetails}}</td>
+                <td>{{item.CityStateDetailsPX}}</td>
                 <td>{{item.vVehicleType}}</td>
                 <td>{{item.nRatePerKM}}</td>
                 <td><input [checked]=item.btActive type="checkbox" [disabled]="disabled" /></td>
                 <td>
-                    <span (click)="editClick(templateCountryMaster, item.nVId)"><svg xmlns="http://www.w3.org/2000/svg"
+                    <span (click)="editClick(templateCountryMaster, item.nVRId)"><svg xmlns="http://www.w3.org/2000/svg"
                             width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path
                                 d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />

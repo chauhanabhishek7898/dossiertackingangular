@@ -68,7 +68,7 @@ export class ServiceSubTypeMasterComponent implements OnInit {
   IsWait: boolean;
   @Input() disabled: boolean = true;
   loader = false;
-
+  cityId
   ngOnInit(): void {
     this.dtOptions = {
       //destroy: true,
@@ -287,6 +287,7 @@ export class ServiceSubTypeMasterComponent implements OnInit {
   editCountryRowItem(nSSTId: number) {
     let country = this.serviceSubTypeMaster.find((e) => e.nSSTId == nSSTId);
     this.countryMasterForm.get('nCityId')?.setValue(country?.nCityId);
+    this.cityId=country?.nCityId
     this.countryMasterForm.patchValue({
       nSSTId: country?.nSSTId,
       nVId: country?.nVId,
