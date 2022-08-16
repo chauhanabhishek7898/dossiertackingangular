@@ -23,8 +23,10 @@ import {
 } from '../../../models/city-master';
 import { CityMasterService } from './city-master.service';
 import { StateService } from '../state-master/state.service';
-
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 // import { NotificationService } from 'src/app/core/services/notification.service';
+
+
 // import { LoaderService } from 'src/app/loader/loader.service';
 
 @Component({
@@ -38,7 +40,7 @@ export class CityMasterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private CityService: CityMasterService,
-    // // private notifier: NotificationService,
+    // private notifier: NotificationService,
     private stateService: StateService,
     private modalService: BsModalService
   ) // public loaderService: LoaderService
@@ -110,6 +112,7 @@ export class CityMasterComponent implements OnInit {
       this.InterRelatedCityId=e.value
     }
   }
+  
   cityNameFind;
   onSubmitCityMasterForm(): void {
     
@@ -164,7 +167,9 @@ export class CityMasterComponent implements OnInit {
       this.CityService.saveCity(this.cityModel, this.formType).subscribe(
         (status: string) => {
           if (status) {
-            alert(status);
+            // alert(status);
+            this.showSuccessMessage(status,'success',true,)
+            // this.notifier.showSuccess(status);
             this.loader = false;
             this.CityMasterForm.reset();
             this.modalRef.hide();
@@ -173,7 +178,9 @@ export class CityMasterComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          alert(error.statusText);
+          // alert(error.statusText);
+          // this.notifier.showError(error.statusText);
+          this.showWarningMessage(error.statusText,'error',true,)
         }
       );
     }
@@ -326,4 +333,24 @@ export class CityMasterComponent implements OnInit {
       
     }
   }
+  showSuccessMessage(
+    message, icon,
+    showCancelButton = true){
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton
+    })
+ }
+ showWarningMessage(
+  message, icon,
+  showCancelButton = true){
+  return Swal.fire({
+    // title: title,
+    text: message,
+    icon: icon,
+    showCancelButton: showCancelButton
+  })
+}
 }
