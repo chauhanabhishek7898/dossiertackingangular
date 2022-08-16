@@ -109,28 +109,31 @@ export class ApproveDriverMasterComponent implements OnInit {
     });
   } 
   ActivateUserDetail() : void{
-    this.loader = true;
-    // this.userDetailService.updateActivateUserDetial(this.UserId)
-    //    .subscribe((status: string) => {
-    //      if (status) {
-    //       //  this.notifier.showSuccess(status);
-    //        this.conformaitonmodalRef.hide();
-    //        setTimeout(() => {
-    //         this.rerender();
-    //       }, 100)
-    //       setTimeout(() => {
-    //         this.loader = false
-    //       }, 300)
-    //      } else {
-    //       //  this.notifier.showError('faild');
-    //        setTimeout(() => {
-    //         this.loader = false
-    //       }, 300)
+    // this.loader = true;
+    let user ={
+      nUserId : this.UserId
+    }
+    this.userDetailService.updateActivateUserDetial(user)
+       .subscribe((status: string) => {
+         if (status) {
+          //  this.notifier.showSuccess(status);
+           this.conformaitonmodalRef.hide();
+           setTimeout(() => {
+            this.rerender();
+          }, 100)
+          setTimeout(() => {
+            this.loader = false
+          }, 300)
+         } else {
+          //  this.notifier.showError('faild');
+           setTimeout(() => {
+            this.loader = false
+          }, 300)
     
-    //      }
-    //     }, (error: HttpErrorResponse) => {
-    //       // this.notifier.showError(error.statusText);
-    //     });
+         }
+        }, (error: HttpErrorResponse) => {
+          // this.notifier.showError(error.statusText);
+        });
       } 
 
       rerender(): void {

@@ -108,6 +108,8 @@
             <tr>
                 <th class="no-sort" style="background-image: none !important;">#</th>
                 <th style="background-image: none !important;">Country Name</th>
+                <th style="background-image: none !important;">Country Prefix</th>
+                <th style="background-image: none !important;">Country PSTN Code</th>
                 <th class="no-sort" style="background-image: none !important;">Status</th>
                 <th class="no-sort" style="background-image: none !important;">Edit</th>
             </tr>
@@ -117,6 +119,8 @@
             <tr *ngFor="let item of countryList; let i = index">
                 <td>{{i+1}}</td>
                 <td>{{item.vCountryName}}</td>
+                <td>{{item.vCountryPrefix}}</td>
+                <td>{{item.vCountryPSTNCode}}</td>
                 <td><input [checked]=item.btActive type="checkbox" [disabled]="disabled" /></td>
                 <td>
                     <span (click)="editClick(templateCountryMaster, item.nCountryId)"><svg

@@ -14,4 +14,5 @@ export class VehicleGet {
     vCityName: string
     vVehicleType: string
     CityStateDetails:string
+    CityStateDetailsPX:string
 }

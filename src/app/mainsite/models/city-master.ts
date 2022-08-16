@@ -18,7 +18,8 @@ export class CityMasterList extends CityMaster {
     vCountryName: string;
     CityDetails: string;
     CityStateDetails: string;
-    RelatedCity: string
+    RelatedCity: string;
+    CityStateDetailsPX:string
 }
 export class MainInterRelatedCity {
     nCityId: number;

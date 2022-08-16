@@ -85,31 +85,31 @@
                 <td>{{items.vPermanentAddress}}</td>
                 <td>{{items.vLicenseNo}}</td>
                 <td>
-                    <a [attr.href]="imageUrl + '/'+ items.vLicenseNoFilePath"
-                        target="_blank">{{items.vLicenseNoFilePath}}</a>
+                    <a *ngIf="items.vLicenseNoFilePath!=null"  [attr.href]="imageUrl + '/'+ items.vLicenseNoFilePath"
+                        target="_blank">License Copy</a>
                 </td>
                 <td>{{items.vAadhaarNo}}</td>
                 <td>
-                    <a [attr.href]="imageUrl + '/'+ items.vAadhaarNoFilePath"
-                        target="_blank">{{items.vAadhaarNoFilePath}}</a>
+                    <a *ngIf="items.vVehicleInsuranceFilePath!=null" [attr.href]="imageUrl + '/'+ items.vAadhaarNoFilePath"
+                        target="_blank">Aadhaar Copy</a>
                 </td>
                 <td>{{items.vPANNo}}</td>
                 <td>
-                    <a [attr.href]="imageUrl + '/'+ items.vPANNoFilePath" target="_blank">{{items.vPANNoFilePath}}</a>
+                    <a *ngIf="items.vVehicleInsuranceFilePath!=null" [attr.href]="imageUrl + '/'+ items.vPANNoFilePath" target="_blank">PAN Card Copy</a>
                 </td>
                 <td>{{items.vVehicleRegistrationNo}}</td>
                 <td>
-                    <a [attr.href]="imageUrl + '/'+ items.vVehicleRegistrationNoFilePath"
-                        target="_blank">{{items.vVehicleRegistrationNoFilePath}}</a>
+                    <a *ngIf="items.vVehicleInsuranceFilePath!=null" [attr.href]="imageUrl + '/'+ items.vVehicleRegistrationNoFilePath"
+                        target="_blank">Vehicle Registration File Copy</a>
                 </td>
 
 
-                <td *ngIf="items.vVehicleInsuranceFilePath!=null">
-                    <a [href]="imageUrl + '/'+ items.vVehicleInsuranceFilePath"
-                        target="_blank">{{items.vVehicleInsuranceFilePath}}</a>
+                <td >
+                    <a *ngIf="items.vVehicleInsuranceFilePath!=null" [href]="imageUrl + '/'+ items.vVehicleInsuranceFilePath"
+                        target="_blank">Vehicle Insurance File Copy</a>
                 </td>
-                <td *ngIf="items.vPhotoFilePath!=null">
-                    <a [href]="imageUrl + '/'+ items.vPhotoFilePath" target="_blank">{{items.vPhotoFilePath}}</a>
+                <td>
+                    <a *ngIf="items.vPhotoFilePath!=null" [href]="imageUrl + '/'+ items.vPhotoFilePath" target="_blank">Profile Photo</a>
                 </td>
                 <!-- <td><input [checked]=items.btIsActive type="checkbox" [disabled]="disabled" /></td> -->
 

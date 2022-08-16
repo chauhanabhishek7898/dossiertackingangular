@@ -14,4 +14,5 @@ export class KMLimitGet {
     vCityName: string
     vVehicleType: string
     CityStateDetails: string
+    CityStateDetailsPX:string
 }

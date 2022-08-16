@@ -20,6 +20,6 @@ updateRevokeUserDetial(updateRevokeUserMaster: object): Observable<any> {
   return this.http.put(`${this.apiUrl}/DriverMaster/RevokeUsersRight/`, updateRevokeUserMaster);
 }
 updateActivateUserDetial(updateActivateUserMaster: object): Observable<any> {
-  return this.http.put(`${this.apiUrl}/DriverMaster/ActivateUsersRight`, updateActivateUserMaster);
+  return this.http.put(`${this.apiUrl}/DriverMaster/ApproveDrivers`, updateActivateUserMaster);
 }
 }

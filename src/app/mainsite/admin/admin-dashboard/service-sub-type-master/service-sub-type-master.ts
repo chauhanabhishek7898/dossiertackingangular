@@ -23,4 +23,5 @@ export class ServiceSubTypeGet {
     vVehicleType: string
     vCityName: string
     CityStateDetails: string
+    CityStateDetailsPX:string
 }

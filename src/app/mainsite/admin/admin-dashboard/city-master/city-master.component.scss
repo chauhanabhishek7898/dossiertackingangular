@@ -1,51 +1,74 @@
 @import "../state-master/state-master.component.scss";
-.country{
-    display: flex;
+
+.country {
+  display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
 
-.input-group-2{
-    width: 45% !important;
+.input-group-2 {
+  width: 45% !important;
 }
-.input-group-1{
-    select{
-      font-size: 12px;
-    }
+
+.input-group-1 {
+  select {
+    font-size: 12px;
+  }
 }
-.country-edit-model{
+
+.country-edit-model {
   // height: 31vh;
   height: auto;
+
   @media screen and (max-width: 768px) {
     height: auto;
+  }
 }
-}
+
 .family-head {
   display: inline;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   border-bottom: none;
+
   @media screen and (max-width: 540px) {
-      display: flex;
-      margin-bottom: 12px;
+    display: flex;
+    margin-bottom: 12px;
   }
+
   @media screen and (max-width: 480px) {
-      // display: inline-flex !important;
-      margin-bottom: 0px;
+    // display: inline-flex !important;
+    margin-bottom: 0px;
   }
+
   span {
-      &:first-child {
-          border-bottom: 4px solid #7087db;
-      }
-      button {
-          border: none;
-          background: #30afa3;
-          padding: 6px 10px;
-          font-size: 13px;
-          border-radius: 5px;
-          color: #fff;
-      }
+    &:first-child {
+      border-bottom: 4px solid #7087db;
+    }
+
+    button {
+      border: none;
+      background: #30afa3;
+      padding: 6px 10px;
+      font-size: 13px;
+      border-radius: 5px;
+      color: #fff;
+    }
   }
+}
+
+::ng-deep .cdk-overlay-container {
+  z-index: 100000;
+}
+
+mat-form-field {
+  border: 1px solid #ccc;
+  width: 100%;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px !important;
+  font-size: 12px;
 }

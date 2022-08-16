@@ -49,7 +49,7 @@ export class VehicleRateMasterComponent implements OnInit {
   IsWait: boolean;
   @Input() disabled: boolean = true;
   loader = false;
-
+  cityId
 
   ngOnInit(): void {
 
@@ -232,6 +232,7 @@ export class VehicleRateMasterComponent implements OnInit {
   editCountryRowItem(nVRId: number) {
     let country = this.vehicleRateMaster.find(e => e.nVRId == nVRId);
     this.countryMasterForm.get('nCityId')?.setValue(country?.nCityId);
+    this.cityId=country?.nCityId
     this.countryMasterForm.patchValue({
       nVRId: country?.nVRId,
       nVId: country?.nVId,

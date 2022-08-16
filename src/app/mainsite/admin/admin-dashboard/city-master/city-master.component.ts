@@ -65,6 +65,7 @@ export class CityMasterComponent implements OnInit {
   formType: string;
   selectState = null;
   @Input() disabled: boolean = true;
+  InterRelatedCityId
   ngOnInit(): void {
     this.dtOptions = {
       //destroy: true,
@@ -100,8 +101,18 @@ export class CityMasterComponent implements OnInit {
   get createCityMasterFormControls(): any {
     return this.CityMasterForm.controls;
   }
+
+  InterRelatedCityIds(e){
+    console.log('e',e)
+    if(e.value == 'NA'){
+      this.InterRelatedCityId=null
+    }else{
+      this.InterRelatedCityId=e.value
+    }
+  }
   cityNameFind;
   onSubmitCityMasterForm(): void {
+    
     if (this.formType == 'Submit') {
       let city = this.CityMasterList.find(
         (e) =>
@@ -114,14 +125,11 @@ export class CityMasterComponent implements OnInit {
         this.loader = true;
         this.cityModel = {
           nStateId: this.CityMasterForm.controls.nStateId.value,
-          nCityId:
-            this.CityMasterForm.controls.nCityId.value == null
-              ? 0
-              : this.CityMasterForm.controls.nCityId.value,
+          nCityId: this.CityMasterForm.controls.nCityId.value == null? 0: this.CityMasterForm.controls.nCityId.value,
           vCityName: this.CityMasterForm.controls.vCityName.value,
           btActive: this.CityMasterForm.controls.btActive.value,
-          nInterRelatedCityId:
-            this.CityMasterForm.controls.nInterRelatedCityId.value,
+          nInterRelatedCityId:this.InterRelatedCityId,
+          // nInterRelatedCityId:this.CityMasterForm.controls.nInterRelatedCityId.value,
           btMainInterRelatedCity:
             this.CityMasterForm.controls.btMainInterRelatedCity.value,
         };
@@ -145,16 +153,12 @@ export class CityMasterComponent implements OnInit {
       this.loader = true;
       this.cityModel = {
         nStateId: this.CityMasterForm.controls.nStateId.value,
-        nCityId:
-          this.CityMasterForm.controls.nCityId.value == null
-            ? 0
-            : this.CityMasterForm.controls.nCityId.value,
+        nCityId:this.CityMasterForm.controls.nCityId.value == null? 0: this.CityMasterForm.controls.nCityId.value,
         vCityName: this.CityMasterForm.controls.vCityName.value,
         btActive: this.CityMasterForm.controls.btActive.value,
-        nInterRelatedCityId:
-          this.CityMasterForm.controls.nInterRelatedCityId.value,
-        btMainInterRelatedCity:
-          this.CityMasterForm.controls.btMainInterRelatedCity.value,
+        nInterRelatedCityId:this.InterRelatedCityId,
+        // nInterRelatedCityId:this.CityMasterForm.controls.nInterRelatedCityId.value,
+        btMainInterRelatedCity:this.CityMasterForm.controls.btMainInterRelatedCity.value,
       };
       console.log("this.cityModel", )
       this.CityService.saveCity(this.cityModel, this.formType).subscribe(
@@ -282,9 +286,15 @@ export class CityMasterComponent implements OnInit {
     let city = this.CityMasterList.find((e) => e.nCityId == cityId);
     if (city?.btMainInterRelatedCity == true) {
       this.InterRelatedCity = true;
+      this.CityMasterForm.get('nInterRelatedCityId')?.setValue(null);
     }else{
-      this.CityMasterForm.get('nInterRelatedCityId')?.setValue(null); 
+      this.InterRelatedCity = false;
+      
+     
     }
+    this.CityMasterForm.get('nInterRelatedCityId')?.setValue(city?.nInterRelatedCityId);
+    console.log('city?.nInterRelatedCityId',city?.nInterRelatedCityId)
+    this.InterRelatedCityId=city?.nInterRelatedCityId
     this.CityMasterForm.patchValue({
       nStateId: city?.nStateId,
       nCityId: city?.nCityId,
@@ -309,9 +319,11 @@ export class CityMasterComponent implements OnInit {
     if (e.target.checked) {
       this.InterRelatedCity = true;
       // this.CityMasterForm.get('nInterRelatedCityId')?.setValue(null);
+      this.CityMasterForm.get('nInterRelatedCityId')?.setValue(null);
     } else {
       this.InterRelatedCity = false;
-       this.CityMasterForm.get('nInterRelatedCityId')?.setValue(null);
+      
+      
     }
   }
 }

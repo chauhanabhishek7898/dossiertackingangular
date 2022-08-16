@@ -19,7 +19,7 @@ import { Subject } from 'rxjs';
 
 import { VehicleTypeMaster } from '../vehicle-type-master/vehicle-type-master';
 import { VehicleTypeMasterService } from '../vehicle-type-master/vehicle-type-master.service';
-import { WaitTimeCharges } from './wait-time-charges';
+import { WaitTimeCharges, WaitTimeChargesGet } from './wait-time-charges';
 import { WaitTimeChargesService } from './wait-time-charges.service';
 
 @Component({
@@ -49,7 +49,7 @@ export class WaitTimeChargesComponent implements OnInit {
   //  UpdateCountryForm: FormGroup
   //  // dtInstance: DataTables.Api;
   isDtInitialized: boolean = false;
-  waitTimeCharges: WaitTimeCharges[] = [];
+  waitTimeCharges: WaitTimeChargesGet[] = [];
 
   vehicleTypeMaster: VehicleTypeMaster[] = [];
   //  bsModalRef: BsModalRef

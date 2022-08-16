@@ -15,7 +15,7 @@ export class IsSignedInGuard implements CanActivate {
         if (this.storageService.isUserLogedIn) {
             // this.router.navigate(["/dashboard"]);
             if (this.storageService.roleId == "1") {
-                this.router.navigate(['/ad'], {
+                this.router.navigate(['/ad/country'], {
                 });
               } 
               else {
