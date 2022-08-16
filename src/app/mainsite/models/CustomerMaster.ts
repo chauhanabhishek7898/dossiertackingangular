@@ -18,6 +18,26 @@ export class CustomerMaster {
   vFlatNoPlotNoLaneBuilding: string;
   vCityName:string
 }
+export class CustomerMasterList {
+  nCId: number;
+  vCId:string;
+  vGender: string;
+  dtDOB: string;
+  vAadhaarNo: string;
+  vAadhaarNoFilePath: string;
+  vFullName: string;
+  vMobileNo: string;
+  vPassword: string;
+  vEmailId: string;
+  btPromotion: any;
+  nCityId: number | null;
+  vAddress: string;
+  vLat: string;
+  vLong: string;
+  vFlatNoPlotNoLaneBuilding: string;
+  vCityName:string
+}
+
 export class CustomerMasterClass {
   CustomerMaster: CustomerMaster[] = [];
 }

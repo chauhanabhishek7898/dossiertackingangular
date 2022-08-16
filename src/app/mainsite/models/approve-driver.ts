@@ -17,7 +17,12 @@ export class ApproveDriverMaster {
 }
 export class ApproveDriverMasterList{
     nDriverId: Number;
-    // vDriverId: String;
+    vDriverId: String;
+    vVehicleType:String;
+    DriverDetails: String;
+    RegistrationDate:String;
+    CityDetails: String;
+    DOB: String;
     nVId: Number;
     vGender: String;
     dtDOB: String;

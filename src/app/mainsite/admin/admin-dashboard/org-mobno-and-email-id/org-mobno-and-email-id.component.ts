@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
-import { NotificationService } from 'src/app/core/services/notification.service';
+// import { NotificationService } from 'src/app/core/services/notification.service';
 import { OrgMobnoAndEmailid } from '../../../models/org-mobno-and-emailid';
 import { OrgMobnoAndEmailIdService } from './org-mobno-and-email-id.service';
 
@@ -20,7 +20,7 @@ export class OrgMobnoAndEmailIdComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private orgMobnoAndEmailIdService: OrgMobnoAndEmailIdService,
-    private notifier: NotificationService,
+    // private notifier: NotificationService,
     private modalService: BsModalService,
   ) {
     //super(toastrService)
@@ -76,6 +76,7 @@ export class OrgMobnoAndEmailIdComponent implements OnInit {
 
   chiefComplaintFind
   onSubmitorgMobNoAndEmailIdForm(): void {    
+    this.loader=true
         this.orgMobnoAndEmailidModel = {
           nID: this.orgMobNoAndEmailIdForm.controls.nID.value == null ? 0 : this.orgMobNoAndEmailIdForm.controls.nID.value,
           vMobileNoOrg: this.orgMobNoAndEmailIdForm.controls.vMobileNoCompany.value,
@@ -84,15 +85,16 @@ export class OrgMobnoAndEmailIdComponent implements OnInit {
         this.orgMobnoAndEmailIdService.updateOrgMobileNoAndEmailId(this.orgMobnoAndEmailidModel, this.formType)
           .subscribe((status: string) => {
             if (status) {
-              this.notifier.showSuccess(status)
+              this.loader=false
+              // this.notifier.showSuccess(status)
               this.orgMobNoAndEmailIdForm.reset();
               this.modalRef.hide();
               this.rerender();
             } else {
-
+              this.loader=false
             }
           }, (error: HttpErrorResponse) => {
-            this.notifier.showError(error.statusText)
+            // this.notifier.showError(error.statusText)
           });
   };
   rerender(): void {
@@ -126,7 +128,7 @@ export class OrgMobnoAndEmailIdComponent implements OnInit {
       }, 300)
 
     }, (error: HttpErrorResponse) => {
-      this.notifier.showError(error.statusText);
+      // this.notifier.showError(error.statusText);
     });
   }
 

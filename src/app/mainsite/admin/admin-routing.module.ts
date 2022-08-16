@@ -11,8 +11,13 @@ import { CountryMasterComponent } from './admin-dashboard/country-master/country
 import { StateMasterComponent } from './admin-dashboard/state-master/state-master.component';
 import { OrgMobnoAndEmailIdComponent } from './admin-dashboard/org-mobno-and-email-id/org-mobno-and-email-id.component';
 import { TrackingDetailsAdminComponent } from './admin-dashboard/tracking-details-admin/tracking-details-admin.component';
-
-
+import { VehicleTypeMasterComponent } from './admin-dashboard/vehicle-type-master/vehicle-type-master.component';
+import { VehicleRateMasterComponent } from './admin-dashboard/vehicle-rate-master/vehicle-rate-master.component';
+import { AuthGuard } from 'src/app/core/guards/auth.guard';
+import { KMLimitMasterComponent } from './admin-dashboard/kmlimit-master/kmlimit-master.component';
+import { ServiceSubTypeMasterComponent } from './admin-dashboard/service-sub-type-master/service-sub-type-master.component';
+import { ServiceTypeMasterComponent } from './admin-dashboard/service-type-master/service-type-master.component';
+import { WaitTimeChargesComponent } from './admin-dashboard/wait-time-charges/wait-time-charges.component';
 
 const routes: Routes = [
   { path: 'city', component: CityMasterComponent },
@@ -21,15 +26,45 @@ const routes: Routes = [
   { path: 'update-password', component: ChangePasswordComponent },
   { path: 'update-mobile-no', component: UpdateMobileNoComponent },
   { path: 'update-email-id', component: UpdateEmailComponent },
-  { path: 'ad/orgmobileemail', component: OrgMobnoAndEmailIdComponent },
+  { path: 'orgmobileemail', component: OrgMobnoAndEmailIdComponent },
   { path: 'approvedrivers', component: ApproveDriverMasterComponent },
   { path: 'driverdetailsadmin', component: DriverDetailsAdminComponent },
   { path: 'customerdetailsadmin', component: CustomerDetailsAdminComponent },
   { path: 'trackingdetailsadmin', component: TrackingDetailsAdminComponent },
+  {
+    path: 'vehicletypemaster',
+    component: VehicleTypeMasterComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'vehicleratemaster',
+    component: VehicleRateMasterComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'waittimecharges',
+    component: WaitTimeChargesComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'kmlimitmaster',
+    component: KMLimitMasterComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'servicetypemaster',
+    component: ServiceTypeMasterComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'servicesubtypemaster',
+    component: ServiceSubTypeMasterComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {}

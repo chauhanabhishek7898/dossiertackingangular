@@ -18,7 +18,7 @@ export class VehicleTypeMasterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private vehicleTypeMasterService: VehicleTypeMasterService,
-    // private notifier: NotificationService,
+    // // private notifier: NotificationService,
     private modalService: BsModalService,
     // public loaderService: LoaderService,
     public breakpointObserver: BreakpointObserver
@@ -86,7 +86,7 @@ export class VehicleTypeMasterComponent implements OnInit {
       if (country) {
         // this.notifier.showError("Country is already added")
       } else {
-
+        this.loader=true
         this.vehicleTypeMaster = {
           nVId: this.countryMasterForm.controls.nVId.value == null ? 0 : this.countryMasterForm.controls.nVId.value,
           vVehicleType: this.countryMasterForm.controls.vVehicleType.value,
@@ -96,6 +96,7 @@ export class VehicleTypeMasterComponent implements OnInit {
         this.vehicleTypeMasterService.VehicleTypeMaster(this.vehicleTypeMaster, this.formType)
           .subscribe((status: string) => {
             if (status) {
+              this.loader=false
               // this.notifier.showSuccess(status)
               this.countryMasterForm.reset();
               //  this. resetCountryMasterFormValue()
@@ -106,11 +107,12 @@ export class VehicleTypeMasterComponent implements OnInit {
             } else {
             }
           }, (error: HttpErrorResponse) => {
-            // this.notifier.showError(error.statusText)
+            // // this.notifier.showError(error.statusText)
           });
       }
     }
     else {
+      this.loader=true
       this.vehicleTypeMaster = {
         nVId: this.countryMasterForm.controls.nVId.value == null ? 0 : this.countryMasterForm.controls.nVId.value,
           vVehicleType: this.countryMasterForm.controls.vVehicleType.value,
@@ -120,7 +122,7 @@ export class VehicleTypeMasterComponent implements OnInit {
       this.vehicleTypeMasterService.VehicleTypeMaster(this.vehicleTypeMaster, this.formType)
         .subscribe((status: string) => {
           if (status) {
-
+            this.loader=false
             // this.notifier.showSuccess(status)
             this.countryMasterForm.reset();
             //  this. resetCountryMasterFormValue()
@@ -131,7 +133,7 @@ export class VehicleTypeMasterComponent implements OnInit {
           } else {
           }
         }, (error: HttpErrorResponse) => {
-          // this.notifier.showError(error.statusText)
+          // // this.notifier.showError(error.statusText)
         });
     }
   };
@@ -162,7 +164,7 @@ export class VehicleTypeMasterComponent implements OnInit {
 
 
     }, (error: HttpErrorResponse) => {
-      // this.notifier.showError(error.statusText);
+      // // this.notifier.showError(error.statusText);
     });
   }
   config: ModalOptions = {

@@ -26,8 +26,7 @@ import { CustomerSignupComponent } from './mainsite/SignUp/customer-signup/custo
 import { DriverSignupComponent } from './mainsite/SignUp/DriverSignup/driver-signup/driver-signup.component';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { NotificationService } from './core/service/notification.service';
-import { ToastrModule } from 'ngx-toastr';
+// import { NotificationService } from './core/service/notification.service';
 import { ContactUsComponent } from './mainsite/contact-us/contact-us.component';
 import { FaqsComponent } from './mainsite/faqs/faqs.component';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -75,7 +74,6 @@ import { DataTablesModule } from 'angular-datatables';
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
-    ToastrModule.forRoot(),
     MatExpansionModule
 
 
@@ -85,7 +83,7 @@ import { DataTablesModule } from 'angular-datatables';
       BsModalService,
       HttpClientModule,
       DatePipe,
-      NotificationService,
+      // NotificationService,
       PageFilterPipe
     ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

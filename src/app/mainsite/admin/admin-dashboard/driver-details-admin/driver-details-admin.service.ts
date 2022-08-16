@@ -12,7 +12,7 @@ export class DriverDetailsAdminService {
 
   }
   apiUrl = environment.dossiarApiUrl;
-  getDoctorList(vGeneric): Observable<any> {
+  getDoctorList(vGeneric:any): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/DriverMaster/DriverMaster_SelectAll/${vGeneric}`);
   }
   // ActivateRevokeDoctorPraticeWithDrome(DriverMaster:object): Observable<any> {

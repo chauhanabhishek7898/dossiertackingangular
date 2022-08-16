@@ -17,7 +17,7 @@ export class ServiceTypeMasterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private serviceTypeMasterService: ServiceTypeMasterService,
-    // private notifier: NotificationService,
+    // // private notifier: NotificationService,
     private modalService: BsModalService,
     // public loaderService: LoaderService,
     public breakpointObserver: BreakpointObserver
@@ -81,11 +81,12 @@ export class ServiceTypeMasterComponent implements OnInit {
   countryMaster
   onSubmitCountryMasterForm(): void {
     if (this.formType == "Submit") {
+
       let country = this.countryList.find(e => e.vServiceType == this.countryMasterForm.controls.vServiceType.value);
       if (country) {
         // this.notifier.showError("Country is already added")
       } else {
-
+ this.loader=true
         this.ServiceTypeMaster = {
           nSTId:0,
           vServiceType: this.countryMasterForm.controls.vServiceType.value,
@@ -95,6 +96,7 @@ export class ServiceTypeMasterComponent implements OnInit {
         this.serviceTypeMasterService.ServiceTypeMaster(this.ServiceTypeMaster, this.formType)
           .subscribe((status: string) => {
             if (status) {
+              this.loader=false
               // this.notifier.showSuccess(status)
               this.countryMasterForm.reset();
               //  this. resetCountryMasterFormValue()
@@ -105,11 +107,12 @@ export class ServiceTypeMasterComponent implements OnInit {
             } else {
             }
           }, (error: HttpErrorResponse) => {
-            // this.notifier.showError(error.statusText)
+            // // this.notifier.showError(error.statusText)
           });
       }
     }
     else {
+      this.loader=true
       this.ServiceTypeMaster = {
         nSTId:0,
         vServiceType: this.countryMasterForm.controls.vServiceType.value,
@@ -119,7 +122,7 @@ export class ServiceTypeMasterComponent implements OnInit {
       this.serviceTypeMasterService.ServiceTypeMaster(this.ServiceTypeMaster, this.formType)
         .subscribe((status: string) => {
           if (status) {
-
+            this.loader=false
             // this.notifier.showSuccess(status)
             this.countryMasterForm.reset();
             //  this. resetCountryMasterFormValue()
@@ -130,7 +133,7 @@ export class ServiceTypeMasterComponent implements OnInit {
           } else {
           }
         }, (error: HttpErrorResponse) => {
-          // this.notifier.showError(error.statusText)
+          // // this.notifier.showError(error.statusText)
         });
     }
   };
@@ -161,7 +164,7 @@ export class ServiceTypeMasterComponent implements OnInit {
 
 
     }, (error: HttpErrorResponse) => {
-      // this.notifier.showError(error.statusText);
+      // // this.notifier.showError(error.statusText);
     });
   }
   config: ModalOptions = {

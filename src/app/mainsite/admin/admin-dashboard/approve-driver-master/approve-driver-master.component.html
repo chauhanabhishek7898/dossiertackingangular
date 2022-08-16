@@ -1,24 +1,54 @@
-<div class="loader" *ngIf="loader">
+<!-- <div class="loader" *ngIf="loader">
     <div class="loading">
         <img src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
     </div>
-</div>
-<div class="family-head">
+</div> -->
+
+<!-- <div class="family-head">
     <span>{{pageTitle}}</span>
 </div>
-<mat-divider></mat-divider>
-<div class="country-table">
-    <table datatable class="ui celled table table-striped dt-responsive nowrap " style="width:100%" [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+<mat-divider></mat-divider> -->
+<!-- <form [formGroup]="myNoteForm">
+    <div class="input-box">
+        <div class="input-group input-group-1">
+        </div>
+        <div class="input-group input-group-1">
+        </div>
+        <div class="input-group input-group-1">
+            <input type="text" formControlName="txtSearch" placeholder="Search..." />
+            <input (click)="searchPastConsultation()" value="Search" type="button" formControlName="btnSearch" />
+        </div>
+    </div>
+</form>
+<mat-divider></mat-divider> -->
+<div class="loader" *ngIf="loader">
+    <div class="center-loader">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>
+<div class="new-table">
+    <table datatable class="ui celled table table-striped dt-responsive nowrap " style="width:100%"
+        [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
         <thead>
             <tr>
                 <th class="no-sort" style="background-image: none !important;">#</th>
                 <th class="no-sort" style="background-image: none !important;">Activate </th>
+
+                <th class="no-sort" style="background-image: none !important;">Driver Id</th>
+                <th class="no-sort" style="background-image: none !important;">Registration Date </th>
+
                 <th class="no-sort" style="background-image: none !important;">Full Name</th>
-            
-                <th class="no-sort" style="background-image: none !important;">Mobile No.</th>
-                <th class="no-sort" style="background-image: none !important;">Email Id</th>
+                <th class="no-sort" style="background-image: none !important;">City Details</th>
+                <th class="no-sort" style="background-image: none !important;">Alternate No.</th>
+
+                <!-- <th class="no-sort" style="background-image: none !important;">Mobile No.</th>
+                <th class="no-sort" style="background-image: none !important;">Email Id</th> -->
                 <th class="no-sort" style="background-image: none !important;">Gender</th>
                 <th class="no-sort" style="background-image: none !important;">DOB</th>
+                <th class="no-sort" style="background-image: none !important;">Vehicle Type</th>
+
                 <th class="no-sort" style="background-image: none !important;">Present Address</th>
                 <th class="no-sort" style="background-image: none !important;">Permanent Address</th>
                 <th class="no-sort" style="background-image: none !important;">License / Registration No.</th>
@@ -30,33 +60,41 @@
                 <th class="no-sort" style="background-image: none !important;">Vehicle Registration No.</th>
                 <th class="no-sort" style="background-image: none !important;">VehicleRegistration File</th>
                 <th class="no-sort" style="background-image: none !important;">VehicleInsurance File</th>
-                <th class="no-sort" style="background-image: none !important;">License /Registration File</th>
-       
+
                 <th class="no-sort" style="background-image: none !important;">Photo</th>
-                <th class="no-sort" style="background-image: none !important;">Is Active </th>
+                <!-- <th class="no-sort" style="background-image: none !important;">Is Active </th> -->
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let items of userDetailList; let i = index ">
                 <td>{{i+1}}</td>
                 <td>
-                    <button class="activate-user" (click)="openConformaitionModel(templateApproveConformationModel,{nUserId : items.nDriverId})">Activate</button>
+                    <button class="activate-user"
+                        (click)="openConformaitionModel(templateApproveConformationModel,{nUserId : items.nDriverId})">Activate</button>
                 </td>
-                <td >{{items.vFullName}}</td>
-              
-                <td>{{items.vMobileNo}}</td>
-                <td>{{items.vEmailId}}</td>
+                <td>{{items.vDriverId}}</td>
+                <td>{{items.RegistrationDate}}</td>
+                <td>{{items.DriverDetails}}</td>
+                <td>{{items.CityDetails}}</td>
+                <td>{{items.vAlternateNo}}</td>
+
+                <!-- <td>{{items.vMobileNo}}</td>
+                <td>{{items.vEmailId}}</td> -->
                 <td>{{items.vGender}}</td>
-                <td>{{items.dtDOB}}</td>
+                <td>{{items.DOB}}</td>
+                <td>{{items.vVehicleType}}</td>
+
                 <td>{{items.vPresentAddress}}</td>
                 <td>{{items.vPermanentAddress}}</td>
                 <td>{{items.vLicenseNo}}</td>
                 <td>
-                    <a [attr.href]="imageUrl + '/'+ items.vLicenseNoFilePath" target="_blank">{{items.vLicenseNoFilePath}}</a>
+                    <a [attr.href]="imageUrl + '/'+ items.vLicenseNoFilePath"
+                        target="_blank">{{items.vLicenseNoFilePath}}</a>
                 </td>
                 <td>{{items.vAadhaarNo}}</td>
                 <td>
-                    <a [attr.href]="imageUrl + '/'+ items.vAadhaarNoFilePath" target="_blank">{{items.vAadhaarNoFilePath}}</a>
+                    <a [attr.href]="imageUrl + '/'+ items.vAadhaarNoFilePath"
+                        target="_blank">{{items.vAadhaarNoFilePath}}</a>
                 </td>
                 <td>{{items.vPANNo}}</td>
                 <td>
@@ -64,17 +102,19 @@
                 </td>
                 <td>{{items.vVehicleRegistrationNo}}</td>
                 <td>
-                    <a [attr.href]="imageUrl + '/'+ items.vVehicleRegistrationNoFilePath" target="_blank">{{items.vVehicleRegistrationNoFilePath}}</a>
+                    <a [attr.href]="imageUrl + '/'+ items.vVehicleRegistrationNoFilePath"
+                        target="_blank">{{items.vVehicleRegistrationNoFilePath}}</a>
                 </td>
 
-              
-                <td *ngIf="items.vVehicleInsuranceFilePath!=null" >
-                    <a [href]="imageUrl + '/'+ items.vVehicleInsuranceFilePath" target="_blank">{{items.vVehicleInsuranceFilePath}}</a>
+
+                <td *ngIf="items.vVehicleInsuranceFilePath!=null">
+                    <a [href]="imageUrl + '/'+ items.vVehicleInsuranceFilePath"
+                        target="_blank">{{items.vVehicleInsuranceFilePath}}</a>
                 </td>
-                <td *ngIf="items.vPhotoFilePath!=null" >
+                <td *ngIf="items.vPhotoFilePath!=null">
                     <a [href]="imageUrl + '/'+ items.vPhotoFilePath" target="_blank">{{items.vPhotoFilePath}}</a>
                 </td>
-                <td><input [checked]=items.btIsActive type="checkbox" [disabled]="disabled" /></td>
+                <!-- <td><input [checked]=items.btIsActive type="checkbox" [disabled]="disabled" /></td> -->
 
             </tr>
         </tbody>

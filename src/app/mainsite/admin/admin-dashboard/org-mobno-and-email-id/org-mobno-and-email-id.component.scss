@@ -1,1 +1,11 @@
 @import '../city-master/city-master.component.scss';
+
+.country {
+    .input-group {
+        width: 48%;
+    }
+}
+
+.submit {
+    margin-top: 15px;
+}
