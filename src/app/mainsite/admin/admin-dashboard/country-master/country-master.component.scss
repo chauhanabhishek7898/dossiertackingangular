@@ -315,22 +315,11 @@ h1 {
 // }
 .country-table {
     margin: 20px 0;
-
     .table {
         border: 0.5px solid #31b0a4;
 
         tr {
             font-size: 12px;
-
-            // @media screen and (max-width: 432px) {
-            //     font-size: 11px !important;
-            // } 
-            // @media screen and (max-width: 410px) {
-            //     font-size: 9px !important;
-            // } 
-            // @media screen and (max-width: 368px) {
-            //     font-size: 8px !important;
-            // } 
             th {
                 padding: 10px 15px;
                 text-align: center;
@@ -346,22 +335,14 @@ h1 {
 
                 &:nth-child(1) {
                     width: 5% !important;
-                    // @media screen and (max-width: 432px) {
-                    //     font-size: 9px !important;
-                    // } 
                 }
             }
-
             td {
                 padding: 8px 15px;
                 border-bottom: none;
                 vertical-align: middle;
                 text-align: center;
                 font-size: 11px;
-
-                // @media screen and (max-width: 432px) {
-                //     font-size: 9px !important;
-                // } 
                 &:nth-child(1),
                 &:nth-child(2) {
                     text-align: left;

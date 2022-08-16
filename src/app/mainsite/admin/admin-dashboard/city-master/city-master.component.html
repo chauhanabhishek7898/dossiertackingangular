@@ -1,8 +1,16 @@
-<div class="loader" *ngIf="loader">
+<!-- <div class="loader" *ngIf="loader">
     <div class="loading">
         <img src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
     </div>
+</div> -->
+<div class="loader" *ngIf="loader">
+    <div class="center-loader">
+        <div class="spinner-border" role="status" >
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
 </div>
+
 <div class="country-model button-spacing">
     <button type="button" class="btn" (click)="openModal(templateCityMaster)">Add City</button>
     <ng-template #templateCityMaster>
@@ -46,19 +54,20 @@
                         <div class="form-check mt-2">
                             <label for="">Main Inter Related City Is Active</label>
                             <span class="checkBox">
-                                <input type="checkbox" formControlName="btMainInterRelatedCity" (change)="checkSelect($event)">
+                                <input type="checkbox" formControlName="btMainInterRelatedCity"
+                                    (change)="checkSelect($event)">
                                 <span class="active">Main Inter Related City Is Active</span>
                             </span>
                         </div>
-                        <div class="input-group input-group-1" *ngIf="InterRelatedCity" >
+                        <div class="input-group input-group-1" *ngIf="InterRelatedCity">
                             <label for="">Select Inter Related City</label>
                             <select class="form-select" aria-label="Default select example"
                                 formControlName="nInterRelatedCityId">
                                 <option value="{{item.nCityId}}" *ngFor="let item of mainInterRelatedCity">
                                     {{item.vCityName}}</option>
-                                <option value="null" >None of these</option>
+                                <option value=null>None of these</option>
                             </select>
-                           
+
                         </div>
                         <div class="break"></div>
                         <div class="form-check mt-2">

@@ -44,7 +44,7 @@ import {
 } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
-import { NotificationService } from 'src/app/core/service/notification.service';
+// import { NotificationService } from 'src/app/core/service/notification.service';
 import { CustomerSignupService } from './customer-signup.service';
 import {
   CustomerMaster,
@@ -108,7 +108,7 @@ export class CustomerSignupComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private customerSignupService: CustomerSignupService,
     private http: HttpClient,
-    private notifier: NotificationService,
+    // private notifier: NotificationService,
     private modalService: BsModalService
   ) { }
   //  city dropdown end here  //
@@ -504,7 +504,7 @@ export class CustomerSignupComponent implements OnInit {
         // this.mobileVerified = true;
 
       } else {
-        this.notifier.showError('OTP not matched');
+        // this.notifier.showError('OTP not matched');
         this.mobileDisable = false;
         // this.mobileVerified = false;
       }
@@ -575,7 +575,7 @@ export class CustomerSignupComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          this.notifier.showError(error.statusText);
+          // this.notifier.showError(error.statusText);
         }
       );
   }
@@ -601,7 +601,7 @@ export class CustomerSignupComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          this.notifier.showError(error.statusText);
+          // this.notifier.showError(error.statusText);
         }
       );
   }

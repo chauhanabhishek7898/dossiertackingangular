@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
-import { NotificationService } from 'src/app/core/service/notification.service';
+// import { NotificationService } from 'src/app/core/service/notification.service';
 import { AdminStorageService } from 'src/app/core/services/adminStorage.service';
 import { ApproveDriverMaster, ApproveDriverMasterList } from 'src/app/mainsite/models/approve-driver';
 import { environment } from 'src/environments/environment';
@@ -45,9 +45,10 @@ export class ApproveDriverMasterComponent implements OnInit {
   imageUrl:string;
   loader = false;
   pageTitle: any;
+  myNoteForm: FormGroup;
   constructor(
     private userDetailService: ApproveDriverMasterService,
-    private notifier: NotificationService,
+    // private notifier: NotificationService,
     private modalService: BsModalService,
     private authService: AuthService,
     private storageService: AdminStorageService,
@@ -74,10 +75,16 @@ export class ApproveDriverMasterComponent implements OnInit {
         targets: "no-sort"
       }]
     }
-
+    this.myNoteForm = this.formBuilder.group({
+      txtSearch: [null],
+      nDriverId: [null],
+    });
     this.bindUserDetailService(false);
     // this.storageService.
     
+  }
+  searchPastConsultation() {
+    this.rerender();
   }
   bindUserDetailService(isReInitilized) {
     this.loader = true;
@@ -86,6 +93,7 @@ export class ApproveDriverMasterComponent implements OnInit {
     }
     this.userDetailService.getUserList(null
     ).subscribe((res) => {
+      console.log("res", res)
       this.userDetailList = res;
 
       if (!this.isDtInitialized) {
@@ -97,32 +105,32 @@ export class ApproveDriverMasterComponent implements OnInit {
       }, 300)
 
     }, (error: HttpErrorResponse) => {
-      this.notifier.showError(error.statusText);
+      // this.notifier.showError(error.statusText);
     });
   } 
   ActivateUserDetail() : void{
     this.loader = true;
-    this.userDetailService.updateActivateUserDetial(this.UserId)
-       .subscribe((status: string) => {
-         if (status) {
-           this.notifier.showSuccess(status);
-           this.conformaitonmodalRef.hide();
-           setTimeout(() => {
-            this.rerender();
-          }, 100)
-          setTimeout(() => {
-            this.loader = false
-          }, 300)
-         } else {
-           this.notifier.showError('faild');
-           setTimeout(() => {
-            this.loader = false
-          }, 300)
+    // this.userDetailService.updateActivateUserDetial(this.UserId)
+    //    .subscribe((status: string) => {
+    //      if (status) {
+    //       //  this.notifier.showSuccess(status);
+    //        this.conformaitonmodalRef.hide();
+    //        setTimeout(() => {
+    //         this.rerender();
+    //       }, 100)
+    //       setTimeout(() => {
+    //         this.loader = false
+    //       }, 300)
+    //      } else {
+    //       //  this.notifier.showError('faild');
+    //        setTimeout(() => {
+    //         this.loader = false
+    //       }, 300)
     
-         }
-        }, (error: HttpErrorResponse) => {
-          this.notifier.showError(error.statusText);
-        });
+    //      }
+    //     }, (error: HttpErrorResponse) => {
+    //       // this.notifier.showError(error.statusText);
+    //     });
       } 
 
       rerender(): void {

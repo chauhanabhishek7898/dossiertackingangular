@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 export class CustomerDetailsMasterService {
   constructor(private http: HttpClient) {}
   apiUrl = environment.dossiarApiUrl;
-  getPatientList(nUserId): Observable<any> {
+  GetCustomerMasterByUserId(nUserId): Observable<any> {
     return this.http.get<any>(
       `${this.apiUrl}/CustomerMaster/GetCustomerMasterByUserId/${nUserId}`
     );

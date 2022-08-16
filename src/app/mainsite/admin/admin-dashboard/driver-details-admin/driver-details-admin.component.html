@@ -1,41 +1,53 @@
-<div class="loader" *ngIf="loader">
+<!-- <div class="loader" *ngIf="loader">
     <div class="loading">
         <img src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
     </div>
-</div>
-<div class="family-head">
+</div> -->
+<!-- <div class="family-head">
     <span>{{pageTitle}}</span>
-</div>
-<mat-divider></mat-divider>
-<form [formGroup]="myNoteForm">
+</div> -->
+<!-- <mat-divider></mat-divider> -->
+<!-- <form [formGroup]="myNoteForm">
     <div class="input-box">
-
         <div class="input-group input-group-1">
-
         </div>
         <div class="input-group input-group-1">
-
         </div>
-
         <div class="input-group input-group-1">
             <input type="text" formControlName="txtSearch" placeholder="Search..." />
             <input (click)="searchPastConsultation()" value="Search" type="button" formControlName="btnSearch" />
         </div>
     </div>
 </form>
-<mat-divider></mat-divider>
-<div class="country-table">
-    <table datatable class="ui celled table table-striped dt-responsive nowrap " style="width:100%" [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+<mat-divider></mat-divider> -->
+<div class="loader" *ngIf="loader">
+    <div class="center-loader">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>
+<div class="new-table">
+    <table datatable class="ui celled table table-striped dt-responsive nowrap " style="width:100%"
+        [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
         <thead>
             <tr>
                 <th class="no-sort" style="background-image: none !important;">#</th>
-                <!-- <th class="no-sort" style="background-image: none !important;">Practice With Drome ?</th> -->
+                <!-- <th class="no-sort" style="background-image: none !important;">Activate </th> -->
+
+                <th class="no-sort" style="background-image: none !important;">Driver Id</th>
+                <th class="no-sort" style="background-image: none !important;">Registration Date </th>
+
                 <th class="no-sort" style="background-image: none !important;">Full Name</th>
-            
-                <th class="no-sort" style="background-image: none !important;">Mobile No.</th>
-                <th class="no-sort" style="background-image: none !important;">Email Id</th>
+                <th class="no-sort" style="background-image: none !important;">City Details</th>
+                <th class="no-sort" style="background-image: none !important;">Alternate No.</th>
+
+                <!-- <th class="no-sort" style="background-image: none !important;">Mobile No.</th>
+                <th class="no-sort" style="background-image: none !important;">Email Id</th> -->
                 <th class="no-sort" style="background-image: none !important;">Gender</th>
                 <th class="no-sort" style="background-image: none !important;">DOB</th>
+                <th class="no-sort" style="background-image: none !important;">Vehicle Type</th>
+
                 <th class="no-sort" style="background-image: none !important;">Present Address</th>
                 <th class="no-sort" style="background-image: none !important;">Permanent Address</th>
                 <th class="no-sort" style="background-image: none !important;">License / Registration No.</th>
@@ -47,36 +59,39 @@
                 <th class="no-sort" style="background-image: none !important;">Vehicle Registration No.</th>
                 <th class="no-sort" style="background-image: none !important;">VehicleRegistration File</th>
                 <th class="no-sort" style="background-image: none !important;">VehicleInsurance File</th>
-                <th class="no-sort" style="background-image: none !important;">License /Registration File</th>
-       
-                <th class="no-sort" style="background-image: none !important;">Photo</th>
-                <th class="no-sort" style="background-image: none !important;">Is Active </th>
 
+                <th class="no-sort" style="background-image: none !important;">Photo</th>
+                <!-- <th class="no-sort" style="background-image: none !important;">Is Active </th> -->
             </tr>
         </thead>
 
-
-
-
         <tbody>
-            <tr *ngFor="let items of doctorDetailList; let i = index;">
+            <tr *ngFor="let items of userDetailList; let i = index ">
                 <td>{{i+1}}</td>
-                <!-- <td (click)="activateConfirmationModel(templateActivateConformationModel,items.nUserId,items.PracticeWithDrome)" style="cursor: pointer; color: green;font-weight: 500;text-align: left;" [ngClass]="{'color':items.PracticeWithDrome=='REVOKE'}">{{items.PracticeWithDrome}}</td> -->
-                <td >{{items.vFullName}}</td>
-              
-                <td>{{items.vMobileNo}}</td>
-                <td>{{items.vEmailId}}</td>
+                
+                <td>{{items.vDriverId}}</td>
+                <td>{{items.RegistrationDate}}</td>
+                <td>{{items.DriverDetails}}</td>
+                <td>{{items.CityDetails}}</td>
+                <td>{{items.vAlternateNo}}</td>
+
+                <!-- <td>{{items.vMobileNo}}</td>
+                <td>{{items.vEmailId}}</td> -->
                 <td>{{items.vGender}}</td>
-                <td>{{items.dtDOB}}</td>
+                <td>{{items.DOB}}</td>
+                <td>{{items.vVehicleType}}</td>
+
                 <td>{{items.vPresentAddress}}</td>
                 <td>{{items.vPermanentAddress}}</td>
                 <td>{{items.vLicenseNo}}</td>
                 <td>
-                    <a [attr.href]="imageUrl + '/'+ items.vLicenseNoFilePath" target="_blank">{{items.vLicenseNoFilePath}}</a>
+                    <a [attr.href]="imageUrl + '/'+ items.vLicenseNoFilePath"
+                        target="_blank">{{items.vLicenseNoFilePath}}</a>
                 </td>
                 <td>{{items.vAadhaarNo}}</td>
                 <td>
-                    <a [attr.href]="imageUrl + '/'+ items.vAadhaarNoFilePath" target="_blank">{{items.vAadhaarNoFilePath}}</a>
+                    <a [attr.href]="imageUrl + '/'+ items.vAadhaarNoFilePath"
+                        target="_blank">{{items.vAadhaarNoFilePath}}</a>
                 </td>
                 <td>{{items.vPANNo}}</td>
                 <td>
@@ -84,24 +99,26 @@
                 </td>
                 <td>{{items.vVehicleRegistrationNo}}</td>
                 <td>
-                    <a [attr.href]="imageUrl + '/'+ items.vVehicleRegistrationNoFilePath" target="_blank">{{items.vVehicleRegistrationNoFilePath}}</a>
+                    <a [attr.href]="imageUrl + '/'+ items.vVehicleRegistrationNoFilePath"
+                        target="_blank">{{items.vVehicleRegistrationNoFilePath}}</a>
                 </td>
 
-              
-                <td *ngIf="items.vVehicleInsuranceFilePath!=null" >
-                    <a [href]="imageUrl + '/'+ items.vVehicleInsuranceFilePath" target="_blank">{{items.vVehicleInsuranceFilePath}}</a>
+
+                <td *ngIf="items.vVehicleInsuranceFilePath!=null">
+                    <a [href]="imageUrl + '/'+ items.vVehicleInsuranceFilePath"
+                        target="_blank">{{items.vVehicleInsuranceFilePath}}</a>
                 </td>
-                <td *ngIf="items.vPhotoFilePath!=null" >
+                <td *ngIf="items.vPhotoFilePath!=null">
                     <a [href]="imageUrl + '/'+ items.vPhotoFilePath" target="_blank">{{items.vPhotoFilePath}}</a>
                 </td>
-               
-
                 <!-- <td><input [checked]=items.btIsActive type="checkbox" [disabled]="disabled" /></td> -->
 
             </tr>
+           
         </tbody>
     </table>
 </div>
+
 <ng-template #templateActivateConformationModel>
     <div class="country-edit-model">
         <div class="model-header">
@@ -113,133 +130,14 @@
         <mat-divider></mat-divider>
     </div>
     <div mat-dialog-content>
-       
-        <p class="confirm-text" style="text-align: center;" *ngIf="PracticeWithDrome!='ACTIVATE'">Do you want to Revoke ??</p>
-        <p class="confirm-text" style="text-align: center;" *ngIf="PracticeWithDrome=='ACTIVATE'" >Do you want to Activate ??</p>
+        <p class="confirm-text" style="text-align: center;" *ngIf="PracticeWithDrome!='ACTIVATE'">Do you want to Revoke
+            ??</p>
+        <p class="confirm-text" style="text-align: center;" *ngIf="PracticeWithDrome=='ACTIVATE'">Do you want to
+            Activate ??</p>
     </div>
     <mat-divider></mat-divider>
     <div class="confirm-btn mt-3">
         <button (click)="activateDoctor()" type="button">Ok</button>
         <button (click)="modelCencelBtn()" type="button">Cancel</button>
-    </div>
-</ng-template>
-<ng-template #templateImageUpload>
-    <div class="country-edit-model">
-        <div class="model-header">
-            <button type="button" class="close-btn pull-right" aria-label="Close" (click)="ProfileImagemodalRef.hide()">
-                <mat-icon>close</mat-icon>
-            </button>
-            <h1 mat-dialog-title style="font-size: 18px;">Profile Image Upload</h1>
-        </div>
-        <mat-divider></mat-divider>
-    </div>
-    <div mat-dialog-content>
-        <div class="mendetory-text">
-            <span>File formats supported:<b> .JPG</b> <span
-                    style="color: red; margin-left: 2px;">*</span></span>
-        </div>
-        <div class="user-img">
-            <div class="upload-btn">
-                <span class="user-img-edit">
-                    <button type="button" (click)="files.click()" class="fileUpload" 
-                        title="Choose Image">
-                        <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                            </svg>
-                        </span>
-                </button>
-
-                <span><input type="file" (change)="selectFiles(templateImageCroper,$event)" style="display: none;" #files>
-                    </span>
-                </span>
-                <div class="divider">OR</div>
-                <div class="user-img-edit">
-                    <button class="take-photo" (click)="openWebCam(templatewebcam)" title="Take Picture">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-camera-fill" viewBox="0 0 16 16">
-                            <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                            <path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="fileName" *ngIf="urlLink !='false'">
-            <img [src]="urlLink" style="width: 170px;" >
-        </div>
-        <div class="fileName" *ngIf="urlLink =='false'">
-            <img [src]="selectedFileBLOB" style="width: 170px;">
-        </div>
-        <div class="upload-btn-box" *ngIf="uploadBtn" >
-            <!-- <button class="up-btn" (click)="onUpload()">Upload</button> -->
-        </div>
-       
-    </div>
-</ng-template>
-<div class="webcam-model">
-    <ng-template #templatewebcam>
-
-        <div class="webcam-edit-model">
-            <button type="button" class="close-btn pull-right" aria-label="Close" (click)="WebmodalRef.hide()">
-                <mat-icon>close</mat-icon>
-            </button>
-            <h1 mat-dialog-title>{{webModalTitle}}</h1>
-            <mat-divider></mat-divider>
-            <div mat-dialog-content>
-                <div class="webcam">
-                    <webcam [height]="300" [width]="300" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam">
-                    </webcam>
-                    <button class="button" (click)="takeSnapshot()" *ngIf="showWebcam">
-                        <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-camera" viewBox="0 0 16 16">
-                                <path
-                                    d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z" />
-                                <path
-                                    d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
-                            </svg>
-                        </span>
-                        Capture
-                    </button>
-                    <button *ngIf="showWebcam" class="button" (click)="OffWebCame()">Switch Off
-                        camera</button>
-                    <span class="webcamOf-text" *ngIf="showText">Your camera is off
-                    </span>
-                    <button *ngIf="showText" class="button" (click)="onWebCame()">Switch on
-                        camera</button>
-                </div>
-            </div>
-        </div>
-    </ng-template>
-</div>
-<ng-template #templateImageCroper>
-    <div class="country-edit-model">
-        <div class="model-header">
-            <button type="button" class="close-btn pull-right" aria-label="Close" (click)="modalRef.hide()">
-                <mat-icon>close</mat-icon>
-            </button>
-            <h1 mat-dialog-title style="font-size: 18px;">Crop Image</h1>
-        </div>
-        <mat-divider></mat-divider>
-    </div>
-    <div mat-dialog-content>
-        <div class="crop-box" style="display: flex;justify-content: space-between; height: 50vh;">
-            <image-cropper class="image-cropper" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="5/5" format="jpeg" (imageCropped)="imageCropped($event)" [imageQuality]=100></image-cropper>
-            <div class="croped-image">
-                <div class="image">
-                    <label>Preview</label>
-                    <img [src]="urlLink" style="width: 100%;">
-
-                </div>
-                <div class="croped">
-                    
-                    <button (click)="croped()">Crop</button>
-                </div>
-            </div>
-
-        </div>
-
-
     </div>
 </ng-template>

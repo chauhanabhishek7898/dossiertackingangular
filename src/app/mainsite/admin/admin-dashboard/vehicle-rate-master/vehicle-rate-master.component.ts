@@ -90,6 +90,7 @@ export class VehicleRateMasterComponent implements OnInit {
   countryMaster
   onSubmitCountryMasterForm(): void {
     if (this.formType == "Submit") {
+      this.loader=true
       this.vehicleTypeMasterModel = {
         nVRId: this.countryMasterForm.controls.nVRId.value == null ? 0 : this.countryMasterForm.controls.nVRId.value,
         nVId: this.countryMasterForm.controls.nVId.value,
@@ -101,6 +102,7 @@ export class VehicleRateMasterComponent implements OnInit {
       this.vehicleRateMasterService.VehicleRateMaster(this.vehicleTypeMasterModel, this.formType)
         .subscribe((status: string) => {
           if (status) {
+            this.loader=false
             // this.notifier.showSuccess(status)
             this.countryMasterForm.reset();
             //  this. resetCountryMasterFormValue()
@@ -113,7 +115,33 @@ export class VehicleRateMasterComponent implements OnInit {
         }, (error: HttpErrorResponse) => {
           // this.notifier.showError(error.statusText)
         });
-    };
+    }else{
+      this.loader=true
+      this.vehicleTypeMasterModel = {
+        nVRId: this.countryMasterForm.controls.nVRId.value == null ? 0 : this.countryMasterForm.controls.nVRId.value,
+        nVId: this.countryMasterForm.controls.nVId.value,
+        nCityId: this.countryMasterForm.controls.nCityId.value,
+        nRatePerKM: this.countryMasterForm.controls.nRatePerKM.value,
+
+        btActive: this.countryMasterForm.controls.btActive.value
+      };
+      this.vehicleRateMasterService.VehicleRateMaster(this.vehicleTypeMasterModel, this.formType)
+        .subscribe((status: string) => {
+          if (status) {
+            this.loader=false
+            // this.notifier.showSuccess(status)
+            this.countryMasterForm.reset();
+            //  this. resetCountryMasterFormValue()
+            this.modalRef.hide();
+            setTimeout(() => {
+              this.rerender();
+            }, 100)
+          } else {
+          }
+        }, (error: HttpErrorResponse) => {
+          // this.notifier.showError(error.statusText)
+        });
+    }
   }
   rerender(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -205,7 +233,7 @@ export class VehicleRateMasterComponent implements OnInit {
     let country = this.vehicleRateMaster.find(e => e.nVRId == nVRId);
     this.countryMasterForm.get('nCityId')?.setValue(country?.nCityId);
     this.countryMasterForm.patchValue({
-      nVRId: country?.nVId,
+      nVRId: country?.nVRId,
       nVId: country?.nVId,
       nCityId: country?.nCityId,
       nRatePerKM: country?.nRatePerKM,

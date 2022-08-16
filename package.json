@@ -35,7 +35,6 @@
     "ngx-bootstrap": "^6.2.0",
     "ngx-google-places-autocomplete": "^2.0.5",
     "ngx-image-cropper": "^2.0.2",
-    "ngx-toastr": "^14.0.0",
     "ngx-webcam": "^0.3.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",

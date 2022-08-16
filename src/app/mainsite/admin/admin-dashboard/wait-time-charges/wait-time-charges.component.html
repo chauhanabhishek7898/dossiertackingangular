@@ -1,6 +1,13 @@
-<div class="loader" *ngIf="loader">
+<!-- <div class="loader" *ngIf="loader">
     <div class="loading">
         <img src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
+    </div>
+</div> -->
+<div class="loader" *ngIf="loader">
+    <div class="center-loader">
+        <div class="spinner-border" role="status" >
+            <span class="visually-hidden">Loading...</span>
+        </div>
     </div>
 </div>
 <div class="country-model button-spacing">
@@ -8,28 +15,33 @@
 
     <ng-template #templateCountryMaster>
 
-        <!-- <div class="loader loader2 " *ngIf="loaderService.isModelPopUpLoading | async">
-            <div class="spinner spinner2">
-                <div class="rect1"></div>
-                <div class="rect2"></div>
-                <div class="rect3"></div>
-                <div class="rect4"></div>
-                <div class="rect5"></div>
-            </div>
-        </div> -->
         <div class="country-edit-model">
             <div class="model-header">
                 <h1 mat-dialog-title>{{ModalTitle}}</h1>
                 <button type="button" class="close-btn pull-right" aria-label="Close" (click)="modalRef.hide()">
                     <mat-icon>close</mat-icon>
                 </button>
-
             </div>
+
             <mat-divider></mat-divider>
+
             <div mat-dialog-content>
+
                 <div class="country-form">
                     <form class="country" [formGroup]="countryMasterForm" (ngSubmit)="onSubmitCountryMasterForm()">
                         <div class="input-group"  >
+
+
+                            <!-- <mat-form-field appearance="fill">
+                                <label>Vehicle Type <span style="color: red;">*</span></label>
+                                <mat-select formControlName="nVId">
+                                  <mat-option *ngFor="let item of vehicleTypeMaster" [value]="item.nVId">
+                                    {{item.vVehicleType}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field> -->
+        
+
                             <label for="">Vehicle Type <span style="color: red;">*</span></label>
                             <select class="form-select" aria-label="Default select example"
                                 formControlName="nVId">

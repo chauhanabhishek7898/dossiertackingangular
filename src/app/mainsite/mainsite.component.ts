@@ -71,7 +71,7 @@ export class MainsiteComponent implements OnInit {
     private formBuilder: FormBuilder,
     private modalService: BsModalService,
     private sanitizer: DomSanitizer,
-    private loginService: LoginService, //   private authService: AuthService, //   private notifier: NotificationService,
+    private loginService: LoginService, //   private authService: AuthService, //   // private notifier: NotificationService,
     private cityDropDownService: CitymasterService,
     private router: Router //   private storageService: StorageService, //   private router: Router,
   ) {}
