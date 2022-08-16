@@ -169,14 +169,14 @@ export class AdminLoginComponent implements OnInit {
     this.storageService.loginUserdetails = user;
     if (this.storageService.roleId == "1") {
       this.storageService.setHealthParameter = true;
-      this.router.navigate(['/ad'], {
+      this.router.navigate(['/ad/country'], {
         state: {
           user: JSON.stringify(user)
         }
       });
     } 
     else {
-      this.router.navigate(['/dashboard'], {
+      this.router.navigate(['/ad/country'], {
         state: {
           user: JSON.stringify(user)
         }

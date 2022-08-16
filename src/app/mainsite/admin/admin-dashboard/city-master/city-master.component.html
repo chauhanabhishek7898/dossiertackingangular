@@ -71,7 +71,7 @@
                             </select> -->
                             <mat-form-field appearance="fill" >
                                 <!-- <mat-label>Select Inter Related City</mat-label> -->
-                                <mat-select formControlName="nInterRelatedCityId" (selectionChange)="InterRelatedCityIds($event)" [(ngModel)]="InterRelatedCityId" name="item">
+                                <mat-select formControlName="nInterRelatedCityId" placeholder="Select Inter Related City" (selectionChange)="InterRelatedCityIds($event)" [(ngModel)]="InterRelatedCityId" name="item">
                                 <!-- <mat-select formControlName="nInterRelatedCityId" (selectionChange)="InterRelatedCityIds($event)" [(ngModel)]="InterRelatedCityId"> -->
                                   <mat-option [value]="item.nCityId" *ngFor="let item of mainInterRelatedCity">{{item.vCityName}}</mat-option>
                                   <mat-option value='NA'>NA</mat-option>    

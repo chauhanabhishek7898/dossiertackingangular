@@ -19,7 +19,7 @@ export class IsSignedInGuard implements CanActivate {
                 });
               } 
               else {
-                this.router.navigate(['/dashboard'], {
+                this.router.navigate(['/ad/country'], {
                 });
               }
             return false;
