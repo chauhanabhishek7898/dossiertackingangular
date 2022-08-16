@@ -3,7 +3,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
-import { NotificationService } from 'src/app/core/services/notification.service';
+// import { NotificationService } from '/src/app/core/services/notification.service';
 import { OtpSender } from 'src/app/core/services/otp.sender.service';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { UserSettingService } from 'src/app/core/services/user.setting.service';
@@ -33,7 +33,7 @@ export class UpdateEmailComponent implements OnInit {
   constructor(
     private modalService: BsModalService,
     private otpSender: OtpSender,
-    private notifier: NotificationService,
+    // private notifier: NotificationService,
     private formBuilder: FormBuilder,
     private userSettingService: UserSettingService,
     private storageService: StorageService,
@@ -77,14 +77,14 @@ export class UpdateEmailComponent implements OnInit {
   //         this.formType = "Send OTP"
   //         this.otPtimer(60);
   //       }, (error: HttpErrorResponse) => {
-  //         this.notifier.showError(error.statusText);
+  //         // this.notifier.showError(error.statusText);
   //       });
   //     }
   //     else {
   //       this.notifier.showError(res);
   //     }
   //   }, (error: HttpErrorResponse) => {
-  //     this.notifier.showError(error.statusText);
+  //     // this.notifier.showError(error.statusText);
   //   });
   // }
   sendOtp(template: TemplateRef<any>) {
@@ -103,7 +103,7 @@ export class UpdateEmailComponent implements OnInit {
         this.loader = false
       }, 300)
     }, (error: HttpErrorResponse) => {
-      this.notifier.showError(error.statusText);
+      // this.notifier.showError(error.statusText);
     });
   }
   otPtimer(remaining: number) {
@@ -135,7 +135,7 @@ export class UpdateEmailComponent implements OnInit {
         this.otpVerified = true;
       }
       else {
-        this.notifier.showError("OTP not matched");
+        // this.notifier.showError("OTP not matched");
         this.otpVerified = false;
       }
     }
@@ -147,7 +147,7 @@ export class UpdateEmailComponent implements OnInit {
     this.userMaster.nUserId = parseInt(this.storageService.userId!!);
     this.userMaster.vEmailId = emailId;
     this.userSettingService.updateUserEmail(this.userMaster).subscribe((res) => {
-      this.notifier.showSuccess(res);
+      // this.notifier.showSuccess(res);
       this.updateEmailForm.reset();
       this.modalRef.hide();
       this.timerOn=false;
@@ -155,7 +155,7 @@ export class UpdateEmailComponent implements OnInit {
         this.loader = false
       }, 300)
     }, (error: HttpErrorResponse) => {
-      this.notifier.showError(error.statusText);
+      // this.notifier.showError(error.statusText);
     });
   }
   resendOtp() {
@@ -164,14 +164,14 @@ export class UpdateEmailComponent implements OnInit {
     this.otpSender.SendOtpToEmailToChangeEmailId(emailId).subscribe((res) => {
       this.emailOtp = res;
       this.resendOtpBtnDisabled = true;
-      this.notifier.showSuccess("OTP Sent");
+      // this.notifier.showSuccess("OTP Sent");
       this.timerOn= true;
       this.otPtimer(60);
       setTimeout(() => {
         this.loader = false
       }, 300)
     }, (error: HttpErrorResponse) => {
-      this.notifier.showError(error.statusText);
+      // this.notifier.showError(error.statusText);
     });
   }
 }

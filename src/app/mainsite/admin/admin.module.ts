@@ -21,7 +21,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { PageFilterPipe } from '../../core/pipe/page-filter';
@@ -88,7 +87,6 @@ import { OtherRolesProfileComponent } from './admin-dashboard/other-roles-profil
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
-    ToastrModule.forRoot(),
     MatExpansionModule,
     DataTablesModule,
     WebcamModule,

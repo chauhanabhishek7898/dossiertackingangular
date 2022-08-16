@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
-import { NotificationService } from 'src/app/core/service/notification.service';
+// import { NotificationService } from 'src/app/core/service/notification.service';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { LoginService } from 'src/app/mainsite/Login/login.service';
 import { UserMaster, RootUserSave, UserMasterForgetPassword } from 'src/app/mainsite/models/user';
@@ -21,7 +21,7 @@ export class AdminLoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private notifier: NotificationService,
+    // private notifier: NotificationService,
     private storageService: StorageService,
     private router: Router,
     private modalService: BsModalService,
@@ -99,7 +99,7 @@ export class AdminLoginComponent implements OnInit {
     let vEmailorPhone = this.userLoginForm.controls.vUserName.value;
     let vPassword = this.userLoginForm.controls.vPassword.value;
     if(vEmailorPhone==null && vPassword==null || vEmailorPhone==undefined && vPassword==undefined ){
-      this.notifier.showError("Please Enter UserName/MemberCode or password");
+      // this.notifier.showError("Please Enter UserName/MemberCode or password");
     }else{
       this.btnLoader = true;
       if (this.storageService.isUserRemberMe == 'true') {
@@ -115,12 +115,12 @@ export class AdminLoginComponent implements OnInit {
             this.goToDashboard(users.data[0])
           }
           else {
-            this.notifier.showError("Incorrect UserName/MemberCode or password");
+            // this.notifier.showError("Incorrect UserName/MemberCode or password");
             this.btnLoader = false
           }
         }
       }, (error: HttpErrorResponse) => {
-        this.notifier.showError(error.statusText);
+        // this.notifier.showError(error.statusText);
         this.btnLoader = false
       });
     }
@@ -155,12 +155,12 @@ export class AdminLoginComponent implements OnInit {
     this.authService.registerUser(this.rootUserSave)
       .subscribe((status: string) => {
         if (status) {
-          this.notifier.showSuccess(status);
+          // this.notifier.showSuccess(status);
           this.goToDashboard(this.addUserModel);
           this.btnLoader = false
         }
       }, (error: HttpErrorResponse) => {
-        this.notifier.showError(error.statusText);
+        // this.notifier.showError(error.statusText);
         this.btnLoader = false
       });
   }
@@ -226,16 +226,16 @@ export class AdminLoginComponent implements OnInit {
           this.otPtimer(60);
         }
         else {
-          this.notifier.showError(status.statusMsg);
+          // this.notifier.showError(status.statusMsg);
         }
         setTimeout(() => {
           this.btnLoader = false
         }, 300)
       }, (error: HttpErrorResponse) => {
-        this.notifier.showError(error.statusText);
+        // this.notifier.showError(error.statusText);
       })
     } else {
-      this.notifier.showError("Please select either Mobile Number or Email Id.");
+      // this.notifier.showError("Please select either Mobile Number or Email Id.");
       setTimeout(() => {
         this.btnLoader = false
       }, 300)
@@ -267,7 +267,7 @@ export class AdminLoginComponent implements OnInit {
         this.otpVerified = true;
       }
       else {
-        this.notifier.showError("OTP not matched");
+        // this.notifier.showError("OTP not matched");
         this.otpVerified = false;
       }
     }
@@ -290,7 +290,7 @@ export class AdminLoginComponent implements OnInit {
       }, 300)
 
     }, (error: HttpErrorResponse) => {
-      this.notifier.showError(error.statusText);
+      // this.notifier.showError(error.statusText);
     });
   }
   toggle: boolean = false;
@@ -365,7 +365,7 @@ export class AdminLoginComponent implements OnInit {
           this.otPtimer(60);
         }
         else {
-          this.notifier.showError(status.statusMsg);
+          // this.notifier.showError(status.statusMsg);
           setTimeout(() => {
             this.btnLoader = false
           }, 300)
@@ -374,12 +374,12 @@ export class AdminLoginComponent implements OnInit {
           this.btnLoader = false
         }, 300)
       }, (error: HttpErrorResponse) => {
-        this.notifier.showError(error.statusText, "Server Error");
+        // this.notifier.showError(error.statusText, "Server Error");
         this.btnLoader = false
       });
     }
     else {
-      this.notifier.showError("Please select either Mobile Number  or Email Id.");
+      // this.notifier.showError("Please select either Mobile Number  or Email Id.");
       setTimeout(() => {
         this.btnLoader = false
       }, 300)
@@ -392,7 +392,7 @@ export class AdminLoginComponent implements OnInit {
         this.isFPOtpReceived = false;
       }
       else {
-        this.notifier.showError("OTP not matched");
+        // this.notifier.showError("OTP not matched");
         this.fPOtpVerified = false;
       }
     }
@@ -405,14 +405,14 @@ export class AdminLoginComponent implements OnInit {
     user.vUserIdORMemberCode = emailOrMobile;
     user.vPassword = newPassWord;
     this.authService.userMasterForgetPassword(user).subscribe((res) => {
-      this.notifier.showSuccess(res);
+      // this.notifier.showSuccess(res);
       this.userForgetPasswordForm.reset();
       this.modalRef.hide();
       setTimeout(() => {
         this.btnLoader = false
       }, 300)
     }, (error: HttpErrorResponse) => {
-      this.notifier.showError(error.statusText)
+      // this.notifier.showError(error.statusText)
     });
   }
   pass: string = 'password'

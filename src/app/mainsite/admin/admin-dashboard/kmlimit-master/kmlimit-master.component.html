@@ -1,6 +1,8 @@
 <div class="loader" *ngIf="loader">
-    <div class="loading">
-        <img src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
+    <div class="center-loader">
+        <div class="spinner-border" role="status" >
+            <span class="visually-hidden">Loading...</span>
+        </div>
     </div>
 </div>
 <div class="country-model button-spacing">
@@ -8,15 +10,6 @@
 
     <ng-template #templateCountryMaster>
 
-        <!-- <div class="loader loader2 " *ngIf="loaderService.isModelPopUpLoading | async">
-            <div class="spinner spinner2">
-                <div class="rect1"></div>
-                <div class="rect2"></div>
-                <div class="rect3"></div>
-                <div class="rect4"></div>
-                <div class="rect5"></div>
-            </div>
-        </div> -->
         <div class="country-edit-model">
             <div class="model-header">
                 <h1 mat-dialog-title>{{ModalTitle}}</h1>
@@ -37,7 +30,7 @@
                                 formControlName="nCityId">
                                 <option value="{{item.nCityId}}" *ngFor="let item of CityMasterList">
                                     {{item.vCityName}}</option>
-                                <!-- <option value="null" >None of these</option> -->
+                                <option  value="null" >None of these</option>
                             </select>
                            
                         </div>

@@ -37,7 +37,7 @@ import {
   DriverMasterClass,
 } from 'src/app/mainsite/models/DriverMaster';
 import { CustomerSignupService } from '../../customer-signup/customer-signup.service';
-import { NotificationService } from 'src/app/core/service/notification.service';
+// import { NotificationService } from 'src/app/core/service/notification.service';
 import * as _moment from 'moment';
 import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
@@ -89,7 +89,7 @@ export class DriverSignupComponent implements OnInit {
     private driverSignupService: DriverSignupService,
     private http: HttpClient,
     private customerSignupService: CustomerSignupService,
-    private notifier: NotificationService
+    // private notifier: NotificationService
   ) {}
   driverSignupForm: FormGroup;
   apiUrl = environment.dossiarApiUrl;
@@ -726,7 +726,7 @@ export class DriverSignupComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          this.notifier.showError(error.statusText);
+          // this.notifier.showError(error.statusText);
         }
       );
   }
@@ -750,7 +750,7 @@ export class DriverSignupComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          this.notifier.showError(error.statusText);
+          // this.notifier.showError(error.statusText);
         }
       );
   }
@@ -795,7 +795,7 @@ export class DriverSignupComponent implements OnInit {
         this.otpVerify = false;
         this.verifiedMobileText=true;
       } else {
-        this.notifier.showError('OTP not matched');
+        // this.notifier.showError('OTP not matched');
         this.mobileDisable = true;
       }
     }

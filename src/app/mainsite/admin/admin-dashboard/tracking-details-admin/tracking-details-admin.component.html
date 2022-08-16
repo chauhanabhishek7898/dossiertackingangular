@@ -1,21 +1,23 @@
-<div class="medical-record">
-    <div class="loader" *ngIf="loader">
-        <div class="loading">
-            <img src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
+<div class="loader" *ngIf="loader">
+    <div class="center-loader">
+        <div class="spinner-border" role="status" >
+            <span class="visually-hidden">Loading...</span>
         </div>
     </div>
-    <div class="family-head">
+</div>
+
+<div class="medical-record">
+  
+    <!-- <div class="family-head">
         <span>{{pageTitle}}</span>
-    </div>
+    </div> -->
     <mat-divider></mat-divider>
     <form [formGroup]="myNoteForm">
         <div class="input-box">
-
             <div class="input-group input-group-1">
                 <label for="">From Date</label>
                 <mat-form-field appearance="fill">
-                    <input formControlName="fromDate" [max]="maxDateFilter" matInput placeholder="From Date " readonly
-                        [matDatepicker]="fromDate" class="matinput">
+                    <input formControlName="fromDate" [max]="maxDateFilter" matInput placeholder="From Date " readonly [matDatepicker]="fromDate" class="matinput">
                     <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
                     <mat-datepicker #fromDate></mat-datepicker>
                 </mat-form-field>
@@ -23,8 +25,7 @@
             <div class="input-group input-group-1">
                 <label for="">To Date</label>
                 <mat-form-field appearance="fill">
-                    <input formControlName="toDate" [max]="maxDateFilter" matInput placeholder="To Date "
-                        [matDatepicker]="toDate" readonly class="matinput">
+                    <input formControlName="toDate" [max]="maxDateFilter" matInput placeholder="To Date " [matDatepicker]="toDate" readonly class="matinput">
                     <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
                     <mat-datepicker #toDate></mat-datepicker>
                 </mat-form-field>

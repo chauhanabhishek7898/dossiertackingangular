@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ConnectionService } from 'ng-connection-service';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subject, Observable } from 'rxjs';
-import { NotificationService } from 'src/app/core/service/notification.service';
+// import { NotificationService } from 'src/app/core/service/notification.service';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { environment } from 'src/environments/environment';
 import { PageDetails } from '../../models/page-details';
@@ -51,7 +51,7 @@ export class AdminDashboardComponent implements OnInit {
   constructor(
     private modalService: BsModalService,
     private adminDashboardService: AdminDashboardService,
-    private notifier: NotificationService,
+    // private notifier: NotificationService,
     private storageService: StorageService,
     private router: Router,
     private connectionService: ConnectionService
@@ -168,7 +168,7 @@ export class AdminDashboardComponent implements OnInit {
       this.file = event.target.files[0];
       if (this.file.name.split('.').pop() == 'jpg') {
         if (this.file.size > 5000000) {
-          this.notifier.showError(`Please Select File less then 2 MB`);
+          // this.notifier.showError(`Please Select File less then 2 MB`);
         } else {
           console.log(this.file.size)
           this.fileName = this.file.name;
@@ -181,7 +181,7 @@ export class AdminDashboardComponent implements OnInit {
           this.uploadBtn = true
         }
       } else {
-        this.notifier.showError(`Invalid file format. Please select .JPG file format.`);
+        // this.notifier.showError(`Invalid file format. Please select .JPG file format.`);
         this.uploadBtn = false
       }
     }
@@ -333,7 +333,7 @@ export class AdminDashboardComponent implements OnInit {
           }
         }
         else {
-          this.notifier.showSuccess("Something Wrong");
+          // this.notifier.showSuccess("Something Wrong");
         }
       }
     );
@@ -520,7 +520,7 @@ export class AdminDashboardComponent implements OnInit {
   //     }
 
   //   }, (error: HttpErrorResponse) => {
-  //     this.notifier.showError(error.statusText);
+  //     // this.notifier.showError(error.statusText);
   //   });
   // }
   // listen() {
@@ -551,14 +551,14 @@ export class AdminDashboardComponent implements OnInit {
   //   this.messageDoctorService.UnReadMessageCount(parseInt(this.storageService.userId!!)).subscribe((res) => {
   //     this.count = res[0].UnReadMessageCount;
   //   }, (error: HttpErrorResponse) => {
-  //     this.notifier.showError(error.statusText);
+  //     // this.notifier.showError(error.statusText);
   //   });
   // }
   // doctorMessageCount() {
   //   this.messageDoctorService.UnReadMessageCount(parseInt(this.storageService.userId!!)).subscribe((res) => {
   //     this.count = res[0].UnReadMessageCount;
   //   }, (error: HttpErrorResponse) => {
-  //     this.notifier.showError(error.statusText);
+  //     // this.notifier.showError(error.statusText);
   //   });
   // }
   configButtons: ModalOptions = {

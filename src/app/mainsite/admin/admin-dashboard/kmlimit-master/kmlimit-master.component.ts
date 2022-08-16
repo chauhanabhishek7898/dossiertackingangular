@@ -1,7 +1,18 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import {
+  Component,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
@@ -15,33 +26,33 @@ import { KMLimitMasterService } from './kmlimit-master.service';
 @Component({
   selector: 'app-kmlimit-master',
   templateUrl: './kmlimit-master.component.html',
-  styleUrls: ['./kmlimit-master.component.scss']
+  styleUrls: ['./kmlimit-master.component.scss'],
 })
 export class KMLimitMasterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private kmLimitMasterService: KMLimitMasterService,
-    // private notifier: NotificationService,
+    // // private notifier: NotificationService,
     private modalService: BsModalService,
     // public loaderService: LoaderService,
     public breakpointObserver: BreakpointObserver,
     private CityService: CityMasterService,
-    private vehicleTypeMasterService: VehicleTypeMasterService,
-  ) { }
+    private vehicleTypeMasterService: VehicleTypeMasterService
+  ) {}
 
   // variable declarations
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   dtOptions: any = {};
   ModalTitle: string;
-  kmLimitMasterModel: KMLimitMaster
-  countryMasterForm: FormGroup
-  formType: string
+  kmLimitMasterModel: KMLimitMaster;
+  countryMasterForm: FormGroup;
+  formType: string;
   //  UpdateCountryForm: FormGroup
   //  // dtInstance: DataTables.Api;
-  isDtInitialized: boolean = false
+  isDtInitialized: boolean = false;
   kmLimitMaster: KMLimitGet[] = [];
-  CityMasterList : CityMasterList[]=[];
+  CityMasterList: CityMasterList[] = [];
   vehicleTypeMaster: VehicleTypeMaster[] = [];
   //  bsModalRef: BsModalRef
   dtTrigger: Subject<any> = new Subject<any>();
@@ -50,70 +61,112 @@ export class KMLimitMasterComponent implements OnInit {
   @Input() disabled: boolean = true;
   loader = false;
 
-
   ngOnInit(): void {
-
     this.dtOptions = {
       //destroy: true,
       dom: 'lBfrtip',
-      "lengthMenu": [5, 10, 25, 50, 100],
-      "pageLength": 5,
-      "scrollX": true,
+      lengthMenu: [5, 10, 25, 50, 100],
+      pageLength: 5,
+      scrollX: true,
 
       // Configure the buttons
       buttons: [
-        { extend: 'excel', text: 'Export To Excel', filename: "country master" }
+        {
+          extend: 'excel',
+          text: 'Export To Excel',
+          filename: 'country master',
+        },
       ],
-      columnDefs: [{
-        orderable: false,
-        targets: "no-sort"
-      }]
-    }
-
+      columnDefs: [
+        {
+          orderable: false,
+          targets: 'no-sort',
+        },
+      ],
+    };
+    this.getActiveCityList();
     this.bindkmLimitMaster(false);
     this.countryMasterForm = this.formBuilder.group({
       nLimitId: [0],
-      nVId: [0, [Validators.required]],
+      nVId: [0],
       nCityId: [0, [Validators.required]],
       nKMLimit: [0, [Validators.required]],
       btActive: new FormControl({ value: 'true', disabled: true }),
-
-
     });
-
   }
-
 
   get createCountryMasterFormControls(): any {
     return this.countryMasterForm.controls;
   }
-  countryMaster
+  countryMaster;
   onSubmitCountryMasterForm(): void {
-    if (this.formType == "Submit") {
+    if (this.formType == 'Submit') {
+      this.loader = true;
       this.kmLimitMasterModel = {
-        nLimitId: this.countryMasterForm.controls.nLimitId.value == null ? 0 : this.countryMasterForm.controls.nLimitId.value,
+        nLimitId:
+          this.countryMasterForm.controls.nLimitId.value == null
+            ? 0
+            : this.countryMasterForm.controls.nLimitId.value,
         nVId: this.countryMasterForm.controls.nVId.value,
         nCityId: this.countryMasterForm.controls.nCityId.value,
         nKMLimit: this.countryMasterForm.controls.nKMLimit.value,
 
-        btActive: this.countryMasterForm.controls.btActive.value
+        btActive: this.countryMasterForm.controls.btActive.value,
       };
-      this.kmLimitMasterService.KMLimitMaster(this.kmLimitMasterModel, this.formType)
-        .subscribe((status: string) => {
-          if (status) {
-            // this.notifier.showSuccess(status)
-            this.countryMasterForm.reset();
-            //  this. resetCountryMasterFormValue()
-            this.modalRef.hide();
-            setTimeout(() => {
-              this.rerender();
-            }, 100)
-          } else {
+      this.kmLimitMasterService
+        .KMLimitMaster(this.kmLimitMasterModel, this.formType)
+        .subscribe(
+          (status: string) => {
+            if (status) {
+              this.loader = false;
+              // this.notifier.showSuccess(status)
+              this.countryMasterForm.reset();
+              //  this. resetCountryMasterFormValue()
+              this.modalRef.hide();
+              setTimeout(() => {
+                this.rerender();
+              }, 100);
+            } else {
+            }
+          },
+          (error: HttpErrorResponse) => {
+            // // this.notifier.showError(error.statusText)
           }
-        }, (error: HttpErrorResponse) => {
-          // this.notifier.showError(error.statusText)
-        });
-    };
+        );
+    } else {
+      this.loader = true;
+      this.kmLimitMasterModel = {
+        nLimitId:
+          this.countryMasterForm.controls.nLimitId.value == null
+            ? 0
+            : this.countryMasterForm.controls.nLimitId.value,
+        nVId: this.countryMasterForm.controls.nVId.value,
+        nCityId: this.countryMasterForm.controls.nCityId.value,
+        nKMLimit: this.countryMasterForm.controls.nKMLimit.value,
+
+        btActive: this.countryMasterForm.controls.btActive.value,
+      };
+      this.kmLimitMasterService
+        .KMLimitMaster(this.kmLimitMasterModel, this.formType)
+        .subscribe(
+          (status: string) => {
+            if (status) {
+              this.loader = false;
+              // this.notifier.showSuccess(status)
+              this.countryMasterForm.reset();
+              //  this. resetCountryMasterFormValue()
+              this.modalRef.hide();
+              setTimeout(() => {
+                this.rerender();
+              }, 100);
+            } else {
+            }
+          },
+          (error: HttpErrorResponse) => {
+            // // this.notifier.showError(error.statusText)
+          }
+        );
+    }
   }
   rerender(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -128,48 +181,51 @@ export class KMLimitMasterComponent implements OnInit {
     if (isReInitilized) {
       this.isDtInitialized = false;
     }
-    this.kmLimitMasterService.KMLimitMaster_SelectAll(
-    ).subscribe((res) => {
-      this.kmLimitMaster = res;
+    this.kmLimitMasterService.KMLimitMaster_SelectAll().subscribe(
+      (res) => {
+        this.kmLimitMaster = res;
 
-      if (!this.isDtInitialized) {
-        this.dtTrigger.next();
+        if (!this.isDtInitialized) {
+          this.dtTrigger.next();
+        }
+        this.isDtInitialized = true;
+        setTimeout(() => {
+          this.loader = false;
+        }, 300);
+      },
+      (error: HttpErrorResponse) => {
+        // // this.notifier.showError(error.statusText);
       }
-      this.isDtInitialized = true;
-      setTimeout(() => {
-        this.loader = false
-      }, 300)
-
-
-    }, (error: HttpErrorResponse) => {
-      // this.notifier.showError(error.statusText);
-    });
+    );
   }
   getActiveCityList() {
-    this.CityService.getActiveCityList(
-    ).subscribe((res) => {
-      this.CityMasterList = res;
-  setTimeout(() => {
-    this.loader = false
-  }, 300)
-    }, (error: HttpErrorResponse) => {
-      alert(error.statusText);
-    });
+    this.CityService.getActiveCityList().subscribe(
+      (res) => {
+        console.log("rescity", res)
+        this.CityMasterList = res;
+       
+        setTimeout(() => {
+          this.loader = false;
+        }, 300);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.statusText);
+      }
+    );
   }
   VehicleTypeMaster_SelectAll() {
-   
-    this.vehicleTypeMasterService.VehicleTypeMaster_SelectAll(
-    ).subscribe((res) => {
-      this.vehicleTypeMaster = res;
+    this.vehicleTypeMasterService.VehicleTypeMaster_SelectAll().subscribe(
+      (res) => {
+        this.vehicleTypeMaster = res;
 
-      setTimeout(() => {
-        this.loader = false
-      }, 300)
-
-
-    }, (error: HttpErrorResponse) => {
-      // this.notifier.showError(error.statusText);
-    });
+        setTimeout(() => {
+          this.loader = false;
+        }, 300);
+      },
+      (error: HttpErrorResponse) => {
+        // // this.notifier.showError(error.statusText);
+      }
+    );
   }
   config: ModalOptions = {
     animated: true,
@@ -178,12 +234,14 @@ export class KMLimitMasterComponent implements OnInit {
   };
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, this.config);
-    this.ModalTitle = "Add KM Limit";
-    this.formType = "Submit"
+    this.ModalTitle = 'Add KM Limit';
+    this.formType = 'Submit';
     this.countryMasterForm.get('btActive')?.disable();
     this.countryMasterForm.get('btActive')?.setValue(true);
-    this.getActiveCityList()
-    this.VehicleTypeMaster_SelectAll()
+    this.countryMasterForm.get('nCityId')?.setValue(null);
+
+    // this.getActiveCityList();
+    this.VehicleTypeMaster_SelectAll();
     this.modalRef.onHide.subscribe(() => {
       this.countryMasterForm.reset();
     });
@@ -192,25 +250,23 @@ export class KMLimitMasterComponent implements OnInit {
   editClick(template: TemplateRef<any>, countryId: number) {
     this.modalRef = this.modalService.show(template, this.config);
     this.countryMasterForm.get('btActive')?.enable();
-    this.ModalTitle = "Edit KM Limit ";
-    this.formType = "Update";
-    this.getActiveCityList()
-    this.VehicleTypeMaster_SelectAll()
+    this.ModalTitle = 'Edit KM Limit ';
+    this.formType = 'Update';
+    // this.getActiveCityList();
+    this.VehicleTypeMaster_SelectAll();
     this.editCountryRowItem(countryId);
     this.modalRef.onHide.subscribe(() => {
       this.countryMasterForm.reset();
     });
   }
   editCountryRowItem(nLimitId: number) {
-    let country = this.kmLimitMaster.find(e => e.nLimitId == nLimitId);
+    let country = this.kmLimitMaster.find((e) => e.nLimitId == nLimitId);
     this.countryMasterForm.patchValue({
       nLimitId: country?.nLimitId,
       nVId: country?.nVId,
       nCityId: country?.nCityId,
       nKMLimit: country?.nKMLimit,
-      btActive: country?.btActive
-
+      btActive: country?.btActive,
     });
   }
-
 }

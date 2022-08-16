@@ -22,7 +22,7 @@ export class CountryMasterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private countryService: CountryService,
-    // private notifier: NotificationService,
+    // // private notifier: NotificationService,
     private modalService: BsModalService,
     // public loaderService: LoaderService,
     public breakpointObserver: BreakpointObserver
@@ -85,6 +85,7 @@ export class CountryMasterComponent implements OnInit {
   countryMaster
   onSubmitCountryMasterForm(): void {
     if (this.formType == "Submit") {
+      this.loader=true
       let country = this.countryList.find(e => e.vCountryName == this.countryMasterForm.controls.vCountryName.value);
       if (country) {
         // this.notifier.showError("Country is already added")
@@ -100,6 +101,7 @@ export class CountryMasterComponent implements OnInit {
         this.countryService.saveCountry(this.conutryModel, this.formType)
           .subscribe((status: string) => {
             if (status) {
+              this.loader=false
               // this.notifier.showSuccess(status)
               this.countryMasterForm.reset();
               //  this. resetCountryMasterFormValue()
@@ -110,11 +112,12 @@ export class CountryMasterComponent implements OnInit {
             } else {
             }
           }, (error: HttpErrorResponse) => {
-            // this.notifier.showError(error.statusText)
+            // // this.notifier.showError(error.statusText)
           });
       }
     }
     else {
+      this.loader=true
       this.conutryModel = {
         nCountryId: this.countryMasterForm.controls.nCountryId.value == null ? 0 : this.countryMasterForm.controls.nCountryId.value,
         vCountryName: this.countryMasterForm.controls.vCountryName.value,
@@ -125,7 +128,7 @@ export class CountryMasterComponent implements OnInit {
       this.countryService.saveCountry(this.conutryModel, this.formType)
         .subscribe((status: string) => {
           if (status) {
-
+            this.loader=false
             // this.notifier.showSuccess(status)
             this.countryMasterForm.reset();
             //  this. resetCountryMasterFormValue()
@@ -136,7 +139,7 @@ export class CountryMasterComponent implements OnInit {
           } else {
           }
         }, (error: HttpErrorResponse) => {
-          // this.notifier.showError(error.statusText)
+          // // this.notifier.showError(error.statusText)
         });
     }
   };
@@ -167,7 +170,7 @@ export class CountryMasterComponent implements OnInit {
 
 
     }, (error: HttpErrorResponse) => {
-      // this.notifier.showError(error.statusText);
+      // // this.notifier.showError(error.statusText);
     });
   }
   config: ModalOptions = {

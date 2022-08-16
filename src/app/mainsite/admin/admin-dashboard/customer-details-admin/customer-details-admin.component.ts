@@ -5,9 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
-import { NotificationService } from 'src/app/core/service/notification.service';
+// import { NotificationService } from 'src/app/core/service/notification.service';
 import { StorageService } from 'src/app/core/services/storage.service';
-import { CustomerMaster } from 'src/app/mainsite/models/CustomerMaster';
+import { CustomerMaster, CustomerMasterList } from 'src/app/mainsite/models/CustomerMaster';
 import { environment } from 'src/environments/environment';
 import { CustomerDetailsMasterService } from './customer-details-master.service';
 
@@ -27,7 +27,7 @@ export class CustomerDetailsAdminComponent implements OnInit {
   formType: string
   
   isDtInitialized: boolean = false
-  PatientDetailList: CustomerMaster[] = [];
+  PatientDetailList: CustomerMasterList[] = [];
   dtTrigger: Subject<any> = new Subject<any>();
   modalRef: BsModalRef;
   IsWait: boolean;
@@ -37,7 +37,7 @@ export class CustomerDetailsAdminComponent implements OnInit {
   pageTitle: any;
   constructor(
     private patientDetailService: CustomerDetailsMasterService,
-    private notifier: NotificationService,
+    // private notifier: NotificationService,
     private storageService: StorageService,
     private route: ActivatedRoute,
     ) { }
@@ -61,6 +61,7 @@ export class CustomerDetailsAdminComponent implements OnInit {
         targets: "no-sort"
       }]
     }
+    console.log("storageiid", this.storageService.userId)
 
     this.bindPatientDetailService(false);
   }
@@ -70,8 +71,9 @@ export class CustomerDetailsAdminComponent implements OnInit {
     if (isReInitilized) {
       this.isDtInitialized = false;
     }
-    this.patientDetailService.getPatientList(parseInt(this.storageService.userId!!)
+    this.patientDetailService.GetCustomerMasterByUserId(21
     ).subscribe((res) => {
+      console.log("res", res)
       this.PatientDetailList = res;
 
       if (!this.isDtInitialized) {
@@ -82,7 +84,7 @@ export class CustomerDetailsAdminComponent implements OnInit {
         this.loader = false
       }, 300)
     }, (error: HttpErrorResponse) => {
-      this.notifier.showError(error.statusText);
+      // this.notifier.showError(error.statusText);
     });
   }
 

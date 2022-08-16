@@ -1,6 +1,13 @@
-<div class="loader" *ngIf="loader">
+<!-- <div class="loader" *ngIf="loader">
     <div class="loading">
         <img src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
+    </div>
+</div> -->
+<div class="loader" *ngIf="loader">
+    <div class="center-loader">
+        <div class="spinner-border" role="status" >
+            <span class="visually-hidden">Loading...</span>
+        </div>
     </div>
 </div>
 <div class="country-model button-spacing">
@@ -9,12 +16,11 @@
 
         <div class="country-edit-model">
             <div class="model-header">
+                <h1 mat-dialog-title>{{ModalTitle}}</h1>
                 <button type="button" class="close-btn pull-right" aria-label="Close" (click)="modalRef.hide()">
                     <mat-icon>close</mat-icon>
                 </button>
-              
             </div>
-            <h1 mat-dialog-title>{{ModalTitle}}</h1>
             <mat-divider></mat-divider>
             <div mat-dialog-content>
                 <div class="country-form">
@@ -27,6 +33,17 @@
                             <div class="invalid-tooltip" *ngIf="createStateMasterFormControls.vStateName.invalid && (createStateMasterFormControls.vStateName.dirty || createStateMasterFormControls.vStateName.touched)">
                                 <span *ngIf="createStateMasterFormControls.vStateName.errors.required">
                                     Please enter State Name.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="input-group input-group-1">
+                            <label for="">State Prefix<span style="color: red;">*</span></label>
+                            <input formControlName="vStatePrefix" appAutofocus type="text" class="form-control" placeholder="State Prefix" aria-label="Country" aria-describedby="basic-addon1" [ngClass]="{'is-invalid' : createStateMasterFormControls.vStatePrefix.invalid && (createStateMasterFormControls.vStatePrefix.dirty || createStateMasterFormControls.vStatePrefix.touched)}"
+                            />
+
+                            <div class="invalid-tooltip" *ngIf="createStateMasterFormControls.vStatePrefix.invalid && (createStateMasterFormControls.vStatePrefix.dirty || createStateMasterFormControls.vStatePrefix.touched)">
+                                <span *ngIf="createStateMasterFormControls.vStatePrefix.errors.required">
+                                    Please enter State Prefix.
                                 </span>
                             </div>
                         </div>

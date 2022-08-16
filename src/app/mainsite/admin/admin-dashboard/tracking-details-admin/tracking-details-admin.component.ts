@@ -2,7 +2,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NotificationService } from 'src/app/core/service/notification.service';
+// import { NotificationService } from 'src/app/core/service/notification.service';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { UtilityService } from 'src/app/core/services/utility.service';
 import { environment } from 'src/environments/environment';
@@ -34,7 +34,7 @@ export class TrackingDetailsAdminComponent implements OnInit {
     private formBuilder: FormBuilder,
     private storageService: StorageService,
     private utilityService: UtilityService,
-    private notifier: NotificationService,
+    // private notifier: NotificationService,
     private buyCreditsaService: TrackingDetailsAdminService,
     private route: ActivatedRoute,
 
@@ -82,13 +82,13 @@ getCurrentDateFilter() {
 
     this.myNoteForm.get('toDate')?.setValue(this.currentDateFilter);
     let pDate = new Date(this.currentDateFilter);
-    pDate.setDate(pDate.getDate() - 365);
+    pDate.setDate(pDate.getDate() - 7);
     this.pastDate = pDate;
     this.myNoteForm.get('fromDate')?.setValue(this.pastDate);
     this.bindCreditsUsageReportList(false);
 
   }, (error: HttpErrorResponse) => {
-    this.notifier.showError(error.statusText);
+    // this.notifier.showError(error.statusText);
   });
 }
 isDtInitialized: boolean = false
@@ -123,7 +123,7 @@ bindCreditsUsageReportList(isReInitilized) {
       this.loader = false
     }, 300)
   }, (error: HttpErrorResponse) => {
-    this.notifier.showError(error.statusText);
+    // this.notifier.showError(error.statusText);
   });
 }
 parseDateToString(d: any) {
@@ -134,7 +134,7 @@ searchPastConsultation() {
   let toDate = this.myNoteForm.controls.toDate.value;
   let fromDate = this.myNoteForm.controls.fromDate.value;
   if (fromDate > toDate) {
-    this.notifier.showError("From Date should not be greater than To Date. ")
+    // this.notifier.showError("From Date should not be greater than To Date. ")
     return;
   } else {
     this.currentDateFilter = toDate

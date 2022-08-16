@@ -18,6 +18,7 @@ import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
+// import { NotificationService } from 'src/app/core/service/notification.service';
 import { CountryMaster } from '../../../models/counntry.model';
 import { StateMaster, stateMasterList } from '../../../models/state.model';
 import { CountryService } from '../country-master/country-services';
@@ -89,6 +90,7 @@ export class StateMasterComponent implements OnInit {
       nStateId: [0],
       nCountryId: [0, [Validators.required, Validators.min(1)]],
       vStateName: [null, [Validators.required]],
+      vStatePrefix: [null, [Validators.required]],
       btActive: new FormControl({ value: 'true', disabled: this.disabled }),
     });
   }
@@ -97,6 +99,7 @@ export class StateMasterComponent implements OnInit {
   }
   onSubmitStateMasterForm(): void {
     if (this.formType == 'Submit') {
+      this.loader=true
       let state = this.StateMasterList.find(
         (e) => e.vStateName == this.stateMasterForm.controls.vStateName.value
       );
@@ -112,11 +115,12 @@ export class StateMasterComponent implements OnInit {
               : this.stateMasterForm.controls.nStateId.value,
           vStateName: this.stateMasterForm.controls.vStateName.value,
           btActive: this.stateMasterForm.controls.btActive.value,
-          vStatePrefix: this.stateMasterForm.controls.btActive.value,
+          vStatePrefix: this.stateMasterForm.controls.vStatePrefix.value,
         };
         this.stateService.saveState(this.stateModel, this.formType).subscribe(
           (status: string) => {
             if (status) {
+              this.loader=false
               // this.notifier.showSuccess(status)
               this.stateMasterForm.reset();
               this.modalRef.hide();
@@ -125,11 +129,12 @@ export class StateMasterComponent implements OnInit {
             }
           },
           (error: HttpErrorResponse) => {
-            // this.notifier.showError(error.statusText)
+            // // this.notifier.showError(error.statusText)
           }
         );
       }
     } else {
+      this.loader=true
       this.stateModel = {
         nCountryId: this.stateMasterForm.controls.nCountryId.value,
         // vCountryName: this.stateMasterForm.controls.vCountryName.value,
@@ -139,11 +144,12 @@ export class StateMasterComponent implements OnInit {
             : this.stateMasterForm.controls.nStateId.value,
         vStateName: this.stateMasterForm.controls.vStateName.value,
         btActive: this.stateMasterForm.controls.btActive.value,
-        vStatePrefix: this.stateMasterForm.controls.btActive.value,
+        vStatePrefix: this.stateMasterForm.controls.vStatePrefix.value,
       };
       this.stateService.saveState(this.stateModel, this.formType).subscribe(
         (status: string) => {
           if (status) {
+            this.loader=false
             // this.notifier.showSuccess(status)
             this.stateMasterForm.reset();
             this.modalRef.hide();
@@ -152,7 +158,7 @@ export class StateMasterComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          // this.notifier.showError(error.statusText)
+          // // this.notifier.showError(error.statusText)
         }
       );
     }
@@ -187,7 +193,7 @@ export class StateMasterComponent implements OnInit {
         }, 300);
       },
       (error: HttpErrorResponse) => {
-        // this.notifier.showError(error.statusText);
+        // // this.notifier.showError(error.statusText);
       }
     );
   }
@@ -200,8 +206,8 @@ export class StateMasterComponent implements OnInit {
         // this.loaderService.isLoading.next(false);
       },
       (error: HttpErrorResponse) => {
-        // this.notifier.showError(error.statusText);
-        //this.notifier.showError(error.statusText);
+        // // this.notifier.showError(error.statusText);
+        //// this.notifier.showError(error.statusText);
       }
     );
   }
@@ -244,6 +250,7 @@ export class StateMasterComponent implements OnInit {
       nCountryId: state?.nCountryId,
       nStateId: state?.nStateId,
       vStateName: state?.vStateName,
+      vStatePrefix: state?.vStatePrefix,
       btActive: state?.btActive,
     });
   }
