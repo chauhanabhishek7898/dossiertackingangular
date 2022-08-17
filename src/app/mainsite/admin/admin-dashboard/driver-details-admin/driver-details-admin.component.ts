@@ -23,6 +23,8 @@ import { environment } from 'src/environments/environment';
 import { DriverDetailsAdminService } from './driver-details-admin.service';
 import { ActivatedRoute } from '@angular/router';
 import { ApproveDriverMasterList } from 'src/app/mainsite/models/approve-driver';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+
 @Component({
   selector: 'app-driver-details-admin',
   templateUrl: './driver-details-admin.component.html',
@@ -164,5 +166,20 @@ export class DriverDetailsAdminComponent implements OnInit {
   modelCencelBtn() {
     this.conformaitonmodalRef.hide();
   }
-
+  showSuccessMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
+  showWarningMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
 }

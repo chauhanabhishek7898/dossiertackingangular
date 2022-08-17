@@ -2,11 +2,13 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 import { CountryMaster } from '../../../models/counntry.model';
 import { CountryService } from './country-services';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 // import { NotificationService } from 'src/app/core/services/notification.service';
 // import { LoaderService } from 'src/app/loader/loader.service';
@@ -18,13 +20,13 @@ import { CountryService } from './country-services';
 })
 export class CountryMasterComponent implements OnInit {
 
-
   constructor(
     private formBuilder: FormBuilder,
     private countryService: CountryService,
     // // private notifier: NotificationService,
     private modalService: BsModalService,
     // public loaderService: LoaderService,
+    private route: ActivatedRoute,
     public breakpointObserver: BreakpointObserver
   ) { }
 
@@ -46,10 +48,10 @@ export class CountryMasterComponent implements OnInit {
   IsWait: boolean;
   @Input() disabled: boolean = true;
   loader = false;
-
-
+  pageTitle: any;
+  
   ngOnInit(): void {
-
+    this.pageTitle = this.route.snapshot.queryParams.title;
     this.dtOptions = {
       //destroy: true,
       dom: 'lBfrtip',
@@ -102,8 +104,8 @@ export class CountryMasterComponent implements OnInit {
           .subscribe((status: string) => {
             if (status) {
               this.loader=false
-              // this.notifier.showSuccess(status)
-              this.countryMasterForm.reset();
+              this.showSuccessMessage(status, 'success', true);
+                            this.countryMasterForm.reset();
               //  this. resetCountryMasterFormValue()
               this.modalRef.hide();
               setTimeout(() => {
@@ -112,7 +114,7 @@ export class CountryMasterComponent implements OnInit {
             } else {
             }
           }, (error: HttpErrorResponse) => {
-            // // this.notifier.showError(error.statusText)
+            this.showWarningMessage(error.statusText, 'error', true);
           });
       }
     }
@@ -129,7 +131,7 @@ export class CountryMasterComponent implements OnInit {
         .subscribe((status: string) => {
           if (status) {
             this.loader=false
-            // this.notifier.showSuccess(status)
+            this.showSuccessMessage(status, 'success', true);
             this.countryMasterForm.reset();
             //  this. resetCountryMasterFormValue()
             this.modalRef.hide();
@@ -139,7 +141,7 @@ export class CountryMasterComponent implements OnInit {
           } else {
           }
         }, (error: HttpErrorResponse) => {
-          // // this.notifier.showError(error.statusText)
+          this.showWarningMessage(error.statusText, 'error', true);
         });
     }
   };
@@ -221,6 +223,22 @@ export class CountryMasterComponent implements OnInit {
       nCountryId: 0,
       vCountryName: null,
       btActive: true
+    });
+  }
+  showSuccessMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
+  showWarningMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
     });
   }
 }

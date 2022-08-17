@@ -13,6 +13,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
@@ -21,6 +22,7 @@ import { VehicleTypeMaster } from '../vehicle-type-master/vehicle-type-master';
 import { VehicleTypeMasterService } from '../vehicle-type-master/vehicle-type-master.service';
 import { WaitTimeCharges, WaitTimeChargesGet } from './wait-time-charges';
 import { WaitTimeChargesService } from './wait-time-charges.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-wait-time-charges',
@@ -33,6 +35,7 @@ export class WaitTimeChargesComponent implements OnInit {
     private waitTimeChargesService: WaitTimeChargesService,
     // // private notifier: NotificationService,
     private modalService: BsModalService,
+    private route: ActivatedRoute,
     // public loaderService: LoaderService,
     public breakpointObserver: BreakpointObserver,
     private vehicleTypeMasterService: VehicleTypeMasterService
@@ -58,8 +61,9 @@ export class WaitTimeChargesComponent implements OnInit {
   IsWait: boolean;
   @Input() disabled: boolean = true;
   loader = false;
-
+  pageTitle: any;
   ngOnInit(): void {
+    this.pageTitle = this.route.snapshot.queryParams.title;
     this.dtOptions = {
       //destroy: true,
       dom: 'lBfrtip',
@@ -116,7 +120,7 @@ export class WaitTimeChargesComponent implements OnInit {
           (status: string) => {
             if (status) {
               this.loader = false;
-              // this.notifier.showSuccess(status)
+              this.showSuccessMessage(status, 'success', true);
               this.countryMasterForm.reset();
               //  this. resetCountryMasterFormValue()
               this.modalRef.hide();
@@ -127,7 +131,7 @@ export class WaitTimeChargesComponent implements OnInit {
             }
           },
           (error: HttpErrorResponse) => {
-            // // this.notifier.showError(error.statusText)
+            this.showWarningMessage(error.statusText, 'error', true);
           }
         );
     } else {
@@ -149,7 +153,7 @@ export class WaitTimeChargesComponent implements OnInit {
           (status: string) => {
             if (status) {
               this.loader = false;
-              // this.notifier.showSuccess(status)
+              this.showSuccessMessage(status, 'success', true);
               this.countryMasterForm.reset();
               //  this. resetCountryMasterFormValue()
               this.modalRef.hide();
@@ -160,7 +164,7 @@ export class WaitTimeChargesComponent implements OnInit {
             }
           },
           (error: HttpErrorResponse) => {
-            // // this.notifier.showError(error.statusText)
+            this.showWarningMessage(error.statusText, 'error', true);
           }
         );
     }
@@ -249,6 +253,22 @@ export class WaitTimeChargesComponent implements OnInit {
 
       nWaitTimeCharges: country?.nWaitTimeCharges,
       btActive: country?.btActive,
+    });
+  }
+  showSuccessMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
+  showWarningMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
     });
   }
 }

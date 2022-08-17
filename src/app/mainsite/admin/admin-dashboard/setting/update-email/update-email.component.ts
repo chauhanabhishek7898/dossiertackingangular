@@ -9,6 +9,7 @@ import { StorageService } from 'src/app/core/services/storage.service';
 import { UserSettingService } from 'src/app/core/services/user.setting.service';
 import { UserValidationService } from 'src/app/core/services/user.validation.service';
 import { UserMaster } from '../../../../models/user';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-update-email',
@@ -147,7 +148,7 @@ export class UpdateEmailComponent implements OnInit {
     this.userMaster.nUserId = parseInt(this.storageService.userId!!);
     this.userMaster.vEmailId = emailId;
     this.userSettingService.updateUserEmail(this.userMaster).subscribe((res) => {
-      // this.notifier.showSuccess(res);
+      this.showSuccessMessage(res, 'success', true);
       this.updateEmailForm.reset();
       this.modalRef.hide();
       this.timerOn=false;
@@ -155,7 +156,7 @@ export class UpdateEmailComponent implements OnInit {
         this.loader = false
       }, 300)
     }, (error: HttpErrorResponse) => {
-      // this.notifier.showError(error.statusText);
+      this.showWarningMessage(error.statusText, 'error', true);
     });
   }
   resendOtp() {
@@ -172,6 +173,22 @@ export class UpdateEmailComponent implements OnInit {
       }, 300)
     }, (error: HttpErrorResponse) => {
       // this.notifier.showError(error.statusText);
+    });
+  }
+  showSuccessMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
+  showWarningMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
     });
   }
 }

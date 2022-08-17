@@ -1,10 +1,14 @@
 @import '../country-master/country-master.component.scss';
+::ng-deep .cdk-overlay-container {
+  z-index: 100000;
+}
+
 mat-form-field {
-    border: 1px solid #ccc;
-    width: 100%;
-    padding: 8px;
-    display: flex;
-    align-items: center;
-    border-radius: 5px !important;
-    font-size: 12px;
-  }
+  border: 1px solid #ccc;
+  width: 100%;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px !important;
+  font-size: 12px;
+}

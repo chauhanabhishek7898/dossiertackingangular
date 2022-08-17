@@ -23,8 +23,11 @@ import {
 } from '../../../models/city-master';
 import { CityMasterService } from './city-master.service';
 import { StateService } from '../state-master/state.service';
-
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { ActivatedRoute } from '@angular/router';
 // import { NotificationService } from 'src/app/core/services/notification.service';
+
+
 // import { LoaderService } from 'src/app/loader/loader.service';
 
 @Component({
@@ -38,11 +41,12 @@ export class CityMasterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private CityService: CityMasterService,
-    // // private notifier: NotificationService,
+    // private notifier: NotificationService,
+    private route: ActivatedRoute,
     private stateService: StateService,
-    private modalService: BsModalService
-  ) // public loaderService: LoaderService
-  {}
+    private modalService: BsModalService // public loaderService: LoaderService
+  ) {}
+  pageTitle: any;
 
   // variable declarations
   @ViewChild(DataTableDirective)
@@ -65,8 +69,9 @@ export class CityMasterComponent implements OnInit {
   formType: string;
   selectState = null;
   @Input() disabled: boolean = true;
-  InterRelatedCityId
+  InterRelatedCityId;
   ngOnInit(): void {
+    this.pageTitle = this.route.snapshot.queryParams.title;
     this.dtOptions = {
       //destroy: true,
       dom: 'lBfrtip',
@@ -102,17 +107,17 @@ export class CityMasterComponent implements OnInit {
     return this.CityMasterForm.controls;
   }
 
-  InterRelatedCityIds(e){
-    console.log('e',e)
-    if(e.value == 'NA'){
-      this.InterRelatedCityId=null
-    }else{
-      this.InterRelatedCityId=e.value
+  InterRelatedCityIds(e) {
+    console.log('e', e);
+    if (e.value == 'NA') {
+      this.InterRelatedCityId = null;
+    } else {
+      this.InterRelatedCityId = e.value;
     }
   }
+
   cityNameFind;
   onSubmitCityMasterForm(): void {
-    
     if (this.formType == 'Submit') {
       let city = this.CityMasterList.find(
         (e) =>
@@ -125,10 +130,13 @@ export class CityMasterComponent implements OnInit {
         this.loader = true;
         this.cityModel = {
           nStateId: this.CityMasterForm.controls.nStateId.value,
-          nCityId: this.CityMasterForm.controls.nCityId.value == null? 0: this.CityMasterForm.controls.nCityId.value,
+          nCityId:
+            this.CityMasterForm.controls.nCityId.value == null
+              ? 0
+              : this.CityMasterForm.controls.nCityId.value,
           vCityName: this.CityMasterForm.controls.vCityName.value,
           btActive: this.CityMasterForm.controls.btActive.value,
-          nInterRelatedCityId:this.InterRelatedCityId,
+          nInterRelatedCityId: this.InterRelatedCityId,
           // nInterRelatedCityId:this.CityMasterForm.controls.nInterRelatedCityId.value,
           btMainInterRelatedCity:
             this.CityMasterForm.controls.btMainInterRelatedCity.value,
@@ -136,7 +144,7 @@ export class CityMasterComponent implements OnInit {
         this.CityService.saveCity(this.cityModel, this.formType).subscribe(
           (status: string) => {
             if (status) {
-              // this.notifier.showSuccess(status);
+              this.showSuccessMessage(status, 'success', true);
               this.loader = false;
               this.CityMasterForm.reset();
               this.modalRef.hide();
@@ -145,26 +153,31 @@ export class CityMasterComponent implements OnInit {
             }
           },
           (error: HttpErrorResponse) => {
-            alert(error.statusText);
-          }
+            this.showWarningMessage(error.statusText, 'error', true);          }
         );
       }
     } else {
       this.loader = true;
       this.cityModel = {
         nStateId: this.CityMasterForm.controls.nStateId.value,
-        nCityId:this.CityMasterForm.controls.nCityId.value == null? 0: this.CityMasterForm.controls.nCityId.value,
+        nCityId:
+          this.CityMasterForm.controls.nCityId.value == null
+            ? 0
+            : this.CityMasterForm.controls.nCityId.value,
         vCityName: this.CityMasterForm.controls.vCityName.value,
         btActive: this.CityMasterForm.controls.btActive.value,
-        nInterRelatedCityId:this.InterRelatedCityId,
+        nInterRelatedCityId: this.InterRelatedCityId,
         // nInterRelatedCityId:this.CityMasterForm.controls.nInterRelatedCityId.value,
-        btMainInterRelatedCity:this.CityMasterForm.controls.btMainInterRelatedCity.value,
+        btMainInterRelatedCity:
+          this.CityMasterForm.controls.btMainInterRelatedCity.value,
       };
-      console.log("this.cityModel", )
+      console.log('this.cityModel');
       this.CityService.saveCity(this.cityModel, this.formType).subscribe(
         (status: string) => {
           if (status) {
-            alert(status);
+            // alert(status);
+            this.showSuccessMessage(status, 'success', true);
+            // this.notifier.showSuccess(status);
             this.loader = false;
             this.CityMasterForm.reset();
             this.modalRef.hide();
@@ -173,7 +186,9 @@ export class CityMasterComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          alert(error.statusText);
+          // alert(error.statusText);
+          // this.notifier.showError(error.statusText);
+          this.showWarningMessage(error.statusText, 'error', true);
         }
       );
     }
@@ -215,7 +230,7 @@ export class CityMasterComponent implements OnInit {
     this.CityService.getActiveCityList().subscribe(
       (res) => {
         this.CityMasterList = res;
-        console.log("res",res)
+        console.log('res', res);
 
         if (!this.isDtInitialized) {
           this.dtTrigger.next();
@@ -287,14 +302,14 @@ export class CityMasterComponent implements OnInit {
     if (city?.btMainInterRelatedCity == true) {
       this.InterRelatedCity = true;
       this.CityMasterForm.get('nInterRelatedCityId')?.setValue(null);
-    }else{
+    } else {
       this.InterRelatedCity = false;
-      
-     
     }
-    this.CityMasterForm.get('nInterRelatedCityId')?.setValue(city?.nInterRelatedCityId);
-    console.log('city?.nInterRelatedCityId',city?.nInterRelatedCityId)
-    this.InterRelatedCityId=city?.nInterRelatedCityId
+    this.CityMasterForm.get('nInterRelatedCityId')?.setValue(
+      city?.nInterRelatedCityId
+    );
+    console.log('city?.nInterRelatedCityId', city?.nInterRelatedCityId);
+    this.InterRelatedCityId = city?.nInterRelatedCityId;
     this.CityMasterForm.patchValue({
       nStateId: city?.nStateId,
       nCityId: city?.nCityId,
@@ -322,8 +337,22 @@ export class CityMasterComponent implements OnInit {
       this.CityMasterForm.get('nInterRelatedCityId')?.setValue(null);
     } else {
       this.InterRelatedCity = false;
-      
-      
     }
+  }
+  showSuccessMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
+  showWarningMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
   }
 }

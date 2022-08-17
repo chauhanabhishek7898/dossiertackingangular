@@ -2,11 +2,13 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 import { VehicleTypeMaster } from './vehicle-type-master';
 import { VehicleTypeMasterService } from './vehicle-type-master.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-vehicle-type-master',
@@ -19,6 +21,7 @@ export class VehicleTypeMasterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private vehicleTypeMasterService: VehicleTypeMasterService,
     // // private notifier: NotificationService,
+    private route: ActivatedRoute,
     private modalService: BsModalService,
     // public loaderService: LoaderService,
     public breakpointObserver: BreakpointObserver
@@ -44,7 +47,9 @@ export class VehicleTypeMasterComponent implements OnInit {
   loader = false;
 
 
+  pageTitle: any;
   ngOnInit(): void {
+    this.pageTitle = this.route.snapshot.queryParams.title;
 
     this.dtOptions = {
       //destroy: true,
@@ -97,7 +102,7 @@ export class VehicleTypeMasterComponent implements OnInit {
           .subscribe((status: string) => {
             if (status) {
               this.loader=false
-              // this.notifier.showSuccess(status)
+              this.showSuccessMessage(status, 'success', true);
               this.countryMasterForm.reset();
               //  this. resetCountryMasterFormValue()
               this.modalRef.hide();
@@ -107,7 +112,7 @@ export class VehicleTypeMasterComponent implements OnInit {
             } else {
             }
           }, (error: HttpErrorResponse) => {
-            // // this.notifier.showError(error.statusText)
+            this.showWarningMessage(error.statusText, 'error', true);
           });
       }
     }
@@ -123,7 +128,7 @@ export class VehicleTypeMasterComponent implements OnInit {
         .subscribe((status: string) => {
           if (status) {
             this.loader=false
-            // this.notifier.showSuccess(status)
+            this.showSuccessMessage(status, 'success', true);
             this.countryMasterForm.reset();
             //  this. resetCountryMasterFormValue()
             this.modalRef.hide();
@@ -133,7 +138,7 @@ export class VehicleTypeMasterComponent implements OnInit {
           } else {
           }
         }, (error: HttpErrorResponse) => {
-          // // this.notifier.showError(error.statusText)
+          this.showWarningMessage(error.statusText, 'error', true);
         });
     }
   };
@@ -207,6 +212,22 @@ export class VehicleTypeMasterComponent implements OnInit {
       nCountryId: 0,
       vCountryName: null,
       btActive: true
+    });
+  }
+  showSuccessMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
+  showWarningMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
     });
   }
 }

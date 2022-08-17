@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 // import { NotificationService } from 'src/app/core/services/notification.service';
 import { OrgMobnoAndEmailid } from '../../../models/org-mobno-and-emailid';
 import { OrgMobnoAndEmailIdService } from './org-mobno-and-email-id.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-org-mobno-and-email-id',
@@ -86,7 +87,7 @@ export class OrgMobnoAndEmailIdComponent implements OnInit {
           .subscribe((status: string) => {
             if (status) {
               this.loader=false
-              // this.notifier.showSuccess(status)
+              this.showSuccessMessage(status, 'success', true);
               this.orgMobNoAndEmailIdForm.reset();
               this.modalRef.hide();
               this.rerender();
@@ -94,7 +95,7 @@ export class OrgMobnoAndEmailIdComponent implements OnInit {
               this.loader=false
             }
           }, (error: HttpErrorResponse) => {
-            // this.notifier.showError(error.statusText)
+            this.showWarningMessage(error.statusText, 'error', true);
           });
   };
   rerender(): void {
@@ -167,5 +168,20 @@ export class OrgMobnoAndEmailIdComponent implements OnInit {
       vEmailIdCompany: org?.vEmailIdOrg,
     });
     }
-
+    showSuccessMessage(message, icon, showCancelButton = true) {
+      return Swal.fire({
+        // title: title,
+        text: message,
+        icon: icon,
+        showCancelButton: showCancelButton,
+      });
+    }
+    showWarningMessage(message, icon, showCancelButton = true) {
+      return Swal.fire({
+        // title: title,
+        text: message,
+        icon: icon,
+        showCancelButton: showCancelButton,
+      });
+    }
 }

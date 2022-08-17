@@ -13,6 +13,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
@@ -22,6 +23,7 @@ import { VehicleTypeMaster } from '../vehicle-type-master/vehicle-type-master';
 import { VehicleTypeMasterService } from '../vehicle-type-master/vehicle-type-master.service';
 import { KMLimitGet, KMLimitMaster } from './kmlimit-master';
 import { KMLimitMasterService } from './kmlimit-master.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-kmlimit-master',
@@ -34,6 +36,7 @@ export class KMLimitMasterComponent implements OnInit {
     private kmLimitMasterService: KMLimitMasterService,
     // // private notifier: NotificationService,
     private modalService: BsModalService,
+    private route: ActivatedRoute,
     // public loaderService: LoaderService,
     public breakpointObserver: BreakpointObserver,
     private CityService: CityMasterService,
@@ -61,7 +64,10 @@ export class KMLimitMasterComponent implements OnInit {
   @Input() disabled: boolean = true;
   loader = false;
 
+  pageTitle: any;
+  
   ngOnInit(): void {
+    this.pageTitle = this.route.snapshot.queryParams.title;
     this.dtOptions = {
       //destroy: true,
       dom: 'lBfrtip',
@@ -119,7 +125,7 @@ export class KMLimitMasterComponent implements OnInit {
           (status: string) => {
             if (status) {
               this.loader = false;
-              // this.notifier.showSuccess(status)
+              this.showSuccessMessage(status, 'success', true);
               this.countryMasterForm.reset();
               //  this. resetCountryMasterFormValue()
               this.modalRef.hide();
@@ -130,7 +136,7 @@ export class KMLimitMasterComponent implements OnInit {
             }
           },
           (error: HttpErrorResponse) => {
-            // // this.notifier.showError(error.statusText)
+            this.showWarningMessage(error.statusText, 'error', true);
           }
         );
     } else {
@@ -152,7 +158,7 @@ export class KMLimitMasterComponent implements OnInit {
           (status: string) => {
             if (status) {
               this.loader = false;
-              // this.notifier.showSuccess(status)
+              this.showSuccessMessage(status, 'success', true);
               this.countryMasterForm.reset();
               //  this. resetCountryMasterFormValue()
               this.modalRef.hide();
@@ -163,7 +169,7 @@ export class KMLimitMasterComponent implements OnInit {
             }
           },
           (error: HttpErrorResponse) => {
-            // // this.notifier.showError(error.statusText)
+            this.showWarningMessage(error.statusText, 'error', true);
           }
         );
     }
@@ -268,5 +274,21 @@ export class KMLimitMasterComponent implements OnInit {
       nKMLimit: country?.nKMLimit,
       btActive: country?.btActive,
     });
+  }showSuccessMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
   }
+  showWarningMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
+  
 }

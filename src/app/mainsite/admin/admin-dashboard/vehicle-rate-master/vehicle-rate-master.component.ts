@@ -2,6 +2,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
@@ -11,6 +12,7 @@ import { VehicleTypeMaster } from '../vehicle-type-master/vehicle-type-master';
 import { VehicleTypeMasterService } from '../vehicle-type-master/vehicle-type-master.service';
 import { VehicleGet, VehicleRateMaster } from './vehicle-rate-master';
 import { VehicleRateMasterService } from './vehicle-rate-master.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-vehicle-rate-master',
@@ -24,6 +26,7 @@ export class VehicleRateMasterComponent implements OnInit {
     // private notifier: NotificationService,
     private modalService: BsModalService,
     // public loaderService: LoaderService,
+    private route: ActivatedRoute,
     public breakpointObserver: BreakpointObserver,
     private CityService: CityMasterService,
     private vehicleTypeMasterService: VehicleTypeMasterService,
@@ -51,7 +54,9 @@ export class VehicleRateMasterComponent implements OnInit {
   loader = false;
   cityId
 
+  pageTitle: any;
   ngOnInit(): void {
+    this.pageTitle = this.route.snapshot.queryParams.title;
 
     this.dtOptions = {
       //destroy: true,
@@ -73,7 +78,7 @@ export class VehicleRateMasterComponent implements OnInit {
     this.bindvehicleRateMaster(false);
     this.countryMasterForm = this.formBuilder.group({
       nVRId: [0],
-      nVId: [0, [Validators.required]],
+      nVId: ['Bike', [Validators.required]],
       nCityId: [0, [Validators.required]],
       nRatePerKM: [0, [Validators.required]],
       btActive: new FormControl({ value: 'true', disabled: true }),
@@ -103,7 +108,7 @@ export class VehicleRateMasterComponent implements OnInit {
         .subscribe((status: string) => {
           if (status) {
             this.loader=false
-            // this.notifier.showSuccess(status)
+            this.showSuccessMessage(status, 'success', true);
             this.countryMasterForm.reset();
             //  this. resetCountryMasterFormValue()
             this.modalRef.hide();
@@ -113,7 +118,7 @@ export class VehicleRateMasterComponent implements OnInit {
           } else {
           }
         }, (error: HttpErrorResponse) => {
-          // this.notifier.showError(error.statusText)
+          this.showWarningMessage(error.statusText, 'error', true);
         });
     }else{
       this.loader=true
@@ -129,7 +134,7 @@ export class VehicleRateMasterComponent implements OnInit {
         .subscribe((status: string) => {
           if (status) {
             this.loader=false
-            // this.notifier.showSuccess(status)
+            this.showSuccessMessage(status, 'success', true);
             this.countryMasterForm.reset();
             //  this. resetCountryMasterFormValue()
             this.modalRef.hide();
@@ -139,7 +144,7 @@ export class VehicleRateMasterComponent implements OnInit {
           } else {
           }
         }, (error: HttpErrorResponse) => {
-          // this.notifier.showError(error.statusText)
+          this.showWarningMessage(error.statusText, 'error', true);
         });
     }
   }
@@ -242,7 +247,22 @@ export class VehicleRateMasterComponent implements OnInit {
 
     });
   }
-
+  showSuccessMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
+  showWarningMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
   // resetCountryMasterFormValue() {
   //   this.countryMasterForm.patchValue({
   //     nCountryId: 0,
