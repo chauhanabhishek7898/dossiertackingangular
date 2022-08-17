@@ -13,6 +13,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
@@ -28,6 +29,7 @@ import {
   ServiceSubTypeMaster,
 } from './service-sub-type-master';
 import { ServiceSubTypeMasterService } from './service-sub-type-master.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-service-sub-type-master',
@@ -39,6 +41,7 @@ export class ServiceSubTypeMasterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private serviceSubTypeMasterService: ServiceSubTypeMasterService,
     // // private notifier: NotificationService,
+    private route: ActivatedRoute,
     private modalService: BsModalService,
     // public loaderService: LoaderService,
     public breakpointObserver: BreakpointObserver,
@@ -69,7 +72,10 @@ export class ServiceSubTypeMasterComponent implements OnInit {
   @Input() disabled: boolean = true;
   loader = false;
   cityId
+  pageTitle: any;
+  
   ngOnInit(): void {
+    this.pageTitle = this.route.snapshot.queryParams.title;
     this.dtOptions = {
       //destroy: true,
       dom: 'lBfrtip',
@@ -132,7 +138,7 @@ export class ServiceSubTypeMasterComponent implements OnInit {
           (status: string) => {
             if (status) {
               this.loader = false;
-              // this.notifier.showSuccess(status)
+              this.showSuccessMessage(status, 'success', true);
               this.countryMasterForm.reset();
               //  this. resetCountryMasterFormValue()
               this.modalRef.hide();
@@ -143,7 +149,7 @@ export class ServiceSubTypeMasterComponent implements OnInit {
             }
           },
           (error: HttpErrorResponse) => {
-            // // this.notifier.showError(error.statusText)
+            this.showWarningMessage(error.statusText, 'error', true);
           }
         );
     } else {
@@ -166,7 +172,7 @@ export class ServiceSubTypeMasterComponent implements OnInit {
           (status: string) => {
             if (status) {
               this.loader = false;
-              // this.notifier.showSuccess(status)
+              this.showSuccessMessage(status, 'success', true);
               this.countryMasterForm.reset();
               //  this. resetCountryMasterFormValue()
               this.modalRef.hide();
@@ -177,7 +183,7 @@ export class ServiceSubTypeMasterComponent implements OnInit {
             }
           },
           (error: HttpErrorResponse) => {
-            // // this.notifier.showError(error.statusText)
+            this.showWarningMessage(error.statusText, 'error', true);
           }
         );
     }
@@ -298,6 +304,22 @@ export class ServiceSubTypeMasterComponent implements OnInit {
       nFromKM: country?.nFromKM,
       nSTId: country?.nSTId,
       btActive: country?.btActive,
+    });
+  }
+  showSuccessMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
+  showWarningMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
     });
   }
 }

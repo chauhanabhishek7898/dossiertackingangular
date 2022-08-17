@@ -10,6 +10,7 @@ import { StorageService } from 'src/app/core/services/storage.service';
 import { CustomerMaster, CustomerMasterList } from 'src/app/mainsite/models/CustomerMaster';
 import { environment } from 'src/environments/environment';
 import { CustomerDetailsMasterService } from './customer-details-master.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-customer-details-admin',
@@ -87,5 +88,20 @@ export class CustomerDetailsAdminComponent implements OnInit {
       // this.notifier.showError(error.statusText);
     });
   }
-
+  showSuccessMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
+  showWarningMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
 }

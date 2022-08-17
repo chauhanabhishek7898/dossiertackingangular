@@ -9,6 +9,7 @@ import { StorageService } from 'src/app/core/services/storage.service';
 import { UserSettingService } from 'src/app/core/services/user.setting.service';
 import { UserValidationService } from 'src/app/core/services/user.validation.service';
 import { UserMaster } from '../../../../models/user';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 
 @Component({
@@ -149,7 +150,7 @@ export class UpdateMobileNoComponent implements OnInit {
     this.userMaster.nUserId = parseInt(this.storageService.userId!!);
     this.userMaster.vMobileNo = mobileNumber;
     this.userSettingService.updateUserMobile(this.userMaster).subscribe((res) => {
-      // this.notifier.showSuccess(res);
+      this.showSuccessMessage(res, 'success', true);
       this.updateMobileForm.reset();
       this.modalRef.hide();
       this.timerOn=false;
@@ -157,7 +158,7 @@ export class UpdateMobileNoComponent implements OnInit {
         this.loader = false
       }, 300)
     }, (error: HttpErrorResponse) => {
-      // this.notifier.showError(error.statusText);
+      this.showWarningMessage(error.statusText, 'error', true);
     });
   }
   resendOtp() {
@@ -174,6 +175,22 @@ export class UpdateMobileNoComponent implements OnInit {
       }, 300)
     }, (error: HttpErrorResponse) => {
       // this.notifier.showError(error.statusText);
+    });
+  }
+  showSuccessMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
+  showWarningMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
     });
   }
 }

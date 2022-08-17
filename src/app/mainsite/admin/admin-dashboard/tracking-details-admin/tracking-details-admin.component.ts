@@ -11,6 +11,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { TrackingDetailsAdminService } from './tracking-details-admin.service';
 import { TrackingDetailsMaster } from 'src/app/mainsite/models/tracking-details-master';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-tracking-details-admin',
@@ -146,6 +147,22 @@ rerender(): void {
   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
     dtInstance.destroy();
     this.bindCreditsUsageReportList(true);
+  });
+}
+showSuccessMessage(message, icon, showCancelButton = true) {
+  return Swal.fire({
+    // title: title,
+    text: message,
+    icon: icon,
+    showCancelButton: showCancelButton,
+  });
+}
+showWarningMessage(message, icon, showCancelButton = true) {
+  return Swal.fire({
+    // title: title,
+    text: message,
+    icon: icon,
+    showCancelButton: showCancelButton,
   });
 }
 }

@@ -15,6 +15,7 @@ import {
 } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
@@ -27,6 +28,7 @@ import { CountryService } from '../country-master/country-services';
 import { StateService } from './state.service';
 // import { NotificationService } from 'src/app/core/services/notification.service';
 // import { LoaderService } from 'src/app/loader/loader.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-state-master',
@@ -43,6 +45,7 @@ export class StateMasterComponent implements OnInit {
     private countryService: CountryService,
     // private notifier: NotificationService,
     // public loaderService: LoaderService,
+    private route: ActivatedRoute,
     private modalService: BsModalService
   ) {}
 
@@ -65,7 +68,9 @@ export class StateMasterComponent implements OnInit {
   modalRef: BsModalRef;
   loader = false;
   @Input() disabled: boolean = true;
+  pageTitle: any;
   ngOnInit(): void {
+    this.pageTitle = this.route.snapshot.queryParams.title;
     this.dtOptions = {
       //destroy: true,
       dom: 'lBfrtip',
@@ -121,7 +126,7 @@ export class StateMasterComponent implements OnInit {
           (status: string) => {
             if (status) {
               this.loader=false
-              // this.notifier.showSuccess(status)
+              this.showSuccessMessage(status, 'success', true);
               this.stateMasterForm.reset();
               this.modalRef.hide();
               this.rerender();
@@ -129,7 +134,7 @@ export class StateMasterComponent implements OnInit {
             }
           },
           (error: HttpErrorResponse) => {
-            // // this.notifier.showError(error.statusText)
+            this.showWarningMessage(error.statusText, 'error', true);
           }
         );
       }
@@ -150,7 +155,7 @@ export class StateMasterComponent implements OnInit {
         (status: string) => {
           if (status) {
             this.loader=false
-            // this.notifier.showSuccess(status)
+            this.showSuccessMessage(status, 'success', true);
             this.stateMasterForm.reset();
             this.modalRef.hide();
             this.rerender();
@@ -158,7 +163,7 @@ export class StateMasterComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          // // this.notifier.showError(error.statusText)
+          this.showWarningMessage(error.statusText, 'error', true);
         }
       );
     }
@@ -260,6 +265,22 @@ export class StateMasterComponent implements OnInit {
       nStateId: 0,
       vStateName: null,
       btActive: true,
+    });
+  }
+  showSuccessMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
+  showWarningMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
     });
   }
 }
