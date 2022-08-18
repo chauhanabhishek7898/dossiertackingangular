@@ -52,6 +52,7 @@ import {
 import { default as _rollupMoment } from 'moment';
 import { DatePipe } from '@angular/common';
 const moment = _rollupMoment || _moment;
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 export const MY_FORMATS = {
   parse: {
     dateInput: 'DD-MM-YYYY',
@@ -1024,12 +1025,7 @@ export class DriverSignupComponent implements OnInit {
           (status: any) => {
             if (status) {
               console.log('status', status);
-              // this.apiStatus = `Your ${status[0].vEType} Establishment Registration - ${status[0].vEstablishmentName}, with Drome is Successfully done, with Reg. Code: ${status[0].vEId}. Also, you have successfully registered with Drome for ${status[0].RoleType} login, with Member Code: ${status[0].MemberCode}. Though, Approval awaited from APP Administrator.`;
-              // this.notifier.showSuccess(this.apiStatus);
-              // this.success = true;
-              // this.redirectAfterClose= 'login';
-              // this.parentChildCommunicationService.emitChange({ redirectAfterClose:this.redirectAfterClose });
-              // this.resetSelectedData();
+              this.showSuccessMessage(status, 'success', true);
               this.driverSignupForm.reset();
               setTimeout(() => {
                 this.btnLoader = false;
@@ -1042,6 +1038,21 @@ export class DriverSignupComponent implements OnInit {
         );
     }
   }
-
+showSuccessMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
+  showWarningMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
   //  submit  end  //
 }

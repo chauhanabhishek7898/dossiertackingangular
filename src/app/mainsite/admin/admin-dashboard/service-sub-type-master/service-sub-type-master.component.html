@@ -30,13 +30,19 @@
                         
                         <div class="input-group"  >
                             <label for="">Service Type <span style="color: red;">*</span></label>
-                            <select class="form-select" aria-label="Default select example"
+                            <!-- <select class="form-select" aria-label="Default select example"
                                 formControlName="nSTId">
                                 <option value="{{item.nSTId}}" *ngFor="let item of countryList">
                                     {{item.vServiceType}}</option>
-                                <!-- <option value="null" >None of these</option> -->
-                            </select>
-                           
+                                <option value="null" >None of these</option>
+                            </select> -->
+                            <mat-form-field appearance="fill">
+                                <mat-select  formControlName="nSTId" placeholder="Service Type" name="item">
+                                    <mat-option [value]="item.nSTId" *ngFor="let item of countryList">
+                                        {{item.vServiceType}}</mat-option>
+                                    <!-- <mat-option value='NA'>NA</mat-option>     -->
+                                </mat-select>
+                            </mat-form-field>
                         </div>
                         <div class="input-group"  >
                             <label for="">City <span style="color: red;">*</span></label>
@@ -46,8 +52,8 @@
                                     {{item.vCityName}}</option>
                                 <option value="null" >None of these</option>
                             </select> -->
-                            <mat-form-field>
-                                <mat-select formControlName="nCityId" [(ngModel)]="cityId" name="item">
+                            <mat-form-field appearance="fill">
+                                <mat-select formControlName="nCityId" placeholder="Select City" [(ngModel)]="cityId" name="item">
                                     <mat-option [value]="item.nCityId" *ngFor="let item of CityMasterList">
                                         {{item.vCityName}}</mat-option>
                                     <!-- <mat-option value='NA'>NA</mat-option>     -->
@@ -56,12 +62,18 @@
                         </div>
                         <div class="input-group"  >
                             <label for="">Vehicle Type <span style="color: red;">*</span></label>
-                            <select class="form-select" aria-label="Default select example"
+                            <!-- <select class="form-select" aria-label="Default select example"
                                 formControlName="nVId">
                                 <option value="{{item.nVId}}" *ngFor="let item of vehicleTypeMaster">
                                     {{item.vVehicleType}}</option>
-                            </select>
-                           
+                            </select> -->
+                            <mat-form-field appearance="fill">
+                                <mat-select formControlName="nVId" placeholder="Vehicle Type"  name="item">
+                                    <mat-option [value]="item.nVId" *ngFor="let item of vehicleTypeMaster">
+                                        {{item.vVehicleType}}</mat-option>
+                                    <!-- <mat-option value='NA'>NA</mat-option>     -->
+                                </mat-select>
+                            </mat-form-field>
                         </div>
                         
                         <div class="input-group">

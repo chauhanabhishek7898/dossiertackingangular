@@ -52,6 +52,7 @@ import {
 } from '../../models/CustomerMaster';
 import { parseDateToString } from '../../shared-function/sharedFunction';
 const moment = _rollupMoment || _moment;
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 export const MY_FORMATS = {
   parse: {
     dateInput: 'DD-MM-YYYY',
@@ -307,7 +308,9 @@ export class CustomerSignupComponent implements OnInit {
       this.customerSignupService.PostCreateUserCustomer(this.CustomerMasterClass).subscribe((status: any) => {
             // this.apiStatus = `Congratulations, User has been created successfully with member Code:  ${status[0].MemberCode}. You may further use it to login in the APP.
             // Though, it has to be approved by the APP Administrator before logging in. Thanks, for your kind patience.`;
+            
             if (status) {
+              this.showSuccessMessage('Login Created Successfully. Please use mobile APP to access the application', 'success', true);
               this.customerSignupForm.reset();
               this.file=null!
             }
@@ -316,12 +319,7 @@ export class CustomerSignupComponent implements OnInit {
             }, 300);
           },
           (error: HttpErrorResponse) => {
-            console.log('error', error);
-            // this.apiError = error.statusText
-            // this.error = true
-            // setTimeout(() => {
-            //   this.error = false
-            // }, 3000)
+            this.showWarningMessage(error.statusText, 'error', true);
           }
         );
       }else{
@@ -633,5 +631,21 @@ export class CustomerSignupComponent implements OnInit {
   }
   resendOtpToEmail() {
     this.sendOtpToEmail();
+  }
+  showSuccessMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
+  showWarningMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
   }
 }

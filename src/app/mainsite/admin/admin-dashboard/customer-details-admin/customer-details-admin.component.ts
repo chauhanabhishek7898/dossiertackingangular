@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 // import { NotificationService } from 'src/app/core/service/notification.service';
 import { StorageService } from 'src/app/core/services/storage.service';
@@ -41,6 +41,7 @@ export class CustomerDetailsAdminComponent implements OnInit {
     // private notifier: NotificationService,
     private storageService: StorageService,
     private route: ActivatedRoute,
+    private modalService: BsModalService,
     ) { }
 
   ngOnInit(): void {
@@ -102,6 +103,61 @@ export class CustomerDetailsAdminComponent implements OnInit {
       text: message,
       icon: icon,
       showCancelButton: showCancelButton,
+    });
+  }
+  conformaitonmodalRef: BsModalRef;
+  conformationConfig: ModalOptions = {
+    animated: true,
+    backdrop: 'static',
+    class: 'modal-dialog-centered modal-md',
+  };
+  UserId
+  btActive
+  openConformaitionModel(template: TemplateRef<any>, nUserId,btActive) {
+    this.conformaitonmodalRef = this.modalService.show(
+      template,
+      this.conformationConfig
+    );
+    this.btActive=btActive
+    this.UserId = nUserId;
+  }
+  modelCencelBtn() {
+    this.conformaitonmodalRef.hide();
+  }
+  ActivateUserDetail(): void {
+    // this.loader = true;
+    let user = {
+      nUserId: this.UserId,
+    };
+    this.patientDetailService.ActivateRevokeRightsOfCustomer(user).subscribe(
+      (status: string) => {
+        if (status) {
+          this.showSuccessMessage(status, 'success', true);
+          this.conformaitonmodalRef.hide();
+          setTimeout(() => {
+            this.rerender();
+          }, 100);
+          setTimeout(() => {
+            this.loader = false;
+          }, 300);
+        } else {
+          //  this.notifier.showError('faild');
+          setTimeout(() => {
+            this.loader = false;
+          }, 300);
+        }
+      },
+      (error: HttpErrorResponse) => {
+        this.showWarningMessage(error.statusText, 'error', true);
+      }
+    );
+  }
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+
+      dtInstance.destroy();
+      this.bindPatientDetailService(true);
     });
   }
 }

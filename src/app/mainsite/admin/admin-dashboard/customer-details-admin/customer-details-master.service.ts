@@ -9,9 +9,12 @@ import { environment } from 'src/environments/environment';
 export class CustomerDetailsMasterService {
   constructor(private http: HttpClient) {}
   apiUrl = environment.dossiarApiUrl;
-  GetCustomerMasterByUserId(nUserId): Observable<any> {
+  GetCustomerMasterByUserId(vGeneric): Observable<any> {
     return this.http.get<any>(
-      `${this.apiUrl}/CustomerMaster/GetCustomerMasterByUserId/${nUserId}`
+      `${this.apiUrl}/CustomerMaster/GetCustomerDetailsForAdmin/${vGeneric}`
     );
+  }
+  ActivateRevokeRightsOfCustomer(updateActivateUserMaster: object): Observable<any> {
+    return this.http.put(`${this.apiUrl}/CustomerMaster/ActivateRevokeRightsOfCustomer`, updateActivateUserMaster);
   }
 }

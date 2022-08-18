@@ -15,15 +15,18 @@
         <thead>
             <tr>
                 <th class="no-sort" style="background-image: none !important;">#</th>
+                <th class="no-sort" style="background-image: none !important;">Active & Inactive</th> 
                 <th class="no-sort" style="background-image: none !important;">Customer Id</th> 
                 <th class="no-sort" style="background-image: none !important;">Full Name</th>
                 <th class="no-sort" style="background-image: none !important;">Mobile No.</th>
+                <th class="no-sort" style="background-image: none !important;">Password</th>
                 <th class="no-sort" style="background-image: none !important;">Email Id</th>
                 <th class="no-sort" style="background-image: none !important;">Gender</th>
                 <th class="no-sort" style="background-image: none !important;">DOB</th>
                
                 <th class="no-sort" style="background-image: none !important;">Address</th>
                 <th class="no-sort" style="background-image: none !important;">City Detail</th>
+                <th class="no-sort" style="background-image: none !important;">Flat No</th>
                
                 <th class="no-sort" style="background-image: none !important;">Aadhaar No.</th>
                 <th class="no-sort" style="background-image: none !important;">Aadhaar File</th>
@@ -35,15 +38,21 @@
         <tbody>
             <tr *ngFor="let items of PatientDetailList; let i = index ">
                 <td>{{i+1}}</td>
+                <td>
+                    <button class="activate-user" style="background-color: green;" (click)="openConformaitionModel(templateApproveConformationModel, items.nUserId,items.btActive)" *ngIf="!items.btActive" >Active</button>
+                    <button class="activate-user" style="background-color: red;" (click)="openConformaitionModel(templateApproveConformationModel,items.nUserId,items.btActive)" *ngIf="items.btActive">Inactive</button>
+                </td>
                 <td>{{items.vCId}}</td>
                 <td>{{items.vFullName}}</td>
                 <td>{{items.vMobileNo}}</td>
+                <td>{{items.vPasswordDec}}</td>
                 <td>{{items.vEmailId}}</td>
                 <td>{{items.vGender}}</td>
-                <td>{{items.dtDOB}}</td>
+                <td>{{items.DOB}}</td>
               
                 <td>{{items.vAddress}}</td>
-                <td>{{items.vCityName}}</td>
+                <td>{{items.CityDetails}}</td>
+                <td>{{items.vFlatNoPlotNoLaneBuilding}}</td>
                 
                 <td>{{items.vAadhaarNo}}</td>
                 <td><a [href]="imageUrl + '/'+ items.vAadhaarNoFilePath"
@@ -54,3 +63,23 @@
         </tbody>
     </table>
 </div>
+<ng-template #templateApproveConformationModel>
+    <div class="country-edit-model">
+        <div class="model-header">
+            <h1 mat-dialog-title>ALERT !!</h1>
+            <button type="button" class="close-btn pull-right" aria-label="Close" (click)="conformaitonmodalRef.hide()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <mat-divider></mat-divider>
+    </div>
+    <div mat-dialog-content>
+        <p class="confirm-text" style="text-align: center;" *ngIf="!btActive" >Do you want to Active this User ??</p>
+        <p class="confirm-text" style="text-align: center;" *ngIf="btActive">Do you want to Inactive this User ??</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="confirm-btn mt-3">
+        <button (click)="ActivateUserDetail()" type="button">Ok</button>
+        <button (click)="modelCencelBtn()" type="button">Cancel</button>
+    </div>
+</ng-template>
