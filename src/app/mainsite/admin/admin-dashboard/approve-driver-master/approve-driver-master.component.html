@@ -38,7 +38,7 @@
         <thead>
             <tr>
                 <th class="no-sort" style="background-image: none !important;">#</th>
-                <th class="no-sort" style="background-image: none !important;">Activate </th>
+                <th class="no-sort" style="background-image: none !important;">Approve </th>
 
                 <th class="no-sort" style="background-image: none !important;">Driver Id</th>
                 <th class="no-sort" style="background-image: none !important;">Registration Date </th>
@@ -73,7 +73,7 @@
             <tr *ngFor="let items of userDetailList; let i = index ">
                 <td>{{i+1}}</td>
                 <td>
-                    <button class="activate-user" (click)="openConformaitionModel(templateApproveConformationModel, items.nDriverId)">Activate</button>
+                    <button class="activate-user" (click)="openConformaitionModel(templateApproveConformationModel, items.nUserId)">Approve</button>
                     <!-- <button class="activate-user" (click)="openConformaitionModel(templateApproveConformationModel,{nUserId : items.nDriverId})">Inactive</button> -->
                 </td>
                 <td>{{items.vDriverId}}</td>
@@ -135,7 +135,7 @@
         <mat-divider></mat-divider>
     </div>
     <div mat-dialog-content>
-        <p class="confirm-text" style="text-align: center;">Do you want to Activate this User ??</p>
+        <p class="confirm-text" style="text-align: center;">Do you want to Approve this Driver ??</p>
     </div>
     <mat-divider></mat-divider>
     <div class="confirm-btn mt-3">

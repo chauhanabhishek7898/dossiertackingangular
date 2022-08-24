@@ -37,11 +37,7 @@
 </div>
 
 <ng-template #templateCountryMaster>
-    <div class="loader" *ngIf="loader">
-        <div class="loading">
-            <img src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
-        </div>
-    </div>
+    
     <div class="country-edit-model">
         <div class="model-header">
             <h1 mat-dialog-title>{{ModalTitle}}</h1>
@@ -54,7 +50,7 @@
             <div class="country-form">
                 <div class="send-otp">
                     <div class="otp-alrt">We have sent you an OTP on</div>
-                    <div>{{mobNumber}}</div>
+                    <div class="number" >{{mobNumber}}</div>
                     <div class="input-group ">
                         <label for="">Enter OTP</label>
                         <input appAutofocus (keyup)="onKeyUpEvent($event)" type="number" class="form-control" placeholder="Please enter 4 digits OTP here to verify" aria-label="Username" aria-describedby="basic-addon1">

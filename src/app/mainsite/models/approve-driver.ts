@@ -45,5 +45,6 @@ export class ApproveDriverMasterList{
     vPassword: String;
     vEmailId: String;
     btPromotion: String;
-    btIsActive: boolean
+    btIsActive: boolean;
+    nUserId:number
 }

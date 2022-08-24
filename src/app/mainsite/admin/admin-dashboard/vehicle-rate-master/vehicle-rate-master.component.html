@@ -36,7 +36,7 @@
                                     {{item.vCityName}}</option>
                                 <option value="null" >None of these</option>
                             </select> -->
-                            <mat-form-field>
+                            <mat-form-field appearance="fill">
                                 <mat-select formControlName="nCityId" placeholder="Select City" [(ngModel)]="cityId" name="item">
                                     <mat-option [value]="item.nCityId" *ngFor="let item of CityMasterList">
                                         {{item.vCityName}}</mat-option>
@@ -46,7 +46,7 @@
                         </div>
                         <div class="input-group">
                             <label for="">Vehicle Type <span style="color: red;">*</span></label>
-                            <mat-form-field>
+                            <mat-form-field appearance="fill">
                                 <mat-select formControlName="nVId" placeholder="Vehicle Type"  >
                                     <mat-option [value]="item.nVId" *ngFor="let item of vehicleTypeMaster">
                                         {{item.vVehicleType}}</mat-option>

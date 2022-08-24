@@ -16,26 +16,23 @@ export class CustomerMaster {
   vLat: string;
   vLong: string;
   vFlatNoPlotNoLaneBuilding: string;
-  vCityName:string
+  vCityName: string
 }
 export class CustomerMasterList {
-  nCId: number;
-  vCId:string;
-  vGender: string;
-  dtDOB: string;
-  vAadhaarNo: string;
-  vAadhaarNoFilePath: string;
-  vFullName: string;
-  vMobileNo: string;
-  vPassword: string;
-  vEmailId: string;
-  btPromotion: any;
-  nCityId: number | null;
-  vAddress: string;
-  vLat: string;
-  vLong: string;
-  vFlatNoPlotNoLaneBuilding: string;
-  vCityName:string
+  btActive: boolean
+  nUserId: number
+  vCId: string
+  vFullName: string
+  vMobileNo: string
+  vPasswordDec: string
+  vEmailId: string
+  vGender: string
+  DOB: string
+  vAadhaarNo: string
+  vAadhaarNoFilePath: string
+  vFlatNoPlotNoLaneBuilding: string
+  vAddress: string
+  CityDetails: string
 }
 
 export class CustomerMasterClass {

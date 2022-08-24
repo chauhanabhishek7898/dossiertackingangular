@@ -1,3 +1,9 @@
+import { CustomerDetailsMasterService } from './../customer-details-admin/customer-details-master.service';
+import {
+  AdminSignupMaster,
+  RootUserSave,
+} from './../../../models/admin-signup-master';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {
   Component,
   ElementRef,
@@ -10,85 +16,48 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  SelectControlValueAccessor,
   Validators,
 } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { OtpSender } from 'src/app/core/services/otp.sender.service';
+import { StorageService } from 'src/app/core/services/storage.service';
+import { UserSettingService } from 'src/app/core/services/user.setting.service';
+import { UserValidationService } from 'src/app/core/services/user.validation.service';
+import { UserMaster } from 'src/app/mainsite/models/user';
+import Swal from 'sweetalert2';
+import { AdminSignupMasterService } from './admin-signup-master.service';
+import { CustomerSignupService } from 'src/app/mainsite/SignUp/customer-signup/customer-signup.service';
 import { LoginService } from 'src/app/mainsite/Login/login.service';
-import * as _moment from 'moment';
-import {
-  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-  MAT_MOMENT_DATE_FORMATS,
-  MomentDateAdapter,
-} from '@angular/material-moment-adapter';
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from '@angular/material/core';
-import { default as _rollupMoment } from 'moment';
-import { DatePipe } from '@angular/common';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { CityMasterList } from '../../models/city-master';
-import { CitymasterService } from 'src/app/services/citymaster.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { CityMasterList } from 'src/app/mainsite/models/city-master';
+import { environment } from 'src/environments/environment';
 import {
   debounceTime,
-  map,
-  startWith,
-  switchMap,
-  tap,
-  finalize,
   distinctUntilChanged,
   filter,
+  finalize,
+  switchMap,
+  tap,
 } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
-import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
-// import { NotificationService } from 'src/app/core/service/notification.service';
-import { CustomerSignupService } from './customer-signup.service';
 import {
   CustomerMaster,
   CustomerMasterClass,
-} from '../../models/CustomerMaster';
-import { parseDateToString } from '../../shared-function/sharedFunction';
-const moment = _rollupMoment || _moment;
-import Swal from 'sweetalert2/dist/sweetalert2.js';
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'DD-MM-YYYY',
-  },
-  display: {
-    dateInput: 'DD-MM-YYYY',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
+} from 'src/app/mainsite/models/CustomerMaster';
+
 @Component({
-  selector: 'app-customer-signup',
-  templateUrl: './customer-signup.component.html',
-  styleUrls: ['./customer-signup.component.scss'],
-  providers: [
-    DatePipe,
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE],
-    },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-  ],
+  selector: 'app-admin-signup-master',
+  templateUrl: './admin-signup-master.component.html',
+  styleUrls: ['./admin-signup-master.component.scss'],
 })
-export class CustomerSignupComponent implements OnInit {
-  // @Input()
-  // options: Object;
-  formattedaddress = " ";
+export class AdminSignupMasterComponent implements OnInit {
+  formattedaddress = ' ';
   @Input()
-  options: any =
-    {
-      componentRestrictions: { country: ["in"] },
-      fields: ["address_components", "geometry","formatted_address"],
-      //types: ["address"],
-    }
+  options: any = {
+    componentRestrictions: { country: ['in'] },
+    fields: ['address_components', 'geometry', 'formatted_address'],
+    //types: ["address"],
+  };
   maxDate = new Date();
   customerSignupForm: FormGroup;
   errorMsg!: string;
@@ -102,16 +71,21 @@ export class CustomerSignupComponent implements OnInit {
   Unavailable: boolean = false;
   @Input()
   maxlength: string | number | null;
+  loader = false;
+  pageTitle: any;
+
   constructor(
     private loginService: LoginService,
     private formBuilder: FormBuilder,
     private router: Router,
     private sanitizer: DomSanitizer,
     private customerSignupService: CustomerSignupService,
+    private adminSignupMasterService: AdminSignupMasterService,
+    private route: ActivatedRoute,
     private http: HttpClient,
     // private notifier: NotificationService,
     private modalService: BsModalService
-  ) { }
+  ) {}
   //  city dropdown end here  //
   // selectedCity: any = { CityDetailsState: "Gurgaon - Haryana" };
   selectedCity: any = { CityStateDetails: '' };
@@ -120,42 +94,44 @@ export class CustomerSignupComponent implements OnInit {
   cityId: any = null;
   cityMasterList: CityMasterList[] = [];
   isLoading = false;
-  addressLat
-  addressLong
-  cityName
-  cityservice=false
-  cityServiceResult
+  addressLat;
+  addressLong;
+  cityName;
+  cityservice = false;
+  cityServiceResult;
   AddressChange(address: any) {
     //setting address from API to local variable
-    console.log(address)
-    this.formattedaddress = address.formatted_address
-    console.log('this.formattedaddress',this.formattedaddress)
-    this.addressLat = address.geometry.location.lat()
-    this.addressLong = address.geometry.location.lng()
-    address.address_components.forEach(element => {
-      console.log(element)
+    console.log(address);
+    this.formattedaddress = address.formatted_address;
+    console.log('this.formattedaddress', this.formattedaddress);
+    this.addressLat = address.geometry.location.lat();
+    this.addressLong = address.geometry.location.lng();
+    address.address_components.forEach((element) => {
+      console.log(element);
       let componentType = element.types[0];
-      if (componentType == "locality") {
+      if (componentType == 'locality') {
         // alert(element.long_name);
-        this.customerSignupForm.get('nCityId')?.setValue(element.long_name)
-        this.cityName= element.long_name
-        this.cityNameCheck(element.long_name)
+        this.customerSignupForm.get('nCityId')?.setValue(element.long_name);
+        this.cityName = element.long_name;
+        this.cityNameCheck(element.long_name);
         return;
       }
     });
   }
-  cityNameCheck(cityName){
-    this.customerSignupService.GetCityIdAgainstCityName(cityName).subscribe((res)=>{
-      console.log('res', res)
-      if(typeof res == "string"){
-        this.cityservice= true
-        this.cityServiceResult=res
-      }else{
-        this.cityservice= false
-        this.cityServiceResult=''
-        this.cityId=res[0].nCityId
-      }
-    })
+  cityNameCheck(cityName) {
+    this.customerSignupService
+      .GetCityIdAgainstCityName(cityName)
+      .subscribe((res) => {
+        console.log('res', res);
+        if (typeof res == 'string') {
+          this.cityservice = true;
+          this.cityServiceResult = res;
+        } else {
+          this.cityservice = false;
+          this.cityServiceResult = '';
+          this.cityId = res[0].nCityId;
+        }
+      });
   }
   onSelected() {
     this.selectedCity = this.selectedCity;
@@ -174,6 +150,7 @@ export class CustomerSignupComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    this.pageTitle = this.route.snapshot.queryParams.title;
     this.searchCityCtrl.valueChanges
       .pipe(
         filter((res) => {
@@ -210,130 +187,81 @@ export class CustomerSignupComponent implements OnInit {
       });
     this.customerSignupForm = this.formBuilder.group(
       {
-        nCId: [0],
-        vCId: [null],
         vFullName: [null, [Validators.required]],
         vMobileNo: [null, [Validators.required]],
-        vEmailId: [null,],
+        // vEmailId: [null,],
         vPassword: [null, [Validators.required]],
         vConfirmPassword: [null, [Validators.required]],
-        dtDOB: [null],
-        btPromotion: [false],
-        nCityId: [null],
-        vAddress: [null, [Validators.required]],
-        vGender: [null, [Validators.required]],
-        vAadhaarNo: [null],
-        vAadhaarNoFilePath: [null], // one file (adhar file)  //
-        vFlatNoPlotNoLaneBuilding: [null, [Validators.required]],
-        dTermCondition: [null, [Validators.required]],
       },
       {
         validator: this.ConfirmedValidator('vPassword', 'vConfirmPassword'),
       }
     );
   }
-  addCustomerUserModel: CustomerMaster;
-  listCustomer: CustomerMaster[] = [];
-  CustomerMasterClass: CustomerMasterClass;
+
   //  signup customer  //
   errorMobileTxt = false;
   errorEmailTxt = false;
   errorCityTxt = false;
-  addressError=false
+  addressError = false;
+  addSignupMasterModel: AdminSignupMaster;
+  listCustomer: AdminSignupMaster[] = [];
+  CustomerMasterClass: RootUserSave;
+
   submitCustomerSignup() {
-    let dob;
-    if (this.customerSignupForm.controls.dtDOB.value != null) {
-      if (typeof this.customerSignupForm.controls.dtDOB.value == 'object') {
-        let dobDate = this.customerSignupForm.controls.dtDOB.value._d;
-        let month = dobDate.getMonth() + 1;
-        dob = dobDate.getFullYear() + '-' + month + '-' + dobDate.getDate();
-      } else {
-        dob = this.customerSignupForm.controls.dtDOB.value;
-      }
-    }
-    let emailId = this.customerSignupForm.controls.vEmailId.value
-    if (this.mobileDisable == false) {
-      if (this.mobileDisable == false) {
-        this.Unavailable = false;
-        this.available = false;
-        this.errorMobileTxt = true;
-      }
-      if (this.emailDisable == false && emailId) {
-        this.errorEmailTxt = true;
-      }
-    } else {
-      if(this.addressLat || this.addressLong){
-      this.btnLoader = true;
-      this.listCustomer = [];
-
-      let docUploadId;
-      let fp;
-      let fz;
-      let fn;
-      docUploadId = 0;
-      fp = '';
-      fz = 0;
-      fn = '';
-
-      if (this.file) {
-        this.fileSize = (this.file.size / 1024) as number;
-      }
-
-      this.addCustomerUserModel = {
-        nCId: 0,
-        // vCId: this.customerSignupForm.controls.vCId.value,
-        // nUserId: 0,
-        vGender: this.customerSignupForm.controls.vGender.value,
-        dtDOB: dob,
-        vAadhaarNo: this.customerSignupForm.controls.vAadhaarNo.value,
-        vAadhaarNoFilePath: '',
+    if (this.verifiedMobileText == true) {
+      this.loader = true;
+      this.addSignupMasterModel = {
         vFullName: this.customerSignupForm.controls.vFullName.value,
         vMobileNo: this.customerSignupForm.controls.vMobileNo.value,
         vPassword: this.customerSignupForm.controls.vPassword.value,
-        vEmailId: this.customerSignupForm.controls.vEmailId.value,
-        btPromotion: false,
-        nCityId:  this.cityId,
-        vAddress: this.formattedaddress,
-        vFlatNoPlotNoLaneBuilding: this.customerSignupForm.controls.vFlatNoPlotNoLaneBuilding.value,
-        vLat: this.addressLat,
-        vLong: this.addressLong,
-        vCityName:this.cityName
       };
 
-      this.listCustomer.push(this.addCustomerUserModel);
-      //   CustomerMasterClass
+      this.listCustomer.push(this.addSignupMasterModel);
       this.CustomerMasterClass = {
-        CustomerMaster: this.listCustomer,
+        UserMaster: this.listCustomer,
       };
-      this.customerSignupService.PostCreateUserCustomer(this.CustomerMasterClass).subscribe((status: any) => {
+
+      console.log('this.CustomerMasterClass', this.CustomerMasterClass);
+      this.adminSignupMasterService
+        .PostCreateAdmin(this.addSignupMasterModel)
+        .subscribe(
+          (status: any) => {
             // this.apiStatus = `Congratulations, User has been created successfully with member Code:  ${status[0].MemberCode}. You may further use it to login in the APP.
             // Though, it has to be approved by the APP Administrator before logging in. Thanks, for your kind patience.`;
-            
+
             if (status) {
-              this.showSuccessMessage('Login Created Successfully. Please use mobile APP to access the application', 'success', true);
+              this.showSuccessMessage(
+                'Login Created Successfully.',
+                'success',
+                true
+              );
               this.customerSignupForm.reset();
-              this.file=null!
             }
             setTimeout(() => {
-              this.btnLoader = false;
+              this.loader = false;
             }, 300);
           },
           (error: HttpErrorResponse) => {
             this.showWarningMessage(error.statusText, 'error', true);
           }
         );
-      }else{
-        this.addressError=true
-      }
+    } else {
+      this.showWarningMessage(
+        'Please Verify your Mobile number before Signup.',
+        'error',
+        true
+      );
     }
   }
 
   //  signup customer  //
-  mobileNo: string;
 
+  mobileNo: string;
   otpVerify = false;
   emailOtpVerify = false;
   @ViewChild('searchInput') searchInput: ElementRef;
+
   ConfirmedValidator(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];
@@ -351,6 +279,7 @@ export class CustomerSignupComponent implements OnInit {
       }
     };
   }
+
   onUserNameKeyUpEvent(event: any) {
     this.available = false;
     this.Unavailable = false;
@@ -360,8 +289,11 @@ export class CustomerSignupComponent implements OnInit {
       this.available = false;
       this.otpVerify = false;
     }
+    if (event.target.value.length < 10) {
+      this.otpVerify = false;
+    }
     if (!!event.target.value) {
-      if (this.mobileNo.length > 9) {
+      if (event.target.value.length > 9) {
         this.loginService
           .checkExistsMobileNo(this.mobileNo)
           .subscribe((res) => {
@@ -375,14 +307,12 @@ export class CustomerSignupComponent implements OnInit {
               this.Unavailable = true;
             }
           });
-      } else {
-        this.otpVerify = false;
-        this.errorMobileTxt = false;
-        this.Unavailable = true;
       }
     }
   }
+
   timers;
+
   emailvalidate(event: any) {
     clearTimeout(this.timers);
     let validate = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
@@ -394,8 +324,10 @@ export class CustomerSignupComponent implements OnInit {
       }
     }, 500);
   }
+
   pass3: string = 'password';
   eye3: boolean = false;
+
   eyeIconPasswordSignInCustomer(type) {
     if (type == 'hide') {
       this.pass3 = 'text';
@@ -406,8 +338,10 @@ export class CustomerSignupComponent implements OnInit {
       this.eye3 = false;
     }
   }
+
   pass4: string = 'password';
   eye4: boolean = false;
+
   eyeIconConfirmPasswordSignInCustomer(type) {
     if (type == 'hide') {
       this.pass4 = 'text';
@@ -418,9 +352,11 @@ export class CustomerSignupComponent implements OnInit {
       this.eye4 = false;
     }
   }
+
   isOtpLogin: boolean = false;
   passwordHide: boolean = false;
   termConditionTxt = false;
+
   onCheckboxChange(e) {
     if (e.target.checked) {
       this.termConditionTxt = true;
@@ -428,9 +364,11 @@ export class CustomerSignupComponent implements OnInit {
       this.termConditionTxt = false;
     }
   }
+
   opentermConditionComponent() {
     this.router.navigate(['/termsandcondition']);
   }
+
   // upload adhar sample code //
   file: File;
   files: any;
@@ -480,6 +418,7 @@ export class CustomerSignupComponent implements OnInit {
       // event.target.value = null;
     }
   }
+
   OTPModalTitle: string;
   OTPmodalRef: BsModalRef;
   mobileNoOtp = false;
@@ -490,7 +429,8 @@ export class CustomerSignupComponent implements OnInit {
     backdrop: 'static',
     class: 'modal-dialog-centered modal-md',
   };
-  verifiedMobileText = false
+  verifiedMobileText = false;
+
   onKeyUpEventForMobile(event: any) {
     if (event.target.value.length == 4) {
       if (this.otp == event.target.value) {
@@ -500,7 +440,6 @@ export class CustomerSignupComponent implements OnInit {
         this.otpVerify = false;
         this.verifiedMobileText = true;
         // this.mobileVerified = true;
-
       } else {
         // this.notifier.showError('OTP not matched');
         this.mobileDisable = false;
@@ -508,7 +447,8 @@ export class CustomerSignupComponent implements OnInit {
       }
     }
   }
-  verifiedEmailText = false
+
+  verifiedEmailText = false;
   onKeyUpEventForEmail(event: any) {
     if (event.target.value.length == 4) {
       if (this.otp == event.target.value) {
@@ -525,6 +465,7 @@ export class CustomerSignupComponent implements OnInit {
       }
     }
   }
+
   userMobileNo;
   isOtp: boolean = false;
   otpBtnDisable: boolean = false;
@@ -544,6 +485,7 @@ export class CustomerSignupComponent implements OnInit {
       this.otpVerify = false;
     }
   }
+
   sendOtpEmailModel(template: TemplateRef<any>) {
     this.timerOn = false;
     this.userEmail = this.customerSignupForm.controls.vEmailId.value;
@@ -553,7 +495,9 @@ export class CustomerSignupComponent implements OnInit {
       this.emailOtpVerify = false;
     }
   }
+
   sendOtpToMobile() {
+    this.loader = true;
     this.available = false;
     this.userMobileNo = this.customerSignupForm.controls.vMobileNo.value;
     this.userEmail = '';
@@ -569,7 +513,7 @@ export class CustomerSignupComponent implements OnInit {
             this.resendOtpBtnDisabled = true;
             this.timerOn = true;
             this.timer(60);
-            this.btnLoader = false;
+            this.loader = false;
           }
         },
         (error: HttpErrorResponse) => {
@@ -579,7 +523,7 @@ export class CustomerSignupComponent implements OnInit {
   }
   userEmail;
   sendOtpToEmail() {
-    this.btnLoader = true;
+    this.loader = true;
     this.available = false;
     this.userEmail = this.customerSignupForm.controls.vEmailId.value;
     this.userMobileNo = '';
@@ -595,7 +539,7 @@ export class CustomerSignupComponent implements OnInit {
             this.resendOtpBtnDisabled = true;
             this.timerOn = true;
             this.timer(60);
-            this.btnLoader = false;
+            this.loader = false;
           }
         },
         (error: HttpErrorResponse) => {
@@ -603,6 +547,7 @@ export class CustomerSignupComponent implements OnInit {
         }
       );
   }
+
   timer(remaining: number) {
     let m = Math.floor(remaining / 60);
     let s = remaining % 60;
@@ -626,12 +571,15 @@ export class CustomerSignupComponent implements OnInit {
     // Do timeout stuff here
     //alert('Timeout for otp');
   }
+
   resendOtpToMobile() {
     this.sendOtpToMobile();
   }
+
   resendOtpToEmail() {
     this.sendOtpToEmail();
   }
+
   showSuccessMessage(message, icon, showCancelButton = true) {
     return Swal.fire({
       // title: title,
@@ -640,6 +588,7 @@ export class CustomerSignupComponent implements OnInit {
       showCancelButton: showCancelButton,
     });
   }
+
   showWarningMessage(message, icon, showCancelButton = true) {
     return Swal.fire({
       // title: title,

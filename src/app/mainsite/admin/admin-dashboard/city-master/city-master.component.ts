@@ -272,7 +272,7 @@ export class CityMasterComponent implements OnInit {
 
     this.ModalTitle = 'Add City';
     this.formType = 'Submit';
-    this.InterRelatedCity = true;
+    this.InterRelatedCity = false;
     this.CityMasterForm.get('btActive')?.setValue(true);
     this.CityMasterForm.get('btActive')?.disable();
     this.GetMainInterrelatedCities();

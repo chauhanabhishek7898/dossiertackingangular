@@ -188,9 +188,9 @@ export class CountryMasterComponent implements OnInit {
     this.formType = "Submit"
     this.countryMasterForm.get('btActive')?.disable();
     this.countryMasterForm.get('btActive')?.setValue(true);
-    // this.modalRef.onHide.subscribe(() => {
-    //   this.countryMasterForm.reset();
-    // });
+    this.modalRef.onHide.subscribe(() => {
+      this.countryMasterForm.reset();
+    });
   }
 
   editClick(template: TemplateRef<any>, countryId: number) {
@@ -203,9 +203,9 @@ export class CountryMasterComponent implements OnInit {
     this.ModalTitle = "Edit Country ";
     this.formType = "Update";
     this.editCountryRowItem(countryId);
-    // this.modalRef.onHide.subscribe(() => {
-    //   this.countryMasterForm.reset();
-    // });
+    this.modalRef.onHide.subscribe(() => {
+      this.countryMasterForm.reset();
+    });
   }
   editCountryRowItem(countryId: number) {
     let country = this.countryList.find(e => e.nCountryId == countryId);
