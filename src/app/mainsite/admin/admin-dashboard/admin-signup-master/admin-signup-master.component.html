@@ -1,0 +1,159 @@
+<div class="medical-record">
+    <div class="loader" *ngIf="loader">
+        <div class="center-loader">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+    <div class="family-head">
+        <span>{{pageTitle}}</span>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="right-form">
+
+        <form [formGroup]="customerSignupForm">
+
+            <div class="flex">
+                <div class="ma-input-50_percent">
+                    <mat-form-field style="width: 100%;" appearance="outline">
+                        <mat-label>Full Name <span style="color: red;">*</span></mat-label>
+                        <input formControlName="vFullName" matInput placeholder="Enter Full Name" type="text">
+                    </mat-form-field>
+                </div>
+
+                <div class="ma-input-50_percent">
+                    <mat-form-field style="width: 100%;" appearance="outline">
+                        <mat-label>Mobile Number <span style="color: red;">*</span></mat-label>
+                        <input (keyup)="onUserNameKeyUpEvent($event)" #searchInput matInput formControlName="vMobileNo"
+                            placeholder="Enter Mobile Number" maxlength="10" type="text" [readonly]="mobileDisable">
+                    </mat-form-field>
+                    <div class="available-true" style="color: green;font-size: 12px;margin-top: -20px;" *ngIf="available">
+                        <span>Mobile number is available.</span>
+                    </div>
+                    <div class="available-true" style="color: red;font-size: 12px;margin-top: -20px;" *ngIf="Unavailable">
+                        <span>Mobile number already exists.</span>
+                    </div>
+                    <div class="available-true" style="color: red;font-size: 12px;margin-top: -20px;" *ngIf="errorMobileTxt">
+                        <span>Please verify Mobile number.</span>
+                    </div>
+                    <div class="available-true" style="color: green;font-size: 12px;margin-top: -20px;" *ngIf="verifiedMobileText">
+                        <span>Mobile number verified.</span>
+                    </div>
+                    <span class="checkIcon-otp" *ngIf="verifiedMobileText">
+                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em"
+                            preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                            <path fill="green" fill-rule="evenodd"
+                                d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11s11-4.925 11-11S18.075 1 12 1Zm4.768 9.14a1 1 0 1 0-1.536-1.28l-4.3 5.159l-2.225-2.226a1 1 0 0 0-1.414 1.414l3 3a1 1 0 0 0 1.475-.067l5-6Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                    <span class="otp_send" *ngIf="otpVerify">
+                        <button (click)="sendOtpMobileModel(templateOTPForm)">Send OTP</button>
+                    </span>
+                </div>
+
+                <div class="ma-input-50_percent">
+                    <mat-form-field style="width: 100%;" appearance="outline">
+                        <mat-label>Password <span style="color: red;">*</span></mat-label>
+                        <input formControlName="vPassword" style="width: 80%;" matInput placeholder="Enter Password"
+                            type="{{pass3}}">
+                        <mat-icon (click)="eyeIconPasswordSignInCustomer('show')" *ngIf="eye3" matSuffix>
+                            visibility
+                        </mat-icon>
+                        <mat-icon (click)="eyeIconPasswordSignInCustomer('hide')" *ngIf="!eye3" matSuffix>
+                            visibility_off
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="ma-input-50_percent">
+                    <mat-form-field style="width: 100%;" appearance="outline">
+                        <mat-label>Confirm Password <span style="color: red;">*</span></mat-label>
+                        <input formControlName="vConfirmPassword" style="width: 80%;" matInput
+                            placeholder="Enter Confirm Password" type="{{pass4}}">
+                        <mat-icon (click)="eyeIconConfirmPasswordSignInCustomer('show')" *ngIf="eye4" matSuffix>
+                            visibility
+                        </mat-icon>
+                        <mat-icon (click)="eyeIconConfirmPasswordSignInCustomer('hide')" *ngIf="!eye4" matSuffix>
+                            visibility_off
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="forgot">
+                <div class="form-check">
+                    <input id='dTermCondition' formControlName="dTermCondition" class="form-check-input" type="checkbox"
+                        value="" id="flexCheckDefault2" (change)="onCheckboxChange($event)">
+                    <label class="form-check-label" for="">
+                        By signing up, i agree to <a routerLink="/termsandcondition" target="_blank"
+                            style="color: blue;border-bottom: 1px solid blue;cursor: pointer;">terms and
+                            conditions.</a>
+                    </label>
+
+                </div>
+                <!-- <div class="termAndCondition" *ngIf="termConditionTxt">
+                            Please agree terms and conditions
+                        </div> -->
+            </div>
+
+            <div class="submit">
+                <div class="log-in-btn" *ngIf="termConditionTxt">
+                    <button class="enable-btn-gray" (click)="submitCustomerSignup()"
+                        [disabled]="customerSignupForm.invalid " type="button">
+                        Signup
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<ng-template #templateOTPForm>
+    <form>
+        <div class="country-edit-model">
+            <div class="model-header">
+                <h1 mat-dialog-title>{{OTPModalTitle}}</h1>
+                <button type="button" class="close-btn pull-right" aria-label="Close" (click)="OTPmodalRef.hide()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <div mat-dialog-content>
+                <div class="country-form">
+                    <div class="send-otp">
+                        <div class="otp-alrt">We have sent you an OTP on</div>
+                        <div class="number" *ngIf="userMobileNo!=''">{{userMobileNo}}</div>
+                        <div class="number" *ngIf="userEmail!=''">{{userEmail}}</div>
+                        <div class="input-group " *ngIf="userMobileNo!=''">
+                            <input appAutofocus (keyup)="onKeyUpEventForMobile($event)" type="number~"
+                                class="form-control" placeholder="Please enter 4 digits OTP here to verify"
+                                aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group " *ngIf="userEmail!=''">
+                            <input appAutofocus (keyup)="onKeyUpEventForEmail($event)" type="number~"
+                                class="form-control" placeholder="Please enter 4 digits OTP here to verify"
+                                aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                        <span class="counter">{{countDownTimer}}</span>
+                        <div class="resend-otp" *ngIf="userMobileNo!=''">
+                            <span>Still not received OTP?</span>
+                            <button (click)="resendOtpToMobile()" [disabled]="resendOtpBtnDisabled" type="button"
+                                class="resend">Resend OTP</button>
+                        </div>
+                        <div class="resend-otp" *ngIf="userEmail!=''">
+                            <span>Still not received OTP?</span>
+                            <button (click)="resendOtpToEmail()" [disabled]="resendOtpBtnDisabled" type="button"
+                                class="resend">Resend OTP</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-template>

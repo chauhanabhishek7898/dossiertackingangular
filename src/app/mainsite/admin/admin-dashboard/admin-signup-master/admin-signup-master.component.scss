@@ -1,0 +1,24 @@
+@import '../../../SignUp//customer-signup//customer-signup.component.scss';
+.mat-divider {
+    margin-top: 2px;
+    margin-bottom: 12px;
+}
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.ma-input-50_percent{
+    width: 48%;
+}
+.otp_send {
+    position: absolute;
+    right: 25px;
+    top: 52px;
+}
+.checkIcon-otp {
+    position: absolute;
+    top: 40px;
+    right: 20px;
+}

@@ -44,6 +44,8 @@ import { KMLimitMasterComponent } from './admin-dashboard/kmlimit-master/kmlimit
 import { ServiceTypeMasterComponent } from './admin-dashboard/service-type-master/service-type-master.component';
 import { ServiceSubTypeMasterComponent } from './admin-dashboard/service-sub-type-master/service-sub-type-master.component';
 import { OtherRolesProfileComponent } from './admin-dashboard/other-roles-profile/other-roles-profile.component';
+import { CustomersSavedAddressesMasterComponent } from './admin-dashboard/customers-saved-addresses-master/customers-saved-addresses-master.component';
+import { AdminSignupMasterComponent } from './admin-dashboard/admin-signup-master/admin-signup-master.component';
 
 
 
@@ -67,7 +69,9 @@ import { OtherRolesProfileComponent } from './admin-dashboard/other-roles-profil
     KMLimitMasterComponent,
     ServiceTypeMasterComponent,
     ServiceSubTypeMasterComponent,
-    OtherRolesProfileComponent
+    OtherRolesProfileComponent,
+    CustomersSavedAddressesMasterComponent,
+    AdminSignupMasterComponent
   ],
   imports: [
     CommonModule,
