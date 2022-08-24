@@ -1,3 +1,5 @@
+import { CustomersSavedAddressesMasterComponent } from './admin-dashboard/customers-saved-addresses-master/customers-saved-addresses-master.component';
+import { AdminSignupMasterComponent } from './admin-dashboard/admin-signup-master/admin-signup-master.component';
 import { CustomerDetailsAdminComponent } from './admin-dashboard/customer-details-admin/customer-details-admin.component';
 import { DriverDetailsAdminComponent } from './admin-dashboard/driver-details-admin/driver-details-admin.component';
 import { ApproveDriverMasterComponent } from './admin-dashboard/approve-driver-master/approve-driver-master.component';
@@ -20,17 +22,61 @@ import { ServiceTypeMasterComponent } from './admin-dashboard/service-type-maste
 import { WaitTimeChargesComponent } from './admin-dashboard/wait-time-charges/wait-time-charges.component';
 
 const routes: Routes = [
-  { path: 'city', component: CityMasterComponent },
-  { path: 'country', component: CountryMasterComponent },
-  { path: 'state', component: StateMasterComponent },
-  { path: 'update-password', component: ChangePasswordComponent },
-  { path: 'update-mobile-no', component: UpdateMobileNoComponent },
-  { path: 'update-email-id', component: UpdateEmailComponent },
-  { path: 'orgmobileemail', component: OrgMobnoAndEmailIdComponent },
-  { path: 'approvedrivers', component: ApproveDriverMasterComponent },
-  { path: 'driverdetailsadmin', component: DriverDetailsAdminComponent },
-  { path: 'customerdetailsadmin', component: CustomerDetailsAdminComponent },
-  { path: 'trackingdetailsadmin', component: TrackingDetailsAdminComponent },
+  {
+    path: 'city',
+    component: CityMasterComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'country',
+    component: CountryMasterComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'state',
+    component: StateMasterComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'update-password',
+    component: ChangePasswordComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'update-mobile-no',
+    component: UpdateMobileNoComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'update-email-id',
+    component: UpdateEmailComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'orgmobileemail',
+    component: OrgMobnoAndEmailIdComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'approvedrivers',
+    component: ApproveDriverMasterComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'driverdetailsadmin',
+    component: DriverDetailsAdminComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'customerdetailsadmin',
+    component: CustomerDetailsAdminComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'trackingdetailsadmin',
+    component: TrackingDetailsAdminComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'vehicletypemaster',
     component: VehicleTypeMasterComponent,
@@ -59,6 +105,16 @@ const routes: Routes = [
   {
     path: 'servicesubtypemaster',
     component: ServiceSubTypeMasterComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'adminsignup',
+    component: AdminSignupMasterComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'customerssavedaddresses',
+    component: CustomersSavedAddressesMasterComponent,
     canActivate: [AuthGuard],
   },
 ];

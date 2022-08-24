@@ -1,0 +1,52 @@
+<div class="medical-record">
+    <div class="loader" *ngIf="loader">
+        <div class="center-loader">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+    <div class="family-head">
+        <span>{{pageTitle}}</span>
+    </div>
+    <mat-divider></mat-divider>
+    <form [formGroup]="getFindMemberForm">
+        <div class="input-box">
+            <div class="input-group input-group-3 custom-select ">
+            </div>
+            <div class="input-group input-group-1 mb-2">
+                <input type="text" formControlName="txtSearch" placeholder="Search..." />
+                <input (click)="searchLeave()" value="Search" type="button" />
+
+            </div>
+        </div>
+    </form>
+    <div class="new-table">
+        <table datatable class="ui celled table table-striped dt-responsive nowrap " style="width:100%" [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+            <thead>
+                <tr>
+                    <th class="no-sort" style="background-image: none !important;">#</th>
+                    <th class="no-sort" style="background-image: none !important;">Customer Id</th>
+                    <th class="no-sort" style="background-image: none !important;">Full Name</th>
+                    <th class="no-sort" style="background-image: none !important;">Mobile No.</th>
+                    <th class="no-sort" style="background-image: none !important;">Email Id</th>
+                    <th class="no-sort" style="background-image: none !important;">Flat No.</th>
+                    <th class="no-sort" style="background-image: none !important;">Address</th>
+                    <th class="no-sort" style="background-image: none !important;">City</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let items of findMemberDetails; let i = index ">
+                    <td>{{i+1}}</td>
+                    <td>{{items.vCId}}</td>
+                    <td>{{items.vFullName}}</td>
+                    <td>{{items.vMobileNo}}</td>
+                    <td>{{items.vEmailId}}</td>
+                    <td>{{items.vFlatNoPlotNoLaneBuilding}}</td>
+                    <td>{{items.vAddress}}</td>
+                    <td>{{items.CityDetails}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
