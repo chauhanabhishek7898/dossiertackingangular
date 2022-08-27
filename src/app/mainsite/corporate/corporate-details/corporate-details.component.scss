@@ -1,0 +1,26 @@
+@import '../../SignUp/DriverSignup/driver-signup/driver-signup.component.scss';
+.dynamicchange {
+    position: absolute;
+    font-size: 10px !important;
+    margin-top: -26px;
+    background-color: #fff;
+}
+.log-in-btn {
+    width: auto ;
+    justify-content: flex-start ;
+    .enable-btn-gray{
+        width: auto ;
+        padding: 8px 40px;
+        font-size: 14px;
+    }
+}
+.mat-form-field{
+    font-size: 12px;
+}
+.ma-input-image-adhar-driver{
+    height: 45px;
+    padding: 15px 10px;
+    a{
+        font-size: 12px;
+    }
+}

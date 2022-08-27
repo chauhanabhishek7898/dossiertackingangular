@@ -97,11 +97,15 @@ export class ApproveDriverMasterComponent implements OnInit {
     this.rerender();
   }
   bindUserDetailService(isReInitilized) {
+    let genric = this.myNoteForm.controls.txtSearch.value
+    if(genric==''){
+      genric=null
+    }
     this.loader = true;
     if (isReInitilized) {
       this.isDtInitialized = false;
     }
-    this.userDetailService.getUserList(null).subscribe(
+    this.userDetailService.getUserList(genric).subscribe(
       (res) => {
         console.log('res', res);
         this.userDetailList = res;

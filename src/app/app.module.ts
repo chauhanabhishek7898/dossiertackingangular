@@ -38,6 +38,7 @@ import { AdminDashboardComponent } from './mainsite/admin/admin-dashboard/admin-
 import { PageFilterPipe } from './core/pipe/page-filter';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { DataTablesModule } from 'angular-datatables';
+import { CorporateSignupComponent } from './mainsite/corporate/signup/corporate-signup/corporate-signup.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,7 @@ import { DataTablesModule } from 'angular-datatables';
     AdminDashboardComponent,
     AdminLoginComponent,
     PageFilterPipe,
-  
+    CorporateSignupComponent
   ],
   imports: [
     GooglePlaceModule,
@@ -86,6 +87,7 @@ import { DataTablesModule } from 'angular-datatables';
       // NotificationService,
       PageFilterPipe
     ],
+
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   bootstrap: [AppComponent],

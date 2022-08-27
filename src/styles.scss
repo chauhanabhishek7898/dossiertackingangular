@@ -22,7 +22,7 @@ a {
 
 /* Importing Datepicker SCSS file. */
 @import "~ngx-bootstrap/datepicker/bs-datepicker";
-
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 html,
 body {
@@ -152,8 +152,10 @@ input[type=number] {
 }
 .invalid-tooltip {
   color: red;
-  background-color: #fff;
-  font-size: 12px;
+  background-color: transparent;
+  font-size: 9px;
+  left: -9px;
+  margin-top: -4px;
 }
 // mat-form-field {
 //   border: 1px solid #ccc;
@@ -172,4 +174,12 @@ input[type=number] {
 }
 .country-model{
   padding: 0 !important;
+}
+.input-group{
+  margin-bottom:10px;
+}
+
+.invalid-tooltip-2{
+    margin-top: 6px !important;
+    left: -15px !important;
 }

@@ -206,7 +206,7 @@ h1 {
     z-index: 0;
 
     button {
-        background: #31b0a4;
+        background: #258ec4;
         color: #fff;
         font-size: 12px;
         font-weight: 500;
@@ -316,7 +316,7 @@ h1 {
 .country-table {
     margin: 20px 0;
     .table {
-        border: 0.5px solid #31b0a4;
+        border: 0.5px solid #258ec4;
 
         tr {
             font-size: 12px;
@@ -324,7 +324,7 @@ h1 {
                 padding: 10px 15px;
                 text-align: center;
                 border-bottom: none;
-                background: #31b0a4;
+                background: #258ec4;
                 color: #fff;
                 font-size: 12px;
 
@@ -388,7 +388,7 @@ h1 {
         background-color: transparent !important;
 
         .mat-form-field-infix {
-            padding: 0 !important;
+            padding: 0;
             border-top: 0 !important;
 
             mat-select {

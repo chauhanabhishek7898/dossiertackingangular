@@ -53,6 +53,8 @@ import { default as _rollupMoment } from 'moment';
 import { DatePipe } from '@angular/common';
 const moment = _rollupMoment || _moment;
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { VehicleTypeMaster } from 'src/app/mainsite/admin/admin-dashboard/vehicle-type-master/vehicle-type-master';
+import { VehicleTypeMasterService } from 'src/app/mainsite/admin/admin-dashboard/vehicle-type-master/vehicle-type-master.service';
 export const MY_FORMATS = {
   parse: {
     dateInput: 'DD-MM-YYYY',
@@ -90,6 +92,7 @@ export class DriverSignupComponent implements OnInit {
     private driverSignupService: DriverSignupService,
     private http: HttpClient,
     private customerSignupService: CustomerSignupService,
+    private vehicleTypeMasterService: VehicleTypeMasterService,
     // private notifier: NotificationService
   ) {}
   driverSignupForm: FormGroup;
@@ -203,6 +206,7 @@ export class DriverSignupComponent implements OnInit {
         validator: this.ConfirmedValidator('vPassword', 'vConfirmPassword'),
       }
     );
+    this.VehicleTypeMaster_SelectAll()
   }
   ConfirmedValidator(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
@@ -220,6 +224,7 @@ export class DriverSignupComponent implements OnInit {
         matchingControl.setErrors(null);
       }
     };
+  
   }
   get createdriverSignupFormControls(): any {
     return this.driverSignupForm.controls;
@@ -579,7 +584,19 @@ export class DriverSignupComponent implements OnInit {
     }
   }
   //  fourth, fifth, sixth file driver code end  //
-
+  vehicleTypeMaster:VehicleTypeMaster[]=[]
+  VehicleTypeMaster_SelectAll() {
+    this.AllCity = [];
+    this.vehicleTypeMasterService.VehicleTypeMaster_SelectAll().subscribe(
+      (res) => {
+        this.vehicleTypeMaster=res
+        // this.loaderService.isLoading.next(false);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.statusText);
+      }
+    );
+  }
   //  city dropdown start here  //
   AllCity: CityMasterList[] = [];
   noMatchFound: boolean = false;

@@ -17,7 +17,11 @@ export class IsSignedInGuard implements CanActivate {
             if (this.storageService.roleId == "1") {
                 this.router.navigate(['/ad/country'], {
                 });
-              } 
+              } else if (this.storageService.roleId == "4") {
+                //dr/pending-consultations
+                this.router.navigate(['/cp/manageaddresses'], {
+                });
+              }
               else {
                 this.router.navigate(['/ad/country'], {
                 });

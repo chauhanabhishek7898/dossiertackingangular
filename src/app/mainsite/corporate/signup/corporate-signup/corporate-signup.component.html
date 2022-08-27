@@ -1,0 +1,538 @@
+<div class="container-xl">
+    
+    <div class="form-box">
+        <div class="signup-head">
+            <h2>Corporate Signup</h2>
+        </div>
+        <form [formGroup]="driverSignupForm" action="">
+        
+            <div>
+        
+                <div class="date-and-mob">
+                    <!--    full name(S)    -->
+                    <div class="ma-input-24">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Corporate Name <span style="color: red;">*</span></mat-label>
+                            <input formControlName="vEstablishmentName" matInput  type="text"
+                                [ngClass]="{'is-invalid' : createdriverSignupFormControls.vEstablishmentName.invalid && (createdriverSignupFormControls.vEstablishmentName.dirty || createdriverSignupFormControls.vEstablishmentName.touched)}">
+                            <div class="invalid-tooltip"
+                                *ngIf="createdriverSignupFormControls.vEstablishmentName.invalid && (createdriverSignupFormControls.vEstablishmentName.dirty || createdriverSignupFormControls.vEstablishmentName.touched)">
+                                Please enter Corporate Name *
+                            </div>
+                        </mat-form-field>
+                    </div>
+                    <div class="ma-input-24">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Contact Person Owner <span style="color: red;">*</span></mat-label>
+                            <input formControlName="vContactPersonOwner" matInput type="text"
+                                [ngClass]="{'is-invalid' : createdriverSignupFormControls.vContactPersonOwner.invalid && (createdriverSignupFormControls.vContactPersonOwner.dirty || createdriverSignupFormControls.vContactPersonOwner.touched)}">
+                            <div class="invalid-tooltip"
+                                *ngIf="createdriverSignupFormControls.vContactPersonOwner.invalid && (createdriverSignupFormControls.vContactPersonOwner.dirty || createdriverSignupFormControls.vContactPersonOwner.touched)">
+                                Please enter Contact Person Owner *
+                            </div>
+                        </mat-form-field>
+                    </div>
+                    <!--    full name(E)    -->
+        
+                    <!--    dob driver(S)    -->
+                    <!-- <div class="ma-input-24">
+                        <mat-form-field appearance="outline">
+                            <mat-label>DOB <span style="color: red;">*</span></mat-label>
+                            <input formControlName="dtDOB" mask="d0-M0-0000" [max]="maxDate" matInput [matDatepicker]="picker1"
+                                placeholder="Enter DOB">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1 color="primary"></mat-datepicker>
+                        </mat-form-field>
+                    </div> -->
+                    <!--    dob driver(E)    -->
+        
+                    <!-- <div class="ma-input-24">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Gender <span style="color: red;">*</span></mat-label>
+                            <mat-select formControlName="vGender">
+                                <mat-option [ngValue]="null" [disabled]="true">Select Gender</mat-option>
+                                <mat-option value="Male">Male</mat-option>
+                                <mat-option value="Female">Female</mat-option>
+                                <mat-option value="Others">Others</mat-option>
+                                <mat-option value="Prefer not to say">Prefer not to say</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+        
+                    <div class="ma-input-24">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Designation <span style="color: red;">*</span></mat-label>
+                            <input formControlName="vCPDesignation" matInput type="text"
+                                [ngClass]="{'is-invalid' : createdriverSignupFormControls.vCPDesignation.invalid && (createdriverSignupFormControls.vCPDesignation.dirty || createdriverSignupFormControls.vCPDesignation.touched)}">
+                            <div class="invalid-tooltip"
+                                *ngIf="createdriverSignupFormControls.vCPDesignation.invalid && (createdriverSignupFormControls.vCPDesignation.dirty || createdriverSignupFormControls.vCPDesignation.touched)">
+                                Please enter Designation. *
+                            </div>
+                        </mat-form-field>
+                    </div>
+                    <div class="ma-input-24">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Corporate Mobile Number <span style="color: red;">*</span></mat-label>
+                            <input (keyup)="onUserNameKeyUpEvent($event)" #searchInput maxlength="10" matInput formControlName="vCPMobileNo"
+                                 type="number" [readonly]="mobileDisable"
+                                [ngClass]="{'is-invalid' : createdriverSignupFormControls.vCPMobileNo.invalid && (createdriverSignupFormControls.vCPMobileNo.dirty || createdriverSignupFormControls.vCPMobileNo.touched)}">
+                                <div class="invalid-tooltip"
+                                *ngIf="createdriverSignupFormControls.vCPMobileNo.invalid && (createdriverSignupFormControls.vCPMobileNo.dirty || createdriverSignupFormControls.vCPMobileNo.touched)">
+                                Please enter Corporate Mobile No. *
+                            </div>
+                            </mat-form-field>
+                        <div class="available" *ngIf="available">
+                            <span>Mobile number is available.</span>
+                        </div>
+                        <div class="available" style="color: red;" *ngIf="Unavailable">
+                            <span>Mobile number is already exist.</span>
+                        </div>
+                        <div class="available" style="color: red;" *ngIf="errorMobileTxt">verifiedEmailText
+                            <span>Please verify Mobile number.</span>
+                        </div>
+                        <div class="available" style="color: green;" *ngIf="verifiedMobileText">
+                            <span>Mobile number verified.</span>
+                        </div>
+                        <span class="checkIcon" *ngIf="verifiedMobileText">
+                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em"
+                                preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                <path fill="green" fill-rule="evenodd"
+                                    d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11s11-4.925 11-11S18.075 1 12 1Zm4.768 9.14a1 1 0 1 0-1.536-1.28l-4.3 5.159l-2.225-2.226a1 1 0 0 0-1.414 1.414l3 3a1 1 0 0 0 1.475-.067l5-6Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                        <span class="otp_send" *ngIf="otpVerify">
+                            <button (click)="sendOtpMobileModel(templateOTPForm)">Send OTP</button>
+                        </span>
+                    </div>
+                    <div class="ma-input-24 " >
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Corporate Email Id <span style="color: red;">*</span></mat-label>
+                            <input formControlName="vCPEmailId" matInput  type="text"
+                                (keyup)="emailvalidate($event)" [readonly]="emailDisable"
+                                [ngClass]="{'is-invalid' : createdriverSignupFormControls.vCPEmailId.invalid && (createdriverSignupFormControls.vCPEmailId.dirty || createdriverSignupFormControls.vCPEmailId.touched)}">
+                                <div class="invalid-tooltip"
+                                *ngIf="createdriverSignupFormControls.vCPEmailId.invalid && (createdriverSignupFormControls.vCPEmailId.dirty || createdriverSignupFormControls.vCPEmailId.touched)">
+                                Please enter Corporate Mobile No. *
+                            </div>
+                        </mat-form-field>
+                        <div class="available" style="color: red;" *ngIf="errorEmailTxt">
+                            <span>Please verify Email.</span>
+                        </div>
+                        <div class="available" style="color: green;" *ngIf="verifiedEmailText">
+                            <span>Email verified.</span>
+                        </div>
+                        <span class="checkIcon" *ngIf="verifiedEmailText">
+                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em"
+                                preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                <path fill="green" fill-rule="evenodd"
+                                    d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11s11-4.925 11-11S18.075 1 12 1Zm4.768 9.14a1 1 0 1 0-1.536-1.28l-4.3 5.159l-2.225-2.226a1 1 0 0 0-1.414 1.414l3 3a1 1 0 0 0 1.475-.067l5-6Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                        <span class="otp_send" *ngIf="emailOtpVerify">
+                            <button (click)="sendOtpEmailModel(templateOTPForm)">Send OTP</button>
+                        </span>
+                    </div>
+                   
+                    <div class="ma-input-33" style="width: 40.2%;">
+        
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Select City <span style="color: red;">*</span></mat-label>
+                            <input id="txtcitySearch" matInput [(ngModel)]="selectedCity" [matAutocomplete]="auto"
+                                [formControl]="searchCityCtrl" (keyup)="clearSelection($event)">
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelected()"
+                                [displayWith]="displayWith">
+                                <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+                                <mat-option *ngIf="!isLoading && cityMasterList.length==0" class="is-loading">Record not found
+                                </mat-option>
+                                <ng-container *ngIf="!isLoading">
+                                    <mat-option *ngFor="let city of cityMasterList" [value]="city">
+                                        <span>{{city.CityStateDetails}}</span>
+                                    </mat-option>
+                                </ng-container>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                        <div class="available" style="color: red;" *ngIf="errorCityTxt">
+                            <span>Please Select City.</span>
+                        </div>
+                    </div>
+                    <div class="ma-input-24" style="width: 44%;">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Address <span style="color: red;">*</span></mat-label>
+                            <input formControlName="vAddress" style="width: 80%;" matInput
+                                [ngClass]="{'is-invalid' : createdriverSignupFormControls.vAddress.invalid && (createdriverSignupFormControls.vAddress.dirty || createdriverSignupFormControls.vAddress.touched)}">
+                            <div class="invalid-tooltip"
+                                *ngIf="createdriverSignupFormControls.vAddress.invalid && (createdriverSignupFormControls.vAddress.dirty || createdriverSignupFormControls.vAddress.touched)">
+                                Please enter Address*
+                            </div>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="ma-input-image-adhar-driver">
+                        <mat-label [ngClass]="{'dynamicchange': ifSelect1}"
+                            style="color: #6c757d;font-weight: 300;font-size: 15px;">Upload Aadhar
+                            File <span style="color: red;">*</span>
+                        </mat-label>
+                        <div class="aadhar-file">
+                            <div class="file-name" *ngIf="urlLink !='false'" style="font-size: 10px;">
+                                <a title={{fileName}} [attr.href]="urlLink" target="_blank">{{fileNameSlice
+                                    }}</a>
+                            </div>
+                            <div class="file-name" *ngIf="urlLink =='false'" style="font-size: 10px;">
+                                <a target="_blank" [attr.href]="selectedFileBLOB">{{fileNameSlice}}</a>
+                            </div>
+                        </div>
+                        <div class="image-chose">
+                            <button type="button" (click)="files.click()" class="img-uplod-btn">Choose</button>
+                            <span>
+                                <input formControlName="vAadhaarNoFilePath" type="file" (change)="selectFiles($event)"
+                                    style="display: none;" #files>
+                            </span>
+                        </div>
+                    </div> -->
+                    <!-- <div class="ma-input-33" style="width: 100%;">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Present Address <span style="color: red;">*</span></mat-label>
+                            <input formControlName="vPresentAddress" matInput placeholder="Enter Present Address" type="text"
+                                [ngClass]="{'is-invalid' : createdriverSignupFormControls.vPresentAddress.invalid && (createdriverSignupFormControls.vPresentAddress.dirty || createdriverSignupFormControls.vPresentAddress.touched)}">
+                            <div class="invalid-tooltip"
+                                *ngIf="createdriverSignupFormControls.vPresentAddress.invalid && (createdriverSignupFormControls.vPresentAddress.dirty || createdriverSignupFormControls.vPresentAddress.touched)">
+                                Please enter Present Address *
+                            </div>
+                        </mat-form-field>
+                    </div> -->
+        
+                    <!-- <div class="ma-input-33" style="width: 100%;">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Permanent Address <span style="color: red;">*</span></mat-label>
+                            <input formControlName="vPermanentAddress" matInput placeholder="Enter Permanent Address"
+                                type="text"
+                                [ngClass]="{'is-invalid' : createdriverSignupFormControls.vPermanentAddress.invalid && (createdriverSignupFormControls.vPermanentAddress.dirty || createdriverSignupFormControls.vPermanentAddress.touched)}">
+                            <div class="invalid-tooltip"
+                                *ngIf="createdriverSignupFormControls.vPermanentAddress.invalid && (createdriverSignupFormControls.vPermanentAddress.dirty || createdriverSignupFormControls.vPermanentAddress.touched)">
+                                Please enter Permanent Address *
+                            </div>
+                        </mat-form-field>
+                    </div> -->
+        
+        
+        
+        
+                    <div class="ma-input-33" style="width: 13%;">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Pin Code<span style="color: red;">*</span></mat-label>
+                            <input formControlName="vPinCode" style="width: 80%;" matInput 
+                                [ngClass]="{'is-invalid' : createdriverSignupFormControls.vPinCode.invalid && (createdriverSignupFormControls.vPinCode.dirty || createdriverSignupFormControls.vPinCode.touched)}">
+                            <div class="invalid-tooltip"
+                                *ngIf="createdriverSignupFormControls.vPinCode.invalid && (createdriverSignupFormControls.vPinCode.dirty || createdriverSignupFormControls.vPinCode.touched)">
+                                Please enter Pin Code *
+                            </div>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="ma-input-image-adhar-driver">
+        
+                        <mat-label [ngClass]="{'dynamicchange': ifSelect2}"
+                            style="color: #6c757d;font-weight: 300;font-size: 15px;">Upload PAN
+                            Card <span style="color: red;">*</span>
+                        </mat-label>
+                        <div class="aadhar-file">
+                            <div class="file-name" *ngIf="LogoUrlLink !='false'" style="font-size: 10px;">
+                                <a title={{LogoFileName}} [attr.href]="LogoUrlLink" target="_blank">{{LogoFileNameSlice
+                                    }}</a>
+                            </div>
+        
+                            <div class="file-name" *ngIf="LogoUrlLink =='false'" style="font-size: 10px;">
+                                <a target="_blank" [attr.href]="LogoSelectedFileBLOB">{{LogoFileNameSlice}}</a>
+                            </div>
+                        </div>
+                        <div class="image-chose">
+                            <button type="button" (click)="files2.click()" class="img-uplod-btn">Choose</button>
+                            <span>
+                                <input formControlName="vPANNoFilePath" type="file" (change)="selectLogoFiles($event)"
+                                    style="display: none;" #files2>
+                            </span>
+                        </div>
+                    </div> -->
+                    <div class="ma-input-33">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Contact No<span style="color: red;">*</span></mat-label>
+                            <input formControlName="vContactNo" style="width: 80%;" matInput>
+                        </mat-form-field>
+                    </div>
+                    <div class="ma-input-33">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>WhatsApp No</mat-label>
+                            <input formControlName="vWhatsUpNo" style="width: 80%;" matInput>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="ma-input-33">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Email Id<span style="color: red;">*</span></mat-label>
+                            <input formControlName="vLicenseNo" style="width: 80%;" matInput placeholder="Enter LIcense No.">
+                        </mat-form-field>
+                    </div> -->
+                    <div class="ma-input-33">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Website Link</mat-label>
+                            <input formControlName="vWebsiteLink" style="width: 80%;" matInput >
+                        </mat-form-field>
+                    </div>
+                    <div class="ma-input-33">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Tax Details</mat-label>
+                            <input formControlName="vTaxDetails" style="width: 80%;" matInput>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="ma-input-image-adhar-driver">
+                        <mat-label [ngClass]="{'dynamicchange': ifSelect4}"
+                            style="color: #6c757d;font-weight: 300;font-size: 15px;">
+                            Upload License <span style="color: red;">*</span>
+                        </mat-label>
+                        <div class="aadhar-file">
+                            <div class="file-name" *ngIf="LicenseUrlLink !='false'" style="font-size: 10px;">
+                                <a title={{LicenseFileName}} [attr.href]="LicenseUrlLink" target="_blank">{{LicenseFileNameSlice
+                                    }}</a>
+                            </div>
+                            <div class="file-name" *ngIf="LicenseUrlLink =='false'" style="font-size: 10px;">
+                                <a target="_blank" [attr.href]="LicenseSelectedFileBLOB">{{LicenseFileNameSlice}}</a>
+                            </div>
+                        </div>
+                        <div class="image-chose">
+                            <button type="button" (click)="files4.click()" class="img-uplod-btn">Choose</button>
+                            <span>
+                                <input formControlName="vLicenseNoFilePath" type="file"
+                                    (change)="selectLicensePhotoFiles($event)" style="display: none;" #files4>
+                            </span>
+                        </div>
+                    </div> -->
+                    <!-- <div class="ma-input-33">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select Vehicle Type <span style="color: red;">*</span></mat-label>
+                            <mat-select formControlName="nVId">
+                                <mat-option [value]="item.nVId" *ngFor="let item of vehicleTypeMaster"  >{{item.vVehicleType}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+                    <div class="ma-input-33">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Authorized Signatory </mat-label>
+                            <input style="width: 80%;" matInput formControlName="vAuthorizedSignatory"
+                                >
+                        </mat-form-field>
+                    </div>
+                    <div class="ma-input-image-adhar-driver">
+                        <mat-label [ngClass]="{'dynamicchange': ifSelect5}"
+                            style="color: #6c757d;font-weight: 300;font-size: 15px;">
+                            Authorized Signatory File Upload
+                        </mat-label>
+                        <div class="aadhar-file">
+                            <div class="file-name" *ngIf="urlLink5 !='false'" style="font-size: 10px;">
+                                <a title={{fileName5}} [attr.href]="urlLink5" target="_blank">{{fileNameSlice5
+                                    }}</a>
+                            </div>
+                            <div class="file-name" *ngIf="urlLink5 =='false'" style="font-size: 10px;">
+                                <a target="_blank" [attr.href]="selectedFileBLOB5">{{fileNameSlice5}}</a>
+                            </div>
+                        </div>
+                        <div class="image-chose">
+                            <button type="button" (click)="files5.click()" class="img-uplod-btn">Choose</button>
+                            <span>
+                                <input formControlName="vAuthorizedSignatoryFilePath" type="file"
+                                    (change)="selectFilesRegistration($event)" style="display: none;" #files5>
+                            </span>
+                        </div>
+                    </div>
+        
+                    <!-- <div class="ma-input-image-adhar-driver">
+                        <mat-label [ngClass]="{'dynamicchange': ifSelect6}"
+                            style="color: #6c757d;font-weight: 300;font-size: 15px;">
+                            Upload Vehicle Insurance <span style="color: red;">*</span>
+                        </mat-label>
+                        <div class="aadhar-file">
+                            <div class="file-name" *ngIf="LogoUrlLink6 !='false'" style="font-size: 10px;">
+                                <a title={{LogoFileName6}} [attr.href]="LogoUrlLink6" target="_blank">{{LogoFileNameSlice6
+                                    }}</a>
+                            </div>
+                            <div class="file-name" *ngIf="LogoUrlLink6 =='false'" style="font-size: 10px;">
+                                <a target="_blank" [attr.href]="LogoSelectedFileBLOB6">{{LogoFileNameSlice6}}</a>
+                            </div>
+                        </div>
+                        <div class="image-chose">
+                            <button type="button" (click)="files6.click()" class="img-uplod-btn">Choose</button>
+                            <span>
+                                <input formControlName="vVehicleInsuranceFilePath" type="file"
+                                    (change)="selectFilesInsurance($event)" style="display: none;" #files6>
+                            </span>
+                        </div>
+                    </div> -->
+        
+                    <div class="ma-input-image-adhar-driver">
+                        <mat-label [ngClass]="{'dynamicchange': ifSelect3}"
+                            style="color: #6c757d;font-weight: 300;font-size: 15px;">
+                            Upload Logo Image File
+                        </mat-label>
+                        <div class="aadhar-file">
+                            <div class="file-name" *ngIf="LicenseUrlLink3 !='false'" style="font-size: 10px;">
+                                <a title={{LicenseFileName3}} [attr.href]="LicenseUrlLink3" target="_blank">{{LicenseFileName3
+                                    }}</a>
+                            </div>
+                            <div class="file-name" *ngIf="LicenseUrlLink3 =='false'" style="font-size: 10px;">
+                                <a target="_blank" [attr.href]="LicenseSelectedFileBLOB3">{{LicenseFileName3}}</a>
+                            </div>
+                        </div>
+                        <div class="image-chose">
+                            <button type="button" (click)="files7.click()" class="img-uplod-btn">Choose</button>
+                            <span>
+                                <input formControlName="vLogoFilePath" type="file" (change)="selectFilesPhoto($event)"
+                                    style="display: none;" #files7>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="ma-input-33">
+                        <!-- <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Vehicle Registration No. <span style="color: red;">*</span></mat-label>
+                            <input style="width: 80%;" matInput formControlName="vVehicleRegistrationNo"
+                                placeholder="Enter Vehicle Registration No.">
+                        </mat-form-field> -->
+                    </div>
+                </div>
+        
+        
+                <div class="signup-head" style="margin-top: 20px;">
+                    <h2>Sign Up Details - Corporate Login</h2>
+                </div>
+        
+                <div class="date-and-mob">
+        
+                    <div class="ma-input-24 ma-input-25">
+                        <mat-form-field style="width: 100%;" appearance="outline" >
+                            <mat-label>Mobile No. <span style="color: red;">*</span></mat-label>
+                            <input [value]="cpMobile" [disabled]="true" matInput placeholder="Enter Alternate No." type="text"
+                            style="cursor: not-allowed;"  >
+                        </mat-form-field>
+                    </div>
+                    <div class="ma-input-24 ma-input-25">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Email Id <span style="color: red;">*</span></mat-label>
+                            <input  [value]="cpEmail" [disabled]="true" matInput placeholder="Enter Alternate No." type="text"
+                             style="cursor: not-allowed;"  >
+                            
+                        </mat-form-field>
+                    </div>
+                    <div class="ma-input-24 ma-input-25">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Password <span style="color: red;">*</span></mat-label>
+                            <input formControlName="vPassword" style="width: 80%;" matInput placeholder="Enter Password"
+                                type="{{pass1}}">
+                            <mat-icon (click)="eyeIconPasswordSignInDriver('show')" *ngIf="eye1" matSuffix>visibility
+                            </mat-icon>
+                            <mat-icon (click)="eyeIconPasswordSignInDriver('hide')" *ngIf="!eye1" matSuffix>visibility_off
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="ma-input-24 ma-input-25">
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Confirm Password <span style="color: red;">*</span></mat-label>
+                            <input formControlName="vConfirmPassword" style="width: 80%;" matInput
+                                placeholder="Enter Confirm Password" type="{{pass2}}"
+                                [ngClass]="{'is-invalid' : createdriverSignupFormControls.vConfirmPassword.invalid && (createdriverSignupFormControls.vConfirmPassword.dirty || createdriverSignupFormControls.vConfirmPassword.touched)}">
+                            <mat-icon (click)="eyeIconConfirmPasswordSignInDriver('show')" *ngIf="eye2" matSuffix>visibility
+                            </mat-icon>
+                            <mat-icon (click)="eyeIconConfirmPasswordSignInDriver('hide')" *ngIf="!eye2" matSuffix>
+                                visibility_off
+                            </mat-icon>
+                            <div class="invalid-tooltip"
+                                *ngIf="createdriverSignupFormControls.vConfirmPassword.invalid && (createdriverSignupFormControls.vConfirmPassword.dirty || createdriverSignupFormControls.vConfirmPassword.touched)">
+                                <span *ngIf="createdriverSignupFormControls.vConfirmPassword.errors.required "> Please enter
+                                    Confirm Password *</span>
+                                <span *ngIf="createdriverSignupFormControls.vConfirmPassword.errors.confirmedValidator">Password
+                                    and Confirm password does not match.</span>
+                            </div>
+                        </mat-form-field>
+                    </div>
+        
+                </div>
+                <div class="forgot">
+                    <div class="form-check">
+                        <input formControlName="dTermCondition" class="form-check-input" type="checkbox" value=""
+                            id="flexCheckDefault2" (change)="onCheckboxChange($event)">
+                        <label class="form-check-label" for="flexCheckDefault2">
+                            By signing up, i agree to
+                        </label>
+                        <a routerLink="/termsandcondition" target="_blank"
+                            style="color: blue;border-bottom: 1px solid blue;cursor: pointer;"> terms and
+                            conditions.</a>
+                    </div>
+                </div>
+        
+            </div>
+            <!-- <div class="driver-sign-in-btn">
+                <button class="enable-driver-sign-in-btn-gray" (click)="signUp()" [disabled]="driverSignupForm.invalid"
+                    type="button">
+                    Signup
+                </button>
+            </div> -->
+            <div class="submit">
+                <div class="btnLoader" *ngIf="btnLoader">
+                    <div class="lds-ring">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+                <div class="log-in-btn">
+                    <button class="enable-btn-gray" (click)="signUp()" [disabled]="driverSignupForm.invalid " type="button">
+                        Signup
+                    </button>
+                </div>
+            </div>
+        
+        
+        
+        </form>
+        <ng-template #templateOTPForm>
+            <form>
+                <div class="country-edit-model">
+                    <div class="model-header">
+                        <h1 mat-dialog-title>{{OTPModalTitle}}</h1>
+                        <button type="button" class="close-btn pull-right" aria-label="Close" (click)="OTPmodalRef.hide()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div mat-dialog-content>
+                        <div class="country-form">
+                            <div class="send-otp">
+                                <div class="otp-alrt">We have sent you an OTP on</div>
+                                <div class="number" *ngIf="userMobileNo!=''">{{userMobileNo}}</div>
+                                <div class="number" *ngIf="userEmail!=''">{{userEmail}}</div>
+                                <div class="input-group " *ngIf="userMobileNo!=''">
+                                    <input appAutofocus (keyup)="onKeyUpEventForMobile($event)" type="number~"
+                                        class="form-control" placeholder="Please enter 4 digits OTP here to verify"
+                                        aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="input-group " *ngIf="userEmail!=''">
+                                    <input appAutofocus (keyup)="onKeyUpEventForEmail($event)" type="number~"
+                                        class="form-control" placeholder="Please enter 4 digits OTP here to verify"
+                                        aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                                <span class="counter">{{countDownTimer}}</span>
+                                <div class="resend-otp" *ngIf="userMobileNo!=''">
+                                    <span>Still not received OTP?</span>
+                                    <button (click)="resendOtpToMobile()" [disabled]="resendOtpBtnDisabled" type="button"
+                                        class="resend">Resend OTP</button>
+                                </div>
+                                <div class="resend-otp" *ngIf="userEmail!=''">
+                                    <span>Still not received OTP?</span>
+                                    <button (click)="resendOtpToEmail()" [disabled]="resendOtpBtnDisabled" type="button"
+                                        class="resend">Resend OTP</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </ng-template>
+    </div>
+</div>

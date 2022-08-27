@@ -11,7 +11,7 @@ import { LoginService } from 'src/app/mainsite/Login/login.service';
 import { UserMaster, RootUserSave, UserMasterForgetPassword } from 'src/app/mainsite/models/user';
 import { CitymasterService } from 'src/app/services/citymaster.service';
 import { AuthService } from './auth.services';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-admin-login',
   templateUrl: './admin-login.component.html',
@@ -61,6 +61,7 @@ export class AdminLoginComponent implements OnInit {
   loader = false;
   btnLoader = false;
   ngOnInit(): void {
+  
     if (this.storageService.isUserRemberMe == 'true') {
       this.isRememberMe = true;
     }
@@ -100,6 +101,7 @@ export class AdminLoginComponent implements OnInit {
     let vPassword = this.userLoginForm.controls.vPassword.value;
     if(vEmailorPhone==null && vPassword==null || vEmailorPhone==undefined && vPassword==undefined ){
       // this.notifier.showError("Please Enter UserName/MemberCode or password");
+      this.showWarningMessage("Please Enter UserName/MemberCode or password", 'error', true);
     }else{
       this.btnLoader = true;
       if (this.storageService.isUserRemberMe == 'true') {
@@ -170,6 +172,13 @@ export class AdminLoginComponent implements OnInit {
     if (this.storageService.roleId == "1") {
       this.storageService.setHealthParameter = true;
       this.router.navigate(['/ad/country'], {
+        state: {
+          user: JSON.stringify(user)
+        }
+      });
+    }else if (this.storageService.roleId == "4") {
+      this.storageService.setHealthParameter = true;
+      this.router.navigate(['/cp/manageaddresses'], {
         state: {
           user: JSON.stringify(user)
         }
@@ -440,5 +449,22 @@ export class AdminLoginComponent implements OnInit {
         matchingControl.setErrors(null);
       }
     }
+  }
+  showSuccessMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
+  }
+
+  showWarningMessage(message, icon, showCancelButton = true) {
+    return Swal.fire({
+      // title: title,
+      text: message,
+      icon: icon,
+      showCancelButton: showCancelButton,
+    });
   }
 }

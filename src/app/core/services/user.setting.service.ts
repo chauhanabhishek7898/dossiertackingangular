@@ -17,6 +17,14 @@ export class UserSettingService {
         return this.http.put(`${this.apiUrl}/UserMaster/UserMasterEmailId_Update`, user);
 
     }
+    CorporateEmail_Update(user: object): Observable<any> {
+        return this.http.put(`${this.apiUrl}/CorporateMaster/CorporateEmail_Update`, user);
+
+    }
+    CorporateMobileNo_Update(user: object): Observable<any> {
+        return this.http.put(`${this.apiUrl}/CorporateMaster/CorporateMobileNo_Update`, user);
+
+    }
     updateUserMobile(user: object): Observable<any> {
         return this.http.put(`${this.apiUrl}/UserMaster/UserMasterMobileNo_Update`, user);
 

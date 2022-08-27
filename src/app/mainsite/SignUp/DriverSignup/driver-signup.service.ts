@@ -32,5 +32,24 @@ export class DriverSignupService {
       formDataAdd.append("DriverMaster", JSON.stringify(DriverMasterSave));
       return this.http.post(`${this.apiUrl}/DriverMaster`, formDataAdd);
   }
-  
+
+  CorporateMaster(CorporateMasterSave: object, file1: File,file2:File): Observable<any> {
+    // if(FormType == "Submit"){
+      const formDataAdd = new FormData();
+      formDataAdd.append("AuthorizedSignatoryFile", file1);
+      formDataAdd.append("LogoFile", file2);
+     
+      formDataAdd.append("CorporateMaster", JSON.stringify(CorporateMasterSave));
+      return this.http.post(`${this.apiUrl}/CorporateMaster`, formDataAdd);
+  }
+  CorporateMasterUpdate(CorporateMasterSave: object, file1: File,file2:File): Observable<any> {
+    // if(FormType == "Submit"){
+      alert(1)
+      const formDataAdd = new FormData();
+      formDataAdd.append("AuthorizedSignatoryFile", file1);
+      formDataAdd.append("LogoFile", file2);
+     
+      formDataAdd.append("CorporateMaster", JSON.stringify(CorporateMasterSave));
+      return this.http.put(`${this.apiUrl}/CorporateMaster`, formDataAdd);
+  }
 }

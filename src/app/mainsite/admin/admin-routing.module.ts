@@ -20,6 +20,10 @@ import { KMLimitMasterComponent } from './admin-dashboard/kmlimit-master/kmlimit
 import { ServiceSubTypeMasterComponent } from './admin-dashboard/service-sub-type-master/service-sub-type-master.component';
 import { ServiceTypeMasterComponent } from './admin-dashboard/service-type-master/service-type-master.component';
 import { WaitTimeChargesComponent } from './admin-dashboard/wait-time-charges/wait-time-charges.component';
+import { CorporatesDetails } from './admin-dashboard/corporates-details/corporates-details';
+import { CorporatesDetailsComponent } from './admin-dashboard/corporates-details/corporates-details.component';
+import { ApproveCorporatesComponent } from './admin-dashboard/approve-corporates/approve-corporates.component';
+import { UserDetailsComponent } from './admin-dashboard/user-details/user-details.component';
 
 const routes: Routes = [
   {
@@ -115,6 +119,21 @@ const routes: Routes = [
   {
     path: 'customerssavedaddresses',
     component: CustomersSavedAddressesMasterComponent,
+    canActivate: [AuthGuard],
+  }, 
+  {
+    path: 'corporatesdetails',
+    component: CorporatesDetailsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'approvecorporates',
+    component: ApproveCorporatesComponent,
+    canActivate: [AuthGuard],
+  },
+   {
+    path: 'userdetailsreport',
+    component: UserDetailsComponent,
     canActivate: [AuthGuard],
   },
 ];

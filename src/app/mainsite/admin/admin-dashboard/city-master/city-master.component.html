@@ -1,6 +1,6 @@
 <div class="loader" *ngIf="loader">
     <div class="center-loader">
-        <div class="spinner-border" role="status" >
+        <div class="spinner-border" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
     </div>
@@ -37,16 +37,20 @@
                         </div>
                         <div class="input-group input-group-1">
                             <label for="">Select State</label>
-                            <select class="form-select" aria-label="Default select example" formControlName="nStateId"
-                                [ngClass]="{'is-invalid' : createCityMasterFormControls.nStateId.invalid && (createCityMasterFormControls.nStateId.dirty || createCityMasterFormControls.nStateId.touched)}">
-                                <option value="0" disabled> Select State</option>
-                                <option value="{{state.nStateId}}" *ngFor="let state of StateList">
-                                    {{state.vStateName}}</option>
-                            </select>
-                            <div class="invalid-tooltip"
-                                *ngIf="createCityMasterFormControls.nStateId.invalid && (createCityMasterFormControls.nStateId.dirty || createCityMasterFormControls.nStateId.touched)">
-                                Please Select State.
-                            </div>
+                            <mat-form-field appearance="fill">
+                                <!-- <mat-label>Select Inter Related City</mat-label> -->
+                                <mat-select formControlName="nStateId" placeholder="Select State" name="item"
+                                    [ngClass]="{'is-invalid' : createCityMasterFormControls.nStateId.invalid && (createCityMasterFormControls.nStateId.dirty || createCityMasterFormControls.nStateId.touched)}">
+                                    <!-- <mat-select formControlName="nInterRelatedCityId" (selectionChange)="InterRelatedCityIds($event)" [(ngModel)]="InterRelatedCityId"> -->
+                                    <mat-option [value]="item.nStateId" *ngFor="let item of StateList">
+                                        {{item.vStateName}}</mat-option>
+                                </mat-select>
+                                <div class="invalid-tooltip invalid-tooltip-2"
+                                    *ngIf="createCityMasterFormControls.nStateId.invalid && (createCityMasterFormControls.nStateId.dirty || createCityMasterFormControls.nStateId.touched)">
+                                    Please Select State.
+                                </div>
+                            </mat-form-field>
+
                         </div>
                         <div class="break"></div>
                         <div class="form-check mt-2">
@@ -57,7 +61,7 @@
                                 <span class="active">Main Inter Related City </span>
                             </span>
                         </div>
-                        <div class="input-group input-group-1" *ngIf="!InterRelatedCity" >
+                        <div class="input-group input-group-1" *ngIf="!InterRelatedCity">
                             <label for="">Select Inter Related City</label>
                             <!-- <select class="form-select" aria-label="Default select example"
                                 formControlName="nInterRelatedCityId" [ngModel]="InterRelatedCityId" (change)="InterRelatedCityId($event)">
@@ -67,14 +71,18 @@
                                 <option value='NA'>NA</option>
 
                             </select> -->
-                            <mat-form-field appearance="fill" >
+                            <mat-form-field appearance="fill">
                                 <!-- <mat-label>Select Inter Related City</mat-label> -->
-                                <mat-select formControlName="nInterRelatedCityId" placeholder="Select Inter Related City" (selectionChange)="InterRelatedCityIds($event)" [(ngModel)]="InterRelatedCityId" name="item">
-                                <!-- <mat-select formControlName="nInterRelatedCityId" (selectionChange)="InterRelatedCityIds($event)" [(ngModel)]="InterRelatedCityId"> -->
-                                  <mat-option [value]="item.nCityId" *ngFor="let item of mainInterRelatedCity">{{item.vCityName}}</mat-option>
-                                  <mat-option value='NA'>NA</mat-option>    
+                                <mat-select formControlName="nInterRelatedCityId"
+                                    placeholder="Select Inter Related City"
+                                    (selectionChange)="InterRelatedCityIds($event)" [(ngModel)]="InterRelatedCityId"
+                                    name="item">
+                                    <!-- <mat-select formControlName="nInterRelatedCityId" (selectionChange)="InterRelatedCityIds($event)" [(ngModel)]="InterRelatedCityId"> -->
+                                    <mat-option [value]="item.nCityId" *ngFor="let item of mainInterRelatedCity">
+                                        {{item.vCityName}}</mat-option>
+                                    <mat-option value='NA'>NA</mat-option>
                                 </mat-select>
-                              </mat-form-field>
+                            </mat-form-field>
                         </div>
                         <div class="break"></div>
                         <div class="form-check mt-2">
