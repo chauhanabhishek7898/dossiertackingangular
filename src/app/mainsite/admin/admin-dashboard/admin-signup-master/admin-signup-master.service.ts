@@ -14,4 +14,7 @@ export class AdminSignupMasterService {
   PostCreateAdmin(CreateAdmin){
     return this.http.post(`${this.apiUrl}/UserMaster/AdminSignUp_Insert`, CreateAdmin);
   }
+  CorporateAssistantSignUp_Insert(CreateAdmin){
+    return this.http.post(`${this.apiUrl}/CorporateMaster/CorporateAssistantSignUp_Insert`, CreateAdmin);
+  }
 }

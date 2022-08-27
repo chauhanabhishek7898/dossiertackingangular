@@ -12,12 +12,9 @@
 </div>
 <div class="change-pass">
 
-    <div class="update-form-head">
-        <span>
-            {{pageTitle}}
-        </span>
+    <div class="family-head">
+        <span>{{pageTitle}}</span>
     </div>
-    <mat-divider></mat-divider>
     <form [formGroup]="updateEmailForm" class="update-form">
 
         <div class="input-group mb-3">
@@ -48,7 +45,6 @@
   </div> -->
     <div class="country-edit-model">
         <div class="model-header">
-            <h1 mat-dialog-title>{{ModalTitle}}</h1>
             <button type="button" class="close-btn pull-right" aria-label="Close" (click)="modalRef.hide()">
                 <mat-icon>close</mat-icon>
             </button>

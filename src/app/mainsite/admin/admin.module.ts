@@ -46,6 +46,10 @@ import { ServiceSubTypeMasterComponent } from './admin-dashboard/service-sub-typ
 import { OtherRolesProfileComponent } from './admin-dashboard/other-roles-profile/other-roles-profile.component';
 import { CustomersSavedAddressesMasterComponent } from './admin-dashboard/customers-saved-addresses-master/customers-saved-addresses-master.component';
 import { AdminSignupMasterComponent } from './admin-dashboard/admin-signup-master/admin-signup-master.component';
+import { CorporatesDetailsComponent } from './admin-dashboard/corporates-details/corporates-details.component';
+import { ApproveCorporatesComponent } from './admin-dashboard/approve-corporates/approve-corporates.component';
+import { CorporateModule } from '../corporate/corporate.module';
+import { UserDetailsComponent } from './admin-dashboard/user-details/user-details.component';
 
 
 
@@ -71,7 +75,10 @@ import { AdminSignupMasterComponent } from './admin-dashboard/admin-signup-maste
     ServiceSubTypeMasterComponent,
     OtherRolesProfileComponent,
     CustomersSavedAddressesMasterComponent,
-    AdminSignupMasterComponent
+    AdminSignupMasterComponent,
+    CorporatesDetailsComponent,
+    ApproveCorporatesComponent,
+    UserDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -94,7 +101,8 @@ import { AdminSignupMasterComponent } from './admin-dashboard/admin-signup-maste
     MatExpansionModule,
     DataTablesModule,
     WebcamModule,
-    ImageCropperModule
+    ImageCropperModule,
+    CorporateModule
     // PageFilterPipe
   ],
   exports:[
@@ -115,7 +123,8 @@ import { AdminSignupMasterComponent } from './admin-dashboard/admin-signup-maste
     KMLimitMasterComponent,
     ServiceTypeMasterComponent,
     ServiceSubTypeMasterComponent,
-    OtherRolesProfileComponent
+    OtherRolesProfileComponent,
+    CorporatesDetailsComponent
   ],
   providers:[
    

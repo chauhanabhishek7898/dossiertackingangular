@@ -115,7 +115,7 @@
                 </div>
             </div> -->
 
-            <button class="login-btn" type="submit" [ngClass]="{'doctorBackground' : toggle}">Login</button>
+            <button class="login-btn" type="submit" [disabled]='userLoginForm.invalid' [ngClass]="{'btnBackground' : userLoginForm.invalid}">Login</button>
         </div>
         <!-- <div class="divider">Or</div> -->
 

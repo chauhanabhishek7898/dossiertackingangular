@@ -1,11 +1,11 @@
 .new-table {
     table {
-        border: 0.5px solid #30afa3;
+        border: 0.5px solid #258ec4;
 
         tr {
             th {
                 font-size: 12px;
-                background: #30afa3;
+                background: #258ec4;
                 border-bottom: none;
                 color: #fff;
                 text-align: center;
@@ -76,7 +76,7 @@
 
         input[type="text"] {
             width: 70%;
-            border: 0.5px solid #30afa3;
+            border: 0.5px solid #258ec4;
             height: auto;
             font-size: 12px;
             padding: 8px 10px;
@@ -86,12 +86,12 @@
 
         input[type="button"] {
             width: 30%;
-            background: #44d7b6;
+            background: #258ec4;
             border: navajowhite;
             border-top-left-radius: 0 !important;
             border-bottom-left-radius: 0 !important;
             padding: 0 10px;
-            color: #000;
+            color: #fff;
         }
     }
 }
@@ -112,4 +112,8 @@
 mat-form-field {
     border: none;
     padding: 0;
+  
+}
+::ng-deep .mat-form-field-wrapper{
+    padding-bottom: 0;
 }

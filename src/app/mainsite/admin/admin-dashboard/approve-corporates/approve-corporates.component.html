@@ -1,0 +1,119 @@
+<!-- <div class="loader" *ngIf="loader">
+    <div class="loading">
+        <img src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
+    </div>
+</div> -->
+
+<!-- <div class="family-head">
+    <span>{{pageTitle}}</span>
+</div>
+<mat-divider></mat-divider> -->
+<!-- <form [formGroup]="myNoteForm">
+    <div class="input-box">
+        <div class="input-group input-group-1">
+        </div>
+        <div class="input-group input-group-1">
+        </div>
+        <div class="input-group input-group-1">
+            <input type="text" formControlName="txtSearch" placeholder="Search..." />
+            <input (click)="searchPastConsultation()" value="Search" type="button" formControlName="btnSearch" />
+        </div>
+    </div>
+</form>
+<mat-divider></mat-divider> -->
+<div class="loader" *ngIf="loader">
+    <div class="center-loader">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>
+<div class="family-head">
+    <span>{{pageTitle}}</span>
+</div>
+<mat-divider></mat-divider>
+<div class="new-table">
+    <table datatable class="ui celled table table-striped dt-responsive nowrap " style="width:100%"
+        [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+        <thead>
+            <tr>
+                <th class="no-sort" style="background-image: none !important;">#</th>
+                <th class="no-sort" style="background-image: none !important;">Approve</th>
+                <!-- <th class="no-sort" style="background-image: none !important;">Is Active </th> -->
+                <th class="no-sort" style="background-image: none !important;">Corporate Id</th>
+                <th class="no-sort" style="background-image: none !important;">Corporate Name</th>
+                <th class="no-sort" style="background-image: none !important;">Contact Person </th>
+
+                <th class="no-sort" style="background-image: none !important;">Designation</th>
+                <th class="no-sort" style="background-image: none !important;">Moile No</th>
+                <th class="no-sort" style="background-image: none !important;">Address</th>
+
+                <!-- <th class="no-sort" style="background-image: none !important;">Mobile No.</th>
+                <th class="no-sort" style="background-image: none !important;">Email Id</th> -->
+                <th class="no-sort" style="background-image: none !important;">City Details</th>
+                <th class="no-sort" style="background-image: none !important;">Pin Code</th>
+                <th class="no-sort" style="background-image: none !important;">Contact No</th>
+
+                <th class="no-sort" style="background-image: none !important;">WhatsApp No</th>
+                <th class="no-sort" style="background-image: none !important;">Website Link</th>
+                <th class="no-sort" style="background-image: none !important;">Tax Details</th>
+                <th class="no-sort" style="background-image: none !important;">Authorized Signatory</th>
+                <th class="no-sort" style="background-image: none !important;">AuthorizedSignatory File</th>
+                <th class="no-sort" style="background-image: none !important;">Logo File</th>
+               
+
+              
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let items of approveCorporatesList; let i = index ">
+                <td>{{i+1}}</td>
+                <td>
+                    <button class="activate-user" (click)="openConformaitionModel(templateApproveConformationModel, items.nEId)">Approve</button>
+                </td>
+                <td>{{items.vEId}}</td>
+                <td>{{items.CorporateName}}</td>
+                <td>{{items.ContactPerson}}</td>
+                <td>{{items.Designation}}</td>
+                <td>{{items.MoileNo}}</td>
+                <td>{{items.vAddress}}</td>
+                <td>{{items.CityDetails}}</td>
+                <td>{{items.vPinCode}}</td>
+
+                <td>{{items.vContactNo}}</td>
+                <td>{{items.vWhatsUpNo}}</td>
+                <td>{{items.vWebsiteLink}}</td>
+                <td>{{items.vTaxDetails}}</td>
+                <td>{{items.vAuthorizedSignatory}}</td>
+                <td>
+                    <a *ngIf="items.vAuthorizedSignatoryFilePath!=null" [attr.href]="imageUrl + '/'+ items.vAuthorizedSignatoryFilePath"
+                        target="_blank">Authorized Signatory File Copy</a>
+                </td>
+                <td>
+                    <a *ngIf="items.vLogoFilePath!=null" [attr.href]="imageUrl + '/'+ items.vLogoFilePath"
+                        target="_blank">Logo File Copy</a>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+<ng-template #templateApproveConformationModel>
+    <div class="country-edit-model">
+        <div class="model-header">
+            <h1 mat-dialog-title>ALERT !!</h1>
+            <button type="button" class="close-btn pull-right" aria-label="Close" (click)="conformaitonmodalRef.hide()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <mat-divider></mat-divider>
+    </div>
+    <div mat-dialog-content>
+        <p class="confirm-text" style="text-align: center;">Do you want to Approve ??</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="confirm-btn mt-3">
+        <button (click)="ActivateUserDetail()" type="button">Ok</button>
+        <button (click)="modelCencelBtn()" type="button">Cancel</button>
+    </div>
+</ng-template>

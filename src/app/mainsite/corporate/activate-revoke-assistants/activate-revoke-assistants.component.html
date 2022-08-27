@@ -1,0 +1,86 @@
+<!-- <div class="loader" *ngIf="loader">
+    <div class="loading">
+        <img src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
+    </div>
+</div> -->
+
+<!-- <div class="family-head">
+    <span>{{pageTitle}}</span>
+</div>
+<mat-divider></mat-divider> -->
+<!-- <form [formGroup]="myNoteForm">
+    <div class="input-box">
+        <div class="input-group input-group-1">
+        </div>
+        <div class="input-group input-group-1">
+        </div>
+        <div class="input-group input-group-1">
+            <input type="text" formControlName="txtSearch" placeholder="Search..." />
+            <input (click)="searchPastConsultation()" value="Search" type="button" formControlName="btnSearch" />
+        </div>
+    </div>
+</form>
+<mat-divider></mat-divider> -->
+<div class="loader" *ngIf="loader">
+    <div class="center-loader">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>
+<div class="family-head">
+    <span>{{pageTitle}}</span>
+</div>
+<mat-divider></mat-divider>
+<div class="new-table">
+    <table datatable class="ui celled table table-striped dt-responsive nowrap " style="width:100%"
+        [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+        <thead>
+            <tr>
+                <th class="no-sort" style="background-image: none !important;width: 5px !important;">#</th>
+                <th class="no-sort" style="background-image: none !important;">Approve </th>
+
+                <th class="no-sort" style="background-image: none !important;">Full Name</th>
+                <th class="no-sort" style="background-image: none !important;">Mobile No. </th>
+
+                <th class="no-sort" style="background-image: none !important;">Email Id</th>
+                <th class="no-sort" style="background-image: none !important;">Is Active </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let items of userDetailList; let i = index ">
+                <td>{{i+1}}</td>
+                <td>
+                    <button class="activate-user" *ngIf="!items.btActive" (click)="openConformaitionModel(templateApproveConformationModel, items.nCLinkId,items.btActive)">Active</button>
+                    <button class="activate-user" style="background: red;" *ngIf="items.btActive" (click)="openConformaitionModel(templateApproveConformationModel,items.nCLinkId,items.btActive)">Revoke</button>
+                </td>
+                <td>{{items.vFullName}}</td>
+                <td>{{items.vMobileNo}}</td>
+                <td>{{items.vEmailId}}</td>
+                
+                <td><input [checked]=items.btActive type="checkbox" [disabled]="disabled" /></td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+<ng-template #templateApproveConformationModel>
+    <div class="country-edit-model">
+        <div class="model-header">
+            <h1 mat-dialog-title>ALERT !!</h1>
+            <button type="button" class="close-btn pull-right" aria-label="Close" (click)="conformaitonmodalRef.hide()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <mat-divider></mat-divider>
+    </div>
+    <div mat-dialog-content>
+        <p class="confirm-text" style="text-align: center;" *ngIf="!btActive" >Do you want to Active this Assistent ??</p>
+        <p class="confirm-text" style="text-align: center;" *ngIf="btActive">Do you want to Revoke this Assistent ??</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="confirm-btn mt-3">
+        <button (click)="ActivateUserDetail()" type="button">Ok</button>
+        <button (click)="modelCencelBtn()" type="button">Cancel</button>
+    </div>
+</ng-template>

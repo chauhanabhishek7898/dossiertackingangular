@@ -10,17 +10,17 @@ export class ApproveDriverMaster {
     btIsActive: true;
     btFromFacebook: boolean;
     btPromotion: boolean
-    vUserName:string;
-    vPasswordDec:string;
-    vUserDetail:string;
-    
+    vUserName: string;
+    vPasswordDec: string;
+    vUserDetail: string;
+
 }
-export class ApproveDriverMasterList{
+export class ApproveDriverMasterList {
     nDriverId: Number;
     vDriverId: String;
-    vVehicleType:String;
+    vVehicleType: String;
     DriverDetails: String;
-    RegistrationDate:String;
+    RegistrationDate: String;
     CityDetails: String;
     DOB: String;
     nVId: Number;
@@ -46,5 +46,30 @@ export class ApproveDriverMasterList{
     vEmailId: String;
     btPromotion: String;
     btIsActive: boolean;
-    nUserId:number
+    nUserId: number
+}
+
+export class GetCorporateAssistants {
+    nCLinkId: number
+    vFullName: string
+    vMobileNo: string
+    vEmailId: string
+    MaskedMobileNo: string
+    MaskedEmailId: string
+    btActive: true
+}
+export class GetUsersDetails_Report {
+    nUserId: number
+    vFullName: string
+    vUserName: string
+    vPassword: string
+    vMobileNo: string
+    vEmailId: string
+    nRoleId: number
+    btActive: boolean
+    btPromotion: boolean
+    vAlias: string
+    vPasswordDec: string
+    MaskedMobileNo: string
+    MaskedEmailId: string
 }

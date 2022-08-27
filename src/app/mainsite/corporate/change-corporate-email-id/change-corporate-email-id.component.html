@@ -1,0 +1,72 @@
+<!-- <div class="loader" *ngIf="loader">
+    <div class="loading">
+        <img src="../../../../assets/loaderlogo/watermark_logo.gif" alt="">
+    </div>
+</div> -->
+<div class="loader" *ngIf="loader">
+    <div class="center-loader">
+        <div class="spinner-border" role="status" >
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>
+<div class="change-pass">
+
+    <div class="family-head">
+        <span>{{pageTitle}}</span>
+    </div>
+    <mat-divider></mat-divider>
+    <form [formGroup]="updateEmailForm" class="update-form">
+
+        <div class="input-group mb-3">
+            <label for="">Email Id</label>
+            <input type="text" formControlName="vEmailId" appAutofocus class="form-control" placeholder="Enter New Email Id" aria-label="Enter Email Id" aria-describedby="basic-addon1" [ngClass]="{'is-invalid' : createupdateEmailFormControls.vEmailId.invalid && (createupdateEmailFormControls.vEmailId.dirty || createupdateEmailFormControls.vEmailId.touched)}">
+            <div class="invalid-tooltip" *ngIf="createupdateEmailFormControls.vEmailId.invalid && (createupdateEmailFormControls.vEmailId.dirty || createupdateEmailFormControls.vEmailId.touched)">
+                Please enter Email Id
+            </div>
+        </div>
+        <div class="change-pass-title">
+            <p>** Please note, an OTP will be sent to your new Email Id before changing.</p>
+        </div>
+        <div class="submit">
+            <button type="button" [disabled]="updateEmailForm.invalid" (click)="openModal(templateCountryMaster)">Send OTP</button>
+        </div>
+    </form>
+</div>
+
+<ng-template #templateCountryMaster>
+    <!-- <div class="loader loader2 " *ngIf="loaderService.isModelPopUpLoading | async">
+      <div class="spinner spinner2">
+          <div class="rect1"></div>
+          <div class="rect2"></div>
+          <div class="rect3"></div>
+          <div class="rect4"></div>
+          <div class="rect5"></div>
+      </div>
+  </div> -->
+    <div class="country-edit-model">
+        <div class="model-header">
+            <button type="button" class="close-btn pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <div mat-dialog-content>
+            <div class="country-form">
+                <div class="send-otp">
+                    <div class="otp-alrt">We have sent you an OTP on</div>
+                    <div>{{eMailid}}</div>
+                    <div class="input-group ">
+                        <label for="">Enter OTP</label>
+                        <input appAutofocus (keyup)="onKeyUpEvent($event)" type="number" class="form-control" placeholder="Please enter 4 digits OTP here to verify" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <span class="counter">{{countDownTimer}}</span>
+                    <div class="resend-otp">
+                        <span>Still not received OTP?</span>
+                        <button (click)="resendOtp()" [disabled]="resendOtpBtnDisabled" type="button" class="resend">Resend OTP</button>
+                    </div>
+                    <div class="submit addMamber" *ngIf="otpVerified"> <button (click)="updateEmail()" class="btn btn-primary" type="button">Update</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

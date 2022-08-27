@@ -1,0 +1,76 @@
+<div class="medical-record">
+    <div class="loader" *ngIf="loader">
+        <div class="center-loader">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+    <div class="family-head">
+        <span>{{pageTitle}}</span>
+    </div>
+    <mat-divider></mat-divider>
+    <form [formGroup]="getFindMemberForm">
+        <div class="input-box">
+            <div class="input-group input-group-3 custom-select ">
+            </div>
+            <div class="input-group input-group-1 mb-2">
+                <input type="text" formControlName="txtSearch" placeholder="Search..." />
+                <input (click)="searchLeave()" value="Search" type="button" />
+
+            </div>
+        </div>
+    </form>
+    <div class="new-table">
+        <table datatable class="ui celled table table-striped dt-responsive nowrap " style="width:100%" [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+            <thead>
+                <tr>
+                    <th class="no-sort" style="background-image: none !important;">#</th>
+                    <th class="no-sort" style="background-image: none !important;">Status</th>
+                    <th class="no-sort" style="background-image: none !important;">Corporate Name</th>
+                    <th class="no-sort" style="background-image: none !important;">Contact Person Owner</th>
+                    <th class="no-sort" style="background-image: none !important;">Designation</th>
+                    <th class="no-sort" style="background-image: none !important;">Corporate Mobile No</th>
+                    <th class="no-sort" style="background-image: none !important;">Corporate Email Id</th>
+                    <th class="no-sort" style="background-image: none !important;">City</th>
+                    <th class="no-sort" style="background-image: none !important;">Address</th>
+                    <th class="no-sort" style="background-image: none !important;">Pincode</th>
+                    <th class="no-sort" style="background-image: none !important;">Contact No.</th>
+                    <th class="no-sort" style="background-image: none !important;">WhatsApp No.</th>
+                    <th class="no-sort" style="background-image: none !important;">Website</th>
+                    <th class="no-sort" style="background-image: none !important;">Tax Details</th>
+                    <th class="no-sort" style="background-image: none !important;">Authorized Signatory</th>
+                    <th class="no-sort" style="background-image: none !important;">Authorized Signatory File</th>
+                    <th class="no-sort" style="background-image: none !important;">Logo File</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let items of findMemberDetails; let i = index ">
+                    <td>{{i+1}}</td>
+                    <td><input disabled [checked]=items.btActive type="checkbox" /></td>
+                    <td>{{items.vEstablishmentName}}</td>
+                    <td>{{items.vContactPersonOwner}}</td>
+                    <td>{{items.vCPDesignation}}</td>
+                    <td>{{items.vCPMobileNo}}</td>
+                    <td>{{items.vCPEmailId}}</td>
+                    <td>{{items.CityDetails}}</td>
+                    <td>{{items.vAddress}}</td>
+                    <td>{{items.vPinCode}}</td>
+                    <td>{{items.vContactNo}}</td>
+                    <td>{{items.vWhatsUpNo}}</td>
+                    <td>{{items.vWebsiteLink}}</td>
+                    <td>{{items.vTaxDetails}}</td>
+                    <td>{{items.vAuthorizedSignatory}}</td>
+                    <td >
+                        <a *ngIf="items.vAuthorizedSignatoryFilePath!=null" [href]="imageUrl + '/'+ items.vAuthorizedSignatoryFilePath"
+                            target="_blank" style="font-size: 11px;">Authorized Signatory File Copy</a>
+                    </td>
+                    <td >
+                        <a *ngIf="items.vLogoFilePath!=null" [href]="imageUrl + '/'+ items.vLogoFilePath"
+                            target="_blank" style="font-size: 11px;">Logo File Copy</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

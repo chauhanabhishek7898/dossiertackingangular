@@ -323,7 +323,7 @@ export class AdminDashboardComponent implements OnInit {
           this.establishmentName = status.TAB1[0].EstablishmentName
 
           this.pageDetails = status.TAB2;
-          console.log("this.pageDetails",this.pageDetails)
+          console.log("this.pageDetails", this.pageDetails)
           this.parentPageList = this.pageDetails.filter((page) => page.nPageDependentId == null)
           if (this.parentPageList.length > 4) {
             this.pageDetailsFirsList = this.parentPageList.slice(0, 4);
@@ -343,7 +343,12 @@ export class AdminDashboardComponent implements OnInit {
     clearInterval(this.messageCountInterval)
     this.storageService.logout();
 
-    this.router.navigate(['/login']);
+    // this.router.navigate(['/login']);
+    this.router.navigate(['/login'])
+      .then(() => {
+        window.location.reload();
+        window.scroll(0,0);
+      });
   }
   takeSnapshot(): void {
     this.trigger.next();
@@ -479,7 +484,9 @@ export class AdminDashboardComponent implements OnInit {
   setUserRole() {
     if (this.storageService.roleId == "1") {
       this.userRole = "ad";
-    } 
+    } else if (this.storageService.roleId == "4") {
+      this.userRole = "cp";
+    }
   }
   states: any;
   arrowRotate = false;

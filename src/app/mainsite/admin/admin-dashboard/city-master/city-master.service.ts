@@ -31,7 +31,7 @@ export class CityMasterService {
   }
 
   getActiveCityList(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/CityMaster/GetAllActiveCities`);
+    return this.http.get<any>(`${this.apiUrl}/CityMaster`);
 
   }
   

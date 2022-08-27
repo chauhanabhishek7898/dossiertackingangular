@@ -1,4 +1,5 @@
-@import '../setting.component.scss';
+
+@import '../../../../SignUp/customer-signup/customer-signup.component.scss';
 .update-form-head {
     font-size: 14px;
     font-weight: 400;
@@ -7,7 +8,6 @@
     // margin-bottom: 15px;
     padding: 15px 0 5px;
 }
-
 .update-form {
     width: 35%;
     @media screen and (max-width: 993px) {
@@ -19,7 +19,10 @@
     .input-group {
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
         margin-top: 20px;
+        width: 100%;
         label {
             margin-bottom: 5px;
             font-size: 12px;
@@ -33,6 +36,7 @@
             border-radius: 5px !important;
             border: 0.5px solid #7087db;
             padding: 4px 10px;
+            text-align: left;
             &::placeholder {
                 font-size: 12px;
             }
@@ -73,4 +77,11 @@
 .loader {
     width: 103.5%;
     z-index: 99999 !important;
+}
+.country-form {
+    display: flex;
+    justify-content: center;
+    input{
+        border-radius: 5px !important;
+    }
 }
