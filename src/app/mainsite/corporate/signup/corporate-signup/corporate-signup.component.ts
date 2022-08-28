@@ -173,14 +173,16 @@ export class CorporateSignupComponent implements OnInit {
   @ViewChild('searchInput') searchInput: ElementRef;
   isOtpLogin: boolean = false;
   passwordHide: boolean = false;
-
+  submit=false
   onCheckboxChange(e) {
     if (e.target.checked) {
       this.isOtpLogin = true;
       this.passwordHide = true;
+      this.submit=true
     } else {
       this.isOtpLogin = false;
       this.passwordHide = false;
+      this.submit=false
     }
   }
   pass1: string = 'password';
@@ -831,14 +833,7 @@ export class CorporateSignupComponent implements OnInit {
   DriverDetailsList: CorporateSignup[] = [];
   DriverMasterClass: CorporateMasterClass;
   signUp() {
-    console.log(this.mobileDisable);
-    console.log(this.emailDisable);
-    if (
-      !this.cityId ||
-      this.mobileDisable == false
-      // ||
-      // this.emailDisable == false
-    ) {
+    if (!this.cityId ||this.mobileDisable == false && this.emailDisable == false) {
       if (!this.cityId) {
         this.errorCityTxt = true;
       }
@@ -847,22 +842,11 @@ export class CorporateSignupComponent implements OnInit {
         this.available = false;
         this.errorMobileTxt = true;
       }
-      // if (this.emailDisable == false) {
-      //   this.errorEmailTxt = true;
-      // }
+      if (this.emailDisable == false) {
+        this.errorEmailTxt = true;
+      }
     } else {
       this.btnLoader = true;
-     
-      // let dob;
-      // if (this.driverSignupForm.controls.dtDOB.value != null) {
-      //   if (typeof this.driverSignupForm.controls.dtDOB.value == 'object') {
-      //     let dobDate = this.driverSignupForm.controls.dtDOB.value._d;
-      //     let month = dobDate.getMonth() + 1;
-      //     dob = dobDate.getFullYear() + '-' + month + '-' + dobDate.getDate();
-      //   } else {
-      //     dob = this.driverSignupForm.controls.dtDOB.value;
-      //   }
-      // }
       this.DriverDetailsList = [];
       this.DriverDetailsModel = {
         nEId: 0,
@@ -883,9 +867,9 @@ export class CorporateSignupComponent implements OnInit {
         vAuthorizedSignatory: this.driverSignupForm.controls.vAuthorizedSignatory.value,
         vAuthorizedSignatoryFilePath: '',
         vLogoFilePath: '',
-        vMobileNo: this.driverSignupForm.controls.vMobileNo.value,
+        // vMobileNo: this.driverSignupForm.controls.vMobileNo.value,
         vPassword: this.driverSignupForm.controls.vPassword.value,
-        vEmailId: this.driverSignupForm.controls.vEmailId.value,
+        // vEmailId: this.driverSignupForm.controls.vEmailId.value,
       };
       this.DriverDetailsList.push(this.DriverDetailsModel);
       this.DriverMasterClass = {

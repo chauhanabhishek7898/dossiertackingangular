@@ -121,7 +121,7 @@ export class ServiceSubTypeMasterComponent implements OnInit {
     if (this.formType == 'Submit') {
       this.loader = true;
       this.vehicleTypeMasterModel = {
-        nSSTId: 0,
+        nSSTId: this.countryMasterForm.controls.nSSTId.value==null?0:this.countryMasterForm.controls.nSSTId.value,
         nVId: this.countryMasterForm.controls.nVId.value,
         nCityId: this.countryMasterForm.controls.nCityId.value,
         nRate: this.countryMasterForm.controls.nRate.value,
@@ -155,7 +155,7 @@ export class ServiceSubTypeMasterComponent implements OnInit {
     } else {
       this.loader = true;
       this.vehicleTypeMasterModel = {
-        nSSTId: 0,
+        nSSTId: this.countryMasterForm.controls.nSSTId.value==null?0:this.countryMasterForm.controls.nSSTId.value,
         nVId: this.countryMasterForm.controls.nVId.value,
         nCityId: this.countryMasterForm.controls.nCityId.value,
         nRate: this.countryMasterForm.controls.nRate.value,

@@ -481,8 +481,8 @@
                         <div></div>
                     </div>
                 </div>
-                <div class="log-in-btn">
-                    <button class="enable-btn-gray" (click)="signUp()" [disabled]="driverSignupForm.invalid " type="button">
+                <div class="log-in-btn" *ngIf="submit" >
+                    <button class="enable-btn-gray" (click)="signUp()" [disabled]="driverSignupForm.invalid" type="button">
                         Signup
                     </button>
                 </div>
@@ -495,12 +495,10 @@
             <form>
                 <div class="country-edit-model">
                     <div class="model-header">
-                        <h1 mat-dialog-title>{{OTPModalTitle}}</h1>
                         <button type="button" class="close-btn pull-right" aria-label="Close" (click)="OTPmodalRef.hide()">
                             <mat-icon>close</mat-icon>
                         </button>
                     </div>
-                    <mat-divider></mat-divider>
                     <div mat-dialog-content>
                         <div class="country-form">
                             <div class="send-otp">

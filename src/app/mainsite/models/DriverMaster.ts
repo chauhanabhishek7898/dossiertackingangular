@@ -31,7 +31,7 @@ export class DriverMasterClass {
 
 export class CorporateSignup {
   nEId:number
-  vMobileNo:number
+  // vMobileNo:number
   // vEId:string
   vEType:string
   vEstablishmentName:string
@@ -44,7 +44,7 @@ export class CorporateSignup {
   vPinCode:string
   vContactNo:string
   vWhatsUpNo:string
-  vEmailId:string
+  // vEmailId:string
   vWebsiteLink:string
   vTaxDetails:string
   vAuthorizedSignatory:string
