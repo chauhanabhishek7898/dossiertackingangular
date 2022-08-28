@@ -255,7 +255,7 @@ export class CorporateDetailsComponent implements OnInit {
         vPinCode: this.findMemberDetails?.vPinCode,
         vContactNo: this.findMemberDetails?.vContactNo,
         vWhatsUpNo: this.findMemberDetails?.vWhatsUpNo,
-        vEmailId: this.findMemberDetails?.vEmailId,
+        // vEmailId: this.findMemberDetails?.vEmailId,
         vWebsiteLink: this.findMemberDetails?.vWebsiteLink, //  first file  //
         vTaxDetails: this.findMemberDetails?.vTaxDetails,
         vAuthorizedSignatory: this.findMemberDetails?.vAuthorizedSignatory, //  second file  //

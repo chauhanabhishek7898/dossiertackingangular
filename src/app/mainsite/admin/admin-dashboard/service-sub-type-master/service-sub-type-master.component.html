@@ -27,7 +27,7 @@
                 <div class="country-form">
                     <form class="country" [formGroup]="countryMasterForm" (ngSubmit)="onSubmitCountryMasterForm()">
 
-                        
+                       
                         <div class="input-group"  >
                             <label for="">Service Type <span style="color: red;">*</span></label>
                             <!-- <select class="form-select" aria-label="Default select example"
@@ -43,6 +43,20 @@
                                     <!-- <mat-option value='NA'>NA</mat-option>     -->
                                 </mat-select>
                             </mat-form-field>
+                        </div>
+                        <div class="input-group">
+                            <label for="">Service Sub Type <span style="color: red;">*</span></label>
+                            <input name="vCountry" formControlName="vServiceSubType" appAutofocus CountryAutofocus="true"
+                                type="text" class="form-control" placeholder="Service Sub Type" aria-label="Country"
+                                aria-describedby="basic-addon1"
+                                [ngClass]="{'is-invalid' : createCountryMasterFormControls.vServiceSubType.invalid && (createCountryMasterFormControls.vServiceSubType.dirty || createCountryMasterFormControls.vServiceSubType.touched)}">
+
+                            <div class="invalid-tooltip"
+                                *ngIf="createCountryMasterFormControls.vServiceSubType.invalid && (createCountryMasterFormControls.vServiceSubType.dirty || createCountryMasterFormControls.vServiceSubType.touched)">
+                                <span *ngIf="createCountryMasterFormControls.vServiceSubType.errors.required">
+                                    Please enter Service Sub Type.
+                                </span>
+                            </div>
                         </div>
                         <div class="input-group"  >
                             <label for="">City <span style="color: red;">*</span></label>
@@ -147,6 +161,7 @@
             <tr>
                 <th class="no-sort" style="background-image: none !important;">#</th>
                 <th style="background-image: none !important;">Service Type</th>
+                <th style="background-image: none !important;">Service Sub Type</th>
                 <th style="background-image: none !important;">City</th>
                 <th style="background-image: none !important;">Vehicle Type</th>
                 <th style="background-image: none !important;">From KM</th>
@@ -161,6 +176,7 @@
             <tr *ngFor="let item of serviceSubTypeMaster; let i = index">
                 <td>{{i+1}}</td>
                 <td>{{item.vServiceType}}</td>
+                <td>{{item.vServiceSubType}}</td>
                 <td>{{item.CityStateDetailsPX}}</td>
                 <td>{{item.vVehicleType}}</td>
                 <td>{{item.nFromKM}}</td>
