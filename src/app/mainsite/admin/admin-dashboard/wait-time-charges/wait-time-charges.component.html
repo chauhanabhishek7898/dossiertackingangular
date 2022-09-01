@@ -42,12 +42,18 @@
         
 
                             <label for="">Vehicle Type <span style="color: red;">*</span></label>
-                            <select class="form-select" aria-label="Default select example"
+                            <!-- <select class="form-select" aria-label="Default select example"
                                 formControlName="nVId">
                                 <option value="{{item.nVId}}" *ngFor="let item of vehicleTypeMaster">
                                     {{item.vVehicleType}}</option>
-                            </select>
-                           
+                            </select> -->
+                            <mat-form-field appearance="fill">
+                                <mat-select formControlName="nVId" placeholder="Vehicle Type "  name="item">
+                                    <mat-option [value]="item.nVId" *ngFor="let item of vehicleTypeMaster">
+                                        {{item.vVehicleType}}</mat-option>
+                                    <!-- <mat-option value='NA'>NA</mat-option>     -->
+                                </mat-select>
+                            </mat-form-field>
                         </div>
                         <div class="input-group">
                             <label for="">Wait Time Charges <span style="color: red;">*</span></label>

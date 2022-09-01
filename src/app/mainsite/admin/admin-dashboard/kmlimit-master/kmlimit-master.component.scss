@@ -1,1 +1,13 @@
 @import '../country-master/country-master.component.scss';
+mat-form-field {
+    border: 1px solid #ccc;
+    width: 100%;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px !important;
+    font-size: 12px;
+  }
+  ::ng-deep .cdk-overlay-container{
+      z-index: 1000000 !important;
+  }
