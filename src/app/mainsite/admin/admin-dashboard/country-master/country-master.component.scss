@@ -70,6 +70,11 @@ h1 {
             padding: 9px 0px;
             margin-top: 4px;
         }
+        @media screen and (max-width: 480px) {
+            width: 100%;
+            padding: 9px 0px;
+            margin-top:0px !important;
+        }
 
         label {
             display: block;

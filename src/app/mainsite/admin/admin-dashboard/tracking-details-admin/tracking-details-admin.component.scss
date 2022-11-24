@@ -39,7 +39,9 @@
 
 ::ng-deep .mat-form-field {
     width: 92%;
-
+    @media screen and (max-width: 480px) {
+        width: 100% !important;
+    }
     .mat-form-field-wrapper .mat-form-field-flex {
         padding: 0px 12px !important;
         .mat-icon-button {
@@ -57,7 +59,9 @@
     display: flex;
     align-items: end;
     justify-content: space-between;
-
+    @media screen and (max-width: 480px) {
+      flex-direction: column;
+    }
     .input-group {
         input {
             font-size: 12px;
@@ -66,7 +70,10 @@
 
     .input-group-1 {
         width: 31%;
-
+        @media screen and (max-width: 480px) {
+            width: 100% !important;
+            margin-bottom: 10px;
+        }
         label {
             display: block;
             font-size: 12px;

@@ -92,7 +92,10 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
-
+    @media screen and (max-width: 480px) {
+      flex-direction: column;
+      align-items: center;
+    }
     .offer_list_box {
       display: flex;
       flex-direction: column;
@@ -136,7 +139,9 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-
+  @media screen and (max-width: 480px) {
+    flex-direction: column;
+  }
   .left_courier_box {
     display: flex;
     align-items: center;
@@ -149,6 +154,9 @@
     img {
     //   width: 440px;
       width: auto;
+      @media screen and (max-width: 480px) {
+        width: 100%;
+      }
     }
 
   }
@@ -163,7 +171,9 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
-
+    @media screen and (max-width: 480px) {
+      margin-top: 0px;
+    }
     .courier_head {
       h2 {
         font-size: 28px;
@@ -261,6 +271,10 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
+  @media screen and (max-width: 480px) {
+    flex-direction: column;
+    min-height: auto;
+  }
 }
 
 .solutions_box .solution_head,
@@ -278,6 +292,10 @@
   box-sizing: border-box;
   padding: 5px 8px 8px;
   border-radius: 20px;
+  @media screen and (max-width: 480px) {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }
 
 .solution_list_2 li {
@@ -346,7 +364,9 @@
 .solution_list li .list_details p,
 .solution_list_2 li .list_details p {
   font-size: 14px;
-
+  @media screen and (max-width: 480px) {
+    font-size: 10px;
+  }
 }
 
 .list_icon img {
@@ -374,7 +394,7 @@
   box-shadow: 0 0 6px 0 rgb(0 0 0 / 40%);
   border-radius: 10px;
   overflow: hidden;
-  min-height: 327px;
+  min-height: 366px;
   margin-bottom: 22px;
   background: #fff;
 }

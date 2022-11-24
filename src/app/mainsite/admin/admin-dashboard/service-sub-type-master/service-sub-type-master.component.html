@@ -25,7 +25,7 @@
             <mat-divider></mat-divider>
             <div mat-dialog-content>
                 <div class="country-form">
-                    <form class="country" [formGroup]="countryMasterForm" (ngSubmit)="onSubmitCountryMasterForm()">
+                    <form class="country" [formGroup]="countryMasterForm" >
 
                        
                         <div class="input-group"  >
@@ -141,7 +141,7 @@
                             </span>
                         </div>
                         <div class="submit mt-2">
-                            <button class="btn btn-primary" type="submit"
+                            <button class="btn btn-primary" type="submit" (click)="onSubmitCountryMasterForm()"
                                 [disabled]="countryMasterForm.invalid">{{formType}}</button>
                         </div>
                     </form>

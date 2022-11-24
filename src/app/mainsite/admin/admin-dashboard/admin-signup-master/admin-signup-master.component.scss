@@ -12,6 +12,10 @@
 .ma-input-50_percent{
     width: 24%;
     position: relative;
+    @media screen and (max-width: 480px) {
+        width: 100% !important;
+        // margin-bottom: 10px;
+    }
 }
 .otp_send {
     position: absolute;

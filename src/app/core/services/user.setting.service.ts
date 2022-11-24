@@ -14,7 +14,7 @@ export class UserSettingService {
     }
     apiUrl = environment.dossiarApiUrl;
     updateUserEmail(user: object): Observable<any> {
-        return this.http.put(`${this.apiUrl}/UserMaster/UserMasterEmailId_Update`, user);
+        return this.http.put(`${this.apiUrl}/UserMaster/UserEmailId_Update`, user);
 
     }
     CorporateEmail_Update(user: object): Observable<any> {
@@ -26,11 +26,11 @@ export class UserSettingService {
 
     }
     updateUserMobile(user: object): Observable<any> {
-        return this.http.put(`${this.apiUrl}/UserMaster/UserMasterMobileNo_Update`, user);
+        return this.http.put(`${this.apiUrl}/UserMaster/UserMobileNo_Update`, user);
 
     }
     updateUserPassword(user: object): Observable<any> {
-        return this.http.put(`${this.apiUrl}/UserMaster/UserMasterChangePassword_Update`, user);
+        return this.http.put(`${this.apiUrl}/UserMaster/UserChangePassword_Update`, user);
 
     }
 

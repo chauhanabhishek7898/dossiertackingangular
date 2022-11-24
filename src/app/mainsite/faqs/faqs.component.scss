@@ -10,6 +10,9 @@
 .faqs_list {
     width: 70%;
     margin: 0 auto 20px;
+    @media screen and (max-width: 480px) {
+        width: 100%;
+      }
     p{
         font-size: 12px;
     }

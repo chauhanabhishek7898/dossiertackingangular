@@ -1042,7 +1042,8 @@ export class DriverSignupComponent implements OnInit {
           (status: any) => {
             if (status) {
               console.log('status', status);
-              this.showSuccessMessage(status, 'success', true);
+              this.showSuccessMessage(`Congratulations, User has been created successfully. You may further use it to login in the APP.
+              Though, it has to be approved by the APP Administrator before logging in. Thanks, for your kind patience.`, 'success', true);
               this.driverSignupForm.reset();
               setTimeout(() => {
                 this.btnLoader = false;

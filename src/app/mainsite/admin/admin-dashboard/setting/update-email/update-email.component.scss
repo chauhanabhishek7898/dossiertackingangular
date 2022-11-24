@@ -81,7 +81,21 @@
 .country-form {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    width: 100%;
     input{
         border-radius: 5px !important;
+        width: 100% !important;
+    }
+}
+.update{
+    button{
+        background:#7087db;
+        width: 150px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10;
     }
 }
