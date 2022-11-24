@@ -586,4 +586,6 @@ export class AdminDashboardComponent implements OnInit {
     $event.stopPropagation();
     this.menuShow = !this.menuShow
   }
+ 
 }
+

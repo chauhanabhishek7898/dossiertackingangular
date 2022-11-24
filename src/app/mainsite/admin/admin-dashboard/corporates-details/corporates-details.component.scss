@@ -1,1 +1,6 @@
 @import '../customers-saved-addresses-master/customers-saved-addresses-master.component.scss';
+.input-group-1{
+    @media screen and (max-width: 480px) {
+        width: 100% !important;
+    }
+}

@@ -39,6 +39,8 @@ import { PageFilterPipe } from './core/pipe/page-filter';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { DataTablesModule } from 'angular-datatables';
 import { CorporateSignupComponent } from './mainsite/corporate/signup/corporate-signup/corporate-signup.component';
+import { DeliveryAndShippingPloicyComponent } from './mainsite/delivery-and-shipping-ploicy/delivery-and-shipping-ploicy.component';
+import { RefunandCancellationPolicyComponent } from './mainsite/refunand-cancellation-policy/refunand-cancellation-policy.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { CorporateSignupComponent } from './mainsite/corporate/signup/corporate-
     AdminDashboardComponent,
     AdminLoginComponent,
     PageFilterPipe,
-    CorporateSignupComponent
+    CorporateSignupComponent,
+    DeliveryAndShippingPloicyComponent,
+    RefunandCancellationPolicyComponent
   ],
   imports: [
     GooglePlaceModule,

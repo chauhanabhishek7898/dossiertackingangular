@@ -49,14 +49,14 @@
                     <div class="number" >{{mobNumber}}</div>
                     <div class="input-group ">
                         <label for="">Enter OTP</label>
-                        <input appAutofocus (keyup)="onKeyUpEvent($event)" type="number" class="form-control" placeholder="Please enter 4 digits OTP here to verify" aria-label="Username" aria-describedby="basic-addon1">
+                        <input appAutofocus (keyup)="onKeyUpEvent($event)" type="number" class="form-control" placeholder="Enter OTP" aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                     <span class="counter">{{countDownTimer}}</span>
                     <div class="resend-otp">
                         <span>Still not received OTP?</span>
                         <button (click)="resendOtp()" [disabled]="resendOtpBtnDisabled" type="button" class="resend">Resend OTP</button>
                     </div>
-                    <div class="submit addMamber" *ngIf="otpVerified"> <button (click)="updateMobileNumber()" class="btn btn-primary" type="button">Update</button></div>
+                    <div class="submit update" *ngIf="otpVerified"> <button (click)="updateMobileNumber()" class="btn btn-primary" type="button">Update</button></div>
                 </div>
             </div>
         </div>

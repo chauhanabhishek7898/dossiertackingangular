@@ -50,6 +50,7 @@ export class TrackingDetailsAdminComponent implements OnInit {
       "lengthMenu": [5, 10, 25, 50, 100],
       "pageLength": 5,
       "scrollX": true,
+      "searching": false,
       // Configure the buttons
       buttons: [
         { extend: 'excel', text: 'Export To Excel', filename: "ChiefComplaint master" }

@@ -108,9 +108,11 @@ export class ChangePasswordComponent implements OnInit {
     this.loader = true;
     let newPassword = this.updatePasswordForm.controls.newPassword.value;
     this.userMaster = new UserMaster();
-    this.userMaster.nUserId = parseInt(this.storageService.userId!!);
-    this.userMaster.vPassword = newPassword;
-    this.userSettingService.updateUserPassword(this.userMaster).subscribe((res) => {
+    let data={
+      nUserId : parseInt(this.storageService.userId!!),
+      vPassword : newPassword
+    }
+    this.userSettingService.updateUserPassword(data).subscribe((res) => {
       this.showSuccessMessage(res, 'success', true);
       this.updatePasswordForm.reset();
       this.modalRef.hide();

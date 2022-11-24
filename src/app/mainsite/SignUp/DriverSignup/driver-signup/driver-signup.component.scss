@@ -92,6 +92,7 @@
     border-radius: 5px;
     height: 52px;
     margin-top: 3px;
+   
 }
 
 .ma-input-image-adhar-driver {
@@ -103,6 +104,10 @@
     border-radius: 5px;
     height: 52px;
     margin-top: 3px;
+    @media screen and (max-width: 480px) {
+        width: 100% !important;
+        margin-bottom: 10px;
+      }
 }
 
 .image-chose {
@@ -118,7 +123,9 @@
 
 .ma-input-33 {
     width: 32%;
-
+    @media screen and (max-width: 480px) {
+        width: 100% !important;
+      }
     mat-form-field {
         width: 100% !important;
     }
@@ -127,7 +134,9 @@
 .ma-input-24 {
     width: 24%;
     position: relative;
-
+    @media screen and (max-width: 480px) {
+        width: 100% !important;
+      }
     mat-form-field {
         width: 100% !important;
     }
@@ -145,6 +154,9 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    @media screen and (max-width: 480px) {
+        flex-direction: column;
+      }
 }
 
 .example-form {

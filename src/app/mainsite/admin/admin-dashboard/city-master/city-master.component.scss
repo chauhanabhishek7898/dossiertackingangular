@@ -41,6 +41,10 @@
   @media screen and (max-width: 480px) {
     // display: inline-flex !important;
     margin-bottom: 0px;
+
+    .form-check {
+      margin-bottom: 0;
+    }
   }
 
   span {
@@ -71,4 +75,16 @@ mat-form-field {
   align-items: center;
   border-radius: 5px !important;
   font-size: 12px;
+}
+
+.form-check {
+
+  @media screen and (max-width: 480px) {
+    margin-bottom: 33px;
+  }
+}
+.form-check-2{
+  @media screen and (max-width: 480px) {
+    margin-bottom: 10px !important;
+  }
 }

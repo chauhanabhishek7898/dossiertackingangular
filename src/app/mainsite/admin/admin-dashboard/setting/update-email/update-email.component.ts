@@ -147,7 +147,11 @@ export class UpdateEmailComponent implements OnInit {
     this.userMaster = new UserMaster();
     this.userMaster.nUserId = parseInt(this.storageService.userId!!);
     this.userMaster.vEmailId = emailId;
-    this.userSettingService.updateUserEmail(this.userMaster).subscribe((res) => {
+    let data={
+      nUserId : parseInt(this.storageService.userId!!),
+      vEmailId : emailId
+    }
+    this.userSettingService.updateUserEmail(data).subscribe((res) => {
       this.showSuccessMessage(res, 'success', true);
       this.updateEmailForm.reset();
       this.modalRef.hide();

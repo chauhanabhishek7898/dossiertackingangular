@@ -107,7 +107,7 @@ export class AdminLoginComponent implements OnInit {
       if (this.storageService.isUserRemberMe == 'true') {
         this.storageService.setRememberMe = vEmailorPhone;
       }
-      this.authService.loginByvUserNameOrMemberCode(vEmailorPhone, vPassword).subscribe((users: any) => {
+      this.authService.loginByvUserNameOrMemberCode(vEmailorPhone, vPassword,null).subscribe((users: any) => {
         console.log('users',users)
         if (users) {
           if (users.data.length > 0) {

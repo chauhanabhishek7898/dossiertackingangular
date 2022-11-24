@@ -1,9 +1,17 @@
 @import '../../../SignUp/DriverSignup/driver-signup/driver-signup.component.scss';
 .ma-input-24{
     width: 19%;
+    @media screen and (max-width: 480px) {
+        width: 100% !important;
+        
+      }
 }
 .ma-input-25{
     width: 24%;
+    @media screen and (max-width: 480px) {
+        width: 100% !important;
+        margin-bottom: 10px;
+      }
 }
 
     

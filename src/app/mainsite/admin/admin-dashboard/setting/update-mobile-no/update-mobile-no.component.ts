@@ -146,10 +146,14 @@ export class UpdateMobileNoComponent implements OnInit {
   updateMobileNumber() {
     this.loader = true;
     let mobileNumber = this.updateMobileForm.controls.vMobileNumber.value;
-    this.userMaster = new UserMaster();
-    this.userMaster.nUserId = parseInt(this.storageService.userId!!);
-    this.userMaster.vMobileNo = mobileNumber;
-    this.userSettingService.updateUserMobile(this.userMaster).subscribe((res) => {
+    // this.userMaster = new UserMaster();
+    // this.userMaster.nUserId = parseInt(this.storageService.userId!!);
+    // this.userMaster.vMobileNo = mobileNumber;
+    let data={
+      nUserId : parseInt(this.storageService.userId!!),
+      vMobileNo : mobileNumber
+    }
+    this.userSettingService.updateUserMobile(data).subscribe((res) => {
       this.showSuccessMessage(res, 'success', true);
       this.updateMobileForm.reset();
       this.modalRef.hide();
