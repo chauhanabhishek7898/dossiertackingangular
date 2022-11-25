@@ -59,7 +59,7 @@ import { RefunandCancellationPolicyComponent } from './mainsite/refunand-cancell
     PageFilterPipe,
     CorporateSignupComponent,
     DeliveryAndShippingPloicyComponent,
-    RefunandCancellationPolicyComponent
+    RefunandCancellationPolicyComponent,
   ],
   imports: [
     GooglePlaceModule,
@@ -82,6 +82,8 @@ import { RefunandCancellationPolicyComponent } from './mainsite/refunand-cancell
     MatExpansionModule
 
 
+  ],
+  exports: [
   ],
   providers:
     [
