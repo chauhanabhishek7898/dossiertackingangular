@@ -137,7 +137,7 @@ export class ServiceTypeMasterComponent implements OnInit {
     } else {
       this.loader = true;
       this.ServiceTypeMaster = {
-        nSTId: 0,
+        nSTId: this.countryMasterForm.controls.nSTId.value== null ? 0 : this.countryMasterForm.controls.nSTId.value,
         vServiceType: this.countryMasterForm.controls.vServiceType.value,
 
         btActive: this.countryMasterForm.controls.btActive.value,

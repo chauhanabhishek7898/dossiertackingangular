@@ -7,7 +7,22 @@
     </span>
 </div>
 
-
+<span class="mobileMenu2" (click)="sideMenuBar($event)">
+    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 57 58">
+        <g id="Group_2" data-name="Group 2" transform="translate(-425 -174)">
+            <ellipse id="Ellipse_1" data-name="Ellipse 1" cx="28.5" cy="29" rx="28.5" ry="29"
+                transform="translate(425 174)" fill="#fff" />
+            <g id="Group_1" data-name="Group 1" transform="translate(435.292 187.458)">
+                <rect id="Rectangle_1" data-name="Rectangle 1" width="36" height="6" rx="3"
+                    transform="translate(-0.292 -0.458)" />
+                <rect id="Rectangle_2" data-name="Rectangle 2" width="36" height="6" rx="3"
+                    transform="translate(-0.292 24.542)" />
+                <rect id="Rectangle_3" data-name="Rectangle 3" width="24" height="6" rx="3"
+                    transform="translate(11.708 12.042)" />
+            </g>
+        </g>
+    </svg>
+</span>
 <section class="user-profile-section">
     <!-- <mat-progress-bar mode='indeterminate' *ngIf="loaderService.isLoading | async"></mat-progress-bar> -->
     <div class="container-xl ">
@@ -15,12 +30,12 @@
             <div class="row">
                 <div class="col-3" [ngClass]="{'sideBarClose' : toggleMenuProfile}">
                     <div class="user-aside" [ngClass]="{'user-aside2' : roleId==2|| roleId==8}">
-                        <!-- <div class="close-profilemenu" (click)="closeProfilesMenu()">
+                        <div class="close-profilemenu" (click)="closeProfilesMenu()">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                                 <path
                                     d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                             </svg>
-                        </div> -->
+                        </div>
                         <div class="user-head">
                             <div class="user-head-box" [ngClass]="{'user-aside2' : roleId==2 || roleId==8}">
                                 <!-- <div class="user-img">

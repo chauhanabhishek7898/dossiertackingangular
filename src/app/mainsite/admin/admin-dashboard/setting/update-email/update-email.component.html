@@ -64,7 +64,7 @@
                         <span>Still not received OTP?</span>
                         <button (click)="resendOtp()" [disabled]="resendOtpBtnDisabled" type="button" class="resend">Resend OTP</button>
                     </div>
-                    <div class="submit addMamber" *ngIf="otpVerified"> <button (click)="updateEmail()" class="btn btn-primary" type="button">Update</button></div>
+                    <div class="submit update" *ngIf="otpVerified"> <button (click)="updateEmail()" class="btn btn-primary" type="button">Update</button></div>
                 </div>
             </div>
         </div>

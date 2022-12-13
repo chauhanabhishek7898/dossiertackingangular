@@ -87,7 +87,7 @@ export class VehicleTypeMasterComponent implements OnInit {
   countryMaster
   onSubmitCountryMasterForm(): void {
     if (this.formType == "Submit") {
-      let country = this.countryList.find(e => e.vVehicleType == this.countryMasterForm.controls.vCountryName.value);
+      let country = this.countryList.find(e => e.vVehicleType == this.countryMasterForm.controls.vVehicleType.value);
       if (country) {
         // this.notifier.showError("Country is already added")
       } else {
@@ -95,7 +95,6 @@ export class VehicleTypeMasterComponent implements OnInit {
         this.vehicleTypeMaster = {
           nVId: this.countryMasterForm.controls.nVId.value == null ? 0 : this.countryMasterForm.controls.nVId.value,
           vVehicleType: this.countryMasterForm.controls.vVehicleType.value,
-       
           btActive: this.countryMasterForm.controls.btActive.value
         };
         this.vehicleTypeMasterService.VehicleTypeMaster(this.vehicleTypeMaster, this.formType)

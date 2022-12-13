@@ -46,7 +46,7 @@ input[type=number] {
 }
 
 .btnLoader {
-  position: absolute;
+  position: relative;
   width: 100%;
 }
 
@@ -175,9 +175,12 @@ input[type=number] {
 .country-model{
   padding: 0 !important;
 }
-.input-group{
-  margin-bottom:10px;
-}
+// .input-group{
+//   margin-bottom:10px;
+//   @media screen and (max-width: 480px) {
+//     margin-top:0px !important;
+// }
+// }
 
 .invalid-tooltip-2{
     margin-top: 6px !important;

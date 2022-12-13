@@ -17,7 +17,10 @@
 .ma-input-33 {
   width: 24%;
   position: relative;
-
+  @media screen and (max-width: 480px) {
+    width: 100% !important;
+    margin-bottom: 10px;
+  }
   mat-form-field {
     width: 100% !important;
   }
@@ -25,7 +28,10 @@
 
 .ma-input-50 {
   width: 100%;
-
+  @media screen and (max-width: 480px) {
+    width: 100% !important;
+    margin-bottom: 10px;
+  }
 
   mat-form-field {
     width: 100% !important;
@@ -42,6 +48,10 @@
   height: 52px;
   margin-top: 3px;
   position: relative;
+  @media screen and (max-width: 480px) {
+    width: 100% ;
+    margin-bottom: 10px;
+  }
 }
 
 .image-chose {

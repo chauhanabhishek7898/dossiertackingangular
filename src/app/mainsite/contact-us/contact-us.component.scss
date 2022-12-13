@@ -21,6 +21,9 @@
         border-top: 6px solid #40a8d1;
         min-height: 349px;
         margin-bottom: 20px;
+        @media screen and (max-width: 480px) {
+            width: 100%;
+          }
         &:nth-child(2){
             border-top: 6px solid #5bc69d;
         }
