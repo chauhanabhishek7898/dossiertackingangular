@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  dossiarApiUrl: 'http://localhost:5000/api'
-  
+  dossiarApiUrl: 'http://localhost:5000/api',
+  dossiarImageUrl: 'http://localhost:5000',
 
 };
 
