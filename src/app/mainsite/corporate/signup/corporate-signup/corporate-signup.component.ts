@@ -232,8 +232,7 @@ export class CorporateSignupComponent implements OnInit {
         this.file1.name.split('.').pop() == 'jpg'
       ) {
         if (this.file1.size > 2000000) {
-          alert(`Please Select File less than 2 MB`);
-          // alert('Please Select File less than 2 MB');
+          this.showWarningMessage('Please Select File less than 2 MB', 'alert', true);
           this.file1 = null!!;
         } else {
           this.fileName = this.file1.name;
@@ -252,8 +251,7 @@ export class CorporateSignupComponent implements OnInit {
           this.ifSelect1 = true;
         }
       } else {
-        alert(`Invalid file format. Please select .JPG or .PDF file formats.`);
-        // alert('Invalid file format. Please select .JPG or .PDF file formats.');
+        this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
         this.fileFormetValid = false;
       }
       // event.target.value = null;
@@ -284,7 +282,7 @@ export class CorporateSignupComponent implements OnInit {
         this.file2.name.split('.').pop() == 'jpg'
       ) {
         if (this.file2.size > 2000000) {
-          alert(`Please Select File less than 2 MB`);
+          this.showWarningMessage('Please Select File less than 2 MB', 'alert', true);
           this.file2 = null!!;
         } else {
           this.LogoFileName = this.file2.name;
@@ -305,7 +303,7 @@ export class CorporateSignupComponent implements OnInit {
           this.ifSelect2 = true;
         }
       } else {
-        alert(`Invalid file format. Please select .JPG or .PDF file formats.`);
+        this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
         this.fileFormetValid = false;
       }
     }
@@ -337,7 +335,7 @@ export class CorporateSignupComponent implements OnInit {
         this.file4.name.split('.').pop() == 'jpg'
       ) {
         if (this.file4.size > 2000000) {
-          alert(`Please Select File less than 2 MB`);
+          this.showWarningMessage('Please Select File less than 2 MB', 'alert', true);
           this.file4 = null!!;
         } else {
           this.LicenseFileName = this.file4.name;
@@ -358,7 +356,7 @@ export class CorporateSignupComponent implements OnInit {
           this.ifSelect4 = true;
         }
       } else {
-        alert(`Invalid file format. Please select .JPG or .PDF file formats.`);
+        this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
         this.fileFormetValid = false;
       }
     }
@@ -388,8 +386,7 @@ export class CorporateSignupComponent implements OnInit {
         this.file5.name.split('.').pop() == 'jpg'
       ) {
         if (this.file5.size > 2000000) {
-          alert(`Please Select File less than 2 MB`);
-          // alert('Please Select File less than 2 MB');
+          this.showWarningMessage('Please Select File less than 2 MB', 'alert', true);
           this.file5 = null!!;
         } else {
           this.fileName5 = this.file5.name;
@@ -409,8 +406,7 @@ export class CorporateSignupComponent implements OnInit {
           this.ifSelect5 = true;
         }
       } else {
-        alert(`Invalid file format. Please select .JPG or .PDF file formats.`);
-        // alert('Invalid file format. Please select .JPG or .PDF file formats.');
+        this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
         this.fileFormetValid = false;
       }
       // event.target.value = null;
@@ -441,7 +437,7 @@ export class CorporateSignupComponent implements OnInit {
         this.file6.name.split('.').pop() == 'jpg'
       ) {
         if (this.file6.size > 2000000) {
-          alert(`Please Select File less than 2 MB`);
+          this.showWarningMessage('Please Select File less than 2 MB', 'alert', true);
           this.file6 = null!!;
         } else {
           this.LogoUrlLink6 = this.file6.name;
@@ -462,7 +458,7 @@ export class CorporateSignupComponent implements OnInit {
           this.ifSelect6 = true;
         }
       } else {
-        alert(`Invalid file format. Please select .JPG or .PDF file formats.`);
+        this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
         this.fileFormetValid = false;
       }
     }
@@ -493,7 +489,7 @@ export class CorporateSignupComponent implements OnInit {
         this.file3.name.split('.').pop() == 'jpg'
       ) {
         if (this.file3.size > 2000000) {
-          alert(`Please Select File less than 2 MB`);
+          this.showWarningMessage('Please Select File less than 2 MB', 'alert', true);
           this.file3 = null!!;
         } else {
           this.LicenseFileName3 = this.file3.name;
@@ -514,7 +510,7 @@ export class CorporateSignupComponent implements OnInit {
           this.ifSelect3 = true;
         }
       } else {
-        alert(`Invalid file format. Please select .JPG or .PDF file formats.`);
+        this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
         this.fileFormetValid = false;
       }
     }
@@ -768,7 +764,7 @@ export class CorporateSignupComponent implements OnInit {
         this.emailDisabled = true;
         this.emailIconVerified = true;
       } else {
-        alert('OTP not matched');
+        this.showWarningMessage('OTP not matched', 'alert', true);
         this.emailDisabled = false;
         this.emailIconVerified = false;
       }
@@ -847,6 +843,9 @@ export class CorporateSignupComponent implements OnInit {
       }
     } else {
       this.btnLoader = true;
+      if(this.btnLoader = true){
+        this.submit=false
+      }
       this.DriverDetailsList = [];
       this.DriverDetailsModel = {
         nEId: 0,
@@ -881,9 +880,9 @@ export class CorporateSignupComponent implements OnInit {
               console.log('status', status);
               this.showSuccessMessage('Login Created Successfully. Please use mobile APP to access the application', 'success', true);
               this.driverSignupForm.reset();
-              setTimeout(() => {
-                this.btnLoader = false;
-              }, 300);
+              // setTimeout(() => {
+              //   this.btnLoader = false;
+              // }, 300);
             }
           },
           (error: HttpErrorResponse) => {

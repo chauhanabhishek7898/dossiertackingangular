@@ -273,7 +273,7 @@
                         </mat-label>
                         <div class="aadhar-file">
                             <div class="file-name" *ngIf="LicenseUrlLink3 !='false'" style="font-size: 10px;">
-                                <a title={{LicenseFileName3}} [attr.href]="LicenseUrlLink3" target="_blank">{{LicenseFileName3
+                                <a title={{LicenseFileName3}} [attr.href]="LicenseUrlLink3" target="_blank">{{LicenseFileNameSlice3
                                     }}</a>
                             </div>
                             <div class="file-name" *ngIf="LicenseUrlLink3 =='false'" style="font-size: 10px;">
@@ -289,11 +289,6 @@
                         </div>
                     </div>
                     <div class="ma-input-33">
-                        <!-- <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Vehicle Registration No. <span style="color: red;">*</span></mat-label>
-                            <input style="width: 80%;" matInput formControlName="vVehicleRegistrationNo"
-                                placeholder="Enter Vehicle Registration No.">
-                        </mat-form-field> -->
                     </div>
                 </div>
         
@@ -403,14 +398,7 @@
                             conditions.</a>
                     </div>
                 </div>
-        
             </div>
-            <!-- <div class="driver-sign-in-btn">
-                <button class="enable-driver-sign-in-btn-gray" (click)="signUp()" [disabled]="driverSignupForm.invalid"
-                    type="button">
-                    Signup
-                </button>
-            </div> -->
             <div class="submit">
                 <div class="btnLoader" *ngIf="btnLoader">
                     <div class="lds-ring">
@@ -420,15 +408,13 @@
                         <div></div>
                     </div>
                 </div>
-                <div class="log-in-btn">
-                    <button class="enable-btn-gray" (click)="signUp()" [disabled]="driverSignupForm.invalid " type="button">
+                <div class="log-in-btn" *ngIf="submit" >
+                    <button class="enable-btn-gray" (click)="signUp()" [disabled]="driverSignupForm.invalid" type="button">
                         Signup
                     </button>
                 </div>
             </div>
-        
-        
-        
+    
         </form>
         <ng-template #templateOTPForm>
             <form>

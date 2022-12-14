@@ -19,7 +19,7 @@
                             </mat-form-field>
                         </div>
     
-                        <!-- <div class="ma-input-33" style="width: 14%;">
+                        <div class="ma-input-33" style="width: 14%;">
                             <mat-form-field appearance="outline">
                                 <mat-label>DOB </mat-label>
                                 <input formControlName="dtDOB" mask="d0-M0-0000" [max]="maxDate" matInput [matDatepicker]="picker1"
@@ -27,7 +27,7 @@
                                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                 <mat-datepicker #picker1 color="primary"></mat-datepicker>
                             </mat-form-field>
-                        </div> -->
+                        </div>
                         <div class="ma-input-33" style="width: 13%;">
                             <mat-form-field appearance="outline">
                                 <mat-label>Gender <span style="color: red;">*</span></mat-label>
@@ -227,9 +227,7 @@
                             </label>
     
                         </div>
-                        <!-- <div class="termAndCondition" *ngIf="termConditionTxt">
-                            Please agree terms and conditions
-                        </div> -->
+                       
                     </div>
                 </div>
     
@@ -242,9 +240,8 @@
                             <div></div>
                         </div>
                     </div>
-                    <div class="log-in-btn" *ngIf="termConditionTxt">
-                        <button class="enable-btn-gray" (click)="submitCustomerSignup()"
-                            [disabled]="customerSignupForm.invalid " type="button">
+                    <div class="log-in-btn" *ngIf="termConditionTxt" >
+                        <button class="enable-btn-gray" (click)="submitCustomerSignup()" [disabled]="customerSignupForm.invalid" type="button">
                             Signup
                         </button>
                     </div>

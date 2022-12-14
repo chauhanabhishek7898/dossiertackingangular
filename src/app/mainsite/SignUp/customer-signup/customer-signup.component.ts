@@ -86,7 +86,7 @@ export class CustomerSignupComponent implements OnInit {
   options: any =
     {
       componentRestrictions: { country: ["in"] },
-      fields: ["address_components", "geometry","formatted_address"],
+      fields: ["address_components", "geometry", "formatted_address"],
       //types: ["address"],
     }
   maxDate = new Date();
@@ -123,37 +123,36 @@ export class CustomerSignupComponent implements OnInit {
   addressLat
   addressLong
   cityName
-  cityservice=false
+  cityservice = false
   cityServiceResult
   AddressChange(address: any) {
     //setting address from API to local variable
     console.log(address)
     this.formattedaddress = address.formatted_address
-    console.log('this.formattedaddress',this.formattedaddress)
+    console.log('this.formattedaddress', this.formattedaddress)
     this.addressLat = address.geometry.location.lat()
     this.addressLong = address.geometry.location.lng()
     address.address_components.forEach(element => {
       console.log(element)
       let componentType = element.types[0];
       if (componentType == "locality") {
-        // alert(element.long_name);
         this.customerSignupForm.get('nCityId')?.setValue(element.long_name)
-        this.cityName= element.long_name
+        this.cityName = element.long_name
         this.cityNameCheck(element.long_name)
         return;
       }
     });
   }
-  cityNameCheck(cityName){
-    this.customerSignupService.GetCityIdAgainstCityName(cityName).subscribe((res)=>{
+  cityNameCheck(cityName) {
+    this.customerSignupService.GetCityIdAgainstCityName(cityName).subscribe((res) => {
       console.log('res', res)
-      if(typeof res == "string"){
-        this.cityservice= true
-        this.cityServiceResult=res
-      }else{
-        this.cityservice= false
-        this.cityServiceResult=''
-        this.cityId=res[0].nCityId
+      if (typeof res == "string") {
+        this.cityservice = true
+        this.cityServiceResult = res
+      } else {
+        this.cityservice = false
+        this.cityServiceResult = ''
+        this.cityId = res[0].nCityId
       }
     })
   }
@@ -239,7 +238,7 @@ export class CustomerSignupComponent implements OnInit {
   errorMobileTxt = false;
   errorEmailTxt = false;
   errorCityTxt = false;
-  addressError=false
+  addressError = false
   submitCustomerSignup() {
     let dob;
     if (this.customerSignupForm.controls.dtDOB.value != null) {
@@ -262,68 +261,71 @@ export class CustomerSignupComponent implements OnInit {
         this.errorEmailTxt = true;
       }
     } else {
-      if(this.addressLat || this.addressLong){
-      this.btnLoader = true;
-      this.listCustomer = [];
+      if (this.addressLat || this.addressLong) {
+        this.btnLoader = true;
+        if (this.btnLoader = true) {
+          this.termConditionTxt = false;
+        }
+        this.listCustomer = [];
 
-      let docUploadId;
-      let fp;
-      let fz;
-      let fn;
-      docUploadId = 0;
-      fp = '';
-      fz = 0;
-      fn = '';
+        let docUploadId;
+        let fp;
+        let fz;
+        let fn;
+        docUploadId = 0;
+        fp = '';
+        fz = 0;
+        fn = '';
 
-      if (this.file) {
-        this.fileSize = (this.file.size / 1024) as number;
-      }
+        if (this.file) {
+          this.fileSize = (this.file.size / 1024) as number;
+        }
 
-      this.addCustomerUserModel = {
-        nCId: 0,
-        // vCId: this.customerSignupForm.controls.vCId.value,
-        // nUserId: 0,
-        vGender: this.customerSignupForm.controls.vGender.value,
-        dtDOB: dob,
-        vAadhaarNo: this.customerSignupForm.controls.vAadhaarNo.value,
-        vAadhaarNoFilePath: '',
-        vFullName: this.customerSignupForm.controls.vFullName.value,
-        vMobileNo: this.customerSignupForm.controls.vMobileNo.value,
-        vPassword: this.customerSignupForm.controls.vPassword.value,
-        vEmailId: this.customerSignupForm.controls.vEmailId.value,
-        btPromotion: false,
-        nCityId:  this.cityId,
-        vAddress: this.formattedaddress,
-        vFlatNoPlotNoLaneBuilding: this.customerSignupForm.controls.vFlatNoPlotNoLaneBuilding.value,
-        vLat: this.addressLat,
-        vLong: this.addressLong,
-        vCityName:this.cityName
-      };
+        this.addCustomerUserModel = {
+          nCId: 0,
+          // vCId: this.customerSignupForm.controls.vCId.value,
+          // nUserId: 0,
+          vGender: this.customerSignupForm.controls.vGender.value,
+          dtDOB: dob,
+          vAadhaarNo: this.customerSignupForm.controls.vAadhaarNo.value,
+          vAadhaarNoFilePath: '',
+          vFullName: this.customerSignupForm.controls.vFullName.value,
+          vMobileNo: this.customerSignupForm.controls.vMobileNo.value,
+          vPassword: this.customerSignupForm.controls.vPassword.value,
+          vEmailId: this.customerSignupForm.controls.vEmailId.value,
+          btPromotion: false,
+          nCityId: this.cityId,
+          vAddress: this.formattedaddress,
+          vFlatNoPlotNoLaneBuilding: this.customerSignupForm.controls.vFlatNoPlotNoLaneBuilding.value,
+          vLat: this.addressLat,
+          vLong: this.addressLong,
+          vCityName: this.cityName
+        };
 
-      this.listCustomer.push(this.addCustomerUserModel);
-      //   CustomerMasterClass
-      this.CustomerMasterClass = {
-        CustomerMaster: this.listCustomer,
-      };
-      this.customerSignupService.PostCreateUserCustomer(this.CustomerMasterClass).subscribe((status: any) => {
-            // this.apiStatus = `Congratulations, User has been created successfully with member Code:  ${status[0].MemberCode}. You may further use it to login in the APP.
-            // Though, it has to be approved by the APP Administrator before logging in. Thanks, for your kind patience.`;
-            
-            if (status) {
-              this.showSuccessMessage('Login Created Successfully. Please use mobile APP to access the application', 'success', true);
-              this.customerSignupForm.reset();
-              this.file=null!
-            }
-            setTimeout(() => {
-              this.btnLoader = false;
-            }, 300);
-          },
+        this.listCustomer.push(this.addCustomerUserModel);
+        //   CustomerMasterClass
+        this.CustomerMasterClass = {
+          CustomerMaster: this.listCustomer,
+        };
+        this.customerSignupService.PostCreateUserCustomer(this.CustomerMasterClass).subscribe((status: any) => {
+          // this.apiStatus = `Congratulations, User has been created successfully with member Code:  ${status[0].MemberCode}. You may further use it to login in the APP.
+          // Though, it has to be approved by the APP Administrator before logging in. Thanks, for your kind patience.`;
+
+          if (status) {
+            this.showSuccessMessage('Login Created Successfully. Please use mobile APP to access the application', 'success', true);
+            this.customerSignupForm.reset();
+            this.file = null!
+          }
+          setTimeout(() => {
+            this.btnLoader = false;
+          }, 300);
+        },
           (error: HttpErrorResponse) => {
             this.showWarningMessage(error.statusText, 'error', true);
           }
         );
-      }else{
-        this.addressError=true
+      } else {
+        this.addressError = true
       }
     }
   }
@@ -453,8 +455,7 @@ export class CustomerSignupComponent implements OnInit {
         this.file.name.split('.').pop() == 'jpg'
       ) {
         if (this.file.size > 2000000) {
-          alert(`Please Select File less than 2 MB`);
-          // alert('Please Select File less than 2 MB');
+          this.showWarningMessage('Please Select File less than 2 MB', 'alert', true);
           this.file = null!!;
         } else {
           this.fileName = this.file.name;
@@ -473,8 +474,7 @@ export class CustomerSignupComponent implements OnInit {
           this.ifSelect = true;
         }
       } else {
-        alert(`Invalid file format. Please select .JPG or .PDF file formats.`);
-        // alert('Invalid file format. Please select .JPG or .PDF file formats.');
+        this.showWarningMessage('Invalid file format. Please select .JPG or .PDF file formats.', 'alert', true);
         this.fileFormetValid = false;
       }
       // event.target.value = null;
@@ -519,7 +519,7 @@ export class CustomerSignupComponent implements OnInit {
         this.verifiedEmailText = true;
         // this.emailVerified = true;
       } else {
-        alert('OTP not matched');
+        this.showWarningMessage('OTP not matched', 'alert', true);
         this.emailDisable = false;
         // this.emailVerified = false;
       }
@@ -624,7 +624,6 @@ export class CustomerSignupComponent implements OnInit {
     this.countDownTimer = '';
     this.resendOtpBtnDisabled = false;
     // Do timeout stuff here
-    //alert('Timeout for otp');
   }
   resendOtpToMobile() {
     this.sendOtpToMobile();
