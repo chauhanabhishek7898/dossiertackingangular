@@ -1,12 +1,7 @@
 <div class="container-xl">
     <div class="form-box">
-        <!-- <div class="left-form-image">
-    
-        </div> -->
         <div class="right-form">
-    
             <form [formGroup]="customerSignupForm">
-    
                 <div>
                     <div class="signup-head">
                         <h2>Customer's Signup</h2>
@@ -18,10 +13,9 @@
                                 <input formControlName="vFullName" matInput placeholder="Enter Full Name" type="text">
                             </mat-form-field>
                         </div>
-    
                         <div class="ma-input-33" style="width: 14%;">
                             <mat-form-field appearance="outline">
-                                <mat-label>DOB </mat-label>
+                                <mat-label>DOB <span style="color: red;">*</span></mat-label>
                                 <input formControlName="dtDOB" mask="d0-M0-0000" [max]="maxDate" matInput [matDatepicker]="picker1"
                                     placeholder="Enter DOB">
                                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -40,35 +34,6 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-    
-                        <!-- <div class="ma-input-33" style="width: 14%;">
-                            <mat-form-field style="width: 100%;" appearance="outline">
-                                <mat-label>Aadhar No.</mat-label>
-                                <input formControlName="vAadhaarNo" style="width: 80%;" matInput placeholder="Enter Aadhar No.">
-                            </mat-form-field>
-                        </div>
-                        <div class="ma-input-image" style="width: 27%;">
-                            <mat-label [ngClass]="{'LableChange': ifSelect}"
-                                style="color: #6c757d;font-weight: 300;font-size: 13px;">Upload Aadhar
-                                File</mat-label>
-                            <div class="aadhar-file">
-                                <div class="file-name" *ngIf="urlLink !='false'" style="font-size: 10px;">
-                                    <a title={{fileName}} [attr.href]="urlLink" target="_blank">{{fileNameSlice
-                                        }}</a>
-                                </div>
-            
-                                <div class="file-name" *ngIf="urlLink =='false'" style="font-size: 10px;">
-                                    <a target="_blank" [attr.href]="selectedFileBLOB">{{fileNameSlice}}</a>
-                                </div>
-                            </div>
-                            <div class="image-chose">
-                                <button type="button" (click)="files.click()" class="img-uplod-btn">Choose</button>
-                                <span>
-                                    <input formControlName="vAadhaarNoFilePath" type="file" (change)="selectFiles($event)"
-                                        style="display: none;" #files>
-                                </span>
-                            </div>
-                        </div> -->
                         <div class="ma-input-33" style="width: 42.5%;">
                             <mat-form-field style="width: 100%;" appearance="outline">
                                 <mat-label>Address <span style="color: red;">*</span></mat-label>
@@ -83,56 +48,22 @@
                                 <span>{{cityServiceResult}}</span>
                             </div>
                         </div>
-    
-    
-                        <!-- <div class="ma-input-33" style="width: 15.2%;">
-            
-                            <mat-form-field style="width: 100%;" appearance="outline">
-                                <mat-label>Select City <span style="color: red;">*</span></mat-label>
-                                <input id="txtcitySearch" matInput [(ngModel)]="selectedCity" [matAutocomplete]="auto"
-                                    [formControl]="searchCityCtrl" (keyup)="clearSelection($event)">
-                                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelected()"
-                                    [displayWith]="displayWith">
-                                    <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
-                                    <ng-container *ngIf="!isLoading">
-                                        <mat-option *ngFor="let city of cityMasterList" [value]="city">
-                                            <span>{{city.CityStateDetails}}</span>
-                                        </mat-option>
-                                    </ng-container>
-                                </mat-autocomplete>
-                            </mat-form-field>
-                            <div class="available" style="color: red;" *ngIf="errorCityTxt">
-                                <span>Please Select City.</span>
-                            </div>
-                        </div> -->
                         <div class="ma-input-33" style="width: 15.2%;">
-    
                             <mat-form-field style="width: 100%;" appearance="outline">
                                 <mat-label>Select City <span style="color: red;">*</span></mat-label>
-                                <input id="txtcitySearch" matInput formControlName="nCityId">
-                                <!-- <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelected()"
-                                    [displayWith]="displayWith">
-                                    <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
-                                    <ng-container *ngIf="!isLoading">
-                                        <mat-option *ngFor="let city of cityMasterList" [value]="city">
-                                            <span>{{city.CityStateDetails}}</span>
-                                        </mat-option>
-                                    </ng-container>
-                                </mat-autocomplete> -->
+                                <input id="txtcitySearch" matInput  formControlName="nCityId">
                             </mat-form-field>
                             <div class="available" style="color: red;" *ngIf="errorCityTxt">
                                 <span>Please Select City.</span>
                             </div>
                         </div>
                         <div class="ma-input-33" style="width: 8%;">
-    
                             <mat-form-field style="width: 100%;" appearance="outline">
                                 <mat-label>Flat/Plot No. <span style="color: red;">*</span></mat-label>
                                 <input formControlName="vFlatNoPlotNoLaneBuilding" matInput placeholder="Enter Flat No."
                                     type="text">
                             </mat-form-field>
                         </div>
-    
                     </div>
                     <div class="date-and-mob">
                         <div class="ma-input-33">
@@ -145,7 +76,7 @@
                             <div class="available" *ngIf="available">
                                 <span>Mobile number is available.</span>
                             </div>
-                            <div class="available" style="color: red;" *ngIf="Unavailable">
+                            <div class="available" style="color: red;" *ngIf="Unavailable==true">
                                 <span>Mobile number already exists.</span>
                             </div>
                             <div class="available" style="color: red;" *ngIf="errorMobileTxt">
@@ -225,12 +156,9 @@
                                     style="color: blue;border-bottom: 1px solid blue;cursor: pointer;">terms and
                                     conditions.</a>
                             </label>
-    
                         </div>
-                       
                     </div>
                 </div>
-    
                 <div class="submit">
                     <div class="btnLoader" *ngIf="btnLoader">
                         <div class="lds-ring">
@@ -246,9 +174,6 @@
                         </button>
                     </div>
                 </div>
-    
-    
-    
             </form>
         </div>
     </div>

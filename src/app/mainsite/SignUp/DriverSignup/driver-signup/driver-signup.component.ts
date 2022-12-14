@@ -37,7 +37,6 @@ import {
   DriverMasterClass,
 } from 'src/app/mainsite/models/DriverMaster';
 import { CustomerSignupService } from '../../customer-signup/customer-signup.service';
-// import { NotificationService } from 'src/app/core/service/notification.service';
 import * as _moment from 'moment';
 import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
@@ -93,8 +92,7 @@ export class DriverSignupComponent implements OnInit {
     private http: HttpClient,
     private customerSignupService: CustomerSignupService,
     private vehicleTypeMasterService: VehicleTypeMasterService,
-    // private notifier: NotificationService
-  ) {}
+  ) { }
   driverSignupForm: FormGroup;
   apiUrl = environment.dossiarApiUrl;
   @Input() mobileDisabled: boolean = false;
@@ -102,11 +100,8 @@ export class DriverSignupComponent implements OnInit {
   OTPModalTitle: string;
   OTPmodalRef: BsModalRef;
   maxDate;
-
   mobileVerified = false;
-
   btnLoader = false;
-
   // selectedCity: any = { CityDetailsState: "Gurgaon - Haryana" };
   selectedCity: any = { CityStateDetails: '' };
   selectedSpecilization: any = '';
@@ -125,7 +120,6 @@ export class DriverSignupComponent implements OnInit {
   displayWith(value: any) {
     return value?.CityStateDetails;
   }
-
   clearSelection(e) {
     if (e.target.value == '') {
       this.selectedCity = '';
@@ -169,39 +163,37 @@ export class DriverSignupComponent implements OnInit {
         console.log(this.cityMasterList);
       });
     this.maxDate = new Date();
-
-    this.driverSignupForm = this.formBuilder.group(
-      {
-        nDriverId: 0,
-        nUserId: [null],
-        vDriverId: [null],
-        nVId: [null,[Validators.required]],
-        vGender: [null, [Validators.required]],
-        dtDOB: [null, [Validators.required]],
-        nCityId: [null],
-        vPresentAddress: [null, [Validators.required]],
-        vPermanentAddress: [null, [Validators.required]],
-        vAlternateNo: [null, [Validators.required]],
-        vLicenseNo: [null, [Validators.required]],
-        vLicenseNoFilePath: [null, [Validators.required]], //  first file  //
-        vAadhaarNo: [null, [Validators.required]],
-        vAadhaarNoFilePath: [null, [Validators.required]], //  second file  //
-        vPANNo: [null, [Validators.required]],
-        vPANNoFilePath: [null, [Validators.required]], //  third file  //
-        vVehicleRegistrationNo: [null, [Validators.required]],
-        vVehicleRegistrationNoFilePath: [null, [Validators.required]], //  fourthfile  //
-        vVehicleInsuranceFilePath: [null, [Validators.required]], //  fifth file  //
-        vPhotoFilePath: [null, [Validators.required]], //  sixth file  //
-        vFullName: [null, [Validators.required]],
-        vMobileNo: [null, [Validators.required]],
-        vPassword: [null, [Validators.required]],
-        vEmailId: [null, [Validators.required]],
-        btPromotion: [false],
-        vDiriverCurrentLat: [null],
-        vDiriverCurrentLong: [null],
-        vConfirmPassword: [null, [Validators.required]],
-        dTermCondition: [null, [Validators.required]],
-      },
+    this.driverSignupForm = this.formBuilder.group({
+      nDriverId: 0,
+      nUserId: [null],
+      vDriverId: [null],
+      nVId: [null, [Validators.required]],
+      vGender: [null, [Validators.required]],
+      dtDOB: [null, [Validators.required]],
+      nCityId: [null],
+      vPresentAddress: [null, [Validators.required]],
+      vPermanentAddress: [null, [Validators.required]],
+      vAlternateNo: [null, [Validators.required]],
+      vLicenseNo: [null, [Validators.required]],
+      vLicenseNoFilePath: [null, [Validators.required]], //  first file  //
+      vAadhaarNo: [null, [Validators.required]],
+      vAadhaarNoFilePath: [null, [Validators.required]], //  second file  //
+      vPANNo: [null, [Validators.required]],
+      vPANNoFilePath: [null, [Validators.required]], //  third file  //
+      vVehicleRegistrationNo: [null, [Validators.required]],
+      vVehicleRegistrationNoFilePath: [null, [Validators.required]], //  fourthfile  //
+      vVehicleInsuranceFilePath: [null, [Validators.required]], //  fifth file  //
+      vPhotoFilePath: [null, [Validators.required]], //  sixth file  //
+      vFullName: [null, [Validators.required]],
+      vMobileNo: [null, [Validators.required]],
+      vPassword: [null, [Validators.required]],
+      vEmailId: [null, [Validators.required]],
+      btPromotion: [false],
+      vDiriverCurrentLat: [null],
+      vDiriverCurrentLong: [null],
+      vConfirmPassword: [null, [Validators.required]],
+      dTermCondition: [null, [Validators.required]],
+    },
       {
         validator: this.ConfirmedValidator('vPassword', 'vConfirmPassword'),
       }
@@ -224,29 +216,26 @@ export class DriverSignupComponent implements OnInit {
         matchingControl.setErrors(null);
       }
     };
-  
   }
   get createdriverSignupFormControls(): any {
     return this.driverSignupForm.controls;
   }
-
   opentermConditionComponent() {
     this.router.navigate(['/termsandcondition']);
   }
-  // mobileNo: string;
   available: boolean = false;
   Unavailable: boolean = false;
   @ViewChild('searchInput') searchInput: ElementRef;
   isOtpLogin: boolean = false;
   passwordHide: boolean = false;
-  submit=false
+  submit = false
   onCheckboxChange(e) {
     if (e.target.checked) {
-      this.submit=true
+      this.submit = true
       this.isOtpLogin = true;
       this.passwordHide = true;
     } else {
-      this.submit=false
+      this.submit = false
       this.isOtpLogin = false;
       this.passwordHide = false;
     }
@@ -263,7 +252,6 @@ export class DriverSignupComponent implements OnInit {
       this.eye1 = false;
     }
   }
-
   pass2: string = 'password';
   eye2: boolean = false;
   eyeIconConfirmPasswordSignInDriver(type) {
@@ -276,7 +264,6 @@ export class DriverSignupComponent implements OnInit {
       this.eye2 = false;
     }
   }
-  // upload adhar sample code //
   file1: File;
   files: any;
   fileSize: number;
@@ -317,15 +304,12 @@ export class DriverSignupComponent implements OnInit {
           this.ifSelect1 = true;
         }
       } else {
-        this.showWarningMessage('Invalid file format. Please select .JPG or .PDF file formats.', 'alert', true);
+        this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
         this.fileFormetValid = false;
       }
       // event.target.value = null;
     }
   }
-  // upload adhar sample code //
-
-  // upload pan sample code //
   file2: File;
   files2;
   LogoFiles: any;
@@ -369,14 +353,11 @@ export class DriverSignupComponent implements OnInit {
           this.ifSelect2 = true;
         }
       } else {
-        this.showWarningMessage('Invalid file format. Please select .JPG or .PDF file formats.', 'alert', true);
+        this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
         this.fileFormetValid = false;
       }
     }
   }
-  // upload pan sample code //
-
-  // upload license sample code //
   ifSelect4 = false;
   file4: File;
   files4: any;
@@ -385,7 +366,6 @@ export class DriverSignupComponent implements OnInit {
   LicenseUrlLink: string;
   LicenseFileName: string;
   LicenseSelectedFileBLOB;
-  // fileFormetValid = true
   roleId;
   LicenseFileNameSlice;
   selectLicensePhotoFiles(event) {
@@ -422,14 +402,11 @@ export class DriverSignupComponent implements OnInit {
           this.ifSelect4 = true;
         }
       } else {
-        this.showWarningMessage('Invalid file format. Please select .JPG or .PDF file formats.', 'alert', true);
+        this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
         this.fileFormetValid = false;
       }
     }
   }
-  // upload license sample code //
-
-  //  fourth, fifth, sixth file driver code start  //
   file5: File;
   files5: any;
   fileSize5: number;
@@ -438,8 +415,6 @@ export class DriverSignupComponent implements OnInit {
   selectedFileBLOB5;
   fileNameSlice5;
   ifSelect5 = false;
-  // fileFormetValid = false;
-  // ifSelect=false
   selectFilesRegistration(event) {
     this.urlLink5 = '';
     this.files5 = null!!;
@@ -472,15 +447,12 @@ export class DriverSignupComponent implements OnInit {
           this.ifSelect5 = true;
         }
       } else {
-        this.showWarningMessage('Invalid file format. Please select .JPG or .PDF file formats.', 'alert', true);
+        this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
         this.fileFormetValid = false;
       }
       // event.target.value = null;
     }
   }
-  // upload adhar sample code //
-
-  // upload pan sample code //
   file6: File;
   files6;
   LogoFiles6: any;
@@ -524,14 +496,11 @@ export class DriverSignupComponent implements OnInit {
           this.ifSelect6 = true;
         }
       } else {
-        this.showWarningMessage('Invalid file format. Please select .JPG or .PDF file formats.', 'alert', true);
+        this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
         this.fileFormetValid = false;
       }
     }
   }
-  // upload pan sample code //
-
-  // upload license sample code //
   file3: File;
   files3: any;
   LicenseFiles3: any;
@@ -539,7 +508,6 @@ export class DriverSignupComponent implements OnInit {
   LicenseUrlLink3: string;
   LicenseFileName3: string;
   LicenseSelectedFileBLOB3;
-  // fileFormetValid = true
   LicenseFileNameSlice3;
   ifSelect3 = false;
   selectFilesPhoto(event) {
@@ -576,26 +544,23 @@ export class DriverSignupComponent implements OnInit {
           this.ifSelect3 = true;
         }
       } else {
-        this.showWarningMessage('Invalid file format. Please select .JPG or .PDF file formats.', 'alert', true);
+        this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
         this.fileFormetValid = false;
       }
     }
   }
-  //  fourth, fifth, sixth file driver code end  //
-  vehicleTypeMaster:VehicleTypeMaster[]=[]
+  vehicleTypeMaster: VehicleTypeMaster[] = []
   VehicleTypeMaster_SelectAll() {
     this.AllCity = [];
     this.vehicleTypeMasterService.VehicleTypeMaster_SelectAll().subscribe(
       (res) => {
-        this.vehicleTypeMaster=res
-        // this.loaderService.isLoading.next(false);
+        this.vehicleTypeMaster = res
       },
       (error: HttpErrorResponse) => {
         alert(error.statusText);
       }
     );
   }
-  //  city dropdown start here  //
   AllCity: CityMasterList[] = [];
   noMatchFound: boolean = false;
   // selectedCity: CityMasterList = new CityMasterList();
@@ -608,20 +573,17 @@ export class DriverSignupComponent implements OnInit {
         if (this.AllCity.length == 0) {
           this.noMatchFound = true;
         }
-        // this.loaderService.isLoading.next(false);
       },
       (error: HttpErrorResponse) => {
         alert(error.statusText);
       }
     );
   }
-
   onCityKey(event: any) {
     if (event.target.value.length == 0) {
       this.AllCity = [];
       this.noMatchFound = false;
     }
-
     if (!!event.target.value) {
       if (event.target.value.length > 2) {
         this.bindCityDetailsOnDropDown(event.target.value);
@@ -629,7 +591,6 @@ export class DriverSignupComponent implements OnInit {
     }
   }
   isCountryIndia = false;
-
   selectCity(city, e) {
     let country = this.AllCity.find((e) => e.vCountryName != 'India');
     if (country) {
@@ -639,20 +600,17 @@ export class DriverSignupComponent implements OnInit {
       this.isCountryIndia = false;
       this.driverSignupForm.get('vMobileNo')?.setValue(null);
     }
-    //this.otherCuntryName = this.AllCity.find(e => e.vCountryName != "India");
     this.selectedCity = city;
     this.driverSignupForm
       .get('nCityId')
       ?.setValue(this.selectedCity.CityDetails);
     this.selectList = false;
     this.AllCity = [];
-    // this.searchInput.nativeElement.value = '';
   }
   selectCityList($event) {
     $event.stopPropagation();
     this.selectList = true;
   }
-
   showSelectList($event) {
     $event.stopPropagation();
     this.selectList = true;
@@ -661,7 +619,6 @@ export class DriverSignupComponent implements OnInit {
     $event.stopPropagation();
     this.selectList = true;
   }
-
   closeSearch() {
     this.selectList = false;
     this.AllCity = [];
@@ -672,22 +629,16 @@ export class DriverSignupComponent implements OnInit {
       this.closeSearch();
     }, 500);
   }
-
-  //  city dropdown end here  //
-
-  //verify mobile no. and email id
   showMobileOtpBtn: boolean = false;
   showEmailOtpBtn: boolean = false;
   MobileIconVerified = false;
   emailIconVerified = false;
-  // mobileVerified = false;
   mobileNo;
   emailId;
   onMobileNo = false;
   onEmail = false;
   userMobileNo;
   userEmail;
-  //send otp model
   OTPconfig: ModalOptions = {
     animated: true,
     backdrop: 'static',
@@ -695,7 +646,6 @@ export class DriverSignupComponent implements OnInit {
   };
   sendOtpMobileModel(template: TemplateRef<any>) {
     this.timerOn = false;
-
     this.userMobileNo = this.driverSignupForm.controls.vMobileNo.value;
     if (this.userMobileNo) {
       this.OTPmodalRef = this.modalService.show(template, this.OTPconfig);
@@ -712,7 +662,6 @@ export class DriverSignupComponent implements OnInit {
       this.emailOtpVerify = false;
     }
   }
-
   isOtp: boolean = false;
   otpBtnDisable: boolean = false;
   countDownTimer: any;
@@ -742,7 +691,6 @@ export class DriverSignupComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          // this.notifier.showError(error.statusText);
         }
       );
   }
@@ -766,7 +714,6 @@ export class DriverSignupComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          // this.notifier.showError(error.statusText);
         }
       );
   }
@@ -776,7 +723,6 @@ export class DriverSignupComponent implements OnInit {
     m = m < 10 ? 0 + m : m;
     s = s < 10 ? 0 + s : s;
     this.countDownTimer = m * 60 + s + ' second(s)';
-    //document.getElementById('timer').innerHTML = m + ':' + s;
     remaining -= 1;
     if (remaining >= 0 && this.timerOn) {
       setTimeout(() => {
@@ -785,13 +731,10 @@ export class DriverSignupComponent implements OnInit {
       return;
     }
     if (!this.timerOn) {
-      // Do validate stuff here
       return;
     }
     this.countDownTimer = '';
     this.resendOtpBtnDisabled = false;
-    // Do timeout stuff here
-    //alert('Timeout for otp');
   }
   resendOtpToMobile() {
     this.sendOtpToMobile();
@@ -799,33 +742,29 @@ export class DriverSignupComponent implements OnInit {
   resendOtpToEmail() {
     this.sendOtpToEmail();
   }
-  // mobileVerified = false;
   mobileVerifiedForSubmit = false;
-  
-  verifiedMobileText=false
+  verifiedMobileText = false
   onKeyUpEventForMobile(event: any) {
     if (event.target.value.length == 4) {
       if (this.otp == event.target.value) {
         this.OTPmodalRef.hide();
         this.mobileDisable = true;
         this.otpVerify = false;
-        this.verifiedMobileText=true;
+        this.verifiedMobileText = true;
       } else {
-        // this.notifier.showError('OTP not matched');
-        this.mobileDisable = true;
+        this.showWarningMessage('OTP not matched', 'alert', true);
+        this.mobileDisable = false;
       }
     }
   }
-
-  verifiedEmailText=false
+  verifiedEmailText = false
   onKeyUpEventForEmail(event: any) {
     if (event.target.value.length == 4) {
       if (this.otp == event.target.value) {
         this.OTPmodalRef.hide();
-        this.verifiedEmailText=true;
+        this.verifiedEmailText = true;
         this.showMobileOtpBtn = false;
         this.showEmailOtpBtn = false;
-        // this.isSubmitDisable = true;
         this.emailDisabled = true;
         this.emailIconVerified = true;
       } else {
@@ -851,7 +790,7 @@ export class DriverSignupComponent implements OnInit {
         this.loginService
           .checkExistsMobileNo(this.mobileNo)
           .subscribe((res) => {
-             if (typeof res != 'string') {
+            if (typeof res != 'string') {
               this.otpVerify = true;
               this.errorMobileTxt = false;
               this.available = true;
@@ -880,8 +819,6 @@ export class DriverSignupComponent implements OnInit {
       }
     }, 500);
   }
-
-  //  submit  start  //
   errorMobileTxt = false;
   errorEmailTxt = false;
   errorCityTxt = false;
@@ -893,25 +830,20 @@ export class DriverSignupComponent implements OnInit {
     console.log(this.emailDisable);
     if (
       !this.cityId ||
-      this.mobileDisable == false 
-      // ||
-      // this.emailDisable == false
+      this.mobileDisable == false
     ) {
       if (!this.cityId) {
         this.errorCityTxt = true;
       }
       if (this.mobileDisable == false) {
-        this.Unavailable=false;
+        this.Unavailable = false;
         this.available = false;
         this.errorMobileTxt = true;
       }
-      // if (this.emailDisable == false) {
-      //   this.errorEmailTxt = true;
-      // }
     } else {
       this.btnLoader = true;
-      if(this.btnLoader = true){
-        this.submit=false
+      if (this.btnLoader = true) {
+        this.submit = false
       }
       let docUploadId;
       let fp1;
@@ -997,7 +929,6 @@ export class DriverSignupComponent implements OnInit {
           this.driverSignupForm.controls.nDriverId.value == null
             ? 0
             : this.driverSignupForm.controls.nDriverId.value,
-        // vDriverId: this.driverSignupForm.controls.vDriverId.value,
         nVId: parseInt(this.driverSignupForm.controls.nVId.value),
         vGender: this.driverSignupForm.controls.vGender.value,
         dtDOB: dob,
@@ -1045,6 +976,11 @@ export class DriverSignupComponent implements OnInit {
               this.showSuccessMessage(`Congratulations, User has been created successfully. You may further use it to login in the APP.
               Though, it has to be approved by the APP Administrator before logging in. Thanks, for your kind patience.`, 'success', true);
               this.driverSignupForm.reset();
+              this.verifiedMobileText = false;
+              this.verifiedEmailText = false;
+              this.mobileDisable = false;
+              this.emailDisable=false;
+              this.resetImageData();
               setTimeout(() => {
                 this.btnLoader = false;
               }, 300);
@@ -1056,7 +992,7 @@ export class DriverSignupComponent implements OnInit {
         );
     }
   }
-showSuccessMessage(message, icon, showCancelButton = true) {
+  showSuccessMessage(message, icon, showCancelButton = true) {
     return Swal.fire({
       // title: title,
       text: message,
@@ -1072,5 +1008,24 @@ showSuccessMessage(message, icon, showCancelButton = true) {
       showCancelButton: showCancelButton,
     });
   }
-  //  submit  end  //
+  resetImageData() {
+    this.urlLink = '';
+    this.file1 = null!!;
+    this.fileNameSlice = '';
+    this.file2 = null!!;
+    this.LogoFileNameSlice = '';
+    this.LogoUrlLink = '';
+    this.file4 = null!!;
+    this.LicenseFileNameSlice = '';
+    this.LicenseUrlLink = '';
+    this.urlLink5 = '';
+    this.files5 = null!!;
+    this.fileNameSlice5 = '';
+    this.file6 = null!!;
+    this.LogoFileNameSlice6 = '';
+    this.LogoUrlLink6 = '';
+    this.file3 = null!!;
+    this.LicenseFileNameSlice3 = '';
+    this.LicenseUrlLink3 = '';
+  }
 }

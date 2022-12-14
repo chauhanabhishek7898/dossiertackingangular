@@ -1,15 +1,11 @@
 <div class="container-xl">
-    
     <div class="form-box">
         <div class="signup-head">
             <h2>Driver's Signup</h2>
         </div>
         <form [formGroup]="driverSignupForm" action="">
-        
             <div>
-        
                 <div class="date-and-mob">
-                    <!--    full name(S)    -->
                     <div class="ma-input-24">
                         <mat-form-field style="width: 100%;" appearance="outline">
                             <mat-label>Full Name <span style="color: red;">*</span></mat-label>
@@ -21,20 +17,15 @@
                             </div>
                         </mat-form-field>
                     </div>
-                    <!--    full name(E)    -->
-        
-                    <!--    dob driver(S)    -->
                     <div class="ma-input-24">
                         <mat-form-field appearance="outline">
                             <mat-label>DOB <span style="color: red;">*</span></mat-label>
-                            <input formControlName="dtDOB" mask="d0-M0-0000" [max]="maxDate" matInput [matDatepicker]="picker1"
-                                placeholder="Enter DOB">
+                            <input formControlName="dtDOB" mask="d0-M0-0000" [max]="maxDate" matInput
+                                [matDatepicker]="picker1" placeholder="Enter DOB">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1 color="primary"></mat-datepicker>
                         </mat-form-field>
                     </div>
-                    <!--    dob driver(E)    -->
-        
                     <div class="ma-input-24">
                         <mat-form-field appearance="outline">
                             <mat-label>Gender <span style="color: red;">*</span></mat-label>
@@ -47,7 +38,6 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-        
                     <div class="ma-input-24">
                         <mat-form-field style="width: 100%;" appearance="outline">
                             <mat-label>Alternate No. <span style="color: red;">*</span></mat-label>
@@ -60,7 +50,6 @@
                         </mat-form-field>
                     </div>
                     <div class="ma-input-33" style="width: 40.2%;">
-        
                         <mat-form-field style="width: 100%;" appearance="outline">
                             <mat-label>Select City <span style="color: red;">*</span></mat-label>
                             <input id="txtcitySearch" matInput [(ngModel)]="selectedCity" [matAutocomplete]="auto"
@@ -68,7 +57,8 @@
                             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelected()"
                                 [displayWith]="displayWith">
                                 <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
-                                <mat-option *ngIf="!isLoading && cityMasterList.length==0" class="is-loading">Record not found
+                                <mat-option *ngIf="!isLoading && cityMasterList.length==0" class="is-loading">Record not
+                                    found
                                 </mat-option>
                                 <ng-container *ngIf="!isLoading">
                                     <mat-option *ngFor="let city of cityMasterList" [value]="city">
@@ -84,7 +74,8 @@
                     <div class="ma-input-24">
                         <mat-form-field style="width: 100%;" appearance="outline">
                             <mat-label>Aadhaar No. <span style="color: red;">*</span></mat-label>
-                            <input formControlName="vAadhaarNo" style="width: 80%;" matInput placeholder="Enter Aadhaar No."
+                            <input formControlName="vAadhaarNo" style="width: 80%;" matInput
+                                placeholder="Enter Aadhaar No."
                                 [ngClass]="{'is-invalid' : createdriverSignupFormControls.vAadhaarNo.invalid && (createdriverSignupFormControls.vAadhaarNo.dirty || createdriverSignupFormControls.vAadhaarNo.touched)}">
                             <div class="invalid-tooltip"
                                 *ngIf="createdriverSignupFormControls.vAadhaarNo.invalid && (createdriverSignupFormControls.vAadhaarNo.dirty || createdriverSignupFormControls.vAadhaarNo.touched)">
@@ -117,7 +108,8 @@
                     <div class="ma-input-33" style="width: 100%;">
                         <mat-form-field style="width: 100%;" appearance="outline">
                             <mat-label>Present Address <span style="color: red;">*</span></mat-label>
-                            <input formControlName="vPresentAddress" matInput placeholder="Enter Present Address" type="text"
+                            <input formControlName="vPresentAddress" matInput placeholder="Enter Present Address"
+                                type="text"
                                 [ngClass]="{'is-invalid' : createdriverSignupFormControls.vPresentAddress.invalid && (createdriverSignupFormControls.vPresentAddress.dirty || createdriverSignupFormControls.vPresentAddress.touched)}">
                             <div class="invalid-tooltip"
                                 *ngIf="createdriverSignupFormControls.vPresentAddress.invalid && (createdriverSignupFormControls.vPresentAddress.dirty || createdriverSignupFormControls.vPresentAddress.touched)">
@@ -125,7 +117,6 @@
                             </div>
                         </mat-form-field>
                     </div>
-        
                     <div class="ma-input-33" style="width: 100%;">
                         <mat-form-field style="width: 100%;" appearance="outline">
                             <mat-label>Permanent Address <span style="color: red;">*</span></mat-label>
@@ -138,10 +129,6 @@
                             </div>
                         </mat-form-field>
                     </div>
-        
-        
-        
-        
                     <div class="ma-input-33">
                         <mat-form-field style="width: 100%;" appearance="outline">
                             <mat-label>PAN No. <span style="color: red;">*</span></mat-label>
@@ -154,7 +141,6 @@
                         </mat-form-field>
                     </div>
                     <div class="ma-input-image-adhar-driver">
-        
                         <mat-label [ngClass]="{'dynamicchange': ifSelect2}"
                             style="color: #6c757d;font-weight: 300;font-size: 15px;">Upload PAN
                             Card <span style="color: red;">*</span>
@@ -164,7 +150,6 @@
                                 <a title={{LogoFileName}} [attr.href]="LogoUrlLink" target="_blank">{{LogoFileNameSlice
                                     }}</a>
                             </div>
-        
                             <div class="file-name" *ngIf="LogoUrlLink =='false'" style="font-size: 10px;">
                                 <a target="_blank" [attr.href]="LogoSelectedFileBLOB">{{LogoFileNameSlice}}</a>
                             </div>
@@ -180,7 +165,8 @@
                     <div class="ma-input-33">
                         <mat-form-field style="width: 100%;" appearance="outline">
                             <mat-label>License No. <span style="color: red;">*</span></mat-label>
-                            <input formControlName="vLicenseNo" style="width: 80%;" matInput placeholder="Enter LIcense No.">
+                            <input formControlName="vLicenseNo" style="width: 80%;" matInput
+                                placeholder="Enter LIcense No.">
                         </mat-form-field>
                     </div>
                     <div class="ma-input-image-adhar-driver">
@@ -190,7 +176,8 @@
                         </mat-label>
                         <div class="aadhar-file">
                             <div class="file-name" *ngIf="LicenseUrlLink !='false'" style="font-size: 10px;">
-                                <a title={{LicenseFileName}} [attr.href]="LicenseUrlLink" target="_blank">{{LicenseFileNameSlice
+                                <a title={{LicenseFileName}} [attr.href]="LicenseUrlLink"
+                                    target="_blank">{{LicenseFileNameSlice
                                     }}</a>
                             </div>
                             <div class="file-name" *ngIf="LicenseUrlLink =='false'" style="font-size: 10px;">
@@ -209,7 +196,8 @@
                         <mat-form-field appearance="outline">
                             <mat-label>Select Vehicle Type <span style="color: red;">*</span></mat-label>
                             <mat-select formControlName="nVId">
-                                <mat-option [value]="item.nVId" *ngFor="let item of vehicleTypeMaster"  >{{item.vVehicleType}}</mat-option>
+                                <mat-option [value]="item.nVId"
+                                    *ngFor="let item of vehicleTypeMaster">{{item.vVehicleType}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -242,7 +230,6 @@
                             </span>
                         </div>
                     </div>
-        
                     <div class="ma-input-image-adhar-driver">
                         <mat-label [ngClass]="{'dynamicchange': ifSelect6}"
                             style="color: #6c757d;font-weight: 300;font-size: 15px;">
@@ -250,7 +237,8 @@
                         </mat-label>
                         <div class="aadhar-file">
                             <div class="file-name" *ngIf="LogoUrlLink6 !='false'" style="font-size: 10px;">
-                                <a title={{LogoFileName6}} [attr.href]="LogoUrlLink6" target="_blank">{{LogoFileNameSlice6
+                                <a title={{LogoFileName6}} [attr.href]="LogoUrlLink6"
+                                    target="_blank">{{LogoFileNameSlice6
                                     }}</a>
                             </div>
                             <div class="file-name" *ngIf="LogoUrlLink6 =='false'" style="font-size: 10px;">
@@ -265,7 +253,6 @@
                             </span>
                         </div>
                     </div>
-        
                     <div class="ma-input-image-adhar-driver">
                         <mat-label [ngClass]="{'dynamicchange': ifSelect3}"
                             style="color: #6c757d;font-weight: 300;font-size: 15px;">
@@ -273,11 +260,12 @@
                         </mat-label>
                         <div class="aadhar-file">
                             <div class="file-name" *ngIf="LicenseUrlLink3 !='false'" style="font-size: 10px;">
-                                <a title={{LicenseFileName3}} [attr.href]="LicenseUrlLink3" target="_blank">{{LicenseFileNameSlice3
+                                <a title={{LicenseFileName3}} [attr.href]="LicenseUrlLink3"
+                                    target="_blank">{{LicenseFileNameSlice3
                                     }}</a>
                             </div>
                             <div class="file-name" *ngIf="LicenseUrlLink3 =='false'" style="font-size: 10px;">
-                                <a target="_blank" [attr.href]="LicenseSelectedFileBLOB3">{{LicenseFileName3}}</a>
+                                <a target="_blank" [attr.href]="LicenseSelectedFileBLOB3">{{LicenseFileNameSlice3}}</a>
                             </div>
                         </div>
                         <div class="image-chose">
@@ -291,24 +279,21 @@
                     <div class="ma-input-33">
                     </div>
                 </div>
-        
-        
                 <div class="signup-head" style="margin-top: 20px;">
                     <h2>Sign Up Details - Driver's Login</h2>
                 </div>
-        
                 <div class="date-and-mob">
-        
                     <div class="ma-input-24">
                         <mat-form-field style="width: 100%;" appearance="outline">
                             <mat-label>Mobile Number <span style="color: red;">*</span></mat-label>
-                            <input (keyup)="onUserNameKeyUpEvent($event)" #searchInput maxlength="10" matInput formControlName="vMobileNo"
-                                placeholder="Enter Mobile Number" type="number" [readonly]="mobileDisable">
+                            <input (keyup)="onUserNameKeyUpEvent($event)" #searchInput maxlength="10" matInput
+                                formControlName="vMobileNo" placeholder="Enter Mobile Number" type="number"
+                                [readonly]="mobileDisable">
                         </mat-form-field>
                         <div class="available" *ngIf="available">
                             <span>Mobile number is available.</span>
                         </div>
-                        <div class="available" style="color: red;" *ngIf="Unavailable">
+                        <div class="available" style="color: red;" *ngIf="Unavailable==true">
                             <span>Mobile number is already exist.</span>
                         </div>
                         <div class="available" style="color: red;" *ngIf="errorMobileTxt">verifiedEmailText
@@ -318,8 +303,8 @@
                             <span>Mobile number verified.</span>
                         </div>
                         <span class="checkIcon" *ngIf="verifiedMobileText">
-                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em"
-                                preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em"
+                                height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                                 <path fill="green" fill-rule="evenodd"
                                     d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11s11-4.925 11-11S18.075 1 12 1Zm4.768 9.14a1 1 0 1 0-1.536-1.28l-4.3 5.159l-2.225-2.226a1 1 0 0 0-1.414 1.414l3 3a1 1 0 0 0 1.475-.067l5-6Z"
                                     clip-rule="evenodd" />
@@ -342,8 +327,8 @@
                             <span>Email verified.</span>
                         </div>
                         <span class="checkIcon" *ngIf="verifiedEmailText">
-                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em"
-                                preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em"
+                                height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                                 <path fill="green" fill-rule="evenodd"
                                     d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11s11-4.925 11-11S18.075 1 12 1Zm4.768 9.14a1 1 0 1 0-1.536-1.28l-4.3 5.159l-2.225-2.226a1 1 0 0 0-1.414 1.414l3 3a1 1 0 0 0 1.475-.067l5-6Z"
                                     clip-rule="evenodd" />
@@ -360,7 +345,8 @@
                                 type="{{pass1}}">
                             <mat-icon (click)="eyeIconPasswordSignInDriver('show')" *ngIf="eye1" matSuffix>visibility
                             </mat-icon>
-                            <mat-icon (click)="eyeIconPasswordSignInDriver('hide')" *ngIf="!eye1" matSuffix>visibility_off
+                            <mat-icon (click)="eyeIconPasswordSignInDriver('hide')" *ngIf="!eye1"
+                                matSuffix>visibility_off
                             </mat-icon>
                         </mat-form-field>
                     </div>
@@ -370,21 +356,23 @@
                             <input formControlName="vConfirmPassword" style="width: 80%;" matInput
                                 placeholder="Enter Confirm Password" type="{{pass2}}"
                                 [ngClass]="{'is-invalid' : createdriverSignupFormControls.vConfirmPassword.invalid && (createdriverSignupFormControls.vConfirmPassword.dirty || createdriverSignupFormControls.vConfirmPassword.touched)}">
-                            <mat-icon (click)="eyeIconConfirmPasswordSignInDriver('show')" *ngIf="eye2" matSuffix>visibility
+                            <mat-icon (click)="eyeIconConfirmPasswordSignInDriver('show')" *ngIf="eye2"
+                                matSuffix>visibility
                             </mat-icon>
                             <mat-icon (click)="eyeIconConfirmPasswordSignInDriver('hide')" *ngIf="!eye2" matSuffix>
                                 visibility_off
                             </mat-icon>
                             <div class="invalid-tooltip"
                                 *ngIf="createdriverSignupFormControls.vConfirmPassword.invalid && (createdriverSignupFormControls.vConfirmPassword.dirty || createdriverSignupFormControls.vConfirmPassword.touched)">
-                                <span *ngIf="createdriverSignupFormControls.vConfirmPassword.errors.required "> Please enter
+                                <span *ngIf="createdriverSignupFormControls.vConfirmPassword.errors.required "> Please
+                                    enter
                                     Confirm Password *</span>
-                                <span *ngIf="createdriverSignupFormControls.vConfirmPassword.errors.confirmedValidator">Password
+                                <span
+                                    *ngIf="createdriverSignupFormControls.vConfirmPassword.errors.confirmedValidator">Password
                                     and Confirm password does not match.</span>
                             </div>
                         </mat-form-field>
                     </div>
-        
                 </div>
                 <div class="forgot">
                     <div class="form-check">
@@ -408,20 +396,21 @@
                         <div></div>
                     </div>
                 </div>
-                <div class="log-in-btn" *ngIf="submit" >
-                    <button class="enable-btn-gray" (click)="signUp()" [disabled]="driverSignupForm.invalid" type="button">
+                <div class="log-in-btn" *ngIf="submit">
+                    <button class="enable-btn-gray" (click)="signUp()" [disabled]="driverSignupForm.invalid"
+                        type="button">
                         Signup
                     </button>
                 </div>
             </div>
-    
         </form>
         <ng-template #templateOTPForm>
             <form>
                 <div class="country-edit-model">
                     <div class="model-header">
                         <h1 mat-dialog-title>{{OTPModalTitle}}</h1>
-                        <button type="button" class="close-btn pull-right" aria-label="Close" (click)="OTPmodalRef.hide()">
+                        <button type="button" class="close-btn pull-right" aria-label="Close"
+                            (click)="OTPmodalRef.hide()">
                             <mat-icon>close</mat-icon>
                         </button>
                     </div>
@@ -445,8 +434,8 @@
                                 <span class="counter">{{countDownTimer}}</span>
                                 <div class="resend-otp" *ngIf="userMobileNo!=''">
                                     <span>Still not received OTP?</span>
-                                    <button (click)="resendOtpToMobile()" [disabled]="resendOtpBtnDisabled" type="button"
-                                        class="resend">Resend OTP</button>
+                                    <button (click)="resendOtpToMobile()" [disabled]="resendOtpBtnDisabled"
+                                        type="button" class="resend">Resend OTP</button>
                                 </div>
                                 <div class="resend-otp" *ngIf="userEmail!=''">
                                     <span>Still not received OTP?</span>

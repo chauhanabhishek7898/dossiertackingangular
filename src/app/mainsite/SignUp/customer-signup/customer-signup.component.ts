@@ -44,7 +44,6 @@ import {
 } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
-// import { NotificationService } from 'src/app/core/service/notification.service';
 import { CustomerSignupService } from './customer-signup.service';
 import {
   CustomerMaster,
@@ -79,8 +78,6 @@ export const MY_FORMATS = {
   ],
 })
 export class CustomerSignupComponent implements OnInit {
-  // @Input()
-  // options: Object;
   formattedaddress = " ";
   @Input()
   options: any =
@@ -109,11 +106,8 @@ export class CustomerSignupComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private customerSignupService: CustomerSignupService,
     private http: HttpClient,
-    // private notifier: NotificationService,
     private modalService: BsModalService
   ) { }
-  //  city dropdown end here  //
-  // selectedCity: any = { CityDetailsState: "Gurgaon - Haryana" };
   selectedCity: any = { CityStateDetails: '' };
   selectedSpecilization: any = '';
   cityName1 = 'Gurgaon';
@@ -152,8 +146,7 @@ export class CustomerSignupComponent implements OnInit {
       } else {
         this.cityservice = false
         this.cityServiceResult = ''
-        this.cityId = res[0].nCityId
-      }
+        this.cityId = res[0].nCityId      }
     })
   }
   onSelected() {
@@ -216,7 +209,7 @@ export class CustomerSignupComponent implements OnInit {
         vEmailId: [null,],
         vPassword: [null, [Validators.required]],
         vConfirmPassword: [null, [Validators.required]],
-        dtDOB: [null],
+        dtDOB: [null, [Validators.required]],
         btPromotion: [false],
         nCityId: [null],
         vAddress: [null, [Validators.required]],
@@ -230,11 +223,11 @@ export class CustomerSignupComponent implements OnInit {
         validator: this.ConfirmedValidator('vPassword', 'vConfirmPassword'),
       }
     );
+    this.customerSignupForm.get('nCityId')?.disable();
   }
   addCustomerUserModel: CustomerMaster;
   listCustomer: CustomerMaster[] = [];
   CustomerMasterClass: CustomerMasterClass;
-  //  signup customer  //
   errorMobileTxt = false;
   errorEmailTxt = false;
   errorCityTxt = false;
@@ -267,24 +260,8 @@ export class CustomerSignupComponent implements OnInit {
           this.termConditionTxt = false;
         }
         this.listCustomer = [];
-
-        let docUploadId;
-        let fp;
-        let fz;
-        let fn;
-        docUploadId = 0;
-        fp = '';
-        fz = 0;
-        fn = '';
-
-        if (this.file) {
-          this.fileSize = (this.file.size / 1024) as number;
-        }
-
         this.addCustomerUserModel = {
           nCId: 0,
-          // vCId: this.customerSignupForm.controls.vCId.value,
-          // nUserId: 0,
           vGender: this.customerSignupForm.controls.vGender.value,
           dtDOB: dob,
           vAadhaarNo: this.customerSignupForm.controls.vAadhaarNo.value,
@@ -301,20 +278,18 @@ export class CustomerSignupComponent implements OnInit {
           vLong: this.addressLong,
           vCityName: this.cityName
         };
-
         this.listCustomer.push(this.addCustomerUserModel);
-        //   CustomerMasterClass
         this.CustomerMasterClass = {
           CustomerMaster: this.listCustomer,
         };
         this.customerSignupService.PostCreateUserCustomer(this.CustomerMasterClass).subscribe((status: any) => {
-          // this.apiStatus = `Congratulations, User has been created successfully with member Code:  ${status[0].MemberCode}. You may further use it to login in the APP.
-          // Though, it has to be approved by the APP Administrator before logging in. Thanks, for your kind patience.`;
-
           if (status) {
             this.showSuccessMessage('Login Created Successfully. Please use mobile APP to access the application', 'success', true);
             this.customerSignupForm.reset();
-            this.file = null!
+            this.verifiedMobileText = false;
+            this.verifiedEmailText = false;
+            this.mobileDisable = false;
+            this.emailDisable=false;
           }
           setTimeout(() => {
             this.btnLoader = false;
@@ -322,6 +297,7 @@ export class CustomerSignupComponent implements OnInit {
         },
           (error: HttpErrorResponse) => {
             this.showWarningMessage(error.statusText, 'error', true);
+            this.btnLoader = false;
           }
         );
       } else {
@@ -329,10 +305,7 @@ export class CustomerSignupComponent implements OnInit {
       }
     }
   }
-
-  //  signup customer  //
   mobileNo: string;
-
   otpVerify = false;
   emailOtpVerify = false;
   @ViewChild('searchInput') searchInput: ElementRef;
@@ -433,53 +406,6 @@ export class CustomerSignupComponent implements OnInit {
   opentermConditionComponent() {
     this.router.navigate(['/termsandcondition']);
   }
-  // upload adhar sample code //
-  file: File;
-  files: any;
-  fileSize: number;
-  urlLink: string;
-  fileName: string;
-  selectedFileBLOB;
-  fileNameSlice;
-  fileFormetValid = false;
-  ifSelect = false;
-  selectFiles(event) {
-    this.urlLink = '';
-    this.file = null!!;
-    this.fileNameSlice = '';
-    if (event.target.files) {
-      this.files = event.target.files;
-      this.file = event.target.files[0];
-      if (
-        this.file.name.split('.').pop() == 'pdf' ||
-        this.file.name.split('.').pop() == 'jpg'
-      ) {
-        if (this.file.size > 2000000) {
-          this.showWarningMessage('Please Select File less than 2 MB', 'alert', true);
-          this.file = null!!;
-        } else {
-          this.fileName = this.file.name;
-          if (this.fileName.length > 6) {
-            this.fileNameSlice = this.fileName.slice(0, 10);
-          }
-          this.urlLink = 'false';
-          this.fileFormetValid = true;
-          var reader = new FileReader();
-          reader.readAsDataURL(this.file);
-          reader.onload = (event: any) => {
-            var blob = new Blob(this.files, { type: this.file.type });
-            var url = window.URL.createObjectURL(blob);
-            this.selectedFileBLOB = this.sanitizer.bypassSecurityTrustUrl(url);
-          };
-          this.ifSelect = true;
-        }
-      } else {
-        this.showWarningMessage('Invalid file format. Please select .JPG or .PDF file formats.', 'alert', true);
-        this.fileFormetValid = false;
-      }
-      // event.target.value = null;
-    }
-  }
   OTPModalTitle: string;
   OTPmodalRef: BsModalRef;
   mobileNoOtp = false;
@@ -499,12 +425,9 @@ export class CustomerSignupComponent implements OnInit {
         this.mobileDisable = true;
         this.otpVerify = false;
         this.verifiedMobileText = true;
-        // this.mobileVerified = true;
-
       } else {
-        // this.notifier.showError('OTP not matched');
+        this.showWarningMessage('OTP not matched', 'alert', true);
         this.mobileDisable = false;
-        // this.mobileVerified = false;
       }
     }
   }
@@ -517,11 +440,9 @@ export class CustomerSignupComponent implements OnInit {
         this.emailDisable = true;
         this.emailOtpVerify = false;
         this.verifiedEmailText = true;
-        // this.emailVerified = true;
       } else {
         this.showWarningMessage('OTP not matched', 'alert', true);
         this.emailDisable = false;
-        // this.emailVerified = false;
       }
     }
   }
@@ -573,7 +494,6 @@ export class CustomerSignupComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          // this.notifier.showError(error.statusText);
         }
       );
   }
@@ -599,7 +519,6 @@ export class CustomerSignupComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          // this.notifier.showError(error.statusText);
         }
       );
   }
@@ -609,7 +528,6 @@ export class CustomerSignupComponent implements OnInit {
     m = m < 10 ? 0 + m : m;
     s = s < 10 ? 0 + s : s;
     this.countDownTimer = m * 60 + s + ' second(s)';
-    //document.getElementById('timer').innerHTML = m + ':' + s;
     remaining -= 1;
     if (remaining >= 0 && this.timerOn) {
       setTimeout(() => {
@@ -618,12 +536,10 @@ export class CustomerSignupComponent implements OnInit {
       return;
     }
     if (!this.timerOn) {
-      // Do validate stuff here
       return;
     }
     this.countDownTimer = '';
     this.resendOtpBtnDisabled = false;
-    // Do timeout stuff here
   }
   resendOtpToMobile() {
     this.sendOtpToMobile();

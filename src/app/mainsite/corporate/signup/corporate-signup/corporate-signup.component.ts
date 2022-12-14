@@ -34,7 +34,6 @@ export class CorporateSignupComponent implements OnInit {
     private http: HttpClient,
     private customerSignupService: CustomerSignupService,
     private vehicleTypeMasterService: VehicleTypeMasterService,
-    // private notifier: NotificationService
   ) { }
   driverSignupForm: FormGroup;
   apiUrl = environment.dossiarApiUrl;
@@ -43,11 +42,8 @@ export class CorporateSignupComponent implements OnInit {
   OTPModalTitle: string;
   OTPmodalRef: BsModalRef;
   maxDate;
-
   mobileVerified = false;
-
   btnLoader = false;
-
   // selectedCity: any = { CityDetailsState: "Gurgaon - Haryana" };
   selectedCity: any = { CityStateDetails: '' };
   selectedSpecilization: any = '';
@@ -66,7 +62,6 @@ export class CorporateSignupComponent implements OnInit {
   displayWith(value: any) {
     return value?.CityStateDetails;
   }
-
   clearSelection(e) {
     if (e.target.value == '') {
       this.selectedCity = '';
@@ -110,7 +105,6 @@ export class CorporateSignupComponent implements OnInit {
         console.log(this.cityMasterList);
       });
     this.maxDate = new Date();
-
     this.driverSignupForm = this.formBuilder.group(
       {
         nEId: 0,
@@ -127,11 +121,11 @@ export class CorporateSignupComponent implements OnInit {
         vContactNo: [null, [Validators.required]],
         vWhatsUpNo: [null],
         vEmailId: [null],
-        vWebsiteLink: [null], //  first file  //
+        vWebsiteLink: [null],
         vTaxDetails: [null],
-        vAuthorizedSignatory: [null], //  second file  //
+        vAuthorizedSignatory: [null],
         vAuthorizedSignatoryFilePath: [null],
-        vLogoFilePath: [null], //  third file  //
+        vLogoFilePath: [null],
         vPassword: [null, [Validators.required]],
         vConfirmPassword: [null, [Validators.required]],
         dTermCondition: [false, [Validators.required]],
@@ -158,31 +152,28 @@ export class CorporateSignupComponent implements OnInit {
         matchingControl.setErrors(null);
       }
     };
-
   }
   get createdriverSignupFormControls(): any {
     return this.driverSignupForm.controls;
   }
-
   opentermConditionComponent() {
     this.router.navigate(['/termsandcondition']);
   }
-  // mobileNo: string;
   available: boolean = false;
   Unavailable: boolean = false;
   @ViewChild('searchInput') searchInput: ElementRef;
   isOtpLogin: boolean = false;
   passwordHide: boolean = false;
-  submit=false
+  submit = false
   onCheckboxChange(e) {
     if (e.target.checked) {
       this.isOtpLogin = true;
       this.passwordHide = true;
-      this.submit=true
+      this.submit = true
     } else {
       this.isOtpLogin = false;
       this.passwordHide = false;
-      this.submit=false
+      this.submit = false
     }
   }
   pass1: string = 'password';
@@ -197,7 +188,6 @@ export class CorporateSignupComponent implements OnInit {
       this.eye1 = false;
     }
   }
-
   pass2: string = 'password';
   eye2: boolean = false;
   eyeIconConfirmPasswordSignInDriver(type) {
@@ -210,160 +200,150 @@ export class CorporateSignupComponent implements OnInit {
       this.eye2 = false;
     }
   }
-  // upload adhar sample code //
-  file1: File;
-  files: any;
-  fileSize: number;
-  urlLink: string;
-  fileName: string;
-  selectedFileBLOB;
-  fileNameSlice;
-  fileFormetValid = false;
-  ifSelect1 = false;
-  selectFiles(event) {
-    this.urlLink = '';
-    this.file1 = null!!;
-    this.fileNameSlice = '';
-    if (event.target.files) {
-      this.files = event.target.files;
-      this.file1 = event.target.files[0];
-      if (
-        this.file1.name.split('.').pop() == 'pdf' ||
-        this.file1.name.split('.').pop() == 'jpg'
-      ) {
-        if (this.file1.size > 2000000) {
-          this.showWarningMessage('Please Select File less than 2 MB', 'alert', true);
-          this.file1 = null!!;
-        } else {
-          this.fileName = this.file1.name;
-          if (this.fileName.length > 6) {
-            this.fileNameSlice = this.fileName.slice(0, 10);
-          }
-          this.urlLink = 'false';
-          this.fileFormetValid = true;
-          var reader = new FileReader();
-          reader.readAsDataURL(this.file1);
-          reader.onload = (event: any) => {
-            var blob = new Blob(this.files, { type: this.file1.type });
-            var url = window.URL.createObjectURL(blob);
-            this.selectedFileBLOB = this.sanitizer.bypassSecurityTrustUrl(url);
-          };
-          this.ifSelect1 = true;
-        }
-      } else {
-        this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
-        this.fileFormetValid = false;
-      }
-      // event.target.value = null;
-    }
-  }
-  // upload adhar sample code //
-
-  // upload pan sample code //
-  file2: File;
-  files2;
-  LogoFiles: any;
-  fileSize2: number;
-  LogoUrlLink: string;
-  LogoFileName: string;
-  LogoSelectedFileBLOB;
-  LogoFileNameSlice;
-  ifSelect2 = false;
-  selectLogoFiles(event) {
-    this.file2 = null!!;
-    this.LogoFileNameSlice = '';
-    this.LogoUrlLink = '';
-    if (event.target.files) {
-      this.files2 = event.target.files;
-      this.file2 = event.target.files[0];
-      console.log(this.file2);
-      if (
-        this.file2.name.split('.').pop() == 'pdf' ||
-        this.file2.name.split('.').pop() == 'jpg'
-      ) {
-        if (this.file2.size > 2000000) {
-          this.showWarningMessage('Please Select File less than 2 MB', 'alert', true);
-          this.file2 = null!!;
-        } else {
-          this.LogoFileName = this.file2.name;
-          if (this.LogoFileName.length > 6) {
-            this.LogoFileNameSlice = this.LogoFileName.slice(0, 10);
-          }
-          var reader = new FileReader();
-          this.LogoUrlLink = 'false';
-          this.fileFormetValid = true;
-          reader.readAsDataURL(this.file2);
-          reader.onload = (event: any) => {
-            // this.urlLink = event.target.result
-            var blob2 = new Blob(this.files2, { type: this.file2.type });
-            var url2 = window.URL.createObjectURL(blob2);
-            this.LogoSelectedFileBLOB =
-              this.sanitizer.bypassSecurityTrustUrl(url2);
-          };
-          this.ifSelect2 = true;
-        }
-      } else {
-        this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
-        this.fileFormetValid = false;
-      }
-    }
-  }
-  // upload pan sample code //
-
-  // upload license sample code //
-  ifSelect4 = false;
-  file4: File;
-  files4: any;
-  LicenseFiles: any;
-  fileSize4: number;
-  LicenseUrlLink: string;
-  LicenseFileName: string;
-  LicenseSelectedFileBLOB;
-  // fileFormetValid = true
-  roleId;
-  LicenseFileNameSlice;
-  selectLicensePhotoFiles(event) {
-    this.file4 = null!!;
-    this.LicenseFileNameSlice = '';
-    this.LicenseUrlLink = '';
-    if (event.target.files) {
-      this.files4 = event.target.files;
-      this.file4 = event.target.files[0];
-      console.log(this.file4);
-      if (
-        this.file4.name.split('.').pop() == 'pdf' ||
-        this.file4.name.split('.').pop() == 'jpg'
-      ) {
-        if (this.file4.size > 2000000) {
-          this.showWarningMessage('Please Select File less than 2 MB', 'alert', true);
-          this.file4 = null!!;
-        } else {
-          this.LicenseFileName = this.file4.name;
-          if (this.LicenseFileName.length > 6) {
-            this.LicenseFileNameSlice = this.LicenseFileName.slice(0, 10);
-          }
-          var reader = new FileReader();
-          this.LicenseUrlLink = 'false';
-          this.fileFormetValid = true;
-          reader.readAsDataURL(event.target.files[0]);
-          reader.onload = (event: any) => {
-            // this.urlLink = event.target.result
-            var blob4 = new Blob(this.files4, { type: this.file4.type });
-            var url4 = window.URL.createObjectURL(blob4);
-            this.LicenseSelectedFileBLOB =
-              this.sanitizer.bypassSecurityTrustUrl(url4);
-          };
-          this.ifSelect4 = true;
-        }
-      } else {
-        this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
-        this.fileFormetValid = false;
-      }
-    }
-  }
-  // upload license sample code //
-
-  //  fourth, fifth, sixth file driver code start  //
+  // file1: File;
+  // files: any;
+  // fileSize: number;
+  // urlLink: string;
+  // fileName: string;
+  // selectedFileBLOB;
+  // fileNameSlice;
+  // fileFormetValid = false;
+  // ifSelect1 = false;
+  // selectFiles(event) {
+  //   this.urlLink = '';
+  //   this.file1 = null!!;
+  //   this.fileNameSlice = '';
+  //   if (event.target.files) {
+  //     this.files = event.target.files;
+  //     this.file1 = event.target.files[0];
+  //     if (
+  //       this.file1.name.split('.').pop() == 'pdf' ||
+  //       this.file1.name.split('.').pop() == 'jpg'
+  //     ) {
+  //       if (this.file1.size > 2000000) {
+  //         this.showWarningMessage('Please Select File less than 2 MB', 'alert', true);
+  //         this.file1 = null!!;
+  //       } else {
+  //         this.fileName = this.file1.name;
+  //         if (this.fileName.length > 6) {
+  //           this.fileNameSlice = this.fileName.slice(0, 10);
+  //         }
+  //         this.urlLink = 'false';
+  //         this.fileFormetValid = true;
+  //         var reader = new FileReader();
+  //         reader.readAsDataURL(this.file1);
+  //         reader.onload = (event: any) => {
+  //           var blob = new Blob(this.files, { type: this.file1.type });
+  //           var url = window.URL.createObjectURL(blob);
+  //           this.selectedFileBLOB = this.sanitizer.bypassSecurityTrustUrl(url);
+  //         };
+  //         this.ifSelect1 = true;
+  //       }
+  //     } else {
+  //       this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
+  //       this.fileFormetValid = false;
+  //     }
+  //     // event.target.value = null;
+  //   }
+  // }
+  // file2: File;
+  // files2;
+  // LogoFiles: any;
+  // fileSize2: number;
+  // LogoUrlLink: string;
+  // LogoFileName: string;
+  // LogoSelectedFileBLOB;
+  // LogoFileNameSlice;
+  // ifSelect2 = false;
+  // selectLogoFiles(event) {
+  //   this.file2 = null!!;
+  //   this.LogoFileNameSlice = '';
+  //   this.LogoUrlLink = '';
+  //   if (event.target.files) {
+  //     this.files2 = event.target.files;
+  //     this.file2 = event.target.files[0];
+  //     console.log(this.file2);
+  //     if (
+  //       this.file2.name.split('.').pop() == 'pdf' ||
+  //       this.file2.name.split('.').pop() == 'jpg'
+  //     ) {
+  //       if (this.file2.size > 2000000) {
+  //         this.showWarningMessage('Please Select File less than 2 MB', 'alert', true);
+  //         this.file2 = null!!;
+  //       } else {
+  //         this.LogoFileName = this.file2.name;
+  //         if (this.LogoFileName.length > 6) {
+  //           this.LogoFileNameSlice = this.LogoFileName.slice(0, 10);
+  //         }
+  //         var reader = new FileReader();
+  //         this.LogoUrlLink = 'false';
+  //         this.fileFormetValid = true;
+  //         reader.readAsDataURL(this.file2);
+  //         reader.onload = (event: any) => {
+  //           // this.urlLink = event.target.result
+  //           var blob2 = new Blob(this.files2, { type: this.file2.type });
+  //           var url2 = window.URL.createObjectURL(blob2);
+  //           this.LogoSelectedFileBLOB =
+  //             this.sanitizer.bypassSecurityTrustUrl(url2);
+  //         };
+  //         this.ifSelect2 = true;
+  //       }
+  //     } else {
+  //       this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
+  //       this.fileFormetValid = false;
+  //     }
+  //   }
+  // }
+  // ifSelect4 = false;
+  // file4: File;
+  // files4: any;
+  // LicenseFiles: any;
+  // fileSize4: number;
+  // LicenseUrlLink: string;
+  // LicenseFileName: string;
+  // LicenseSelectedFileBLOB;
+  // // fileFormetValid = true
+  // roleId;
+  // LicenseFileNameSlice;
+  // selectLicensePhotoFiles(event) {
+  //   this.file4 = null!!;
+  //   this.LicenseFileNameSlice = '';
+  //   this.LicenseUrlLink = '';
+  //   if (event.target.files) {
+  //     this.files4 = event.target.files;
+  //     this.file4 = event.target.files[0];
+  //     console.log(this.file4);
+  //     if (
+  //       this.file4.name.split('.').pop() == 'pdf' ||
+  //       this.file4.name.split('.').pop() == 'jpg'
+  //     ) {
+  //       if (this.file4.size > 2000000) {
+  //         this.showWarningMessage('Please Select File less than 2 MB', 'alert', true);
+  //         this.file4 = null!!;
+  //       } else {
+  //         this.LicenseFileName = this.file4.name;
+  //         if (this.LicenseFileName.length > 6) {
+  //           this.LicenseFileNameSlice = this.LicenseFileName.slice(0, 10);
+  //         }
+  //         var reader = new FileReader();
+  //         this.LicenseUrlLink = 'false';
+  //         this.fileFormetValid = true;
+  //         reader.readAsDataURL(event.target.files[0]);
+  //         reader.onload = (event: any) => {
+  //           // this.urlLink = event.target.result
+  //           var blob4 = new Blob(this.files4, { type: this.file4.type });
+  //           var url4 = window.URL.createObjectURL(blob4);
+  //           this.LicenseSelectedFileBLOB =
+  //             this.sanitizer.bypassSecurityTrustUrl(url4);
+  //         };
+  //         this.ifSelect4 = true;
+  //       }
+  //     } else {
+  //       this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
+  //       this.fileFormetValid = false;
+  //     }
+  //   }
+  // }
   file5: File;
   files5: any;
   fileSize5: number;
@@ -412,60 +392,54 @@ export class CorporateSignupComponent implements OnInit {
       // event.target.value = null;
     }
   }
-  // upload adhar sample code //
-
-  // upload pan sample code //
-  file6: File;
-  files6;
-  LogoFiles6: any;
-  fileSize6: number;
-  LogoUrlLink6: string;
-  LogoFileName6: string;
-  LogoSelectedFileBLOB6;
-  LogoFileNameSlice6;
-  ifSelect6 = false;
-  selectFilesInsurance(event) {
-    this.file6 = null!!;
-    this.LogoFileNameSlice6 = '';
-    this.LogoUrlLink6 = '';
-    if (event.target.files) {
-      this.files6 = event.target.files;
-      this.file6 = event.target.files[0];
-      console.log(this.file6);
-      if (
-        this.file6.name.split('.').pop() == 'pdf' ||
-        this.file6.name.split('.').pop() == 'jpg'
-      ) {
-        if (this.file6.size > 2000000) {
-          this.showWarningMessage('Please Select File less than 2 MB', 'alert', true);
-          this.file6 = null!!;
-        } else {
-          this.LogoUrlLink6 = this.file6.name;
-          if (this.LogoFileName.length > 6) {
-            this.LogoFileNameSlice6 = this.LogoUrlLink6.slice(0, 10);
-          }
-          var reader = new FileReader();
-          this.LogoUrlLink6 = 'false';
-          this.fileFormetValid = true;
-          reader.readAsDataURL(this.file6);
-          reader.onload = (event: any) => {
-            // this.urlLink = event.target.result
-            var blob6 = new Blob(this.files6, { type: this.file6.type });
-            var url6 = window.URL.createObjectURL(blob6);
-            this.LogoSelectedFileBLOB6 =
-              this.sanitizer.bypassSecurityTrustUrl(url6);
-          };
-          this.ifSelect6 = true;
-        }
-      } else {
-        this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
-        this.fileFormetValid = false;
-      }
-    }
-  }
-  // upload pan sample code //
-
-  // upload license sample code //
+  // file6: File;
+  // files6;
+  // LogoFiles6: any;
+  // fileSize6: number;
+  // LogoUrlLink6: string;
+  // LogoFileName6: string;
+  // LogoSelectedFileBLOB6;
+  // LogoFileNameSlice6;
+  // ifSelect6 = false;
+  // selectFilesInsurance(event) {
+  //   this.file6 = null!!;
+  //   this.LogoFileNameSlice6 = '';
+  //   this.LogoUrlLink6 = '';
+  //   if (event.target.files) {
+  //     this.files6 = event.target.files;
+  //     this.file6 = event.target.files[0];
+  //     console.log(this.file6);
+  //     if (
+  //       this.file6.name.split('.').pop() == 'pdf' ||
+  //       this.file6.name.split('.').pop() == 'jpg'
+  //     ) {
+  //       if (this.file6.size > 2000000) {
+  //         this.showWarningMessage('Please Select File less than 2 MB', 'alert', true);
+  //         this.file6 = null!!;
+  //       } else {
+  //         this.LogoUrlLink6 = this.file6.name;
+  //         if (this.LogoFileName.length > 6) {
+  //           this.LogoFileNameSlice6 = this.LogoUrlLink6.slice(0, 10);
+  //         }
+  //         var reader = new FileReader();
+  //         this.LogoUrlLink6 = 'false';
+  //         this.fileFormetValid = true;
+  //         reader.readAsDataURL(this.file6);
+  //         reader.onload = (event: any) => {
+  //           // this.urlLink = event.target.result
+  //           var blob6 = new Blob(this.files6, { type: this.file6.type });
+  //           var url6 = window.URL.createObjectURL(blob6);
+  //           this.LogoSelectedFileBLOB6 =
+  //             this.sanitizer.bypassSecurityTrustUrl(url6);
+  //         };
+  //         this.ifSelect6 = true;
+  //       }
+  //     } else {
+  //       this.showWarningMessage('Invalid file format Please select .JPG or .PDF file formats.', 'alert', true);
+  //       this.fileFormetValid = false;
+  //     }
+  //   }
+  // }
   file3: File;
   files3: any;
   LicenseFiles3: any;
@@ -473,7 +447,7 @@ export class CorporateSignupComponent implements OnInit {
   LicenseUrlLink3: string;
   LicenseFileName3: string;
   LicenseSelectedFileBLOB3;
-  // fileFormetValid = true
+  fileFormetValid = true
   LicenseFileNameSlice3;
   ifSelect3 = false;
   selectFilesPhoto(event) {
@@ -515,24 +489,20 @@ export class CorporateSignupComponent implements OnInit {
       }
     }
   }
-  //  fourth, fifth, sixth file driver code end  //
   vehicleTypeMaster: VehicleTypeMaster[] = []
   VehicleTypeMaster_SelectAll() {
     this.AllCity = [];
     this.vehicleTypeMasterService.VehicleTypeMaster_SelectAll().subscribe(
       (res) => {
         this.vehicleTypeMaster = res
-        // this.loaderService.isLoading.next(false);
       },
       (error: HttpErrorResponse) => {
         alert(error.statusText);
       }
     );
   }
-  //  city dropdown start here  //
   AllCity: CityMasterList[] = [];
   noMatchFound: boolean = false;
-  // selectedCity: CityMasterList = new CityMasterList();
   selectList: boolean = false;
   bindCityDetailsOnDropDown(cityName: string) {
     this.AllCity = [];
@@ -542,20 +512,17 @@ export class CorporateSignupComponent implements OnInit {
         if (this.AllCity.length == 0) {
           this.noMatchFound = true;
         }
-        // this.loaderService.isLoading.next(false);
       },
       (error: HttpErrorResponse) => {
         alert(error.statusText);
       }
     );
   }
-
   onCityKey(event: any) {
     if (event.target.value.length == 0) {
       this.AllCity = [];
       this.noMatchFound = false;
     }
-
     if (!!event.target.value) {
       if (event.target.value.length > 2) {
         this.bindCityDetailsOnDropDown(event.target.value);
@@ -563,7 +530,6 @@ export class CorporateSignupComponent implements OnInit {
     }
   }
   isCountryIndia = false;
-
   selectCity(city, e) {
     let country = this.AllCity.find((e) => e.vCountryName != 'India');
     if (country) {
@@ -573,20 +539,17 @@ export class CorporateSignupComponent implements OnInit {
       this.isCountryIndia = false;
       this.driverSignupForm.get('vMobileNo')?.setValue(null);
     }
-    //this.otherCuntryName = this.AllCity.find(e => e.vCountryName != "India");
     this.selectedCity = city;
     this.driverSignupForm
       .get('nCityId')
       ?.setValue(this.selectedCity.CityDetails);
     this.selectList = false;
     this.AllCity = [];
-    // this.searchInput.nativeElement.value = '';
   }
   selectCityList($event) {
     $event.stopPropagation();
     this.selectList = true;
   }
-
   showSelectList($event) {
     $event.stopPropagation();
     this.selectList = true;
@@ -595,7 +558,6 @@ export class CorporateSignupComponent implements OnInit {
     $event.stopPropagation();
     this.selectList = true;
   }
-
   closeSearch() {
     this.selectList = false;
     this.AllCity = [];
@@ -606,22 +568,16 @@ export class CorporateSignupComponent implements OnInit {
       this.closeSearch();
     }, 500);
   }
-
-  //  city dropdown end here  //
-
-  //verify mobile no. and email id
   showMobileOtpBtn: boolean = false;
   showEmailOtpBtn: boolean = false;
   MobileIconVerified = false;
   emailIconVerified = false;
-  // mobileVerified = false;
   mobileNo;
   emailId;
   onMobileNo = false;
   onEmail = false;
   userMobileNo;
   userEmail;
-  //send otp model
   OTPconfig: ModalOptions = {
     animated: true,
     backdrop: 'static',
@@ -630,7 +586,7 @@ export class CorporateSignupComponent implements OnInit {
   sendOtpMobileModel(template: TemplateRef<any>) {
     this.timerOn = false;
     this.userMobileNo = this.driverSignupForm.controls.vCPMobileNo.value;
-    console.log('this.userMobileNo',  this.userMobileNo)
+    console.log('this.userMobileNo', this.userMobileNo)
     if (this.userMobileNo) {
       this.OTPmodalRef = this.modalService.show(template, this.OTPconfig);
       this.sendOtpToMobile();
@@ -640,14 +596,13 @@ export class CorporateSignupComponent implements OnInit {
   sendOtpEmailModel(template: TemplateRef<any>) {
     this.timerOn = false;
     this.userEmail = this.driverSignupForm.controls.vCPEmailId.value;
-    console.log('this.userEmail',this.userEmail)
+    console.log('this.userEmail', this.userEmail)
     if (this.userEmail) {
       this.OTPmodalRef = this.modalService.show(template, this.OTPconfig);
       this.sendOtpToEmail();
       this.emailOtpVerify = false;
     }
   }
-
   isOtp: boolean = false;
   otpBtnDisable: boolean = false;
   countDownTimer: any;
@@ -677,7 +632,6 @@ export class CorporateSignupComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          // this.notifier.showError(error.statusText);
         }
       );
   }
@@ -701,7 +655,6 @@ export class CorporateSignupComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
-          // this.notifier.showError(error.statusText);
         }
       );
   }
@@ -711,7 +664,6 @@ export class CorporateSignupComponent implements OnInit {
     m = m < 10 ? 0 + m : m;
     s = s < 10 ? 0 + s : s;
     this.countDownTimer = m * 60 + s + ' second(s)';
-    //document.getElementById('timer').innerHTML = m + ':' + s;
     remaining -= 1;
     if (remaining >= 0 && this.timerOn) {
       setTimeout(() => {
@@ -720,13 +672,10 @@ export class CorporateSignupComponent implements OnInit {
       return;
     }
     if (!this.timerOn) {
-      // Do validate stuff here
       return;
     }
     this.countDownTimer = '';
     this.resendOtpBtnDisabled = false;
-    // Do timeout stuff here
-    //alert('Timeout for otp');
   }
   resendOtpToMobile() {
     this.sendOtpToMobile();
@@ -734,24 +683,22 @@ export class CorporateSignupComponent implements OnInit {
   resendOtpToEmail() {
     this.sendOtpToEmail();
   }
-  // mobileVerified = false;
   mobileVerifiedForSubmit = false;
-
   verifiedMobileText = false
   onKeyUpEventForMobile(event: any) {
     if (event.target.value.length == 4) {
       if (this.otp == event.target.value) {
         this.OTPmodalRef.hide();
         this.mobileDisable = true;
+        this.showMobileOtpBtn = false;
         this.otpVerify = false;
         this.verifiedMobileText = true;
       } else {
-        // this.notifier.showError('OTP not matched');
-        this.mobileDisable = true;
+        this.showWarningMessage('OTP not matched', 'alert', true);
+        this.mobileDisable = false;
       }
     }
   }
-
   verifiedEmailText = false
   onKeyUpEventForEmail(event: any) {
     if (event.target.value.length == 4) {
@@ -760,7 +707,6 @@ export class CorporateSignupComponent implements OnInit {
         this.verifiedEmailText = true;
         this.showMobileOtpBtn = false;
         this.showEmailOtpBtn = false;
-        // this.isSubmitDisable = true;
         this.emailDisabled = true;
         this.emailIconVerified = true;
       } else {
@@ -771,12 +717,12 @@ export class CorporateSignupComponent implements OnInit {
     }
   }
   otpVerify;
-  cpMobile=null
+  cpMobile = null
   onUserNameKeyUpEvent(event: any) {
     this.available = false;
     this.Unavailable = false;
     this.mobileNo = event.target.value;
-    this.cpMobile=event.target.value
+    this.cpMobile = event.target.value
     if (event.target.value.length == 0) {
       this.Unavailable = false;
       this.available = false;
@@ -784,7 +730,6 @@ export class CorporateSignupComponent implements OnInit {
     }
     if (!!event.target.value) {
       if (this.mobileNo.length > 9) {
-
         this.loginService
           .checkExistsMobileNo(this.mobileNo)
           .subscribe((res) => {
@@ -806,11 +751,11 @@ export class CorporateSignupComponent implements OnInit {
   }
   emailOtpVerify;
   timers;
-  cpEmail=null
+  cpEmail = null
   emailvalidate(event: any) {
     clearTimeout(this.timers);
     let validate = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
-    this.cpEmail=event.target.value
+    this.cpEmail = event.target.value
     this.timers = setTimeout(() => {
       if (validate.test(event.target.value)) {
         this.emailOtpVerify = true;
@@ -819,17 +764,14 @@ export class CorporateSignupComponent implements OnInit {
       }
     }, 500);
   }
-
-  //  submit  start  //
   errorMobileTxt = false;
   errorEmailTxt = false;
   errorCityTxt = false;
-
   DriverDetailsModel: CorporateSignup;
   DriverDetailsList: CorporateSignup[] = [];
   DriverMasterClass: CorporateMasterClass;
   signUp() {
-    if (!this.cityId ||this.mobileDisable == false && this.emailDisable == false) {
+    if (!this.cityId || this.mobileDisable == false && this.emailDisable == false) {
       if (!this.cityId) {
         this.errorCityTxt = true;
       }
@@ -843,8 +785,8 @@ export class CorporateSignupComponent implements OnInit {
       }
     } else {
       this.btnLoader = true;
-      if(this.btnLoader = true){
-        this.submit=false
+      if (this.btnLoader = true) {
+        this.submit = false
       }
       this.DriverDetailsList = [];
       this.DriverDetailsModel = {
@@ -860,35 +802,37 @@ export class CorporateSignupComponent implements OnInit {
         vPinCode: this.driverSignupForm.controls.vPinCode.value,
         vContactNo: this.driverSignupForm.controls.vContactNo.value,
         vWhatsUpNo: this.driverSignupForm.controls.vWhatsUpNo.value,
-
         vWebsiteLink: this.driverSignupForm.controls.vWebsiteLink.value,
         vTaxDetails: this.driverSignupForm.controls.vTaxDetails.value,
         vAuthorizedSignatory: this.driverSignupForm.controls.vAuthorizedSignatory.value,
         vAuthorizedSignatoryFilePath: '',
         vLogoFilePath: '',
-        // vMobileNo: this.driverSignupForm.controls.vMobileNo.value,
         vPassword: this.driverSignupForm.controls.vPassword.value,
-        // vEmailId: this.driverSignupForm.controls.vEmailId.value,
       };
       this.DriverDetailsList.push(this.DriverDetailsModel);
       this.DriverMasterClass = {
         CorporateMaster: this.DriverDetailsList,
       };
       console.log('this.DriverDetailsList', this.DriverDetailsList);
-      this.driverSignupService.CorporateMaster(this.DriverMasterClass,this.file5,this.file3,).subscribe((status: any) => {
-            if (status) {
-              console.log('status', status);
-              this.showSuccessMessage('Login Created Successfully. Please use mobile APP to access the application', 'success', true);
-              this.driverSignupForm.reset();
-              // setTimeout(() => {
-              //   this.btnLoader = false;
-              // }, 300);
-            }
-          },
-          (error: HttpErrorResponse) => {
-            alert(error.statusText);
-          }
-        );
+      this.driverSignupService.CorporateMaster(this.DriverMasterClass, this.file5, this.file3,).subscribe((status: any) => {
+        if (status) {
+          console.log('status', status);
+          this.showSuccessMessage('Login Created Successfully. Please use mobile APP to access the application', 'success', true);
+          this.driverSignupForm.reset();
+          this.resetImageData();
+          this.verifiedMobileText = false;
+          this.verifiedEmailText = false;
+          this.mobileDisable = false;
+          this.emailDisable=false;
+          setTimeout(() => {
+            this.btnLoader = false;
+          }, 300);
+        }
+      },
+        (error: HttpErrorResponse) => {
+          alert(error.statusText);
+        }
+      );
     }
   }
   showSuccessMessage(message, icon, showCancelButton = true) {
@@ -906,5 +850,13 @@ export class CorporateSignupComponent implements OnInit {
       icon: icon,
       showCancelButton: showCancelButton,
     });
+  }
+  resetImageData() {
+    this.urlLink5 = '';
+    this.files5 = null!!;
+    this.fileNameSlice5 = '';
+    this.file3 = null!!;
+    this.LicenseFileNameSlice3 = '';
+    this.LicenseUrlLink3 = '';
   }
 }
