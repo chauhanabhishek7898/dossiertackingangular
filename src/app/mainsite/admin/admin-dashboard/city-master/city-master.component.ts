@@ -45,7 +45,7 @@ export class CityMasterComponent implements OnInit {
     private route: ActivatedRoute,
     private stateService: StateService,
     private modalService: BsModalService // public loaderService: LoaderService
-  ) {}
+  ) { }
   pageTitle: any;
 
   // variable declarations
@@ -125,7 +125,7 @@ export class CityMasterComponent implements OnInit {
           e.nStateId == this.CityMasterForm.controls.nStateId.value
       );
       if (city) {
-        alert('City is already added');
+        this.showWarningMessage('City is already added', 'error', true);
       } else {
         this.loader = true;
         this.cityModel = {
@@ -153,7 +153,8 @@ export class CityMasterComponent implements OnInit {
             }
           },
           (error: HttpErrorResponse) => {
-            this.showWarningMessage(error.statusText, 'error', true);          }
+            this.showWarningMessage(error.statusText, 'error', true);
+          }
         );
       }
     } else {

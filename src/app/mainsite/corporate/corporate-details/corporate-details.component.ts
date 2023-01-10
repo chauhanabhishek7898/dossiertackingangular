@@ -24,16 +24,16 @@ export class CorporateDetailsComponent implements OnInit {
   corporateForm: FormGroup;
   findMemberDetails: GetCorporateUserDetail;
   CorprationModal: CorporateUpdae;
-  CorporateDetailsList:CorporateUpdae[]=[]
-  corporateMasterUpdateClass:CorporateMasterUpdateClass
-  
+  CorporateDetailsList: CorporateUpdae[] = []
+  corporateMasterUpdateClass: CorporateMasterUpdateClass
+
   constructor(
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private http: HttpClient,
     private corporatesDetailsService: CorporatesDetailsService,
     private formBuilder: FormBuilder,
-    private storageService:StorageService,
+    private storageService: StorageService,
     private driverSignupService: DriverSignupService
   ) { }
   selectedCity: any = { CityStateDetails: '' };
@@ -64,62 +64,62 @@ export class CorporateDetailsComponent implements OnInit {
   }
   ngOnInit(): void {
     this.searchCityCtrl.valueChanges
-    .pipe(
-      filter((res) => {
-        return res !== null && res.length >= this.minLengthTerm;
-      }),
-      distinctUntilChanged(),
-      debounceTime(200),
-      tap(() => {
-        this.errorMsg = '';
-        this.cityMasterList = [];
-        this.isLoading = true;
-      }),
-      switchMap((value) =>
-        this.http
-          .get(
-            `${this.apiUrl}/CityMaster/CityMaster_SelectAll_ActiveLikeSearch/${value}`
-          )
-          .pipe(
-            finalize(() => {
-              this.isLoading = false;
-            })
-          )
+      .pipe(
+        filter((res) => {
+          return res !== null && res.length >= this.minLengthTerm;
+        }),
+        distinctUntilChanged(),
+        debounceTime(200),
+        tap(() => {
+          this.errorMsg = '';
+          this.cityMasterList = [];
+          this.isLoading = true;
+        }),
+        switchMap((value) =>
+          this.http
+            .get(
+              `${this.apiUrl}/CityMaster/CityMaster_SelectAll_ActiveLikeSearch/${value}`
+            )
+            .pipe(
+              finalize(() => {
+                this.isLoading = false;
+              })
+            )
+        )
       )
-    )
-    .subscribe((data: any) => {
-      if (data == undefined) {
-        this.errorMsg = 'error';
-        this.cityMasterList = [];
-      } else {
-        this.errorMsg = '';
-        this.cityMasterList = data;
-      }
-      console.log(this.cityMasterList);
-    });
-    this.findMemberDetails=new GetCorporateUserDetail();
+      .subscribe((data: any) => {
+        if (data == undefined) {
+          this.errorMsg = 'error';
+          this.cityMasterList = [];
+        } else {
+          this.errorMsg = '';
+          this.cityMasterList = data;
+        }
+        console.log(this.cityMasterList);
+      });
+    this.findMemberDetails = new GetCorporateUserDetail();
     this.bindUserDetailService()
     this.pageTitle = this.route.snapshot.queryParams.title;
     this.corporateForm = this.formBuilder.group({
-        nEId: 0,
-        vEstablishmentName: [null, [Validators.required]],
-        vContactPersonOwner: [null, [Validators.required]],
-        vCPDesignation: [null, [Validators.required]],
-        vCPMobileNo: [null, [Validators.required]],
-        vCPEmailId: [null, [Validators.required]],
-        nCityId: [null],
-        vAddress: [null, [Validators.required]],
-        vPinCode: [null, [Validators.required]],
-        vContactNo: [null, [Validators.required]],
-        vWhatsUpNo: [null],
-        vEmailId: [null],
-        vWebsiteLink: [null], //  first file  //
-        vTaxDetails: [null],
-        vAuthorizedSignatory: [null], //  second file  //
-        vAuthorizedSignatoryFilePath: [null],
-        vLogoFilePath: [null], //  third file  //
+      nEId: 0,
+      vEstablishmentName: [null, [Validators.required]],
+      vContactPersonOwner: [null, [Validators.required]],
+      vCPDesignation: [null, [Validators.required]],
+      vCPMobileNo: [null, [Validators.required]],
+      vCPEmailId: [null, [Validators.required]],
+      nCityId: [null],
+      vAddress: [null, [Validators.required]],
+      vPinCode: [null, [Validators.required]],
+      vContactNo: [null, [Validators.required]],
+      vWhatsUpNo: [null],
+      vEmailId: [null],
+      vWebsiteLink: [null], //  first file  //
+      vTaxDetails: [null],
+      vAuthorizedSignatory: [null], //  second file  //
+      vAuthorizedSignatoryFilePath: [null],
+      vLogoFilePath: [null], //  third file  //
     });
-    
+
   }
   get createdriverSignupFormControls(): any {
     return this.corporateForm.controls;
@@ -147,7 +147,8 @@ export class CorporateDetailsComponent implements OnInit {
         this.file3.name.split('.').pop() == 'jpg'
       ) {
         if (this.file3.size > 2000000) {
-          alert(`Please Select File less than 2 MB`);
+          this.showWarningMessage(`Please Select File less than 2 MB`, 'error', true);
+
           this.file3 = null!!;
         } else {
           this.LicenseFileName3 = this.file3.name;
@@ -168,7 +169,7 @@ export class CorporateDetailsComponent implements OnInit {
           this.ifSelect3 = true;
         }
       } else {
-        alert(`Invalid file format. Please select .JPG or .PDF file formats.`);
+        this.showWarningMessage(`Invalid file format. Please select .JPG or .PDF file formats.`, 'error', true);
         this.fileFormetValid = false;
       }
     }
@@ -195,8 +196,7 @@ export class CorporateDetailsComponent implements OnInit {
         this.file5.name.split('.').pop() == 'jpg'
       ) {
         if (this.file5.size > 2000000) {
-          alert(`Please Select File less than 2 MB`);
-          // alert('Please Select File less than 2 MB');
+          this.showWarningMessage(`Please Select File less than 2 MB`, 'error', true);
           this.file5 = null!!;
         } else {
           this.fileName5 = this.file5.name;
@@ -216,8 +216,8 @@ export class CorporateDetailsComponent implements OnInit {
           this.ifSelect5 = true;
         }
       } else {
-        alert(`Invalid file format. Please select .JPG or .PDF file formats.`);
-        // alert('Invalid file format. Please select .JPG or .PDF file formats.');
+        this.showWarningMessage(`Invalid file format. Please select .JPG or .PDF file formats.`, 'error', true);
+
         this.fileFormetValid = false;
       }
       // event.target.value = null;
@@ -229,48 +229,48 @@ export class CorporateDetailsComponent implements OnInit {
   bindUserDetailService() {
     this.loader = true;
     this.corporatesDetailsService.GetCorporateDetailsForAdmins(parseInt(this.storageService.userId!!)).subscribe((res) => {
-      if(res){
+      if (res) {
         this.findMemberDetails = res[0];
-        this.selectedCitys=this.findMemberDetails?.CityDetails
+        this.selectedCitys = this.findMemberDetails?.CityDetails
         this.selectedCity = { CityStateDetails: this.selectedCitys }
         this.cityId = this.findMemberDetails?.nCityId
-        
-        this.LicenseUrlLink3= `${environment.dossiarApiUrl}/${this.findMemberDetails?.vLogoFilePath}`
-        if(this.LicenseUrlLink3){
-          this.ifSelect3=true
+
+        this.LicenseUrlLink3 = `${environment.dossiarApiUrl}/${this.findMemberDetails?.vLogoFilePath}`
+        if (this.LicenseUrlLink3) {
+          this.ifSelect3 = true
         }
-        this.urlLink5= `${environment.dossiarApiUrl}/${this.findMemberDetails?.vAuthorizedSignatoryFilePath}`
-        if(this.urlLink5){
-          this.ifSelect5=true
+        this.urlLink5 = `${environment.dossiarApiUrl}/${this.findMemberDetails?.vAuthorizedSignatoryFilePath}`
+        if (this.urlLink5) {
+          this.ifSelect5 = true
         }
         this.corporateForm.patchValue({
-        nEId: this.findMemberDetails?.nEId,
-        vEstablishmentName: this.findMemberDetails?.vEstablishmentName,
-        vContactPersonOwner: this.findMemberDetails?.vContactPersonOwner,
-        vCPDesignation: this.findMemberDetails?.vCPDesignation,
-        vCPMobileNo: this.findMemberDetails?.vCPMobileNo,
-        vCPEmailId: this.findMemberDetails?.vCPEmailId,
-        nCityId: this.findMemberDetails?.nCityId,
-        vAddress: this.findMemberDetails?.vAddress,
-        vPinCode: this.findMemberDetails?.vPinCode,
-        vContactNo: this.findMemberDetails?.vContactNo,
-        vWhatsUpNo: this.findMemberDetails?.vWhatsUpNo,
-        // vEmailId: this.findMemberDetails?.vEmailId,
-        vWebsiteLink: this.findMemberDetails?.vWebsiteLink, //  first file  //
-        vTaxDetails: this.findMemberDetails?.vTaxDetails,
-        vAuthorizedSignatory: this.findMemberDetails?.vAuthorizedSignatory, //  second file  //
-        // vAuthorizedSignatoryFilePath: this.findMemberDetails?.vAuthorizedSignatoryFilePath,
-        // vLogoFilePath: this.findMemberDetails?.vLogoFilePath,
+          nEId: this.findMemberDetails?.nEId,
+          vEstablishmentName: this.findMemberDetails?.vEstablishmentName,
+          vContactPersonOwner: this.findMemberDetails?.vContactPersonOwner,
+          vCPDesignation: this.findMemberDetails?.vCPDesignation,
+          vCPMobileNo: this.findMemberDetails?.vCPMobileNo,
+          vCPEmailId: this.findMemberDetails?.vCPEmailId,
+          nCityId: this.findMemberDetails?.nCityId,
+          vAddress: this.findMemberDetails?.vAddress,
+          vPinCode: this.findMemberDetails?.vPinCode,
+          vContactNo: this.findMemberDetails?.vContactNo,
+          vWhatsUpNo: this.findMemberDetails?.vWhatsUpNo,
+          // vEmailId: this.findMemberDetails?.vEmailId,
+          vWebsiteLink: this.findMemberDetails?.vWebsiteLink, //  first file  //
+          vTaxDetails: this.findMemberDetails?.vTaxDetails,
+          vAuthorizedSignatory: this.findMemberDetails?.vAuthorizedSignatory, //  second file  //
+          // vAuthorizedSignatoryFilePath: this.findMemberDetails?.vAuthorizedSignatoryFilePath,
+          // vLogoFilePath: this.findMemberDetails?.vLogoFilePath,
         })
-        if(this.findMemberDetails?.vLogoFilePath !=""){
-          this.LogoFilePath=this.findMemberDetails?.vLogoFilePath
-        }else{
-          this.LogoFilePath=''
+        if (this.findMemberDetails?.vLogoFilePath != "") {
+          this.LogoFilePath = this.findMemberDetails?.vLogoFilePath
+        } else {
+          this.LogoFilePath = ''
         }
-        if(this.findMemberDetails?.vAuthorizedSignatoryFilePath!=""){
-          this.AuthorizedSignatoryFilePath=this.findMemberDetails?.vAuthorizedSignatoryFilePath
-        }else{
-          this.AuthorizedSignatoryFilePath= ''
+        if (this.findMemberDetails?.vAuthorizedSignatoryFilePath != "") {
+          this.AuthorizedSignatoryFilePath = this.findMemberDetails?.vAuthorizedSignatoryFilePath
+        } else {
+          this.AuthorizedSignatoryFilePath = ''
         }
       }
       setTimeout(() => {
@@ -281,10 +281,10 @@ export class CorporateDetailsComponent implements OnInit {
     });
   }
 
-  submit(){
-    this.loader=true
-    this.CorporateDetailsList=[]
-    this.CorprationModal={
+  submit() {
+    this.loader = true
+    this.CorporateDetailsList = []
+    this.CorprationModal = {
       nEId: this.findMemberDetails?.nEId,
       vEstablishmentName: this.corporateForm.controls.vEstablishmentName.value,
       vContactPersonOwner: this.corporateForm.controls.vContactPersonOwner.value,
@@ -303,20 +303,18 @@ export class CorporateDetailsComponent implements OnInit {
       vLogoFilePath: this.LogoFilePath,
     }
     this.CorporateDetailsList.push(this.CorprationModal);
-      this.corporateMasterUpdateClass = {
-        CorporateMaster: this.CorporateDetailsList,
-      };
-      console.log('this.corporateMasterUpdateClass',this.corporateMasterUpdateClass)
-      this.driverSignupService.CorporateMasterUpdate(this.corporateMasterUpdateClass,this.file5,this.file3,).subscribe((status: any) => {
-        if (status) {
-          console.log('status', status);
-          this.showSuccessMessage(status, 'success', true);
-          this.bindUserDetailService()
-          this.loader=true
-        }
-      },
+    this.corporateMasterUpdateClass = {
+      CorporateMaster: this.CorporateDetailsList,
+    };
+    this.driverSignupService.CorporateMasterUpdate(this.corporateMasterUpdateClass, this.file5, this.file3,).subscribe((status: any) => {
+      if (status) {
+        this.showSuccessMessage(status, 'success', true);
+        this.bindUserDetailService()
+        this.loader = true
+      }
+    },
       (error: HttpErrorResponse) => {
-        alert(error.statusText);
+        this.showWarningMessage(error.statusText, 'error', true);
       }
     );
   }
