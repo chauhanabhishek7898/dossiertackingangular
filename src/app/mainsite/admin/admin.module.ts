@@ -50,7 +50,7 @@ import { CorporatesDetailsComponent } from './admin-dashboard/corporates-details
 import { ApproveCorporatesComponent } from './admin-dashboard/approve-corporates/approve-corporates.component';
 import { CorporateModule } from '../corporate/corporate.module';
 import { UserDetailsComponent } from './admin-dashboard/user-details/user-details.component';
-
+import { GoogleMapsModule } from '@angular/google-maps'
 
 
 
@@ -102,7 +102,8 @@ import { UserDetailsComponent } from './admin-dashboard/user-details/user-detail
     DataTablesModule,
     WebcamModule,
     ImageCropperModule,
-    CorporateModule
+    CorporateModule,
+    GoogleMapsModule
     // PageFilterPipe
   ],
   exports:[

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
@@ -23,7 +23,7 @@ export class ApproveCorporatesComponent implements OnInit {
   dtOptions: any = {};
   ModalTitle: string;
   userModel: ApproveDriverMaster;
-  UpdateList: FormGroup;
+  UpdateList: UntypedFormGroup;
   formType: string;
   UserId: any;
   isDtInitialized: boolean = false;
@@ -44,14 +44,14 @@ export class ApproveCorporatesComponent implements OnInit {
   imageUrl: string;
   loader = false;
   pageTitle: any;
-  myNoteForm: FormGroup;
+  myNoteForm: UntypedFormGroup;
   constructor(
     private approveCorporatesService: ApproveCorporatesService,
     // private notifier: NotificationService,
     private modalService: BsModalService,
     private authService: AuthService,
     private storageService: AdminStorageService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute
   ) {}
 

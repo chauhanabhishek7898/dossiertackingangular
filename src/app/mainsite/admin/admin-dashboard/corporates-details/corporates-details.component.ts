@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -21,7 +21,7 @@ export class CorporatesDetailsComponent implements OnInit {
   dtOptions: any = {};
   ModalTitle: string;
   userModel: CustomersSavedAddresses
-  getFindMemberForm: FormGroup
+  getFindMemberForm: UntypedFormGroup
   formType: string
 
   isDtInitialized: boolean = false
@@ -46,7 +46,7 @@ export class CorporatesDetailsComponent implements OnInit {
   imageUrl=environment.dossiarApiUrl
   constructor(
     private corporatesDetailsService: CorporatesDetailsService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
   ) { }
 

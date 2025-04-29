@@ -1,7 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
@@ -21,7 +21,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 })
 export class VehicleRateMasterComponent implements OnInit {
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private vehicleRateMasterService: VehicleRateMasterService,
     // private notifier: NotificationService,
     private modalService: BsModalService,
@@ -38,7 +38,7 @@ export class VehicleRateMasterComponent implements OnInit {
   dtOptions: any = {};
   ModalTitle: string;
   vehicleTypeMasterModel: VehicleRateMaster
-  countryMasterForm: FormGroup
+  countryMasterForm: UntypedFormGroup
   formType: string
   //  UpdateCountryForm: FormGroup
   //  // dtInstance: DataTables.Api;
@@ -81,7 +81,7 @@ export class VehicleRateMasterComponent implements OnInit {
       nVId: ['Bike', [Validators.required]],
       nCityId: [0, [Validators.required]],
       nRatePerKM: [0, [Validators.required]],
-      btActive: new FormControl({ value: 'true', disabled: true }),
+      btActive: new UntypedFormControl({ value: 'true', disabled: true }),
 
 
     });

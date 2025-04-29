@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators, UntypedFormBuilder } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
@@ -29,13 +29,13 @@ export class AssistantSignUpComponent implements OnInit {
     //types: ["address"],
   };
   maxDate = new Date();
-  customerSignupForm: FormGroup;
+  customerSignupForm: UntypedFormGroup;
   errorMsg!: string;
   minLengthTerm = 3;
   apiUrl = environment.dossiarApiUrl;
   mobileVerified = false;
   emailVerified = false;
-  searchCityCtrl = new FormControl(Validators.required);
+  searchCityCtrl = new UntypedFormControl(Validators.required);
   btnLoader = false;
   available: boolean = false;
   Unavailable: boolean = false;
@@ -46,7 +46,7 @@ export class AssistantSignUpComponent implements OnInit {
 
   constructor(
     private loginService: LoginService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private router: Router,
     private sanitizer: DomSanitizer,
     private customerSignupService: CustomerSignupService,
@@ -225,7 +225,7 @@ export class AssistantSignUpComponent implements OnInit {
   @ViewChild('searchInput') searchInput: ElementRef;
 
   ConfirmedValidator(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
       if (

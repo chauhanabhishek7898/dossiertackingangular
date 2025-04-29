@@ -38,8 +38,9 @@
     <thead>
       <tr>
         <th class="no-sort" style="background-image: none !important;">#</th>
-        <!-- <th class="no-sort" style="background-image: none !important;">Activate </th> -->
+        <th class="no-sort" style="background-image: none !important;">Is Supervisor </th>
         <th class="no-sort" style="background-image: none !important;">Edit</th>
+        <th class="no-sort" style="background-image: none !important;">Diver Location</th>
 
         <th class="no-sort" style="background-image: none !important;">Driver Id</th>
         <th class="no-sort" style="background-image: none !important;">Registration Date </th>
@@ -75,6 +76,10 @@
       <tr *ngFor="let items of userDetailList; let i = index ">
         <td>{{i+1}}</td>
         <td>
+          <span style="background: green;padding: 2px 8px;color: #fff;cursor: pointer;border-radius: 5px;" *ngIf="items.btSupervisor==false" (click)="activateConfirmationModel(templateActivateConformationModel,items.nUserId,items.btSupervisor)">Active</span>
+          <span style="background: red;padding: 2px 8px;color: #fff;cursor: pointer;border-radius: 5px;" *ngIf="items.btSupervisor==true"(click)="activateConfirmationModel(templateActivateConformationModel,items.nUserId,items.btSupervisor)">Inactive</span>
+        </td>
+        <td>
           <span (click)="editClick(templateCountryMaster, items,items.nDriverId)"><svg
               xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square"
               viewBox="0 0 16 16">
@@ -85,6 +90,11 @@
             </svg>
           </span>
         </td>
+        <td><span (click)="openmap(templatemap,items.nDriverId)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+          </svg>
+        </span></td>
         <td>{{items.vDriverId}}</td>
         <td>{{items.RegistrationDate}}</td>
         <td>{{items.DriverDetails}}</td>
@@ -141,17 +151,17 @@
 <ng-template #templateActivateConformationModel>
   <div class="country-edit-model">
     <div class="model-header">
+      <h1 style="margin-bottom: 0;" mat-dialog-title >ALERT !!</h1>
       <button type="button" class="close-btn pull-right" aria-label="Close" (click)="conformaitonmodalRef.hide()">
         <mat-icon>close</mat-icon>
       </button>
-      <h1 mat-dialog-title>ALERT !!</h1>
     </div>
     <mat-divider></mat-divider>
   </div>
   <div mat-dialog-content>
-    <p class="confirm-text" style="text-align: center;" *ngIf="PracticeWithDrome!='ACTIVATE'">Do you want to Revoke
+    <p class="confirm-text" style="text-align: center;" *ngIf="PracticeWithDrome">Do you want to Revoke
       ??</p>
-    <p class="confirm-text" style="text-align: center;" *ngIf="PracticeWithDrome=='ACTIVATE'">Do you want to
+    <p class="confirm-text" style="text-align: center;" *ngIf="!PracticeWithDrome">Do you want to
       Activate ??</p>
   </div>
   <mat-divider></mat-divider>
@@ -166,7 +176,7 @@
   <div class="country-edit-model">
 
     <div class="model-header">
-
+      <h1></h1>
       <button type="button" class="close-btn pull-right" aria-label="Close" (click)="modalRef.hide()">
         <mat-icon>close</mat-icon>
       </button>
@@ -536,4 +546,26 @@
       </div>
     </div>
   </div>
+</ng-template>
+<ng-template #templatemap>
+  <div class="country-edit-model">
+    <div class="model-header">
+      <button type="button" class="close-btn pull-right" aria-label="Close" (click)="closeDriverTrackingModel()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <google-map height="700px"
+            width="1000px"
+            [center]="center"
+            
+            >
+            <!-- <map-marker *ngFor="let markerPosition of markerPositions"
+              [position]="markerPosition"
+               </map-marker>
+  > -->
+  <map-marker [position]="markerPos"></map-marker>
+ 
+</google-map>
+  </div>
+  
 </ng-template>

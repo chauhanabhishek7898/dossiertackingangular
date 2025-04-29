@@ -79,6 +79,7 @@ export class ApproveDriverMasterList {
     vEmailId: String;
     btPromotion: String;
     btIsActive: boolean;
+    btSupervisor: boolean;
     nUserId: number
 }
 

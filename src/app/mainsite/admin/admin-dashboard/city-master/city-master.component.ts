@@ -7,10 +7,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   Validators,
-  FormControl,
+  UntypedFormControl,
 } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
@@ -39,7 +39,7 @@ export class CityMasterComponent implements OnInit {
   loader = false;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private CityService: CityMasterService,
     // private notifier: NotificationService,
     private route: ActivatedRoute,
@@ -53,7 +53,7 @@ export class CityMasterComponent implements OnInit {
   dtElement: DataTableDirective;
   dtOptions: any = {};
   cityModel: CityMaster;
-  CityMasterForm: FormGroup;
+  CityMasterForm: UntypedFormGroup;
   // UpdateCityForm: FormGroup
   // dtInstance: DataTables.Api;
   isDtInitialized: boolean = false;
@@ -97,7 +97,7 @@ export class CityMasterComponent implements OnInit {
       nStateId: [0, [Validators.required, Validators.min(1)]],
       nCityId: [0],
       vCityName: [null, [Validators.required]],
-      btActive: new FormControl({ value: 'true', disabled: this.disabled }),
+      btActive: new UntypedFormControl({ value: 'true', disabled: this.disabled }),
       nInterRelatedCityId: [null],
       btMainInterRelatedCity: [false],
     });

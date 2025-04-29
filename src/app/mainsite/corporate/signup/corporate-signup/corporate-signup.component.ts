@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
@@ -26,7 +26,7 @@ export class CorporateSignupComponent implements OnInit {
     private router: Router,
     private sanitizer: DomSanitizer,
     private loginService: LoginService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private cityDropDownService: CitymasterService,
     private modalService: BsModalService,
     private otpSenderApiService: OtpSenderApiService,
@@ -35,7 +35,7 @@ export class CorporateSignupComponent implements OnInit {
     private customerSignupService: CustomerSignupService,
     private vehicleTypeMasterService: VehicleTypeMasterService,
   ) { }
-  driverSignupForm: FormGroup;
+  driverSignupForm: UntypedFormGroup;
   apiUrl = environment.dossiarApiUrl;
   @Input() mobileDisabled: boolean = false;
   @Input() emailDisabled: boolean = false;
@@ -51,7 +51,7 @@ export class CorporateSignupComponent implements OnInit {
   cityId: any = null;
   cityMasterList: CityMasterList[] = [];
   isLoading = false;
-  searchCityCtrl = new FormControl();
+  searchCityCtrl = new UntypedFormControl();
   errorMsg!: string;
   minLengthTerm = 3;
   onSelected() {
@@ -137,7 +137,7 @@ export class CorporateSignupComponent implements OnInit {
     this.VehicleTypeMaster_SelectAll()
   }
   ConfirmedValidator(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
       if (

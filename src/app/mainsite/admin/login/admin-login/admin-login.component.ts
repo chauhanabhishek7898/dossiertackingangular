@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
@@ -19,15 +19,15 @@ import Swal from 'sweetalert2';
 })
 export class AdminLoginComponent implements OnInit {
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private authService: AuthService,
     // private notifier: NotificationService,
     private storageService: StorageService,
     private router: Router,
     private modalService: BsModalService,
   ) { }
-  userLoginForm: FormGroup;
-  userForgetPasswordForm: FormGroup;
+  userLoginForm: UntypedFormGroup;
+  userForgetPasswordForm: UntypedFormGroup;
   users: UserMaster[]
   roleId: number = 2
   listUserModel: UserMaster[] = [];
@@ -437,7 +437,7 @@ export class AdminLoginComponent implements OnInit {
     }
   }
   ConfirmedValidator(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
       if (matchingControl.errors && !matchingControl.errors.confirmedValidator) {

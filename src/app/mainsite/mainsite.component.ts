@@ -8,11 +8,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  FormBuilder,
+  UntypedFormBuilder,
   FormGroupDirective,
   NgForm,
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
@@ -25,7 +25,7 @@ import { CityMasterList } from './models/city-master';
 import { Router } from '@angular/router';
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
-    control: FormControl | null,
+    control: UntypedFormControl | null,
     form: FormGroupDirective | NgForm | null
   ): boolean {
     const isSubmitted = form && form.submitted;
@@ -60,7 +60,7 @@ export class MainsiteComponent implements OnInit {
 
   @ViewChild('driversignup') private driversignup: TemplateRef<any>;
   @ViewChild('customersignup') private customersignup: TemplateRef<any>;
-  customerSignupForm: FormGroup;
+  customerSignupForm: UntypedFormGroup;
   foods: Food[] = [
     { value: 'steak-0', viewValue: 'Select Gender' },
     { value: 'pizza-1', viewValue: 'Male' },
@@ -68,23 +68,23 @@ export class MainsiteComponent implements OnInit {
   ];
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private modalService: BsModalService,
     private sanitizer: DomSanitizer,
     private loginService: LoginService, //   private authService: AuthService, //   // private notifier: NotificationService,
     private cityDropDownService: CitymasterService,
     private router: Router //   private storageService: StorageService, //   private router: Router,
   ) {}
-  driverSignupForm: FormGroup;
-  userLoginForm: FormGroup;
-  userForgetPasswordForm: FormGroup;
-  ChiefComplaintForm: FormGroup;
+  driverSignupForm: UntypedFormGroup;
+  userLoginForm: UntypedFormGroup;
+  userForgetPasswordForm: UntypedFormGroup;
+  ChiefComplaintForm: UntypedFormGroup;
   ModalTitle: String;
   modalRef: BsModalRef;
 
   @Input() disabled: boolean = true;
 
-  emailFormControl = new FormControl('', [
+  emailFormControl = new UntypedFormControl('', [
     Validators.required,
     Validators.email,
   ]);

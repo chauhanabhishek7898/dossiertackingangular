@@ -41,7 +41,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { CorporateSignupComponent } from './mainsite/corporate/signup/corporate-signup/corporate-signup.component';
 import { DeliveryAndShippingPloicyComponent } from './mainsite/delivery-and-shipping-ploicy/delivery-and-shipping-ploicy.component';
 import { RefunandCancellationPolicyComponent } from './mainsite/refunand-cancellation-policy/refunand-cancellation-policy.component';
-
+import { GoogleMapsModule } from '@angular/google-maps'
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,7 +79,8 @@ import { RefunandCancellationPolicyComponent } from './mainsite/refunand-cancell
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
-    MatExpansionModule
+    MatExpansionModule,
+    GoogleMapsModule
 
 
   ],

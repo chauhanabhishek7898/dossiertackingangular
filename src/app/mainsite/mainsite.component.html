@@ -3,66 +3,35 @@
         <div class="container-xl">
             <div class="top_header">
                 <div class="left_header"><a routerLink="/home">
-                    <img src="../../../assets/images/bottom text logo.png"
-                            alt="">
-                        </a>
-                        <span style="margin-top: 0px;margin-left: 60px;"><img style="width: 85px;" src="../../assets/images/since_1999.png" alt=""></span>
-                        </div>
+                        <img src="../../../assets/images/bottom text logo.png" alt="">
+                    </a>
+                    <span style="margin-top: 0px;margin-left: 60px;"><img style="width: 85px;"
+                            src="../../assets/images/since_1999.png" alt=""></span>
+                </div>
                 <div class="right_header">
                     <ul>
                         <li><a routerLink="home" routerLinkActive="active">Home</a></li>
                         <li><a routerLink="/about-us" routerLinkActive="active">About Us</a></li>
                         <li><a routerLink="/contact-us" routerLinkActive="active">Contact Us</a></li>
-
-                        <!-- <li><a style="cursor: pointer;" routerLinkActive="active"  ></a></li>
-                        <li><a style="cursor: pointer;" routerLinkActive="active" ></a></li>
                         <li>
-                            
-                        </li> -->
-                        <!-- <li style="position: relative;">
-                            <span class="signup_link" (click)="toggle_nav()" *ngIf="!toggle_nav_list">
-                                Signup
-                            </span>
-                            <span class="signup_link" (click)="toggle_nav()" *ngIf="toggle_nav_list">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-x-lg" viewBox="0 0 16 16">
-                                    <path
-                                        d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
-                                </svg>
-                            </span>
-                            <ul class="custm-selet" *ngIf="toggle_nav_list">
-                                <li (click)="openDriverSignup(driversignup)">Driver's Signup</li>
-                                <li (click)="openCstomersignup(customersignup)">Customer's Signup</li>
-                            </ul>
-                        </li> -->
-                        <li>
-
                         </li>
-
-
                     </ul>
                     <div>
                         <button class="log-in-buton" routerLink="driver-signup">
                             Driver's Signup
                         </button>
-                        <button class="log-in-buton" routerLink="customer-signup" >
+                        <button class="log-in-buton" routerLink="customer-signup">
                             Customer's Signup
                         </button>
-                         <button class="log-in-buton" routerLink="corporate-signup" >
+                        <button class="log-in-buton" routerLink="corporate-signup">
                             Corporate's Signup
                         </button>
-                        <!-- <button class="log-in-buton" (click)="openModal(templateLoginMaster)">
-                            Login
-                        </button> -->
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
     <ng-template #templateLoginMaster>
-        
-
     </ng-template>
     <ng-template #driversignup>
         <div class="modal-container">

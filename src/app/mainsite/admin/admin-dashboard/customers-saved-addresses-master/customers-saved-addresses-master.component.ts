@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
@@ -25,7 +25,7 @@ export class CustomersSavedAddressesMasterComponent implements OnInit {
   dtOptions: any = {};
   ModalTitle: string;
   userModel: CustomersSavedAddresses
-  getFindMemberForm: FormGroup
+  getFindMemberForm: UntypedFormGroup
   formType: string
 
   isDtInitialized: boolean = false
@@ -50,7 +50,7 @@ export class CustomersSavedAddressesMasterComponent implements OnInit {
   
   constructor(
     private findMemberDetailsService: CustomersSavedAddressesService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
   ) { }
 

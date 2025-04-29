@@ -18,7 +18,9 @@ export class DriverDetailsAdminService {
   getDriverDetailsByUserId(nDriverUserId:any): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/DriverMaster/GetDriverByUserId/${nDriverUserId}`);
   }
-
+  getDriverCurrentLocation(nDriverUserId:any): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/DriverMaster/GetDriver_CurrentLocation/${nDriverUserId}`);
+  }
   DriverMasterUpdate(DriverMasterSave: object, file1: File,file2: File, file3: File,file4: File,file5: File,file6: File): Observable<any> {
     // if(FormType == "Submit"){
       console.log('file1',file1)
@@ -37,6 +39,9 @@ export class DriverDetailsAdminService {
      
       formDataAdd.append("DriverMaster", JSON.stringify(DriverMasterSave));
       return this.http.put(`${this.apiUrl}/DriverMaster`, formDataAdd);
+  }
+  UpdateDriverSupervisorStatus(data: object): Observable<any> {
+      return this.http.put(`${this.apiUrl}/DriverMaster/UpdateDriverSupervisorStatus`, data);
   }
   // ActivateRevokeDoctorPraticeWithDrome(DriverMaster:object): Observable<any> {
   //   return this.http.put<any>(`${this.apiUrl}/DriverMaster/ActivateRevokeDoctorPraticeWithDrome`,DriverMaster);

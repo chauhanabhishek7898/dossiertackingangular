@@ -1,7 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
@@ -21,7 +21,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 export class CountryMasterComponent implements OnInit {
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private countryService: CountryService,
     // // private notifier: NotificationService,
     private modalService: BsModalService,
@@ -36,7 +36,7 @@ export class CountryMasterComponent implements OnInit {
   dtOptions: any = {};
   ModalTitle: string;
   conutryModel: CountryMaster
-  countryMasterForm: FormGroup
+  countryMasterForm: UntypedFormGroup
   formType: string
   //  UpdateCountryForm: FormGroup
   //  // dtInstance: DataTables.Api;
@@ -75,7 +75,7 @@ export class CountryMasterComponent implements OnInit {
       vCountryName: [null, [Validators.required]],
       vCountryPrefix: [null, [Validators.required]],
       vCountryPSTNCode: [null, [Validators.required]],
-      btActive: new FormControl({ value: 'true', disabled: true }),
+      btActive: new UntypedFormControl({ value: 'true', disabled: true }),
     });
 
   }

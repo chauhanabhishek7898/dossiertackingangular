@@ -13,9 +13,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -59,13 +59,13 @@ export class AdminSignupMasterComponent implements OnInit {
     //types: ["address"],
   };
   maxDate = new Date();
-  customerSignupForm: FormGroup;
+  customerSignupForm: UntypedFormGroup;
   errorMsg!: string;
   minLengthTerm = 3;
   apiUrl = environment.dossiarApiUrl;
   mobileVerified = false;
   emailVerified = false;
-  searchCityCtrl = new FormControl(Validators.required);
+  searchCityCtrl = new UntypedFormControl(Validators.required);
   btnLoader = false;
   available: boolean = false;
   Unavailable: boolean = false;
@@ -76,7 +76,7 @@ export class AdminSignupMasterComponent implements OnInit {
 
   constructor(
     private loginService: LoginService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private router: Router,
     private sanitizer: DomSanitizer,
     private customerSignupService: CustomerSignupService,
@@ -263,7 +263,7 @@ export class AdminSignupMasterComponent implements OnInit {
   @ViewChild('searchInput') searchInput: ElementRef;
 
   ConfirmedValidator(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
       if (

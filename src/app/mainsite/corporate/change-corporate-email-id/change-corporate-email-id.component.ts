@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { OtpSender } from 'src/app/core/services/otp.sender.service';
@@ -19,7 +19,7 @@ export class ChangeCorporateEmailIdComponent implements OnInit {
   modalRef: BsModalRef;
   ModalTitle: string;
   formType: string;
-  updateEmailForm: FormGroup
+  updateEmailForm: UntypedFormGroup
   emailOtp: string
   timerOn = true;
   otpVerified: boolean = false
@@ -33,7 +33,7 @@ export class ChangeCorporateEmailIdComponent implements OnInit {
     private modalService: BsModalService,
     private otpSender: OtpSender,
     // private notifier: NotificationService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private userSettingService: UserSettingService,
     private storageService: StorageService,
     private userValidationService: UserValidationService,

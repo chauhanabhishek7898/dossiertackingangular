@@ -6,7 +6,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
@@ -33,7 +33,7 @@ export class ApproveDriverMasterComponent implements OnInit {
   dtOptions: any = {};
   ModalTitle: string;
   userModel: ApproveDriverMaster;
-  UpdateList: FormGroup;
+  UpdateList: UntypedFormGroup;
   formType: string;
   UserId: any;
   isDtInitialized: boolean = false;
@@ -54,14 +54,14 @@ export class ApproveDriverMasterComponent implements OnInit {
   imageUrl: string;
   loader = false;
   pageTitle: any;
-  myNoteForm: FormGroup;
+  myNoteForm: UntypedFormGroup;
   constructor(
     private userDetailService: ApproveDriverMasterService,
     // private notifier: NotificationService,
     private modalService: BsModalService,
     private authService: AuthService,
     private storageService: AdminStorageService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute
   ) {}
 

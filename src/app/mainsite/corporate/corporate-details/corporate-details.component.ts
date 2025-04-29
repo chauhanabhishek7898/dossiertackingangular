@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { filter, distinctUntilChanged, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
@@ -21,7 +21,7 @@ export class CorporateDetailsComponent implements OnInit {
   loader = false;
   pageTitle: any;
   errorCityTxt = false;
-  corporateForm: FormGroup;
+  corporateForm: UntypedFormGroup;
   findMemberDetails: GetCorporateUserDetail;
   CorprationModal: CorporateUpdae;
   CorporateDetailsList: CorporateUpdae[] = []
@@ -32,8 +32,8 @@ export class CorporateDetailsComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private http: HttpClient,
     private corporatesDetailsService: CorporatesDetailsService,
-    private formBuilder: FormBuilder,
-    private storageService: StorageService,
+    private formBuilder: UntypedFormBuilder,
+    private storageService:StorageService,
     private driverSignupService: DriverSignupService
   ) { }
   selectedCity: any = { CityStateDetails: '' };
@@ -42,7 +42,7 @@ export class CorporateDetailsComponent implements OnInit {
   cityId: any = null;
   cityMasterList: CityMasterList[] = [];
   isLoading = false;
-  searchCityCtrl = new FormControl();
+  searchCityCtrl = new UntypedFormControl();
   errorMsg!: string;
   minLengthTerm = 3;
   apiUrl = environment.dossiarApiUrl;

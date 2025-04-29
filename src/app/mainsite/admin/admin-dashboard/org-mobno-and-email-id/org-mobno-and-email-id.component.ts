@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
@@ -19,7 +19,7 @@ export class OrgMobnoAndEmailIdComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private orgMobnoAndEmailIdService: OrgMobnoAndEmailIdService,
     // private notifier: NotificationService,
     private modalService: BsModalService,
@@ -33,7 +33,7 @@ export class OrgMobnoAndEmailIdComponent implements OnInit {
   dtOptions: any = {};
   ModalTitle: string;
   orgMobnoAndEmailidModel: OrgMobnoAndEmailid
-  orgMobNoAndEmailIdForm: FormGroup
+  orgMobNoAndEmailIdForm: UntypedFormGroup
   formType: string
   //  UpdateCountryForm: FormGroup
   //  // dtInstance: DataTables.Api;

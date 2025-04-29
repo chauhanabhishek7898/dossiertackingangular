@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { StorageService } from 'src/app/core/services/storage.service';
 import { UtilityService } from 'src/app/core/services/utility.service';
 import { environment } from 'src/environments/environment';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { TrackingDetailsAdminService } from './tracking-details-admin.service';
@@ -19,7 +19,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
   styleUrls: ['./tracking-details-admin.component.scss']
 })
 export class TrackingDetailsAdminComponent implements OnInit {
-  myNoteForm: FormGroup
+  myNoteForm: UntypedFormGroup
   buyCreditsa :TrackingDetailsMaster[] = [];
 
   panelOpenState = false;
@@ -32,7 +32,7 @@ export class TrackingDetailsAdminComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   pageTitle: any
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private storageService: StorageService,
     private utilityService: UtilityService,
     // private notifier: NotificationService,

@@ -8,10 +8,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   Validators,
-  FormControl,
+  UntypedFormControl,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
@@ -32,7 +32,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 })
 export class KMLimitMasterComponent implements OnInit {
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private kmLimitMasterService: KMLimitMasterService,
     // // private notifier: NotificationService,
     private modalService: BsModalService,
@@ -49,7 +49,7 @@ export class KMLimitMasterComponent implements OnInit {
   dtOptions: any = {};
   ModalTitle: string;
   kmLimitMasterModel: KMLimitMaster;
-  countryMasterForm: FormGroup;
+  countryMasterForm: UntypedFormGroup;
   formType: string;
   //  UpdateCountryForm: FormGroup
   //  // dtInstance: DataTables.Api;
@@ -97,7 +97,7 @@ export class KMLimitMasterComponent implements OnInit {
       nVId: [0],
       nCityId: [0, [Validators.required]],
       nKMLimit: [0, [Validators.required]],
-      btActive: new FormControl({ value: 'true', disabled: true }),
+      btActive: new UntypedFormControl({ value: 'true', disabled: true }),
     });
   }
 

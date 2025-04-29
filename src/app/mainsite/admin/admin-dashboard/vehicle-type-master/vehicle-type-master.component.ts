@@ -1,7 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
@@ -18,7 +18,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 export class VehicleTypeMasterComponent implements OnInit {
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private vehicleTypeMasterService: VehicleTypeMasterService,
     // // private notifier: NotificationService,
     private route: ActivatedRoute,
@@ -33,7 +33,7 @@ export class VehicleTypeMasterComponent implements OnInit {
   dtOptions: any = {};
   ModalTitle: string;
   vehicleTypeMaster: VehicleTypeMaster
-  countryMasterForm: FormGroup
+  countryMasterForm: UntypedFormGroup
   formType: string
   //  UpdateCountryForm: FormGroup
   //  // dtInstance: DataTables.Api;
@@ -73,7 +73,7 @@ export class VehicleTypeMasterComponent implements OnInit {
       nVId: [0],
       vVehicleType: [null, [Validators.required]],
     
-      btActive: new FormControl({ value: 'true', disabled: true }),
+      btActive: new UntypedFormControl({ value: 'true', disabled: true }),
       
 
     });

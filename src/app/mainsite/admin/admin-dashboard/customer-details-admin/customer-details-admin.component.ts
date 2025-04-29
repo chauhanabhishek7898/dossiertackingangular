@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
@@ -24,7 +24,7 @@ export class CustomerDetailsAdminComponent implements OnInit {
   dtOptions: any = {};
   ModalTitle: string;
   conutryModel: CustomerMaster
-  countryMasterForm: FormGroup
+  countryMasterForm: UntypedFormGroup
   formType: string
   
   isDtInitialized: boolean = false

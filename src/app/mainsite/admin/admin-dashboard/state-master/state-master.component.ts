@@ -8,10 +8,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   Validators,
-  FormControl,
+  UntypedFormControl,
 } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
@@ -40,7 +40,7 @@ export class StateMasterComponent implements OnInit {
   color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'determinate';
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private stateService: StateService,
     private countryService: CountryService,
     // private notifier: NotificationService,
@@ -55,7 +55,7 @@ export class StateMasterComponent implements OnInit {
   dtElement: DataTableDirective;
   dtOptions: any = {};
   stateModel: StateMaster;
-  stateMasterForm: FormGroup;
+  stateMasterForm: UntypedFormGroup;
   // UpdateStateForm: FormGroup
   // dtInstance: DataTables.Api;
   isDtInitialized: boolean = false;
@@ -96,7 +96,7 @@ export class StateMasterComponent implements OnInit {
       nCountryId: [0, [Validators.required, Validators.min(1)]],
       vStateName: [null, [Validators.required]],
       vStatePrefix: [null, [Validators.required]],
-      btActive: new FormControl({ value: 'true', disabled: this.disabled }),
+      btActive: new UntypedFormControl({ value: 'true', disabled: this.disabled }),
     });
   }
   get createStateMasterFormControls(): any {

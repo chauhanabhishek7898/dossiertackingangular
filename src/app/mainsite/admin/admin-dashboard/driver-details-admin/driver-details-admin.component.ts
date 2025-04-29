@@ -11,7 +11,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DataTableDirective } from 'angular-datatables';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
@@ -34,7 +34,7 @@ import { CityMasterList } from 'src/app/mainsite/models/city-master';
 import { debounceTime, distinctUntilChanged, filter, finalize, switchMap, tap } from 'rxjs/operators';
 import { VehicleTypeMaster } from '../vehicle-type-master/vehicle-type-master';
 import { parseDateToString } from 'src/app/mainsite/shared-function/sharedFunction';
-
+import * as signalR from '@microsoft/signalr';
 @Component({
   selector: 'app-driver-details-admin',
   templateUrl: './driver-details-admin.component.html',
@@ -58,7 +58,8 @@ export class DriverDetailsAdminComponent implements OnInit {
   IsWait: boolean;
   loader = false;
   @Input() disabled: boolean = true;
-  myNoteForm: FormGroup;
+  myNoteForm: UntypedFormGroup;
+  connection: any
   pageTitle: any;
 
   constructor(
@@ -67,7 +68,7 @@ export class DriverDetailsAdminComponent implements OnInit {
     private modalService: BsModalService,
     private sanitizer: DomSanitizer,
     private utilityService: UtilityService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
 
     private router: Router,
@@ -81,7 +82,7 @@ export class DriverDetailsAdminComponent implements OnInit {
   ) { }
 
 
-  driverSignupForm: FormGroup;
+  driverSignupForm: UntypedFormGroup;
   apiUrl = environment.dossiarApiUrl;
   @Input() mobileDisabled: boolean = false;
   @Input() emailDisabled: boolean = false;
@@ -92,7 +93,17 @@ export class DriverDetailsAdminComponent implements OnInit {
   mobileVerified = false;
 
   btnLoader = false;
-
+  center: google.maps.LatLngLiteral = {
+    lat: 28.5179644,
+    lng: 77.2316918
+  };
+  latitude=28.5179644
+  longitude=77.2316918
+  markerPositions: google.maps.LatLngLiteral[] = [];
+  markerPos={lat:26.760759,lng:83.373703}
+  trackLocation=false;
+  trackingDriverId:number;
+//zoom = 4;
   // selectedCity: any = { CityDetailsState: "Gurgaon - Haryana" };
   selectedCity: any = { CityStateDetails: '' };
   selectedSpecilization: any = '';
@@ -100,7 +111,7 @@ export class DriverDetailsAdminComponent implements OnInit {
   cityId: any = null;
   cityMasterList: CityMasterList[] = [];
   isLoading = false;
-  searchCityCtrl = new FormControl();
+  searchCityCtrl = new UntypedFormControl();
   errorMsg!: string;
   minLengthTerm = 3;
   onSelected() {
@@ -124,6 +135,34 @@ export class DriverDetailsAdminComponent implements OnInit {
 
 
   ngOnInit(): void {
+        //ading signalR
+      this.connection = new signalR.HubConnectionBuilder()
+      .configureLogging(signalR.LogLevel.Information)
+      .withUrl(environment.dossiarImageUrl + '/TrackingHub')
+      .build();
+
+    this.connection.start().then(function () {
+      console.log('SignalR Connected!');
+    }).catch(function (err) {
+      return console.error(err.toString());
+    });
+     // start
+     this.connection.on("CurrentLocationHub", (ndriverId, subscriberList, currentLocation) => {
+      console.log('CurrentLocationHub')
+      if(this.trackLocation){
+        if(this.trackingDriverId==ndriverId){
+      console.log('subscriberList', subscriberList);
+      let driverLocation = JSON.parse(currentLocation)
+      console.log('driverLocation', driverLocation);
+      let dlat = parseFloat(driverLocation.lat);
+      let dlong = parseFloat(driverLocation.lng);
+      this.markerPos={lat:dlat,lng:dlong}
+          this.center.lat=dlat
+          this.center.lng=dlong
+        }
+      }
+     });
+     //end
     this.pageTitle = this.route.snapshot.queryParams.title;
     this.imageUrl = environment.dossiarApiUrl;
     this.dtOptions = {
@@ -230,7 +269,7 @@ export class DriverDetailsAdminComponent implements OnInit {
     this.VehicleTypeMaster_SelectAll()
   }
   ConfirmedValidator(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
       if (
@@ -896,31 +935,75 @@ export class DriverDetailsAdminComponent implements OnInit {
     backdrop: 'static',
     class: 'modal-dialog-centered modal-xl',
   };
+  alertconfig: ModalOptions = {
+    animated: true,
+    backdrop: 'static',
+    class: 'modal-dialog-centered modal-md',
+  };
+  mapconfig: ModalOptions = {
+    animated: true,
+    backdrop: 'static',
+    class: 'modal-dialog-centered modal-xl',
+  };
   nDriverId;
   PracticeWithDrome;
-  activateConfirmationModel(
-    template: TemplateRef<any>,
-    nDriverId
-  ) {
-    this.conformaitonmodalRef = this.modalService.show(template, this.config);
+  activateConfirmationModel(template: TemplateRef<any>,nDriverId,PracticeWithDrome) {
+    this.conformaitonmodalRef = this.modalService.show(template, this.alertconfig);
     this.nDriverId = nDriverId;
+    this.PracticeWithDrome=PracticeWithDrome
   }
+  openmap(template: TemplateRef<any>,nDriverId) {
+    this.doctorDetailService.getDriverCurrentLocation(nDriverId).subscribe(
+      (res) => {
+         console.log('current location',res)
+         if(res.length>0){
+          this.trackLocation=true;
+          this.trackingDriverId=nDriverId;
+          this.conformaitonmodalRef = this.modalService.show(template, this.mapconfig);
+          this.nDriverId = nDriverId;
+          console.log('dd',nDriverId)
+         let lat=parseFloat(res[0].vDiriverCurrentLat);
+         let lng=parseFloat(res[0].vDiriverCurrentLong);
+         this.center.lat=lat;
+         this.center.lng=lng
+        //  this.markerPositions=[];
+        //  this.markerPositions.push({
+        //   lat:lat,
+        //   lng:lng,              
+        // });
+        this.markerPos={lat:lat,lng:lng,}
+        console.log('le', this.markerPositions.length)      
+      }
+      else{
+        alert('Driver location not available!')
+      }
+      });
+    
+   
+    
+  }
+  closeDriverTrackingModel(){
+    this.conformaitonmodalRef.hide();
+    this.trackLocation=false;
+    this.trackingDriverId=0;
 
+  }
   activateDoctor() {
     this.loader = true
     this.conformaitonmodalRef.hide();
     let driver = {
-      nDriverId: this.nDriverId,
+      nUserId: this.nDriverId,
     };
-    // this.doctorDetailService.ActivateRevokeDoctorPraticeWithDrome(driver).subscribe((res) => {
-    //     if(res){
-    this.loader = false
-    //       this.notifier.showSuccess(res);
-    //       this.rerender();
-    //     }
-    //   }, (error: HttpErrorResponse) => {
-    //   // this.notifier.showError(error.statusText);
-    // });
+    console.log('driver',driver)
+    this.doctorDetailService.UpdateDriverSupervisorStatus(driver).subscribe((res) => {
+        if(res){
+        this.loader = false
+        this.showSuccessMessage(res, 'success', true);
+        this.rerender();
+        }
+      }, (error: HttpErrorResponse) => {
+      // this.notifier.showError(error.statusText);
+    });
   }
 
   modelCencelBtn() {

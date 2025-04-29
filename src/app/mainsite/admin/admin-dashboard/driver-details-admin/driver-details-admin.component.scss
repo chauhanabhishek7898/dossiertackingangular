@@ -518,22 +518,48 @@ bottom: 28px;
     padding: 20px 0;
 }
 
-.model-header {
+// .model-header {
+//     display: flex;
+//     justify-content: flex-end;
+//     border-bottom: none;
+
+//     button {
+//         justify-content: flex-end;
+//         display: flex;
+//         align-items: center;
+//         border: none;
+//         border-radius: 50%;
+//         margin: 3px;
+//     }
+
+// }
+.close-btn {
+    right: 10px;
+    border: none;
+    width: 30px;
+    height: 30px;
+    background: #d6724e;
+    color: #fff;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.confirm-btn {
     display: flex;
     justify-content: flex-end;
-    border-bottom: none;
-
+    padding: 5px;
     button {
-        justify-content: flex-end;
-        display: flex;
-        align-items: center;
         border: none;
-        border-radius: 50%;
-        margin: 3px;
+        padding: 8px;
+        color: #fff;
+        background: #c47453;
+        border-radius: 5px;
+        &:first-child{
+            margin-right: 5px;
+        }
     }
-
 }
-
 .input-group {
     width: 30%;
     margin: 10px 0;

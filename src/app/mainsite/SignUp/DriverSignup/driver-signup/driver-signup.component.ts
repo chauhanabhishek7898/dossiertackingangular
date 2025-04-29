@@ -8,9 +8,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -84,7 +84,7 @@ export class DriverSignupComponent implements OnInit {
     private router: Router,
     private sanitizer: DomSanitizer,
     private loginService: LoginService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private cityDropDownService: CitymasterService,
     private modalService: BsModalService,
     private otpSenderApiService: OtpSenderApiService,
@@ -92,8 +92,9 @@ export class DriverSignupComponent implements OnInit {
     private http: HttpClient,
     private customerSignupService: CustomerSignupService,
     private vehicleTypeMasterService: VehicleTypeMasterService,
-  ) { }
-  driverSignupForm: FormGroup;
+    // private notifier: NotificationService
+  ) {}
+  driverSignupForm: UntypedFormGroup;
   apiUrl = environment.dossiarApiUrl;
   @Input() mobileDisabled: boolean = false;
   @Input() emailDisabled: boolean = false;
@@ -109,7 +110,7 @@ export class DriverSignupComponent implements OnInit {
   cityId: any = null;
   cityMasterList: CityMasterList[] = [];
   isLoading = false;
-  searchCityCtrl = new FormControl();
+  searchCityCtrl = new UntypedFormControl();
   errorMsg!: string;
   minLengthTerm = 3;
   onSelected() {
@@ -201,7 +202,7 @@ export class DriverSignupComponent implements OnInit {
     this.VehicleTypeMaster_SelectAll()
   }
   ConfirmedValidator(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
       if (
